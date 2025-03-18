@@ -1,3 +1,3 @@
 # CODE:PANDEMIC
 
-hi!  i'm mulgyeol
+Hi! I'm Mulgyeol
