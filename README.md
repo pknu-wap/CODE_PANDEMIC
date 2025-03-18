@@ -1,2 +1,2 @@
 # CODE:PANDEMIC
-hi my name is nayeong
+hi my name
