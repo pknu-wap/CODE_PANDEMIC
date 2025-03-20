@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 public class BaseScene : MonoBehaviour
 {
-    public SceneType _sceneType = SceneType.Unknown;
+    public SceneType SceneType = SceneType.Unknown;
     protected bool _init;
     private void Awake()
     {
@@ -33,5 +34,10 @@ public class BaseScene : MonoBehaviour
     public void FadeOut()
     {
 
+    }
+
+    internal void Clear()
+    {
+        throw new NotImplementedException();
     }
 }
