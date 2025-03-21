@@ -1,18 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class TitleScene : BaseScene
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    UI_TitleScene _titleSceneUI;
 
-    // Update is called once per frame
-    void Update()
+    protected override bool Init()
     {
-        
+        if (base.Init() == false) return false;
+        SceneType = Define.SceneType.TitleScene;
+
+        Managers.UI.ShowSceneUI<UI_TitleScene>(callback: (titleSceneUI) =>
+        {
+            _titleSceneUI = titleSceneUI;
+
+        });
+        return true;
     }
+    //TODO: TITLESCENE UI  BUTTON ACTIVE
 }

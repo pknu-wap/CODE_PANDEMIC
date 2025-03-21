@@ -1,18 +1,61 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_TitleScene : UI_Scene
-{
-    // Start is called before the first frame update
-    void Start()
+{   
+    enum Texts
     {
-        
+        TitleText,
+        StartText,
+        OptionText,
+        ExitText
+    }
+    enum Buttons
+    {
+        StartButton,
+        OptionButton,
+        ExitButton
+    }
+    GameObject _startButton;
+    GameObject _optionButton;
+    GameObject _exitButton;
+
+
+    public override bool Init()
+    {
+        if (base.Init() == false) return false;
+        BindText(typeof(Texts));
+        BindButton(typeof(Buttons));
+
+       _startButton= GetButton((int)Buttons.StartButton).gameObject;
+       _optionButton=GetButton((int)Buttons.OptionButton).gameObject;
+       _exitButton=GetButton((int)Buttons.ExitButton).gameObject;
+
+        BindEvent(_startButton, OnClickStartButton);
+        BindEvent(_optionButton, OnClickOptionButton);
+        BindEvent(_exitButton, OnClickExitButton);
+
+        return true;
     }
 
-    // Update is called once per frame
-    void Update()
+    #region EventHandler
+    private void OnClickExitButton()
     {
+        Debug.Log("ExitButton");
+
+    }
+    private void OnClickOptionButton()
+    {
+        Managers.UI.ShowPopupUI<UI_TitleOptionPopUp>();
         
     }
+    private void OnClickStartButton()
+    {
+        Debug.Log("StartButton");
+    }
+    #endregion
 }

@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 
 
+
 public class UI_Base : MonoBehaviour
 {
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
@@ -51,6 +52,28 @@ public class UI_Base : MonoBehaviour
 
         return objects[idx] as T;
     }
+    protected GameObject GetObject(int idx) { return Get<GameObject>(idx); }
+    protected TextMeshProUGUI GetText(int idx) { return Get<TextMeshProUGUI>(idx); }
+    protected Button GetButton(int idx) { return Get<Button>(idx); }
+    protected Image GetImage(int idx) { return Get<Image>(idx); }
+    protected Slider GetSlider(int idx) { return Get<Slider>(idx); }
 
+   public static void BindEvent(GameObject go, Action action, Define.UIEvent type = Define.UIEvent.Click)
+   {
+       UI_EventHandler evt = Utils.GetOrAddComponent<UI_EventHandler>(go);
+
+       switch (type)
+       {
+           case Define.UIEvent.Click:
+               evt.OnClickHandler -= action;
+               evt.OnClickHandler += action;
+               break;
+
+           case Define.UIEvent.Press:
+               evt.OnPressHandler -= action;
+               evt.OnPressHandler += action;
+               break;
+       }
+   }
 
 }

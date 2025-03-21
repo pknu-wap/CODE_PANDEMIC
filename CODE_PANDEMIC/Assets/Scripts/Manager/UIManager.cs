@@ -67,6 +67,19 @@ public class UIManager : MonoBehaviour
             callback?.Invoke(popup);
         });
     }
+    public void ClosePopupUI(UI_PopUp popup)
+    {
+        if (_popupStack.Count == 0)
+            return;
+
+        if (_popupStack.Peek() != popup)
+        {
+            Debug.Log("Close Popup Failed!");
+            return;
+        }
+
+        ClosePopupUI();
+    }
     public void ClosePopupUI()
     {
         if (_popupStack.Count == 0)
