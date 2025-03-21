@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class PZ_Sliding_Board : MonoBehaviour
@@ -54,7 +53,7 @@ public class PZ_Sliding_Board : MonoBehaviour
                 GameObject spawnedTileObject = Instantiate(_tilePrefab, transform);
                 PZ_Sliding_Tile spawnedTile = spawnedTileObject.GetComponent<PZ_Sliding_Tile>();
                 _tileList.Add(spawnedTile);
-                spawnedTile.TileSetup(x * _slidingPuzzleSize.x + (y + 1), _slidingPuzzleSize.x * _slidingPuzzleSize.y);
+                spawnedTile.TileSetup(x * _slidingPuzzleSize.x + (y + 1), 3); // 3번 그림이 빈 그림임
             }
         }
     }
@@ -73,17 +72,19 @@ public class PZ_Sliding_Board : MonoBehaviour
             yield return new WaitForSeconds(shuffleDuration);
         }
 
-        // 셔플이 끝난 후 빈 타일의 현재 위치를 저장
-        EmptyTilePosition = _tileList[_tileList.Count - 1].GetComponent<RectTransform>().localPosition;
+        // 셔플이 끝난 후 빈 타일의 현재 위치를 저장 (3번)
+        EmptyTilePosition = _tileList[2].GetComponent<RectTransform>().localPosition;
     }
 
     public void MoveTile(PZ_Sliding_Tile tile)
     {
+        // 클릭한 타일이 빈 타일과 붙어 있지 않으면 둘 사이의 거리가 _needMoveDistance와 일치하지 않음
         if (Vector3.Distance(EmptyTilePosition, tile.GetComponent<RectTransform>().localPosition) != _needMoveDistance)
         {
             return;
         }
 
+        // 빈 타일 위치와 바꾸려는 타일 위치 정보 교환
         Vector3 endPosition = EmptyTilePosition;
         EmptyTilePosition = tile.GetComponent<RectTransform>().localPosition;
         tile.TileMoveto(endPosition);
@@ -97,6 +98,8 @@ public class PZ_Sliding_Board : MonoBehaviour
         {
             // 삭제 예정
             Debug.Log("Puzzle Clear!!!");
+
+            // 여기에 퍼즐 클리어 로직 구현 예정
         }
     }
 }

@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections; // 삭제 예정
+using System.Collections;
+using System.Collections.Generic; // 삭제 예정
 
 public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
 {
@@ -12,6 +13,12 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
     private PZ_Sliding_Board _sliding_Board;
     private Vector3 _correctPosition;
     public bool _isCorrect = false;
+
+    private Image _image; // 퍼즐 이미지
+
+    // 해당 부분은 임시로 이렇게 함 나중에 resource 폴더에서 리소스 로드로 구현 할 예정
+    [SerializeField]
+    private List<Sprite> _puzzleSprites;
 
     // 삭제 예정
     public int TileNumber
@@ -27,6 +34,7 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
     private void Awake()
     {
         _sliding_Board = GetComponentInParent<PZ_Sliding_Board>();
+        _image = GetComponent<Image>();
     }
 
     // tileEmptyIndex 마지막 빈 타일의 index
@@ -34,6 +42,7 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
     {
         _tileNumberText = GetComponentInChildren<TextMeshProUGUI>();
         TileNumber = tileNumber;
+        _image.sprite = _puzzleSprites[tileNumber - 1];
 
         if (TileNumber == tileEmptyIndex)
         {
@@ -48,6 +57,7 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
         _correctPosition = GetComponent<RectTransform>().localPosition;
     }
 
+    // 클릭 이벤트
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("Click" + _tileNumber);
@@ -77,11 +87,14 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
             yield return null;
         }
 
+        // 타일 위치 체크
         _isCorrect = CheckCorrectPosition();
 
+        // 퍼즐 클리어 체크
         _sliding_Board.IsPuzzleClear();
     }
 
+    // 현재 타일 위치가 올바른 위치인지 확인
     private bool CheckCorrectPosition()
     {
         if (GetComponent<RectTransform>().localPosition == _correctPosition)
