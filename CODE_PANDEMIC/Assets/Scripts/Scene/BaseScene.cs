@@ -36,8 +36,8 @@ public class BaseScene : MonoBehaviour
 
     }
 
-    internal void Clear()
+    public void Clear()
     {
-        throw new NotImplementedException();
+        Debug.Log("clear");
     }
 }

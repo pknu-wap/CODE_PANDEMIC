@@ -24,7 +24,7 @@ public class UI_TitleScene : UI_Scene
     GameObject _optionButton;
     GameObject _exitButton;
 
-
+    
     public override bool Init()
     {
         if (base.Init() == false) return false;
@@ -55,7 +55,7 @@ public class UI_TitleScene : UI_Scene
     }
     private void OnClickStartButton()
     {
-        Debug.Log("StartButton");
+        Managers.Scene.ChangScene(Define.SceneType.GameScene);
     }
     #endregion
 }

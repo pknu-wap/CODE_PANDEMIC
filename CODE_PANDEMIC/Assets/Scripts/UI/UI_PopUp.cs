@@ -9,7 +9,7 @@ public class UI_PopUp : UI_Base
         if (base.Init() == false)
             return false;
 
-        //Managers.UI.SetCanvas(gameObject, false);
+        Managers.UI.SetCanvas(gameObject, true);
         return true;
     }
 }

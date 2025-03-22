@@ -6,6 +6,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     int _index = 20;
+  
     Stack<UI_PopUp> _popupStack = new Stack<UI_PopUp>();
     
     public UI_Scene SceneUI { get; set; }
@@ -62,8 +63,8 @@ public class UIManager : MonoBehaviour
         {
             T popup = Utils.GetOrAddComponent<T>(obj);
             _popupStack.Push(popup);
-            if (parent != null) obj.transform.SetParent(parent);
-            else obj.transform.SetParent(UIRoot.transform);
+            if (parent != null) obj.transform.SetParent(parent,false);
+            else obj.transform.SetParent(UIRoot.transform,false);
             callback?.Invoke(popup);
         });
     }

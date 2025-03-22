@@ -15,10 +15,12 @@ public class Managers : MonoBehaviour
     ResourceManager _resource = new ResourceManager();
     UIManager _ui = new UIManager();
     GameManagerEx _game =new GameManagerEx();
+    SceneManagerEx _scene = new SceneManagerEx();
     public static Managers Instance { get { return _instance; } }
     public static ResourceManager Resource { get { return _instance._resource; }}
     public static UIManager UI { get { return _instance._ui; } }
 
+    public static SceneManagerEx Scene { get { return _instance._scene; } }
     public static GameManagerEx Game { get { return _instance._game; } }
 
     public static bool Init()

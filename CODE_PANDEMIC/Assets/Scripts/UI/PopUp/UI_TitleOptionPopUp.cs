@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class UI_TitleOptionPopUp : UI_PopUp
 {   
-    enum Texts
+    enum GameObejcts
     {
-        OptionTitle
+        OptionPanel
     }
     enum Buttons
     {
@@ -26,7 +26,7 @@ public class UI_TitleOptionPopUp : UI_PopUp
     public override bool Init()
     {
         if (base.Init() == false) return false;
-        BindText(typeof(Texts));
+        BindObject(typeof(GameObejcts));
         BindButton(typeof(Buttons));
         
         _videoButton = GetButton((int)Buttons.VideoButton).gameObject;
@@ -42,11 +42,11 @@ public class UI_TitleOptionPopUp : UI_PopUp
     #region EventHandler
     void OnClickVideoButton()
     {
-        //instantiate video panel
+        Debug.Log("video");
     }
     void OnClickSoundButton()
     {
-        //instantiate sound panel
+        Managers.UI.ShowPopupUI<UI_SoundPopUp>();
     }
     void OnClickExitButton()
     {

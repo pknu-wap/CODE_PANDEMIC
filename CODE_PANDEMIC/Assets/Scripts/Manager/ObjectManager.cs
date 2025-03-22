@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
-   
-  
+     
+    public void Init()
+    {
+
+    }
+
 }
