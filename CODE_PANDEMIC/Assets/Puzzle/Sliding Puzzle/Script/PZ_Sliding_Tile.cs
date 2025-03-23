@@ -10,7 +10,7 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
     private TextMeshProUGUI _tileNumberText; // 테스트용 현재 타일 번호 출력을 위한 text
     private int _tileNumber; // 현재 타일 번호
 
-    private PZ_Sliding_Board _sliding_Board;
+    private PZ_Sliding_Board _slidingBoard;
     private Vector3 _correctPosition;
     public bool _isCorrect = false;
 
@@ -33,7 +33,7 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
     }
     private void Awake()
     {
-        _sliding_Board = GetComponentInParent<PZ_Sliding_Board>();
+        _slidingBoard = GetComponentInParent<PZ_Sliding_Board>();
         _image = GetComponent<Image>();
     }
 
@@ -62,7 +62,7 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("Click" + _tileNumber);
 
-        _sliding_Board.MoveTile(this);
+        _slidingBoard.MoveTile(this);
     }
 
     public void TileMoveto(Vector3 endPosition)
@@ -91,7 +91,7 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
         _isCorrect = CheckCorrectPosition();
 
         // 퍼즐 클리어 체크
-        _sliding_Board.IsPuzzleClear();
+        _slidingBoard.IsPuzzleClear();
     }
 
     // 현재 타일 위치가 올바른 위치인지 확인
