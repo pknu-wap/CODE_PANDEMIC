@@ -97,7 +97,7 @@ public class PZ_Sliding_Board : MonoBehaviour
         if (_tileList.FindAll(tile => tile._isCorrect == true).Count == _slidingPuzzleSize.x * _slidingPuzzleSize.y - 1)
         {
             // 삭제 예정
-            Debug.Log("Puzzle Clear!!!");
+            Debug.LogWarning("Sliding Puzzle Clear!!!");
 
             // 여기에 퍼즐 클리어 로직 구현 예정
         }

@@ -22,8 +22,18 @@ public class PZ_Password_Board : MonoBehaviour
 
     private void Awake()
     {
-        // 비밀 번호 판 기본 세팅
         _rectTransform = GetComponent<RectTransform>();
+       
+        _buttonList = new List<PZ_Password_Button>();
+
+        _passwordInputUI = _inputUIPrefab.GetComponent<PZ_Password_InputUI>();
+    }
+
+    private void Start()
+    {
+        SpawnButtons();
+
+        // 비밀 번호 판 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0f);
         _rectTransform.anchorMax = new Vector2(0.5f, 0f);
         _rectTransform.pivot = new Vector2(0.5f, 0.5f);
@@ -38,15 +48,6 @@ public class PZ_Password_Board : MonoBehaviour
         _layoutGroup.padding.bottom = 10;
         _layoutGroup.cellSize = new Vector2(180, 180);
         _layoutGroup.spacing = new Vector2(10, 10);
-
-        _buttonList = new List<PZ_Password_Button>();
-
-        _passwordInputUI = _inputUIPrefab.GetComponent<PZ_Password_InputUI>();
-    }
-
-    private void Start()
-    {
-        SpawnButtons();
     }
 
     // 버튼 스폰
@@ -77,7 +78,7 @@ public class PZ_Password_Board : MonoBehaviour
     {
         if (_inputPassword == _correctPassword)
         {
-            Debug.Log("Password Puzzle Clear!!!");
+            Debug.LogWarning("Password Puzzle Clear!!!");
             // 여기에 퍼즐 클리어 로직 구현
         }
 
