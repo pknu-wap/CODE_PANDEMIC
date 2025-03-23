@@ -42,7 +42,7 @@ public class UI_TitleOptionPopUp : UI_PopUp
     #region EventHandler
     void OnClickVideoButton()
     {
-        Debug.Log("video");
+        Managers.UI.ShowPopupUI<UI_VideoPopUp>();
     }
     void OnClickSoundButton()
     {

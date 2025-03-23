@@ -45,8 +45,7 @@ public class UI_TitleScene : UI_Scene
     #region EventHandler
     private void OnClickExitButton()
     {
-        Debug.Log("ExitButton");
-
+       
     }
     private void OnClickOptionButton()
     {

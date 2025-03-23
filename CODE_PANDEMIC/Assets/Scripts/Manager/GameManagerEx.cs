@@ -18,6 +18,9 @@ public class GameData
     public int MasterVolume;
     public int BgmVolume;
     public int EffectVolume;
+
+    public Resolution SaveResolution;
+    public bool IsFullScreen;
 }
 public class GameManagerEx : MonoBehaviour
 {
@@ -32,7 +35,17 @@ public class GameManagerEx : MonoBehaviour
     {
         _path = Application.persistentDataPath + "/SaveData.json";
     }
-
+    public void SetResolutionScreen(Resolution res)
+    {
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen=SaveData.IsFullScreen);
+        Debug.Log($"{res.width}x{res.height}");
+        SaveData.SaveResolution = res;
+    }
+    public void SetFullScreenMode(bool value)
+    {
+        Screen.fullScreen = value;
+        SaveData.IsFullScreen = value;
+    }
     #region SaveLoad
     public bool IsLoaded = false;
     string _path;

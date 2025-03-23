@@ -44,6 +44,8 @@ public class UI_Base : MonoBehaviour
     protected void BindText(Type type) { Bind<TextMeshProUGUI>(type); }
     protected void BindButton(Type type) { Bind<Button>(type); }
     protected void BindSlider(Type type) { Bind<Slider>(type); }
+
+    protected void BindDropDown(Type type) { Bind<TMP_Dropdown>(type); }    
     protected T Get<T>(int idx) where T : UnityEngine.Object
     {
         UnityEngine.Object[] objects = null;
@@ -57,6 +59,7 @@ public class UI_Base : MonoBehaviour
     protected Button GetButton(int idx) { return Get<Button>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
     protected Slider GetSlider(int idx) { return Get<Slider>(idx); }
+    protected TMP_Dropdown GetDropdown(int idx) { return Get<TMP_Dropdown>(idx); }
 
    public static void BindEvent(GameObject go, Action action, Define.UIEvent type = Define.UIEvent.Click)
    {
