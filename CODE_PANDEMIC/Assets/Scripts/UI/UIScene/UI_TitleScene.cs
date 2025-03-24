@@ -45,7 +45,7 @@ public class UI_TitleScene : UI_Scene
     #region EventHandler
     private void OnClickExitButton()
     {
-       
+       Managers.Game.QuitGame();
     }
     private void OnClickOptionButton()
     {

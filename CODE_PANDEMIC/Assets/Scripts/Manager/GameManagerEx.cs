@@ -68,4 +68,16 @@ public class GameManagerEx : MonoBehaviour
         return true;
     }
     #endregion
+
+    public void QuitGame()
+    {
+        //유니티  에디터 어플리케이션 두개의 상황 다나갈수있게 
+        //이후 유니티 에디터를 빼면 됨 
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; 
+        #else
+        Application.Quit();
+        #endif
+    
+    }
 }
