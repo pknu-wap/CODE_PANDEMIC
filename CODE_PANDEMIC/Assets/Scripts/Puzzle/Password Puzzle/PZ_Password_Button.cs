@@ -21,7 +21,7 @@ public class PZ_Password_Button : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         _passwordBoard = GetComponentInParent<PZ_Password_Board>();
     }

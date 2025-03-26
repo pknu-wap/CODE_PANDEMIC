@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,22 +19,34 @@ public class PZ_Piano_Tile_Black : MonoBehaviour, IPointerClickHandler
     private PianoNoteBlack[] _pianoNoteTypes; // 건반 음 종류
     private PianoNoteBlack _pianoTileNote; // 현재 건반 음
 
-    private void Awake()
+    public bool Init()
     {
         _rectTransform = GetComponent<RectTransform>();
         _pianoBase = GetComponentInParent<PZ_Piano_Base>();
 
-        // enum 값들을 배열로 가져옴
-        _pianoNoteTypes = (PianoNoteBlack[])System.Enum.GetValues(typeof(PianoNoteBlack));
-    }
+        if (!_rectTransform || !_pianoBase)
+        {
+            return false;
+        }
 
-    private void Start()
-    {
         // 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         _rectTransform.pivot = new Vector2(0.5f, 0.5f);
         _rectTransform.sizeDelta = new Vector2(100, 300);
+
+        // enum 값들을 배열로 가져옴
+        _pianoNoteTypes = (PianoNoteBlack[])System.Enum.GetValues(typeof(PianoNoteBlack));
+
+        return true;
+    }
+
+    private void Start()
+    {
+        if (!Init())
+        {
+            return;
+        }
     }
 
     // 건반 기본 세팅

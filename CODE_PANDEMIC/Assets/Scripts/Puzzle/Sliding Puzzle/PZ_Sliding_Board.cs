@@ -8,13 +8,13 @@ public class PZ_Sliding_Board : MonoBehaviour
     [SerializeField]
     private GameObject _tilePrefab; // 타일 프리팹
     private RectTransform _rectTransform; // 크기 조정을 위해 가져옴
-    private List<PZ_Sliding_Tile> _tileList; // 생성된 타일을 저장
+    private List<PZ_Sliding_Tile> _tileList = new List<PZ_Sliding_Tile>(); // 생성된 타일을 저장
     private Vector2Int _slidingPuzzleSize = new Vector2Int(3, 3); // 퍼즐 사이즈
     private float _needMoveDistance = 232f; // 타일이 이동해야 하는 거리
 
     public Vector3 EmptyTilePosition { get; set; } // 빈 타일의 위치
 
-    private void Awake()
+    private IEnumerator Start()
     {
         _rectTransform = GetComponent<RectTransform>();
 
@@ -25,11 +25,6 @@ public class PZ_Sliding_Board : MonoBehaviour
         _rectTransform.anchoredPosition = Vector2.zero;
         _rectTransform.sizeDelta = new Vector2(730, 730);
 
-        _tileList = new List<PZ_Sliding_Tile>();
-    }
-
-    private IEnumerator Start()
-    {
         SpawnTiles();
 
         // 위치 정보 강제 동기화
@@ -52,11 +47,18 @@ public class PZ_Sliding_Board : MonoBehaviour
                 // Grid Layout Group을 활용해 보드에 타일을 스폰하면 자동으로 배치되게 함
                 GameObject spawnedTileObject = Instantiate(_tilePrefab, transform);
                 PZ_Sliding_Tile spawnedTile = spawnedTileObject.GetComponent<PZ_Sliding_Tile>();
+
+                if (!spawnedTile.Init())
+                {
+                    break;
+                }
+
                 _tileList.Add(spawnedTile);
                 spawnedTile.TileSetup(x * _slidingPuzzleSize.x + (y + 1), 3); // 3번 그림이 빈 그림임
             }
         }
     }
+
     private IEnumerator ShuffleTiles()
     {
         int shuffleCount = 20;

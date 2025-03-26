@@ -31,10 +31,18 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
             _tileNumberText.text = _tileNumber.ToString();
         }
     }
-    private void Awake()
+
+    public bool Init()
     {
         _slidingBoard = GetComponentInParent<PZ_Sliding_Board>();
         _image = GetComponent<Image>();
+
+        if (!_slidingBoard || !_image)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     // tileEmptyIndex 마지막 빈 타일의 index

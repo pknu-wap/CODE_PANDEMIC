@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +9,8 @@ public class PZ_Piano_Base : MonoBehaviour
     [SerializeField]
     private GameObject _tileBlackPrefab;
 
-    private List<PZ_Piano_Tile_White> _whiteList;
-    private List<PZ_Piano_Tile_Black> _blackList;
+    private List<PZ_Piano_Tile_White> _whiteList = new List<PZ_Piano_Tile_White>();
+    private List<PZ_Piano_Tile_Black> _blackList = new List<PZ_Piano_Tile_Black>();
 
     [SerializeField]
     private string _correctPianoNotes = "SolSolLaLaSolSolMi"; // 정답
@@ -21,14 +20,23 @@ public class PZ_Piano_Base : MonoBehaviour
     private int _maxPianoCount = 7; // 최대 선택될 음 개수 ( == 정답 음의 개수)
     private int _currentPianoCount = 0; // 현재 선택된 음 개수
 
-    private void Awake()
+    private bool Init()
     {
-        _whiteList = new List<PZ_Piano_Tile_White>();
-        _blackList = new List<PZ_Piano_Tile_Black>();
+        if (!_tileWhitePrefab || !_tileBlackPrefab)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private void Start()
     {
+        if (!Init())
+        {
+            return;
+        }
+
         SpawnPianoTiles();
     }
 
@@ -40,6 +48,12 @@ public class PZ_Piano_Base : MonoBehaviour
         {
             GameObject spawnedTileObject = Instantiate(_tileWhitePrefab, transform);
             PZ_Piano_Tile_White spawnedTile = spawnedTileObject.GetComponent<PZ_Piano_Tile_White>();
+
+            if (!spawnedTile.Init())
+            {
+                break;
+            }
+
             spawnedTile.TileSetup(i);
             _whiteList.Add(spawnedTile);
         }
@@ -49,6 +63,12 @@ public class PZ_Piano_Base : MonoBehaviour
         {
             GameObject spawnedTileObject = Instantiate(_tileBlackPrefab, transform);
             PZ_Piano_Tile_Black spawnedTile = spawnedTileObject.GetComponent<PZ_Piano_Tile_Black>();
+
+            if (!spawnedTile.Init())
+            {
+                break;
+            }
+
             spawnedTile.TileSetup(i);
             _blackList.Add(spawnedTile);
         }

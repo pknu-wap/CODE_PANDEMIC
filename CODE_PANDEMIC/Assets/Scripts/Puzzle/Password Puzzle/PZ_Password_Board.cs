@@ -14,24 +14,27 @@ public class PZ_Password_Board : MonoBehaviour
     private RectTransform _rectTransform; // 세팅
     private GridLayoutGroup _layoutGroup; // 세팅
 
-    private List<PZ_Password_Button> _buttonList; // 생성한 버튼 리스트
+    private List<PZ_Password_Button> _buttonList = new List<PZ_Password_Button>(); // 생성한 버튼 리스트
 
     [SerializeField]
     private string _correctPassword = "1234"; // 정답 비밀 번호
     private string _inputPassword; // 입력 받는 비밀 번호
 
-    private void Awake()
+    private bool Init()
     {
+        if (!_buttonPrefab || !_inputUIPrefab)
+        {
+            return false;
+        }
+
         _rectTransform = GetComponent<RectTransform>();
-       
-        _buttonList = new List<PZ_Password_Button>();
-
+        _layoutGroup = GetComponent<GridLayoutGroup>();
         _passwordInputUI = _inputUIPrefab.GetComponent<PZ_Password_InputUI>();
-    }
 
-    private void Start()
-    {
-        SpawnButtons();
+        if (!_rectTransform || !_layoutGroup || !_passwordInputUI)
+        {
+            return false;
+        }
 
         // 비밀 번호 판 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0f);
@@ -41,13 +44,24 @@ public class PZ_Password_Board : MonoBehaviour
         _rectTransform.sizeDelta = new Vector2(600, 800);
 
         // 생성할 버튼들을 배치할 세팅
-        _layoutGroup = GetComponent<GridLayoutGroup>();
         _layoutGroup.padding.left = 10;
         _layoutGroup.padding.right = 10;
         _layoutGroup.padding.top = 10;
         _layoutGroup.padding.bottom = 10;
         _layoutGroup.cellSize = new Vector2(180, 180);
         _layoutGroup.spacing = new Vector2(10, 10);
+
+        return true;
+    }
+
+    private void Start()
+    {
+        if (!Init())
+        {
+            return;
+        }
+
+        SpawnButtons();
     }
 
     // 버튼 스폰
