@@ -1,40 +1,86 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f; // 기본 이동 속도
-    public float sprintSpeed = 8f; // 달리기(Shift) 속도
-
-    private Vector2 movement;
+    public float playerSpeed;
+    public float playerRunSpeed = 1.5f;
+    private Vector3 move;
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+
+    public Sprite upSprite;
+    public Sprite downSprite;
+    public Sprite rightSprite;
+    public Sprite rightupSprite;
+    public Sprite rightdownSprite;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        // Input Manager에서 이동 입력값 가져오기
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        movement = new Vector2(moveX, moveY).normalized;
+        move = new Vector3(horizontal, vertical, 0).normalized;
 
-        // Shift 누르면 스프린트, 아니면 기본 속도
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? playerSpeed * playerRunSpeed : playerSpeed;
+
+        if (move.magnitude > 0)
         {
-            moveSpeed = sprintSpeed;
-        }
-        else
-        {
-            moveSpeed = 5f;
+            float angle = Mathf.Atan2(move.y, move.x) * Mathf.Rad2Deg;
+
+            if (angle > -22.5f && angle <= 22.5f)
+            {
+                spriteRenderer.sprite = rightSprite;
+                spriteRenderer.flipX = false;
+            }
+            else if (angle > 22.5f && angle <= 67.5f)
+            {
+                spriteRenderer.sprite = rightupSprite;
+                spriteRenderer.flipX = false;
+            }
+            else if (angle > 67.5f && angle <= 112.5f)
+            {
+                spriteRenderer.sprite = upSprite;
+                spriteRenderer.flipX = false;
+            }
+            else if (angle > 112.5f && angle <= 157.5f)
+            {
+                spriteRenderer.sprite = rightupSprite;
+                spriteRenderer.flipX = true;
+            }
+            else if (angle > 157.5f || angle <= -157.5f)
+            {
+                spriteRenderer.sprite = rightSprite;
+                spriteRenderer.flipX = true;
+            }
+            else if (angle > -157.5f && angle <= -112.5f)
+            {
+                spriteRenderer.sprite = rightdownSprite;
+                spriteRenderer.flipX = true;
+            }
+            else if (angle > -112.5f && angle <= -67.5f)
+            {
+                spriteRenderer.sprite = downSprite;
+                spriteRenderer.flipX = true;
+            }
+            else if (angle > -67.5f && angle <= -22.5f)
+            {
+                spriteRenderer.sprite = rightdownSprite;
+                spriteRenderer.flipX = false;
+            }
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        // Rigidbody2D를 이용한 이동 처리
-        rb.velocity = movement * moveSpeed;
+        float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? playerSpeed * playerRunSpeed : playerSpeed;
+        rb.velocity = move * currentSpeed;
     }
 }
