@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 280619118}
   - component: {fileID: 280619120}
   - component: {fileID: 280619119}
+  - component: {fileID: 280619121}
   m_Layer: 5
   m_Name: UI_PlayerStatusBar
   m_TagString: Untagged
@@ -580,6 +581,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280619117}
   m_CullTransparentMesh: 1
+--- !u!114 &280619121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280619117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094746f0c8a0a314e896bad55df9e530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hpBarTransform: {fileID: 0}
+  _originalWidth: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

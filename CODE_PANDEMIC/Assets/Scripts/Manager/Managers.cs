@@ -14,12 +14,13 @@ public class Managers : MonoBehaviour
 
     ResourceManager _resource = new ResourceManager();
     UIManager _ui = new UIManager();
+    EventManager _event =new EventManager();
     GameManagerEx _game =new GameManagerEx();
     SceneManagerEx _scene = new SceneManagerEx();
     public static Managers Instance { get { return _instance; } }
     public static ResourceManager Resource { get { return _instance._resource; }}
     public static UIManager UI { get { return _instance._ui; } }
-
+    public static EventManager Event { get { return _instance._event; } }
     public static SceneManagerEx Scene { get { return _instance._scene; } }
     public static GameManagerEx Game { get { return _instance._game; } }
 
