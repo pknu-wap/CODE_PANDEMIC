@@ -12,9 +12,9 @@ public class AI_Zombie : MonoBehaviour
 
     private float _aiSpeed = 2f;
     private float _aiDamage = 10f;
-    private float _aiDetectionRange = 7.5f;
-    private float _aiDetectionAngle = 120f;
-    private float _aiDamageDelay = 5f;
+    private float _aiDetectionRange = 7.5f; // 시야 거리
+    private float _aiDetectionAngle = 120f; // 시야각각
+    private float _aiDamageDelay = 0.5f; // 데미지 딜레이(닿였을때 대미지 들어오는 간격)
     public virtual bool Init()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
