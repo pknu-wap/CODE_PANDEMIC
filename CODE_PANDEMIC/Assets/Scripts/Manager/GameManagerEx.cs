@@ -8,8 +8,8 @@ using static Define;
 [Serializable]
 public class GameData
 {
-    public int Chapter;
-    public int Stage;
+    public int Chapter=1;
+    public int Stage=1;
 
     public int ShortWeaponID;
     public int PistolID;
