@@ -68,6 +68,6 @@ public class PZ_Piano_Tile_White : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("¥©∏• »Ú ∞«π› : " + _pianoTileNote.ToString());
 
-        _pianoBase.IsPuzzleClear(_pianoTileNote.ToString());
+        _pianoBase.CheckPuzzleClear(_pianoTileNote.ToString());
     }
 }

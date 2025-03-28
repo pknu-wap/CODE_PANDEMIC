@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PZ_Sliding_Board : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _tilePrefab; // 타일 프리팹
+    #region Base
+
     private RectTransform _rectTransform; // 크기 조정을 위해 가져옴
     private List<PZ_Sliding_Tile> _tileList = new List<PZ_Sliding_Tile>(); // 생성된 타일을 저장
     private Vector2Int _slidingPuzzleSize = new Vector2Int(3, 3); // 퍼즐 사이즈
@@ -38,15 +38,23 @@ public class PZ_Sliding_Board : MonoBehaviour
         StartCoroutine("ShuffleTiles");
     }
 
+    #endregion
+
+    #region Tile
+
     private void SpawnTiles()
     {
         for (int x = 0; x < _slidingPuzzleSize.x; x++)
         {
             for (int y = 0; y < _slidingPuzzleSize.y; y++)
             {
+                PZ_Sliding_Tile spawnedTile = null;
+
                 // Grid Layout Group을 활용해 보드에 타일을 스폰하면 자동으로 배치되게 함
-                GameObject spawnedTileObject = Instantiate(_tilePrefab, transform);
-                PZ_Sliding_Tile spawnedTile = spawnedTileObject.GetComponent<PZ_Sliding_Tile>();
+                Managers.Resource.Instantiate("PZ_Sliding_Tile", transform, (spawnedTileObject) =>
+                {
+                    spawnedTile = Utils.GetOrAddComponent<PZ_Sliding_Tile>(spawnedTileObject);
+                });
 
                 if (!spawnedTile.Init())
                 {
@@ -92,7 +100,11 @@ public class PZ_Sliding_Board : MonoBehaviour
         tile.TileMoveto(endPosition);
     }
 
-    public void IsPuzzleClear()
+    #endregion
+
+    #region Clear
+
+    public void CheckPuzzleClear()
     {
         // 삭제 예정
         Debug.Log("Correct : " + _tileList.FindAll(tile => tile._isCorrect == true).Count);
@@ -104,4 +116,6 @@ public class PZ_Sliding_Board : MonoBehaviour
             // 여기에 퍼즐 클리어 로직 구현 예정
         }
     }
+
+    #endregion
 }

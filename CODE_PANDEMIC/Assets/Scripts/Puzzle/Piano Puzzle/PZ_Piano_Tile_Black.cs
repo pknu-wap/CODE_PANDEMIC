@@ -79,6 +79,6 @@ public class PZ_Piano_Tile_Black : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("누른 검은 건반 : " + _pianoTileNote.ToString());
 
-        _pianoBase.IsPuzzleClear(_pianoTileNote.ToString());
+        _pianoBase.CheckPuzzleClear(_pianoTileNote.ToString());
     }
 }

@@ -3,40 +3,17 @@ using UnityEngine;
 
 public class PZ_Piano_Base : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _tileWhitePrefab;
-
-    [SerializeField]
-    private GameObject _tileBlackPrefab;
-
     private List<PZ_Piano_Tile_White> _whiteList = new List<PZ_Piano_Tile_White>();
     private List<PZ_Piano_Tile_Black> _blackList = new List<PZ_Piano_Tile_Black>();
 
-    [SerializeField]
     private string _correctPianoNotes = "SolSolLaLaSolSolMi"; // 정답
     private string _currentPianoNotes = ""; // 현재 선택된 음들
 
-    [SerializeField]
     private int _maxPianoCount = 7; // 최대 선택될 음 개수 ( == 정답 음의 개수)
     private int _currentPianoCount = 0; // 현재 선택된 음 개수
 
-    private bool Init()
-    {
-        if (!_tileWhitePrefab || !_tileBlackPrefab)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     private void Start()
     {
-        if (!Init())
-        {
-            return;
-        }
-
         SpawnPianoTiles();
     }
 
@@ -46,8 +23,12 @@ public class PZ_Piano_Base : MonoBehaviour
         // 흰 건반 스폰
         for (int i = 0; i < 7; i++)
         {
-            GameObject spawnedTileObject = Instantiate(_tileWhitePrefab, transform);
-            PZ_Piano_Tile_White spawnedTile = spawnedTileObject.GetComponent<PZ_Piano_Tile_White>();
+            PZ_Piano_Tile_White spawnedTile = null;
+
+            Managers.Resource.Instantiate("PZ_Piano_Tile_White", transform, (spawnedTileObject) =>
+            {
+                spawnedTile = Utils.GetOrAddComponent<PZ_Piano_Tile_White>(spawnedTileObject);
+            });
 
             if (!spawnedTile.Init())
             {
@@ -61,8 +42,12 @@ public class PZ_Piano_Base : MonoBehaviour
         // 검은 건반 스폰
         for (int i = 0; i < 6; i++)
         {
-            GameObject spawnedTileObject = Instantiate(_tileBlackPrefab, transform);
-            PZ_Piano_Tile_Black spawnedTile = spawnedTileObject.GetComponent<PZ_Piano_Tile_Black>();
+            PZ_Piano_Tile_Black spawnedTile = null;
+
+            Managers.Resource.Instantiate("PZ_Piano_Tile_Black", transform, (spawnedTileObject) =>
+            {
+                spawnedTile = Utils.GetOrAddComponent<PZ_Piano_Tile_Black>(spawnedTileObject);
+            });
 
             if (!spawnedTile.Init())
             {
@@ -75,7 +60,7 @@ public class PZ_Piano_Base : MonoBehaviour
     }
 
     // 퍼즐 클리어 여부 체크
-    public void IsPuzzleClear(string selectedNote)
+    public void CheckPuzzleClear(string selectedNote)
     {
         _currentPianoNotes += selectedNote;
 

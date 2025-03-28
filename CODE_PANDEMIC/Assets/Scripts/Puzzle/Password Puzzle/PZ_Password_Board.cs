@@ -4,32 +4,34 @@ using UnityEngine.UI;
 
 public class PZ_Password_Board : MonoBehaviour
 {
-    [SerializeField]
     private GameObject _inputUIPrefab;
     private PZ_Password_InputUI _passwordInputUI;
-
-    [SerializeField]
-    private GameObject _buttonPrefab;
 
     private RectTransform _rectTransform; // 세팅
     private GridLayoutGroup _layoutGroup; // 세팅
 
     private List<PZ_Password_Button> _buttonList = new List<PZ_Password_Button>(); // 생성한 버튼 리스트
 
-    [SerializeField]
     private string _correctPassword = "1234"; // 정답 비밀 번호
     private string _inputPassword; // 입력 받는 비밀 번호
 
     private bool Init()
     {
-        if (!_buttonPrefab || !_inputUIPrefab)
+        Managers.Resource.LoadAsync<GameObject>("PZ_Password_InputUI", (inputUIPrefab) =>
+        {
+            _inputUIPrefab = inputUIPrefab;
+        });
+
+        if (!_inputUIPrefab)
         {
             return false;
         }
 
+        GameObject spawnedInputUI = Instantiate(_inputUIPrefab, transform);
+        _passwordInputUI = spawnedInputUI.GetComponent<PZ_Password_InputUI>();
+
         _rectTransform = GetComponent<RectTransform>();
         _layoutGroup = GetComponent<GridLayoutGroup>();
-        _passwordInputUI = _inputUIPrefab.GetComponent<PZ_Password_InputUI>();
 
         if (!_rectTransform || !_layoutGroup || !_passwordInputUI)
         {
@@ -70,10 +72,12 @@ public class PZ_Password_Board : MonoBehaviour
         for (int i = 1; i <= 12; i++)
         {
             // Grid Layout Group을 활용해 보드에 타일을 스폰하면 자동으로 배치되게 함
-            GameObject spawnedButtonObject = Instantiate(_buttonPrefab, transform);
-            PZ_Password_Button spawnedButton = spawnedButtonObject.GetComponent<PZ_Password_Button>();
-            _buttonList.Add(spawnedButton);
-            spawnedButton.ButtonSetup(i);
+            Managers.Resource.Instantiate("PZ_Password_Button", transform, (spawnedButtonObject) =>
+            {
+                PZ_Password_Button spawnedButton = spawnedButtonObject.GetComponent<PZ_Password_Button>();
+                _buttonList.Add(spawnedButton);
+                spawnedButton.ButtonSetup(i);
+            });           
         }
     }
 
@@ -84,11 +88,11 @@ public class PZ_Password_Board : MonoBehaviour
 
         _passwordInputUI.SetPasswordText(_inputPassword);
 
-        IsPuzzleClear();
+        CheckPuzzleClear();
     }
 
     // 비밀 번호 일치 체크
-    private void IsPuzzleClear()
+    private void CheckPuzzleClear()
     {
         if (_inputPassword == _correctPassword)
         {
