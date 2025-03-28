@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PZ_Piano_Base : MonoBehaviour
+public class PZ_Piano_Base : UI_PopUp
 {
     private List<PZ_Piano_Tile_White> _whiteList = new List<PZ_Piano_Tile_White>();
     private List<PZ_Piano_Tile_Black> _blackList = new List<PZ_Piano_Tile_Black>();

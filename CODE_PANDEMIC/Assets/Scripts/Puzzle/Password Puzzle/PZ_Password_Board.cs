@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PZ_Password_Board : MonoBehaviour
+public class PZ_Password_Board : UI_PopUp
 {
     private GameObject _inputUIPrefab;
     private PZ_Password_InputUI _passwordInputUI;

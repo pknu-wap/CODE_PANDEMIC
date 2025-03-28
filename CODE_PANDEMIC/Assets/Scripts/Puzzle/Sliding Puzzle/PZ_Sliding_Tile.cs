@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 using System.Collections;
+using TMPro;
 
 public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
 {

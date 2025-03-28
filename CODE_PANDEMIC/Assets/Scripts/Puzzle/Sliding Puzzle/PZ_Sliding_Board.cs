@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PZ_Sliding_Board : MonoBehaviour
+public class PZ_Sliding_Board : UI_PopUp
 {
     #region Base
 
