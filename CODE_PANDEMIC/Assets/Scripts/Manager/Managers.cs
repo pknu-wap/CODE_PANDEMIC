@@ -11,12 +11,13 @@ public class Managers : MonoBehaviour
     private static Managers _instance;
   
     ObjectManager objectManager;
-
+    DataManager _data = new DataManager();
     ResourceManager _resource = new ResourceManager();
     UIManager _ui = new UIManager();
     EventManager _event =new EventManager();
     GameManagerEx _game =new GameManagerEx();
     SceneManagerEx _scene = new SceneManagerEx();
+    public static DataManager Data { get { return Instance?._data; } }
     public static Managers Instance { get { return _instance; } }
     public static ResourceManager Resource { get { return _instance._resource; }}
     public static UIManager UI { get { return _instance._ui; } }
@@ -34,8 +35,8 @@ public class Managers : MonoBehaviour
 
             _instance = go.GetOrAddComponent<Managers>();
             DontDestroyOnLoad(go);
-            
 
+            _instance._data.Init();
         }
         return true;
     }

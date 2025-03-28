@@ -11,11 +11,10 @@ public class UI_GameScene : UI_Scene
     //인벤토리 
     //몬스터 hp는 몬스터에게 붙일거고 
     //가이드 퀘스트 ?
-
+   
     public override bool Init()
     {
         if (base.Init() == false) return false;
-
 
         return true;
     }

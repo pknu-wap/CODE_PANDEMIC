@@ -24,8 +24,8 @@ public class GameData
 }
 public class GameManagerEx : MonoBehaviour
 {
-   
     GameData _gameData = new GameData();
+    private bool _isPaused;
     public GameData SaveData
     { 
         get { return _gameData; } 
@@ -33,6 +33,7 @@ public class GameManagerEx : MonoBehaviour
     }
     public void Init()
     {
+        _isPaused = false;
         _path = Application.persistentDataPath + "/SaveData.json";
     }
     public void SetResolutionScreen(Resolution res)
@@ -49,6 +50,22 @@ public class GameManagerEx : MonoBehaviour
     #region SaveLoad
     public bool IsLoaded = false;
     string _path;
+    public void PauseGame()
+    {
+        if (!_isPaused)
+        {
+            _isPaused = true;
+            Time.timeScale = 0;
+        }
+    }
+    public void ResumeGame()
+    {
+        if (_isPaused)
+        {
+            _isPaused = false;
+            Time.timeScale = 1;
+        }
+    }
     public void SaveGame()
     {
         string jsonStr = JsonUtility.ToJson(Managers.Game.SaveData);

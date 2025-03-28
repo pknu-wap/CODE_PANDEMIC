@@ -17,8 +17,8 @@ public class Define
     public enum SceneType
     {
         Unknown,
+        GameScene,
         TitleScene,
-        GameScene
     };
     public enum WeaponType
     {

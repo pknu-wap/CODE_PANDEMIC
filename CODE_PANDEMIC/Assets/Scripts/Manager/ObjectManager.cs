@@ -4,10 +4,32 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
-     
-    public void Init()
+    //monstercontroller list 
+    private int _leftMonsters;
+    private int _leftPuzzles;
+    
+    public void SpawnPlayer()
     {
 
     }
+    public void  LoadStageData(StageData stageData)
+    { 
+        Debug.Log("stage");
+    }
+    public void SpawnMonster()
+    {
 
+    }
+    public void ReleaseMonster()
+    {
+
+    }
+    public void ClearChapter()
+    {
+
+    }
+    public void ResetStageObjects()
+    {
+         
+    }
 }

@@ -54,7 +54,7 @@ public class UI_TitleScene : UI_Scene
     }
     private void OnClickStartButton()
     {
-        Managers.Scene.ChangScene(Define.SceneType.GameScene);
+        Managers.Scene.ChangeScene(Define.SceneType.GameScene);
     }
     #endregion
 }
