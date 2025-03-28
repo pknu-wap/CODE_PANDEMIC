@@ -20,4 +20,10 @@ public class Define
         TitleScene,
         GameScene
     };
+    public enum WeaponType
+    {
+        ShortWeapon,
+        PistolWeapon,
+        RangeWeapon
+    }
 }
