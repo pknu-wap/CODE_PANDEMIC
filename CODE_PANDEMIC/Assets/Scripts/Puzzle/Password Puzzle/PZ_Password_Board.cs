@@ -1,10 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PZ_Password_Board : UI_PopUp
 {
-    private GameObject _inputUIPrefab;
     private PZ_Password_InputUI _passwordInputUI;
 
     private RectTransform _rectTransform; // 세팅
@@ -15,28 +14,15 @@ public class PZ_Password_Board : UI_PopUp
     private string _correctPassword = "1234"; // 정답 비밀 번호
     private string _inputPassword; // 입력 받는 비밀 번호
 
-    private bool Init()
+    private void Init()
     {
-        Managers.Resource.LoadAsync<GameObject>("PZ_Password_InputUI", (inputUIPrefab) =>
+        Managers.Resource.Instantiate("PZ_Password_InputUI", GetComponentInParent<Canvas>().transform, (spawnedInputUI) =>
         {
-            _inputUIPrefab = inputUIPrefab;
+            _passwordInputUI = spawnedInputUI.GetComponent<PZ_Password_InputUI>();
         });
-
-        if (!_inputUIPrefab)
-        {
-            return false;
-        }
-
-        GameObject spawnedInputUI = Instantiate(_inputUIPrefab, transform);
-        _passwordInputUI = spawnedInputUI.GetComponent<PZ_Password_InputUI>();
 
         _rectTransform = GetComponent<RectTransform>();
         _layoutGroup = GetComponent<GridLayoutGroup>();
-
-        if (!_rectTransform || !_layoutGroup || !_passwordInputUI)
-        {
-            return false;
-        }
 
         // 비밀 번호 판 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0f);
@@ -52,32 +38,24 @@ public class PZ_Password_Board : UI_PopUp
         _layoutGroup.padding.bottom = 10;
         _layoutGroup.cellSize = new Vector2(180, 180);
         _layoutGroup.spacing = new Vector2(10, 10);
-
-        return true;
     }
 
     private void Start()
     {
-        if (!Init())
-        {
-            return;
-        }
+        Init();
 
-        SpawnButtons();
+        GetSpawnedButtons();
     }
 
-    // 버튼 스폰
-    private void SpawnButtons()
+    // 버튼 가져오기
+    private void GetSpawnedButtons()
     {
-        for (int i = 1; i <= 12; i++)
+        for (int index = 0; index < 12; index++)
         {
-            // Grid Layout Group을 활용해 보드에 타일을 스폰하면 자동으로 배치되게 함
-            Managers.Resource.Instantiate("PZ_Password_Button", transform, (spawnedButtonObject) =>
-            {
-                PZ_Password_Button spawnedButton = spawnedButtonObject.GetComponent<PZ_Password_Button>();
-                _buttonList.Add(spawnedButton);
-                spawnedButton.ButtonSetup(i);
-            });           
+            Transform childButton = transform.GetChild(index);
+            PZ_Password_Button spawnedButton = childButton.gameObject.GetComponent<PZ_Password_Button>();
+            spawnedButton.ButtonSetup(index + 1);
+            _buttonList.Add(spawnedButton);
         }
     }
 

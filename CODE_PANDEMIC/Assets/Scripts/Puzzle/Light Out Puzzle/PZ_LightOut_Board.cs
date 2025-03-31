@@ -46,7 +46,7 @@ public class PZ_LightOut_Board : UI_PopUp
         GetSpawnedButtons();
     }
 
-    // Light Button 스폰
+    // Light Button 가져오기
     private void GetSpawnedButtons()
     {
         for (int index = 0; index < _buttonMaxCount; index++)

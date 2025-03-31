@@ -1,25 +1,19 @@
 using UnityEngine;
 using TMPro;
 
-public class PZ_Password_InputUI : MonoBehaviour
+public class PZ_Password_InputUI : UI_Base
 {
     private RectTransform _rectTransform;
-    private GameObject _passwordTextObject;
     private RectTransform _textRectTransform;
+
+    private TextMeshProUGUI _textMeshPro;
 
     private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
-        Managers.Resource.Instantiate("PZ_Password_Text", transform, (_passwordText) =>
-        {
-            _passwordTextObject = _passwordText;
-            _textRectTransform = _passwordText.GetComponent<RectTransform>();
-        });
 
-        if (!_rectTransform || _textRectTransform)
-        {
-            return;
-        }
+        _textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
+        _textRectTransform = _textMeshPro.gameObject.GetComponent<RectTransform>();
 
         // 크기 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 1f);
@@ -41,6 +35,6 @@ public class PZ_Password_InputUI : MonoBehaviour
     {
         Debug.Log("Check Password : " + passwordText);
 
-        _passwordTextObject.GetComponent<TextMeshProUGUI>().text = passwordText;
+        _textMeshPro.text = passwordText;
     }
 }
