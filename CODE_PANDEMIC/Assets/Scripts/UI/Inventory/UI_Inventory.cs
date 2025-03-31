@@ -94,8 +94,7 @@ namespace Inventory.UI
 
         }
         
-        public void UpdateData(int itemIndex,
-            Sprite itemImage, int itemQuantity)
+        public void UpdateData(int itemIndex, Sprite itemImage, int itemQuantity)
         {
             if (_listOfUiItems.Count > itemIndex)
                 _listOfUiItems[itemIndex].SetData(itemImage, itemQuantity);

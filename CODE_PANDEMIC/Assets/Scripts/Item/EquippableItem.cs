@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Inventory.Model
 {
     [CreateAssetMenu]
-    public class EquippableItemSO : ItemData, IDestroyableItem,IItemAction
+    public class EquippableItem : ItemData, IDestroyableItem,IItemAction
     {
         public string ActionName => "Equip";
 
@@ -18,7 +18,7 @@ namespace Inventory.Model
             if(weaponSystem!=null)
             {
                 Debug.Log("EquipAction");
-                weaponSystem.SetWeapon(this, itemState == null ? _parameterList : itemState);
+                weaponSystem.SetWeapon(this, itemState == null ? parameters : itemState);
                 return true;
             }
             return false;

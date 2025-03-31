@@ -1,3 +1,4 @@
+using Inventory.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -58,4 +59,62 @@ public class StageDataLoader : ILoader<int, StageData>
     {
         return true;
     }
+}
+namespace Inventory.Model
+{
+    [Serializable]
+    public class ItemData
+    {
+        public int TemplateID;
+        public string name;
+        public string Description;
+        public bool IsStackable;
+        public int MaxStackSize;
+        public string ItemImageAddress;
+        public List<ItemParameter> parameters;
+        public string GetParameterInfo(int index)
+        {
+            if (index >= 0 && index < parameters.Count)
+            {
+                return $"{parameters[index].parameterName} : {parameters[index].value}";
+            }
+            return string.Empty;
+        }
+    }
+    [Serializable]
+    public class ItemDataLoader : ILoader<int, ItemData>
+    {
+        public List<ItemData> items = new List<ItemData>();
+        public Dictionary<int, ItemData> MakeDic()
+        {
+            Dictionary<int, ItemData> dic = new Dictionary<int, ItemData>();
+            foreach (ItemData stage in items)
+                dic.Add(stage.TemplateID, stage);
+            return dic;
+        }
+        public bool Validate()
+        {
+            return true;
+        }
+    }
+
+    [Serializable]
+    public class ItemParameter
+    {
+        public string parameterName;
+        public float value;
+    }
+}
+[Serializable]
+public class InventorySaveData
+{
+    public List<InventoryItemData> InventoryItems;
+}
+
+[Serializable]
+public class InventoryItemData
+{
+    public int ItemID;
+    public int Quantity;
+    public List<ItemParameter> ItemState;
 }

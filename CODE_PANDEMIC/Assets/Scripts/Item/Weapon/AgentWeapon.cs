@@ -6,13 +6,13 @@ using UnityEngine;
 public class AgentWeapon : MonoBehaviour
 {
     [SerializeField]
-    private EquippableItemSO _weapon;
+    private EquippableItem _weapon;
     [SerializeField]
     private InventoryData _inventoryData;
     [SerializeField]
     private List<ItemParameter> _parametersToModify, _itemCurrentState;
 
-    public void SetWeapon(EquippableItemSO weaponItemSO, List<ItemParameter>itemState)
+    public void SetWeapon(EquippableItem weaponItemSO, List<ItemParameter>itemState)
     {
         Debug.Log("Setweapon");
         if(_weapon!=null)
@@ -33,7 +33,7 @@ public class AgentWeapon : MonoBehaviour
                 float newValue = _itemCurrentState[index].value + paramaeter.value;
                 _itemCurrentState[index] = new ItemParameter
                 {
-                    itemParameter = paramaeter.itemParameter,
+                   parameterName = paramaeter.parameterName,
                     value = newValue
                 };
             }

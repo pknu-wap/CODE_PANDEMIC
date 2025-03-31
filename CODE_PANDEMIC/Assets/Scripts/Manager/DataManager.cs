@@ -1,3 +1,4 @@
+using Inventory.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ public class DataManager : MonoBehaviour
 {
     //public Dictionary<int, MonsterData> Monsters { get; private set; }
     public Dictionary<int, StageData> Stages { get; private set; }
-
+    public Dictionary<int, ItemData> Items { get; private set; }
     public void Init()
     {
         LoadJson<StageDataLoader, int, StageData>("StageData", (loader) => { Stages = loader.MakeDic(); });
+        LoadJson<ItemDataLoader, int, ItemData>("ItemData", (loader) => { Items = loader.MakeDic(); });
+
     }
     public bool Loaded()
     {
@@ -27,6 +30,8 @@ public class DataManager : MonoBehaviour
         //if (Weapons == null)
         //    return false;
         if (Stages == null)
+            return false;
+        if (Items == null)
             return false;
         //if (Bosses == null)
         //    return false;

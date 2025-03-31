@@ -37,6 +37,7 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
 
             _instance._data.Init();
+            _instance._game.Init();
         }
         return true;
     }

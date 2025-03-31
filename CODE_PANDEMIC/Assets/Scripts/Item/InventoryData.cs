@@ -9,11 +9,11 @@ namespace Inventory.Model
     public class InventoryData : MonoBehaviour
     {
         [field: SerializeField]
-        public List<InventoryItem> _inventoryItems;
+        public List<InventoryItem> _inventoryItems;  
         
 
         [field: SerializeField]
-        public int Size { get; private set; } = 10;
+        public int Size { get; private set; } = 30;
 
         public event Action<Dictionary<int, InventoryItem>> OnInventoryChanged; 
         public void Init()
@@ -27,7 +27,7 @@ namespace Inventory.Model
         }
         public int AddItem(ItemData item, int quantity,List<ItemParameter> itemState=null)
         {
-            if (!item.isStackable) // 스택 불가능한 경우
+            if (!item.IsStackable) // 스택 불가능한 경우
             {
                 while (quantity > 0 && !IsInventoryFull())
                 {
@@ -50,7 +50,7 @@ namespace Inventory.Model
             InventoryItem  newItem = new InventoryItem
                 (item,
                 quantity,
-                new List<ItemParameter>(itemState==null? item._parameterList:itemState)
+                new List<ItemParameter>(itemState==null? item.parameters:itemState)
                 );
             for(int i  =0; i<_inventoryItems.Count;i++)
             {
@@ -71,7 +71,7 @@ namespace Inventory.Model
             for (int i = 0; i <_inventoryItems.Count; i++)
             {
                 if (_inventoryItems[i].IsEmpty) continue;
-                if (_inventoryItems[i]._item.ID == item.ID)
+                if (_inventoryItems[i]._item.TemplateID == item.TemplateID)
                 {
                     int amountPossibleToTake = _inventoryItems[i]._item.MaxStackSize - _inventoryItems[i]._quantity;
                     if (quantity > amountPossibleToTake)
@@ -142,8 +142,25 @@ namespace Inventory.Model
             }
            
         }
+
+        #region Load(Inventory)
+        public void LoadInventoryFromData(Dictionary<int, Inventory.Model.InventoryItem> loadedItems)
+        {
+            _inventoryItems.Clear();
+            for (int i = 0; i < Size; i++)
+            {
+                _inventoryItems.Add(Inventory.Model.InventoryItem.GetEmptyItem());
+            }
+
+            foreach (var item in loadedItems)
+            {
+                _inventoryItems[item.Key] = item.Value;
+            }
+            InformAboutChange();
+        }
+        #endregion
     }
-    
+
     [Serializable]
     //heap 이 아닌 stack에 할당을 위함 
     public struct InventoryItem
