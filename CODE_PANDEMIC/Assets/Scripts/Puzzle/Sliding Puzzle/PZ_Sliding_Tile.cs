@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
-public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
+public class PZ_Sliding_Tile : UI_Base
 {
     #region Base
 
@@ -28,19 +27,6 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public bool Init()
-    {
-        _slidingBoard = GetComponentInParent<PZ_Sliding_Board>();
-        _image = GetComponent<Image>();
-
-        if (!_slidingBoard || !_image)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     #endregion
 
     #region Tile
@@ -48,6 +34,8 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
     // tileEmptyIndex 마지막 빈 타일의 index
     public void TileSetup(int tileNumber, int tileEmptyIndex)
     {
+        _slidingBoard = GetComponentInParent<PZ_Sliding_Board>();
+        _image = GetComponent<Image>();
         _tileNumberText = GetComponentInChildren<TextMeshProUGUI>();
 
         TileNumber = tileNumber;
@@ -57,14 +45,16 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
         Managers.Resource.LoadAsync<Sprite>(tileSpriteKey, (imageSprite) =>
         {
             _image.sprite = imageSprite;
+
+            // 빈 타일 비활성화
+            if (TileNumber == tileEmptyIndex)
+            {
+                _image.enabled = false;
+                _tileNumberText.enabled = false;
+            }
         });
 
-        // 빈 타일 비활성화
-        if (TileNumber == tileEmptyIndex)
-        {
-            GetComponent<Image>().enabled = false;
-            _tileNumberText.enabled = false;
-        }
+        BindEvent(gameObject, OnTileClick);
     }
 
     public void TileMoveto(Vector3 endPosition)
@@ -122,7 +112,7 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
     #endregion
 
     // 클릭 이벤트
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnTileClick()
     {
         Debug.Log("Click" + _tileNumber);
 
