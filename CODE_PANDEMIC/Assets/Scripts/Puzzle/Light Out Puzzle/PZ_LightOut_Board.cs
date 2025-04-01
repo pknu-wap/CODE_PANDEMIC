@@ -65,10 +65,7 @@ public class PZ_LightOut_Board : UI_PopUp
     {
         for (int index = 0; index < _buttonMaxCount; index++)
         {
-            if (_lightOutButtonList[index].IsButtonCorrect())
-            {
-                _lightOutButtonList[index].ChangeButtonState();
-            }
+            _lightOutButtonList[index].ShuffleButtonState();
         }
     }
 

@@ -6,9 +6,7 @@ public class PZ_LightOut_Button : UI_Base
     private RectTransform _rectTransform;
     private Image _image;
 
-    [SerializeField]
     private Material _correctMaterial; // 맞았을때 색
-    [SerializeField]
     private Material _wrongMaterial; // 틀렸을때 색
 
     private int _buttonIndex; // 현재 버튼 Index
@@ -19,14 +17,39 @@ public class PZ_LightOut_Button : UI_Base
         _rectTransform = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
 
-        _image.material = _wrongMaterial;
-        _image.SetMaterialDirty();
+        Managers.Resource.LoadAsync<Material>("PZ_LightOut_Correct", (getMaterial) =>
+        {
+            _correctMaterial = getMaterial;
+        });
+
+        Managers.Resource.LoadAsync<Material>("PZ_LightOut_Wrong", (getMaterial) =>
+        {
+            _wrongMaterial = getMaterial;
+            ShuffleButtonState();
+        });
 
         _buttonIndex = buttonIndex;
 
         _rectTransform.sizeDelta = new Vector2(160, 160);
 
         BindEvent(gameObject, OnButtonClick);
+    }
+
+    // 무작위 버튼 상태 설정
+    public void ShuffleButtonState()
+    {
+        int randomState = Random.Range(0, 2);
+
+        if (randomState == 0)
+        {
+            _image.material = _correctMaterial;
+            _isCorrectState = true;
+        }
+        else
+        {
+            _image.material = _wrongMaterial;
+            _isCorrectState = false;
+        }
     }
 
     // 현재 버튼의 상태와 그에 맞는 색으로 변경
