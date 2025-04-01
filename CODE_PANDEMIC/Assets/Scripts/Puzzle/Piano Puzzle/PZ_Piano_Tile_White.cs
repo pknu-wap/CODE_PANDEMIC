@@ -1,8 +1,7 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PZ_Piano_Tile_White : MonoBehaviour, IPointerClickHandler
+public class PZ_Piano_Tile_White : UI_Base
 {
     // 흰 건반 enum
     private enum PianoNoteWhite
@@ -22,16 +21,11 @@ public class PZ_Piano_Tile_White : MonoBehaviour, IPointerClickHandler
     private PianoNoteWhite[] _pianoNoteTypes; // 건반 음 종류
     private PianoNoteWhite _pianoTileNote; // 현재 건반 음
 
-    public bool Init()
+    private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
         _outLine = GetComponent<Outline>();
         _pianoBase = GetComponentInParent<PZ_Piano_Base>();
-
-        if (!_rectTransform || !_outLine || !_pianoBase)
-        {
-            return false;
-        }
 
         // 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -44,15 +38,7 @@ public class PZ_Piano_Tile_White : MonoBehaviour, IPointerClickHandler
         // enum 값들을 배열로 가져옴
         _pianoNoteTypes = (PianoNoteWhite[])System.Enum.GetValues(typeof(PianoNoteWhite));
 
-        return true;
-    }
-
-    private void Start()
-    {
-        if (!Init())
-        {
-            return;
-        }
+        BindEvent(gameObject, OnButtonClick);
     }
 
     // 건반 기본 세팅
@@ -64,7 +50,7 @@ public class PZ_Piano_Tile_White : MonoBehaviour, IPointerClickHandler
     }
 
     // 건반 클릭 이벤트
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnButtonClick()
     {
         Debug.Log("누른 흰 건반 : " + _pianoTileNote.ToString());
 

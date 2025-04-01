@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PZ_Piano_Base : UI_PopUp
 {
@@ -14,47 +14,29 @@ public class PZ_Piano_Base : UI_PopUp
 
     private void Start()
     {
-        SpawnPianoTiles();
+        GetSpawnedPianoTiles();
     }
 
-    // 피아노 타일 스폰
-    private void SpawnPianoTiles()
+    // 피아노 타일 가져오기
+    private void GetSpawnedPianoTiles()
     {
-        // 흰 건반 스폰
-        for (int i = 0; i < 7; i++)
+        // 흰 건반 가져오기
+        for (int index = 0; index < 7; index++)
         {
-            PZ_Piano_Tile_White spawnedTile = null;
+            Transform childTile = transform.GetChild(index);
+            PZ_Piano_Tile_White spawnedTile = childTile.gameObject.GetComponent<PZ_Piano_Tile_White>();
 
-            Managers.Resource.Instantiate("PZ_Piano_Tile_White", transform, (spawnedTileObject) =>
-            {
-                spawnedTile = Utils.GetOrAddComponent<PZ_Piano_Tile_White>(spawnedTileObject);
-            });
-
-            if (!spawnedTile.Init())
-            {
-                break;
-            }
-
-            spawnedTile.TileSetup(i);
+            spawnedTile.TileSetup(index);
             _whiteList.Add(spawnedTile);
         }
 
-        // 검은 건반 스폰
-        for (int i = 0; i < 6; i++)
+        // 검은 건반 가져오기
+        for (int index = 0; index < 6; index++)
         {
-            PZ_Piano_Tile_Black spawnedTile = null;
+            Transform childTile = transform.GetChild(index + 7);
+            PZ_Piano_Tile_Black spawnedTile = childTile.gameObject.GetComponent<PZ_Piano_Tile_Black>();
 
-            Managers.Resource.Instantiate("PZ_Piano_Tile_Black", transform, (spawnedTileObject) =>
-            {
-                spawnedTile = Utils.GetOrAddComponent<PZ_Piano_Tile_Black>(spawnedTileObject);
-            });
-
-            if (!spawnedTile.Init())
-            {
-                break;
-            }
-
-            spawnedTile.TileSetup(i);
+            spawnedTile.TileSetup(index);
             _blackList.Add(spawnedTile);
         }
     }
