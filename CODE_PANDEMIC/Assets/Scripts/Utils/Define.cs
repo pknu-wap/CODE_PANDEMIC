@@ -26,4 +26,5 @@ public class Define
         PistolWeapon,
         RangeWeapon
     }
+    public const int STAGES_PER_CHAPTER = 3;
 }

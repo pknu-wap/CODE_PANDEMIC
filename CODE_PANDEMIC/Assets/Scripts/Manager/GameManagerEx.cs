@@ -1,169 +1,193 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
 using Inventory.Model;
-using static Define;
-using Unity.VisualScripting;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
 [Serializable]
 public class GameData
 {
-    public int Chapter=1;
-    public int Stage=1;
+    public int Chapter = 1;
+    public int Stage = 1;
 
     public int ShortWeaponID;
     public int PistolID;
-    public int RangeWeaponID;
+    public int RangeWeaponID; //key slot data 저잦ㅇ 
 
     public int MasterVolume;
-    public int BgmVolume;
+    public int BgmVolume; //volume 저장 
     public int EffectVolume;
 
     public Resolution SaveResolution;
     public bool IsFullScreen;
+
+    public static string FilePath => Application.persistentDataPath + "/SaveData.json";
 }
+
+
 public class GameManagerEx : MonoBehaviour
 {
-    GameData _gameData = new GameData();
+    private GameData _gameData = new GameData();
     private bool _isPaused;
     private InventoryData _inventoryData;
-    private InventorySaver _inventorySaver; // InventorySaver 추가
+    private InventorySaver _inventorySaver;
+
     public GameData SaveData
     {
-        get { return _gameData; }
-        set { _gameData = value; }
+        get => _gameData;
+        set => _gameData = value;
     }
     public InventoryData Inventory
     {
-        get { return _inventoryData; }
+        get=>_inventoryData;
+        private set => _inventoryData = value;  
     }
+
+    public int Chapter //1chapter 1stage = 병원 3층 
+    {
+        get => _gameData.Chapter;
+        set => _gameData.Chapter = value;
+    }
+
+    public int Stage
+    {
+        get => _gameData.Stage;
+        set => _gameData.Stage = value;
+    }
+
     public void Init()
     {
         _isPaused = false;
-        _path = Application.persistentDataPath + "/SaveData.json";
-        _inventoryData= new InventoryData();
+        _inventoryData = new InventoryData();
         _inventorySaver = new InventorySaver(_inventoryData);
         _inventorySaver.LoadInventory();
-       
+        LoadGame();
     }
+
     public void SetResolutionScreen(Resolution res)
     {
-        Screen.SetResolution(res.width, res.height, Screen.fullScreen = SaveData.IsFullScreen);
-        Debug.Log($"{res.width}x{res.height}");
+        Screen.SetResolution(res.width, res.height, SaveData.IsFullScreen);
         SaveData.SaveResolution = res;
+        Debug.Log($"Resolution set: {res.width}x{res.height}");
     }
+
     public void SetFullScreenMode(bool value)
     {
         Screen.fullScreen = value;
         SaveData.IsFullScreen = value;
+        Debug.Log($"Fullscreen mode: {value}");
     }
-    #region SaveLoad
-    public bool IsLoaded = false;
-    string _path;
+
     public void PauseGame()
     {
         if (!_isPaused)
         {
             _isPaused = true;
             Time.timeScale = 0;
+            Debug.Log("Game paused.");
         }
     }
+
     public void ResumeGame()
     {
         if (_isPaused)
         {
             _isPaused = false;
             Time.timeScale = 1;
+            Debug.Log("Game resumed.");
         }
     }
+
     public void SaveGame()
     {
-        string jsonStr = JsonUtility.ToJson(Managers.Game.SaveData);
-        File.WriteAllText(_path, jsonStr);
-        _inventorySaver.SaveInventory(); // 인벤토리 저장
+        string jsonStr = JsonUtility.ToJson(_gameData);
+
+        File.WriteAllText(GameData.FilePath, jsonStr);
+
+        _inventorySaver.SaveInventory();
+
+        Debug.Log("Game saved.");
     }
+
     public bool LoadGame()
     {
-        if (File.Exists(_path) == false)
-            return false;
+        if (!File.Exists(GameData.FilePath)) return false;
 
-        string fileStr = File.ReadAllText(_path);
+        string fileStr = File.ReadAllText(GameData.FilePath);
         GameData data = JsonUtility.FromJson<GameData>(fileStr);
-        if (data != null)
-            Managers.Game.SaveData = data;
-
-        IsLoaded = true;
+        if (data != null) _gameData = data;
+        Debug.Log("Game loaded.");
         return true;
     }
-    #endregion
 
     public void QuitGame()
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-    #else
+#else
         Application.Quit();
-    #endif
+#endif
+        Debug.Log("Game Quit.");
     }
 }
 
 public class InventorySaver
 {
     private InventoryData _inventoryData;
-    private string _savePath;
+    private static string SavePath => Application.persistentDataPath + "/inventory.json";
 
-    public InventorySaver(Inventory.Model.InventoryData inventoryData)
+    public InventorySaver(InventoryData inventoryData)
     {
         _inventoryData = inventoryData;
-        _savePath = Application.persistentDataPath + "/inventory.json";
     }
 
     public void SaveInventory()
     {
-        InventorySaveData saveData = new InventorySaveData();
-        saveData.InventoryItems = new List<InventoryItemData>();
+        var saveData = new InventorySaveData { InventoryItems = new List<InventoryItemData>() };
 
         foreach (var item in _inventoryData.GetCurrentInventoryState())
         {
-            InventoryItemData itemData = new InventoryItemData
+            saveData.InventoryItems.Add(new InventoryItemData
             {
                 ItemID = item.Value._item.TemplateID,
                 Quantity = item.Value._quantity,
                 ItemState = item.Value._itemState
-            };
-            saveData.InventoryItems.Add(itemData);
+            });
         }
 
         string json = JsonUtility.ToJson(saveData);
-        File.WriteAllText(_savePath, json);
+        File.WriteAllText(SavePath, json);
+        Debug.Log("Inventory saved.");
     }
 
     public void LoadInventory()
     {
-        
-        if (File.Exists(_savePath))
+        if (!File.Exists(SavePath))
         {
-            string json = File.ReadAllText(_savePath);
-            InventorySaveData saveData = JsonUtility.FromJson<InventorySaveData>(json);
+            _inventoryData.Init();
+            return;
+        }
 
-            if (saveData != null && saveData.InventoryItems != null)
+        string json = File.ReadAllText(SavePath);
+        var saveData = JsonUtility.FromJson<InventorySaveData>(json);
+
+        if (saveData?.InventoryItems != null)
+        {
+            var loadedItems = new Dictionary<int, InventoryItem>();
+            foreach (var itemData in saveData.InventoryItems)
             {
-                Dictionary<int, Inventory.Model.InventoryItem> loadedItems = new Dictionary<int, Inventory.Model.InventoryItem>();
-                foreach (var itemData in saveData.InventoryItems)
+                if (Managers.Data.Items.TryGetValue(itemData.ItemID, out var item))
                 {
-                    if (Managers.Data.Items.TryGetValue(itemData.ItemID, out ItemData item))
-                    {
-                        loadedItems.Add(loadedItems.Count, new Inventory.Model.InventoryItem(item, itemData.Quantity, itemData.ItemState));
-                    }
-                    else
-                    {
-                        Debug.LogError($"Item with ID {itemData.ItemID} not found.");
-                    }
+                    loadedItems.Add(loadedItems.Count, new InventoryItem(item, itemData.Quantity, itemData.ItemState));
+                    Debug.Log($"Loaded item: {item.name}, Quantity: {itemData.Quantity}");
                 }
-                _inventoryData.LoadInventoryFromData(loadedItems);
+                else
+                {
+                    Debug.LogError($"Item with ID {itemData.ItemID} not found.");
+                }
             }
+            _inventoryData.LoadInventoryFromData(loadedItems);
+            Debug.Log("Inventory loaded.");
         }
         else
         {

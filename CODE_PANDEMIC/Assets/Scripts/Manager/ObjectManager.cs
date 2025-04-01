@@ -9,12 +9,12 @@ public class ObjectManager : MonoBehaviour
     private int _leftPuzzles;
     
     public void SpawnPlayer()
-    {
-
+    { 
+        //맵 로딩되면 거기서 오브젝틀를 찾아야함?
     }
     public void  LoadStageData(StageData stageData)
     { 
-        Debug.Log("stage");
+        //lOAD STAGE DATA
     }
     public void SpawnMonster()
     {

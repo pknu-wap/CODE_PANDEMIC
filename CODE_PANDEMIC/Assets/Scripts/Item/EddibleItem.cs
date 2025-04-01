@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Inventory.Model
 {
     [CreateAssetMenu]
-    public class EdibleItemSO :ItemData,IDestroyableItem, IItemAction
+    public class EddibleItem :ItemData,IDestroyableItem, IItemAction
     {
         [SerializeField]
         private List<ModifierData>_modifierData =new List<ModifierData>();

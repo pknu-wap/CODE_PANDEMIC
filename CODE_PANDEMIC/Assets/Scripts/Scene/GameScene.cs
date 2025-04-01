@@ -17,5 +17,15 @@ public class GameScene : BaseScene
     IEnumerator CowaitLoad()
     {
         while (Managers.Data.Loaded() == false) yield return null;
+        int templateID = (Managers.Game.Chapter - 1) * Define.STAGES_PER_CHAPTER + Managers.Game.Stage;
+        if (Managers.Data.Stages.TryGetValue(templateID, out StageData stageData) == false) yield break;
+
+        _stageData = stageData;
+        Managers.UI.ShowSceneUI<UI_GameScene>(callback: (UI) =>
+        {
+            _gameSceneUI = UI;
+        });
+        Managers.Object.LoadStageData(_stageData);
+
     }
 }

@@ -106,15 +106,15 @@ namespace Inventory.Model
     }
 }
 [Serializable]
-public class InventorySaveData
-{
-    public List<InventoryItemData> InventoryItems;
-}
-
-[Serializable]
 public class InventoryItemData
 {
     public int ItemID;
     public int Quantity;
     public List<ItemParameter> ItemState;
+}
+
+[Serializable]
+public class InventorySaveData
+{
+    public List<InventoryItemData> InventoryItems;
 }

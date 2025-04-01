@@ -10,13 +10,14 @@ public class Managers : MonoBehaviour
 {
     private static Managers _instance;
   
-    ObjectManager objectManager;
+    ObjectManager _object= new ObjectManager();
     DataManager _data = new DataManager();
     ResourceManager _resource = new ResourceManager();
     UIManager _ui = new UIManager();
     EventManager _event =new EventManager();
     GameManagerEx _game =new GameManagerEx();
     SceneManagerEx _scene = new SceneManagerEx();
+    
     public static DataManager Data { get { return Instance?._data; } }
     public static Managers Instance { get { return _instance; } }
     public static ResourceManager Resource { get { return _instance._resource; }}
@@ -25,6 +26,7 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return _instance._scene; } }
     public static GameManagerEx Game { get { return _instance._game; } }
 
+    public static ObjectManager Object { get { return _instance._object; } }
     public static bool Init()
     {
         if (_instance == null)
