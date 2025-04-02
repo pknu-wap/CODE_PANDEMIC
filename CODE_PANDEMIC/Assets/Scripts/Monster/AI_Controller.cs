@@ -13,10 +13,10 @@ enum AI_State2
 public class AI_Controller : MonoBehaviour
 {
     private Transform _player;
-    private Rigidbody2D _Rb;
+    private Rigidbody2D _rb;
     private Coroutine _aiDamageCoroutine;
-    private SpriteRenderer _Renderer;
-
+    private SpriteRenderer _renderer;
+    
     private float _aiDamage = 10f;
     private float _aiDetectionRange = 7.5f;
     private float _aiDetectionAngle = 120f;
@@ -24,10 +24,6 @@ public class AI_Controller : MonoBehaviour
     
     private float _currentAngle;
     private float _currentDistance;
-
-
-    
-    
     
     public virtual bool Init()
     {
@@ -39,24 +35,24 @@ public class AI_Controller : MonoBehaviour
         }
         _player = playerObj.transform;
         
-        _Rb = GetComponent<Rigidbody2D>();
-        if (_Rb == null)
+        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null)
         {
             Debug.LogError("Rigidbody 없음");
             return false;
         }
-        _Rb.freezeRotation = true;
-
-        _Renderer = GetComponent<SpriteRenderer>();
-        if (_Renderer == null)
+        _rb.freezeRotation = true;
+        
+        _renderer = GetComponent<SpriteRenderer>();
+        if (_renderer == null)
         {
             Debug.LogError("Sprite 없음");
             return false;
         }
-
+        
         return true;
     }
-
+    
     void Start()
     {
         if (!Init())
@@ -65,21 +61,21 @@ public class AI_Controller : MonoBehaviour
             return;
         }
     }
-
+    
     private void Update()
     {
         if (_player == null)
             return;
         
-        _currentAngle = AI_CalculateAngle();
-        _currentDistance = AI_CalculateDistance();
+        _currentAngle = CalculateAngle();
+        _currentDistance = CalculateDistance();
     }
-
+    
     private void FixedUpdate()
     {
         if (_player == null)
             return;
-
+        
         if (_currentDistance <= _aiDetectionRange)
         {
             if (_currentAngle <= _aiDetectionAngle / 2)
@@ -88,61 +84,59 @@ public class AI_Controller : MonoBehaviour
             }
             else
             {
-                AI_StopMoving();
+                StopMoving();
             }
         }
         else
         {
-            AI_StopMoving();
+            StopMoving();
         }
     }
-
-    private float AI_CalculateAngle()
+    
+    private float CalculateAngle()
     {
         Vector2 aiDirection = (_player.position - transform.position).normalized;
         Vector2 aiForward = (_player.position.x < transform.position.x) ? Vector2.left : Vector2.right;
         return Vector2.Angle(aiForward, aiDirection);
     }
-
-    private float AI_CalculateDistance()
+    
+    private float CalculateDistance()
     {
         return Vector2.Distance(_player.position, transform.position);
     }
-
+    
     private void ChasePlayer()
     {
-        _Renderer.flipX = _player.position.x < transform.position.x;
+        // 좀비가 플레이어를 향하도록 스프라이트 flip 처리
+        _renderer.flipX = _player.position.x < transform.position.x;
     }
-
-
-
-    private void AI_StopMoving()
+    
+    private void StopMoving()
     {
         // 추후 Idle 애니메이션 및 정지 로직 추가 예정
     }
     
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            _aiDamageCoroutine ??= StartCoroutine(ZombieAttackPlayer());
+            _aiDamageCoroutine ??= StartCoroutine(AttackPlayer());
         }
     }
-
-    private void OnCollisionExit2D(Collision2D collision)
+    
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Player") && _aiDamageCoroutine != null)
+        if (other.gameObject.CompareTag("Player") && _aiDamageCoroutine != null)
         {
             StopCoroutine(_aiDamageCoroutine);
             _aiDamageCoroutine = null;
         }
     }
-
-    private IEnumerator ZombieAttackPlayer()
+    
+    private IEnumerator AttackPlayer()
     {
         Debug.Log(_aiDamage + " 데미지");
         // TODO: 플레이어 체력 감소 로직 추가
         yield return new WaitForSecondsRealtime(_aiDamageDelay);
     }
-
 }
