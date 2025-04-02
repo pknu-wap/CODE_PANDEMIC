@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum AI_State
+enum AI_State2
 {
     Idle,
     Walk,
@@ -16,8 +16,7 @@ public class AI_Controller : MonoBehaviour
     private Rigidbody2D _Rb;
     private Coroutine _aiDamageCoroutine;
     private SpriteRenderer _Renderer;
-    
-    private float _aiSpeed = 2f;
+
     private float _aiDamage = 10f;
     private float _aiDetectionRange = 7.5f;
     private float _aiDetectionAngle = 120f;
@@ -26,16 +25,20 @@ public class AI_Controller : MonoBehaviour
     private float _currentAngle;
     private float _currentDistance;
 
+
+    
+    
+    
     public virtual bool Init()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player"); // 바꿀 예정
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj == null)
         {
             Debug.LogError("Player 없음");
             return false;
         }
         _player = playerObj.transform;
-
+        
         _Rb = GetComponent<Rigidbody2D>();
         if (_Rb == null)
         {
@@ -50,6 +53,7 @@ public class AI_Controller : MonoBehaviour
             Debug.LogError("Sprite 없음");
             return false;
         }
+
         return true;
     }
 
@@ -76,11 +80,11 @@ public class AI_Controller : MonoBehaviour
         if (_player == null)
             return;
 
-        if (_currentAngle <= _aiDetectionAngle / 2)
+        if (_currentDistance <= _aiDetectionRange)
         {
-            if (_currentDistance <= _aiDetectionRange)
+            if (_currentAngle <= _aiDetectionAngle / 2)
             {
-                ChasePlayer(_player.position);
+                ChasePlayer();
             }
             else
             {
@@ -105,16 +109,16 @@ public class AI_Controller : MonoBehaviour
         return Vector2.Distance(_player.position, transform.position);
     }
 
-    private void ChasePlayer(Vector3 target)
+    private void ChasePlayer()
     {
-        Vector2 newPosition = Vector2.MoveTowards(_Rb.position, target, _aiSpeed * Time.fixedDeltaTime);
-        _Rb.MovePosition(newPosition);
         _Renderer.flipX = _player.position.x < transform.position.x;
     }
 
+
+
     private void AI_StopMoving()
     {
-        // 추후 Idle 애니메이션 추가 예정
+        // 추후 Idle 애니메이션 및 정지 로직 추가 예정
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
@@ -137,6 +141,8 @@ public class AI_Controller : MonoBehaviour
     private IEnumerator ZombieAttackPlayer()
     {
         Debug.Log(_aiDamage + " 데미지");
+        // TODO: 플레이어 체력 감소 로직 추가
         yield return new WaitForSecondsRealtime(_aiDamageDelay);
     }
+
 }
