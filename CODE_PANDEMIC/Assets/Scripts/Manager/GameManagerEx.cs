@@ -1,4 +1,5 @@
 using Inventory.Model;
+using Inventory.Model.Inventory.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -179,7 +180,7 @@ public class InventorySaver
                 if (Managers.Data.Items.TryGetValue(itemData.ItemID, out var item))
                 {
                     loadedItems.Add(loadedItems.Count, new InventoryItem(item, itemData.Quantity, itemData.ItemState));
-                    Debug.Log($"Loaded item: {item.name}, Quantity: {itemData.Quantity}");
+                    Debug.Log($"Loaded item: {item.Name}, Quantity: {itemData.Quantity}");
                 }
                 else
                 {

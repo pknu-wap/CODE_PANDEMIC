@@ -1,19 +1,22 @@
 using Inventory.Model;
+using Inventory.Model.Inventory.Model;
 using Inventory.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
-using UnityEngine.ResourceManagement.AsyncOperations;
+
 
 namespace Inventory
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] private UI_Inventory _inventoryUI;
-        [SerializeField] private InventoryData _inventoryData;
+        [SerializeField]
+        private UI_Inventory _inventoryUI;
+        [SerializeField] 
+        private InventoryData _inventoryData;
+
         public List<InventoryItem> _initialItems = new List<InventoryItem>();
 
         public UI_Inventory UIInventory
@@ -25,6 +28,7 @@ namespace Inventory
         private void Start()
         {
             _inventoryData = Managers.Game.Inventory;
+            Debug.Log($"{_inventoryData}");
             if (UIInventory == null)
             {
                 Debug.LogError("InventoryUI가 할당되지 않았습니다.");
@@ -51,7 +55,7 @@ namespace Inventory
             foreach (var item in inventoryState)
             {
                 // Addressable을 사용하여 이미지 로드
-                string address = item.Value._item.ItemImageAddress;
+                string address = item.Value._item.Sprite;
                 Managers.Resource.LoadAsync<Sprite>(address, (loadedSprite) =>
                 {
                     if (loadedSprite != null)
@@ -119,7 +123,7 @@ namespace Inventory
         {
             InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
             if (inventoryItem.IsEmpty) return;
-            string address = inventoryItem._item.ItemImageAddress;
+            string address = inventoryItem._item.Sprite;
             Managers.Resource.LoadAsync<Sprite>(address, (loadedSprite) =>
             {
                 if (loadedSprite != null)
@@ -148,12 +152,12 @@ namespace Inventory
             }
             string description = PrepareDescription(inventoryItem);
             ItemData item = inventoryItem._item;
-            string address = item.ItemImageAddress;
+            string address = item.Sprite;
             Managers.Resource.LoadAsync<Sprite>(address, (loadedSprite) =>
             {
                 if (loadedSprite != null)
                 {
-                    UIInventory.UpdateDescription(itemIndex, loadedSprite, item.name, description);
+                    UIInventory.UpdateDescription(itemIndex, loadedSprite, item.Name, description);
                 }
                 else
                 {
@@ -167,7 +171,7 @@ namespace Inventory
             StringBuilder sb = new StringBuilder();
             sb.Append(item._item.Description);
             sb.AppendLine();
-            for (int i = 0; i < item._item.parameters.Count; i++)
+            for (int i = 0; i < item._item.Parameters.Count; i++)
             {
                 string parameterInfo = item._item.GetParameterInfo(i);
                 if (!string.IsNullOrEmpty(parameterInfo))
@@ -186,7 +190,7 @@ namespace Inventory
                 UIInventory.Show();
                 foreach (var item in _inventoryData.GetCurrentInventoryState())
                 {
-                    string address = item.Value._item.ItemImageAddress;
+                    string address = item.Value._item.Sprite;
                     Managers.Resource.LoadAsync<Sprite>(address, (loadedSprite) =>
                     {
                         if (loadedSprite != null)

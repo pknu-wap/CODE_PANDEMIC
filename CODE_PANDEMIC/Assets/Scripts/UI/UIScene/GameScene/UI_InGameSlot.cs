@@ -41,7 +41,7 @@ public class UI_InGameSlot : UI_Base
     {
         if (itemData == null) return;
 
-        Managers.Resource.LoadAsync<Sprite>(itemData.ItemImageAddress, callback: (sprite) =>
+        Managers.Resource.LoadAsync<Sprite>(itemData.Sprite, callback: (sprite) =>
         {
             if (sprite != null)
             {
@@ -49,7 +49,7 @@ public class UI_InGameSlot : UI_Base
             }
             else
             {
-                Debug.LogWarning($"Failed to load sprite for item: {itemData.name}");
+                Debug.LogWarning($"Failed to load sprite for item: {itemData.Name}");
             }
         });
     }
@@ -98,18 +98,18 @@ public class UI_InGameSlot : UI_Base
     {
         if (_slotItems.TryGetValue(slotIndex, out ItemData itemData))
         {
-            Debug.Log($"Using item from slot {slotIndex}: {itemData.name}");
+            Debug.Log($"Using item from slot {slotIndex}: {itemData.Name}");
             // 아이템 사용 로직
             if (itemData is IItemAction actionItem)
             {
-                bool success = actionItem.PerformAction(gameObject, itemData.parameters);
+                bool success = actionItem.PerformAction(gameObject, itemData.Parameters);
                 if (success)
                 {
-                    Debug.Log($"{itemData.name} 사용 완료.");
+                    Debug.Log($"{itemData.Name} 사용 완료.");
                 }
                 else
                 {
-                    Debug.LogWarning($"{itemData.name} 사용 실패.");
+                    Debug.LogWarning($"{itemData.Name} 사용 실패.");
                 }
             }
         }

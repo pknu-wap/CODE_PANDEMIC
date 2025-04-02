@@ -25,14 +25,14 @@ namespace Inventory.UI
         [SerializeField]
         RectTransform _contentPanel;
 
-        List<UI_InventoryItem> _listOfUiItems = new List<UI_InventoryItem>();
-
         [SerializeField]
         UIInventoryDescription _description;
         [SerializeField]
         MouseFollower _mouseFollower;
         [SerializeField]
         ItemActionPanel _actionPanel;
+
+        List<UI_InventoryItem> _listOfUiItems = new List<UI_InventoryItem>();
 
         public event Action<int> OnDescriptionRequested,
             OnItemActionRequested, OnstartDragging;
@@ -41,6 +41,7 @@ namespace Inventory.UI
 
         //-1Àº item ¾øÀ½ 
         int _currentlyDraggedItemIndex = -1;
+
         
         public override bool Init()
         {

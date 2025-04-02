@@ -66,17 +66,19 @@ namespace Inventory.Model
     public class ItemData
     {
         public int TemplateID;
-        public string name;
+        public string Name;
         public string Description;
         public bool IsStackable;
         public int MaxStackSize;
-        public string ItemImageAddress;
-        public List<ItemParameter> parameters;
+        public string Sprite;
+        public ItemType Type;
+        public WeaponType Weapon;
+        public List<ItemParameter> Parameters;
         public string GetParameterInfo(int index)
         {
-            if (index >= 0 && index < parameters.Count)
+            if (index >= 0 && index < Parameters.Count)
             {
-                return $"{parameters[index].parameterName} : {parameters[index].value}";
+                return $"{Parameters[index].parameterName} : {Parameters[index].value}";
             }
             return string.Empty;
         }

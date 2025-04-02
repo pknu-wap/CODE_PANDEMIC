@@ -28,10 +28,7 @@ namespace Inventory.UI
         [SerializeField] TextMeshProUGUI _text;
         public event Action<UI_InventoryItem> OnItemClicked, OnItemDroppedOn
              , OnItemBeginDrag, OnItemEndDrag, OnRightMouseButtonClick;
-        private bool empty = true;
-
-        //¿Ã»ƒ init
-      
+        private bool empty = true;      
        
         public void Initialize()
         {

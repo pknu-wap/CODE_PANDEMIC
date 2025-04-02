@@ -1,4 +1,5 @@
 using Inventory.Model;
+using Inventory.Model.Inventory.Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,10 @@ public class AgentWeapon : MonoBehaviour
     private InventoryData _inventoryData;
     [SerializeField]
     private List<ItemParameter> _parametersToModify, _itemCurrentState;
-
+    private void Start()
+    {
+        _inventoryData = Managers.Game.Inventory;
+    }
     public void SetWeapon(EquippableItem weaponItemSO, List<ItemParameter>itemState)
     {
         Debug.Log("Setweapon");

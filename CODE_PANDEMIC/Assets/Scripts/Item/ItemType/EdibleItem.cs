@@ -6,12 +6,11 @@ using UnityEngine;
 
 namespace Inventory.Model
 {
-    [CreateAssetMenu]
-    public class EddibleItem :ItemData,IDestroyableItem, IItemAction
+    public class EdibleItem :ItemData,IDestroyableItem, IItemAction
     {
         [SerializeField]
         private List<ModifierData>_modifierData =new List<ModifierData>();
-        //나중에 eventmanager로 빼자 
+ 
         public string ActionName => "Consume";
 
         public bool PerformAction(GameObject character , List<ItemParameter> itemState = null)
@@ -38,7 +37,7 @@ namespace Inventory.Model
     [Serializable]
     public class  ModifierData
     {
-        public CharacterStatModifierSO _statModifier;
+        public CharacterStatModifier _statModifier;
         public float _value;
     }
 }
