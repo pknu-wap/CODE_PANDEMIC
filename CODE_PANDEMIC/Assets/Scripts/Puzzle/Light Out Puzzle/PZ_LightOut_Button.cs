@@ -6,8 +6,8 @@ public class PZ_LightOut_Button : UI_Base
     private RectTransform _rectTransform;
     private Image _image;
 
-    private Material _correctMaterial; // 맞았을때 색
-    private Material _wrongMaterial; // 틀렸을때 색
+    private Sprite _correctSprite; // 맞았을때 색
+    private Sprite _wrongSprite; // 틀렸을때 색
 
     private int _buttonIndex; // 현재 버튼 Index
     private bool _isCorrectState = false; // 현재 버튼이 올바른 상태인지 체크
@@ -17,14 +17,14 @@ public class PZ_LightOut_Button : UI_Base
         _rectTransform = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
 
-        Managers.Resource.LoadAsync<Material>("PZ_LightOut_Correct", (getMaterial) =>
+        Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Correct_Sprite", (getSprite) =>
         {
-            _correctMaterial = getMaterial;
+            _correctSprite = getSprite;
         });
 
-        Managers.Resource.LoadAsync<Material>("PZ_LightOut_Wrong", (getMaterial) =>
+        Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Wrong_Sprite", (getSprite) =>
         {
-            _wrongMaterial = getMaterial;
+            _wrongSprite = getSprite;
             ShuffleButtonState();
         });
 
@@ -42,12 +42,12 @@ public class PZ_LightOut_Button : UI_Base
 
         if (randomState == 0)
         {
-            _image.material = _correctMaterial;
+            _image.sprite = _correctSprite;
             _isCorrectState = true;
         }
         else
         {
-            _image.material = _wrongMaterial;
+            _image.sprite = _wrongSprite;
             _isCorrectState = false;
         }
     }
@@ -57,11 +57,11 @@ public class PZ_LightOut_Button : UI_Base
     {
         if (_isCorrectState)
         {
-            _image.material = new Material(_wrongMaterial);
+            _image.sprite = _wrongSprite;
         }
         else
         {
-            _image.material = new Material(_correctMaterial);
+            _image.sprite = _correctSprite;
         }
 
         _image.canvasRenderer.SetMaterial(_image.material, null);

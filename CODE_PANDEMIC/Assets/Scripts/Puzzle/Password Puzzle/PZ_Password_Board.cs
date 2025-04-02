@@ -7,6 +7,7 @@ public class PZ_Password_Board : UI_PopUp
     private PZ_Password_InputUI _passwordInputUI;
 
     private RectTransform _rectTransform; // 세팅
+    private Image _image; // 세팅
     private GridLayoutGroup _layoutGroup; // 세팅
 
     private List<PZ_Password_Button> _buttonList = new List<PZ_Password_Button>(); // 생성한 버튼 리스트
@@ -16,13 +17,20 @@ public class PZ_Password_Board : UI_PopUp
 
     private void Init()
     {
-        Managers.Resource.Instantiate("PZ_Password_InputUI", GetComponentInParent<Canvas>().transform, (spawnedInputUI) =>
+        Managers.Resource.Instantiate("PZ_Password_InputUI_Prefab", GetComponentInParent<Canvas>().transform, (spawnedInputUI) =>
         {
             _passwordInputUI = spawnedInputUI.GetComponent<PZ_Password_InputUI>();
         });
 
         _rectTransform = GetComponent<RectTransform>();
         _layoutGroup = GetComponent<GridLayoutGroup>();
+
+        _image = GetComponent<Image>();
+
+        Managers.Resource.LoadAsync<Sprite>("PZ_Password_Board_Sprite", (getSprite) =>
+        {
+            _image.sprite = getSprite;
+        });
 
         // 비밀 번호 판 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0f);
@@ -32,12 +40,12 @@ public class PZ_Password_Board : UI_PopUp
         _rectTransform.sizeDelta = new Vector2(600, 800);
 
         // 생성할 버튼들을 배치할 세팅
-        _layoutGroup.padding.left = 10;
-        _layoutGroup.padding.right = 10;
-        _layoutGroup.padding.top = 10;
-        _layoutGroup.padding.bottom = 10;
-        _layoutGroup.cellSize = new Vector2(180, 180);
-        _layoutGroup.spacing = new Vector2(10, 10);
+        _layoutGroup.padding.left = 100;
+        _layoutGroup.padding.right = 100;
+        _layoutGroup.padding.top = 100;
+        _layoutGroup.padding.bottom = 100;
+        _layoutGroup.cellSize = new Vector2(120, 120);
+        _layoutGroup.spacing = new Vector2(20, 20);
     }
 
     private void Start()

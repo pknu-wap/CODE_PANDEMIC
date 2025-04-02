@@ -1,8 +1,11 @@
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class PZ_Password_Button : UI_Base
 {
+    private Image _image;
+
     private TextMeshProUGUI _buttonNumberText; // 테스트용 현재 버튼 번호 출력을 위한 text
     private int _buttonNumber; // 현재 버튼 번호
 
@@ -22,6 +25,13 @@ public class PZ_Password_Button : UI_Base
     // 버튼의 고유 값 설정
     public void ButtonSetup(int index)
     {
+        _image = GetComponent<Image>();
+
+        Managers.Resource.LoadAsync<Sprite>("PZ_Password_Button_Sprite", (getSprite) =>
+        {
+            _image.sprite = getSprite;
+        });
+
         _passwordBoard = GetComponentInParent<PZ_Password_Board>();
 
         _buttonNumberText = GetComponentInChildren<TextMeshProUGUI>();

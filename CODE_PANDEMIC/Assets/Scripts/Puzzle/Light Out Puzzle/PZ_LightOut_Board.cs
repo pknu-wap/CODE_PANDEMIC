@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PZ_LightOut_Board : UI_PopUp
 {
     private RectTransform _rectTransform;
+    private Image _image;
     private GridLayoutGroup _gridLayoutGroup;
 
     private List<PZ_LightOut_Button> _lightOutButtonList = new List<PZ_LightOut_Button>(); // 소환된 버튼들 관리
@@ -14,9 +15,10 @@ public class PZ_LightOut_Board : UI_PopUp
     public override bool Init()
     {
         _rectTransform = GetComponent<RectTransform>();
+        _image = GetComponent<Image>();
         _gridLayoutGroup = GetComponent<GridLayoutGroup>();
 
-        Managers.Resource.Instantiate("PZ_LightOut_Reset", GetComponentInParent<Canvas>().transform);
+        Managers.Resource.Instantiate("PZ_LightOut_Reset_Prefab", GetComponentInParent<Canvas>().transform);
 
         // 보드 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -24,6 +26,12 @@ public class PZ_LightOut_Board : UI_PopUp
         _rectTransform.pivot = new Vector2(0.5f, 0.5f);
         _rectTransform.anchoredPosition = new Vector2(0, 0);
         _rectTransform.sizeDelta = new Vector2(900, 900);
+
+        // 이미지 세팅
+        Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Board_Sprite", (getSprite) =>
+        {
+            _image.sprite = getSprite;
+        });
 
         // 스폰될 버튼의 위치 세팅
         _gridLayoutGroup.padding.left = 10;

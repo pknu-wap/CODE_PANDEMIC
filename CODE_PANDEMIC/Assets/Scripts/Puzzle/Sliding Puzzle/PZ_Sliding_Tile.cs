@@ -41,7 +41,7 @@ public class PZ_Sliding_Tile : UI_Base
         TileNumber = tileNumber;
 
         // 슬라이딩 퍼즐 타일 Sprite 비동기 로딩
-        string tileSpriteKey = "PZ_Sliding_Tile_" + tileNumber.ToString();
+        string tileSpriteKey = "PZ_Sliding_Tile_" + tileNumber.ToString() + "_Sprite";
         Managers.Resource.LoadAsync<Sprite>(tileSpriteKey, (imageSprite) =>
         {
             _image.sprite = imageSprite;
