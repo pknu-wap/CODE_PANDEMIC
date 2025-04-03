@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PZ_LightOut_Reset : UI_Base
 {
-    private RectTransform _rectTransform;
+    private RectTransform _rectTransform; // 추후 Bind 배우고 수정 예정
 
     private void Start()
     {

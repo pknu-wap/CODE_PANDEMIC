@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class PZ_LightOut_Board : UI_PopUp
 {
-    private RectTransform _rectTransform;
-    private Image _image;
+    private RectTransform _rectTransform; // 추후 Bind 배우고 수정 예정
+    private Image _image; // 추후 Bind 배우고 수정 예정
     private GridLayoutGroup _gridLayoutGroup;
 
     private List<PZ_LightOut_Button> _lightOutButtonList = new List<PZ_LightOut_Button>(); // 소환된 버튼들 관리
@@ -41,17 +41,9 @@ public class PZ_LightOut_Board : UI_PopUp
         _gridLayoutGroup.cellSize = new Vector2(160, 160);
         _gridLayoutGroup.spacing = new Vector2(10, 10);
 
-        return true;
-    }
-
-    private void Start()
-    {
-        if (!Init())
-        {
-            return;
-        }
-
         GetSpawnedButtons();
+
+        return true;
     }
 
     // Light Button 가져오기
