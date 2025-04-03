@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "TemplateID": 1,
+      "name": "붕대",
+      "Description": "부상을 응급처치할 때 사용하는 붕대입니다. 체력을 소량 회복합니다.",
+      "IsStackable": true,
+      "MaxStackSize": 10,
+      "Sprite": "Portion_1",
+      "Type": "Edible",
+      "Weapon": "None",
+      "parameters": [
+        {
+          "parameterName": "Health",
+          "value": 20
+        }
+      ]
+    }
+  ]
+}
