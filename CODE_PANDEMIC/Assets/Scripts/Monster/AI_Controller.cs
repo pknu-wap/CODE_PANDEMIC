@@ -16,7 +16,7 @@ public class AI_Controller : MonoBehaviour
     private Rigidbody2D _rb;
     private Coroutine _aiDamageCoroutine;
     private SpriteRenderer _renderer;
-    
+
     private float _aiDamage = 10f;
     private float _aiDetectionRange = 7.5f;
     private float _aiDetectionAngle = 120f;
@@ -75,7 +75,7 @@ public class AI_Controller : MonoBehaviour
     {
         if (_player == null)
             return;
-        
+            
         if (_currentDistance <= _aiDetectionRange)
         {
             if (_currentAngle <= _aiDetectionAngle / 2)
@@ -113,7 +113,6 @@ public class AI_Controller : MonoBehaviour
     
     private void StopMoving()
     {
-        // 추후 Idle 애니메이션 및 정지 로직 추가 예정
     }
     
     private void OnTriggerEnter2D(Collider2D other)
