@@ -1,81 +1,48 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class PZ_Piano_Base : MonoBehaviour
+public class PZ_Piano_Base : UI_PopUp
 {
-    [SerializeField]
-    private GameObject _tileWhitePrefab;
-
-    [SerializeField]
-    private GameObject _tileBlackPrefab;
-
     private List<PZ_Piano_Tile_White> _whiteList = new List<PZ_Piano_Tile_White>();
     private List<PZ_Piano_Tile_Black> _blackList = new List<PZ_Piano_Tile_Black>();
 
-    [SerializeField]
     private string _correctPianoNotes = "SolSolLaLaSolSolMi"; // 정답
     private string _currentPianoNotes = ""; // 현재 선택된 음들
 
-    [SerializeField]
     private int _maxPianoCount = 7; // 최대 선택될 음 개수 ( == 정답 음의 개수)
     private int _currentPianoCount = 0; // 현재 선택된 음 개수
 
-    private bool Init()
-    {
-        if (!_tileWhitePrefab || !_tileBlackPrefab)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     private void Start()
     {
-        if (!Init())
-        {
-            return;
-        }
-
-        SpawnPianoTiles();
+        GetSpawnedPianoTiles();
     }
 
-    // 피아노 타일 스폰
-    private void SpawnPianoTiles()
+    // 피아노 타일 가져오기
+    private void GetSpawnedPianoTiles()
     {
-        // 흰 건반 스폰
-        for (int i = 0; i < 7; i++)
+        // 흰 건반 가져오기
+        for (int index = 0; index < 7; index++)
         {
-            GameObject spawnedTileObject = Instantiate(_tileWhitePrefab, transform);
-            PZ_Piano_Tile_White spawnedTile = spawnedTileObject.GetComponent<PZ_Piano_Tile_White>();
+            Transform childTile = transform.GetChild(index);
+            PZ_Piano_Tile_White spawnedTile = childTile.gameObject.GetComponent<PZ_Piano_Tile_White>();
 
-            if (!spawnedTile.Init())
-            {
-                break;
-            }
-
-            spawnedTile.TileSetup(i);
+            spawnedTile.TileSetup(index);
             _whiteList.Add(spawnedTile);
         }
 
-        // 검은 건반 스폰
-        for (int i = 0; i < 6; i++)
+        // 검은 건반 가져오기
+        for (int index = 0; index < 6; index++)
         {
-            GameObject spawnedTileObject = Instantiate(_tileBlackPrefab, transform);
-            PZ_Piano_Tile_Black spawnedTile = spawnedTileObject.GetComponent<PZ_Piano_Tile_Black>();
+            Transform childTile = transform.GetChild(index + 7);
+            PZ_Piano_Tile_Black spawnedTile = childTile.gameObject.GetComponent<PZ_Piano_Tile_Black>();
 
-            if (!spawnedTile.Init())
-            {
-                break;
-            }
-
-            spawnedTile.TileSetup(i);
+            spawnedTile.TileSetup(index);
             _blackList.Add(spawnedTile);
         }
     }
 
     // 퍼즐 클리어 여부 체크
-    public void IsPuzzleClear(string selectedNote)
+    public void CheckPuzzleClear(string selectedNote)
     {
         _currentPianoNotes += selectedNote;
 
