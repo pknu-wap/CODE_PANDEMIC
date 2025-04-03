@@ -2,17 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameScene : MonoBehaviour
+public class GameScene : BaseScene
 {
-    // Start is called before the first frame update
-    void Start()
+    UI_GameScene _gameSceneUI;
+    StageData _stageData;
+    protected override bool Init()
     {
-        
-    }
+        if (base.Init() == false) return false;
+        SceneType = Define.SceneType.GameScene;
 
-    // Update is called once per frame
-    void Update()
+        StartCoroutine(CowaitLoad());
+        return true;
+    }
+    IEnumerator CowaitLoad()
     {
-        
+        while (Managers.Data.Loaded() == false) yield return null;
+        int templateID = (Managers.Game.Chapter - 1) * Define.STAGES_PER_CHAPTER + Managers.Game.Stage;
+        if (Managers.Data.Stages.TryGetValue(templateID, out StageData stageData) == false) yield break;
+
+        _stageData = stageData;
+        Managers.UI.ShowSceneUI<UI_GameScene>(callback: (UI) =>
+        {
+            _gameSceneUI = UI;
+        });
+        Managers.Object.LoadStageData(_stageData);
+
     }
 }
