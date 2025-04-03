@@ -17,13 +17,20 @@ public class Define
     public enum SceneType
     {
         Unknown,
+        GameScene,
         TitleScene,
-        GameScene
     };
     public enum WeaponType
     {
+        None,
         ShortWeapon,
         PistolWeapon,
         RangeWeapon
     }
+    public enum ItemType
+    {
+        Edible,
+        Equippable
+    }
+    public const int STAGES_PER_CHAPTER = 3;
 }
