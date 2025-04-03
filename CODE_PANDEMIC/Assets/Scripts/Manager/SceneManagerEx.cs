@@ -18,7 +18,7 @@ public class SceneManagerEx : MonoBehaviour
         set { _currentSceneType = value;}
     }
 
-    public void ChangScene(SceneType type)
+    public void ChangeScene(SceneType type)
     {
         CurrentScene.Clear();
         _currentSceneType = type;

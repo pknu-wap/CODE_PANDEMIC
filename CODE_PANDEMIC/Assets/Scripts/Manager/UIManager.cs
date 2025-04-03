@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -8,9 +9,9 @@ public class UIManager : MonoBehaviour
     int _index = 20;
   
     Stack<UI_PopUp> _popupStack = new Stack<UI_PopUp>();
+    UI_FadeImage _fadeImage;
     
     public UI_Scene SceneUI { get; set; }
-
     //TODO : INVENTORY: NOT POPUP, NOT SCENE INVENTORY
 
     public  GameObject UIRoot
@@ -96,4 +97,29 @@ public class UIManager : MonoBehaviour
         while (_popupStack.Count > 0) ClosePopupUI();
         SceneUI = null;
     }
+    public void FadeIn(Action onComplete = null)
+    {
+        if(_fadeImage==null)
+        {
+           Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) => 
+           {
+               _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
+           });
+        }
+              
+        _fadeImage.FadeIn(onComplete);
+    }
+           
+    public void  FadeOut(Action onComplete = null)
+    {
+        if (_fadeImage == null)
+        {
+            Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) =>
+            {
+                _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
+            });
+        }
+        _fadeImage.FadeOut(onComplete);
+    } 
+        
 }
