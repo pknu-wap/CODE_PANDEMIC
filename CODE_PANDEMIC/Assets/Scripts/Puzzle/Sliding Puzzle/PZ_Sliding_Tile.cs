@@ -1,26 +1,21 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 using System.Collections;
-using System.Collections.Generic; // 삭제 예정
+using TMPro;
 
-public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
+public class PZ_Sliding_Tile : UI_Base
 {
-    private TextMeshProUGUI _tileNumberText; // 테스트용 현재 타일 번호 출력을 위한 text
+    #region Base
+
+    private TextMeshProUGUI _tileNumberText; // 현재 타일 번호 출력을 위한 text
     private int _tileNumber; // 현재 타일 번호
 
     private PZ_Sliding_Board _slidingBoard;
-    private Vector3 _correctPosition;
-    public bool _isCorrect = false;
+    private Vector3 _correctPosition; // 올바른 위치의 Position
+    public bool _isCorrect = false; // 현재 타일의 위치가 올바른 위치인지 판단
 
     private Image _image; // 퍼즐 이미지
 
-    // 해당 부분은 임시로 이렇게 함 나중에 resource 폴더에서 리소스 로드로 구현 할 예정
-    [SerializeField]
-    private List<Sprite> _puzzleSprites;
-
-    // 삭제 예정
     public int TileNumber
     {
         get { return _tileNumber; }
@@ -32,45 +27,34 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public bool Init()
-    {
-        _slidingBoard = GetComponentInParent<PZ_Sliding_Board>();
-        _image = GetComponent<Image>();
+    #endregion
 
-        if (!_slidingBoard || !_image)
-        {
-            return false;
-        }
-
-        return true;
-    }
+    #region Tile
 
     // tileEmptyIndex 마지막 빈 타일의 index
     public void TileSetup(int tileNumber, int tileEmptyIndex)
     {
+        _slidingBoard = GetComponentInParent<PZ_Sliding_Board>();
+        _image = GetComponent<Image>();
         _tileNumberText = GetComponentInChildren<TextMeshProUGUI>();
+
         TileNumber = tileNumber;
-        _image.sprite = _puzzleSprites[tileNumber - 1];
 
-        if (TileNumber == tileEmptyIndex)
+        // 슬라이딩 퍼즐 타일 Sprite 비동기 로딩
+        string tileSpriteKey = "PZ_Sliding_Tile_" + tileNumber.ToString() + "_Sprite";
+        Managers.Resource.LoadAsync<Sprite>(tileSpriteKey, (imageSprite) =>
         {
-            GetComponent<Image>().enabled = false;
-            _tileNumberText.enabled = false;
-        }
-    }
+            _image.sprite = imageSprite;
 
-    // 정답 위치 설정
-    public void SetCorrectPosition()
-    {
-        _correctPosition = GetComponent<RectTransform>().localPosition;
-    }
+            // 빈 타일 비활성화
+            if (TileNumber == tileEmptyIndex)
+            {
+                _image.enabled = false;
+                _tileNumberText.enabled = false;
+            }
+        });
 
-    // 클릭 이벤트
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log("Click" + _tileNumber);
-
-        _slidingBoard.MoveTile(this);
+        BindEvent(gameObject, OnTileClick);
     }
 
     public void TileMoveto(Vector3 endPosition)
@@ -99,7 +83,17 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
         _isCorrect = CheckCorrectPosition();
 
         // 퍼즐 클리어 체크
-        _slidingBoard.IsPuzzleClear();
+        _slidingBoard.CheckPuzzleClear();
+    }
+
+    #endregion
+
+    #region Check
+
+    // 정답 위치 설정
+    public void SetCorrectPosition()
+    {
+        _correctPosition = GetComponent<RectTransform>().localPosition;
     }
 
     // 현재 타일 위치가 올바른 위치인지 확인
@@ -113,5 +107,15 @@ public class PZ_Sliding_Tile : MonoBehaviour, IPointerClickHandler
         {
             return false;
         }
+    }
+
+    #endregion
+
+    // 클릭 이벤트
+    public void OnTileClick()
+    {
+        Debug.Log("Click" + _tileNumber);
+
+        _slidingBoard.MoveTile(this);
     }
 }

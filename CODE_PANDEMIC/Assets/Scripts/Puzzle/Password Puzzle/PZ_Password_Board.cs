@@ -1,40 +1,36 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
-public class PZ_Password_Board : MonoBehaviour
+public class PZ_Password_Board : UI_PopUp
 {
-    [SerializeField]
-    private GameObject _inputUIPrefab;
     private PZ_Password_InputUI _passwordInputUI;
 
-    [SerializeField]
-    private GameObject _buttonPrefab;
-
     private RectTransform _rectTransform; // 세팅
+    private Image _image; // 세팅
     private GridLayoutGroup _layoutGroup; // 세팅
 
     private List<PZ_Password_Button> _buttonList = new List<PZ_Password_Button>(); // 생성한 버튼 리스트
 
-    [SerializeField]
     private string _correctPassword = "1234"; // 정답 비밀 번호
     private string _inputPassword; // 입력 받는 비밀 번호
 
-    private bool Init()
+    private void Init()
     {
-        if (!_buttonPrefab || !_inputUIPrefab)
+        Managers.Resource.Instantiate("PZ_Password_InputUI_Prefab", GetComponentInParent<Canvas>().transform, (spawnedInputUI) =>
         {
-            return false;
-        }
+            _passwordInputUI = spawnedInputUI.GetComponent<PZ_Password_InputUI>();
+        });
 
         _rectTransform = GetComponent<RectTransform>();
         _layoutGroup = GetComponent<GridLayoutGroup>();
-        _passwordInputUI = _inputUIPrefab.GetComponent<PZ_Password_InputUI>();
 
-        if (!_rectTransform || !_layoutGroup || !_passwordInputUI)
+        _image = GetComponent<Image>();
+
+        Managers.Resource.LoadAsync<Sprite>("PZ_Password_Board_Sprite", (getSprite) =>
         {
-            return false;
-        }
+            _image.sprite = getSprite;
+        });
 
         // 비밀 번호 판 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0f);
@@ -44,36 +40,30 @@ public class PZ_Password_Board : MonoBehaviour
         _rectTransform.sizeDelta = new Vector2(600, 800);
 
         // 생성할 버튼들을 배치할 세팅
-        _layoutGroup.padding.left = 10;
-        _layoutGroup.padding.right = 10;
-        _layoutGroup.padding.top = 10;
-        _layoutGroup.padding.bottom = 10;
-        _layoutGroup.cellSize = new Vector2(180, 180);
-        _layoutGroup.spacing = new Vector2(10, 10);
-
-        return true;
+        _layoutGroup.padding.left = 100;
+        _layoutGroup.padding.right = 100;
+        _layoutGroup.padding.top = 100;
+        _layoutGroup.padding.bottom = 100;
+        _layoutGroup.cellSize = new Vector2(120, 120);
+        _layoutGroup.spacing = new Vector2(20, 20);
     }
 
     private void Start()
     {
-        if (!Init())
-        {
-            return;
-        }
+        Init();
 
-        SpawnButtons();
+        GetSpawnedButtons();
     }
 
-    // 버튼 스폰
-    private void SpawnButtons()
+    // 버튼 가져오기
+    private void GetSpawnedButtons()
     {
-        for (int i = 1; i <= 12; i++)
+        for (int index = 0; index < 12; index++)
         {
-            // Grid Layout Group을 활용해 보드에 타일을 스폰하면 자동으로 배치되게 함
-            GameObject spawnedButtonObject = Instantiate(_buttonPrefab, transform);
-            PZ_Password_Button spawnedButton = spawnedButtonObject.GetComponent<PZ_Password_Button>();
+            Transform childButton = transform.GetChild(index);
+            PZ_Password_Button spawnedButton = childButton.gameObject.GetComponent<PZ_Password_Button>();
+            spawnedButton.ButtonSetup(index + 1);
             _buttonList.Add(spawnedButton);
-            spawnedButton.ButtonSetup(i);
         }
     }
 
@@ -84,11 +74,11 @@ public class PZ_Password_Board : MonoBehaviour
 
         _passwordInputUI.SetPasswordText(_inputPassword);
 
-        IsPuzzleClear();
+        CheckPuzzleClear();
     }
 
     // 비밀 번호 일치 체크
-    private void IsPuzzleClear()
+    private void CheckPuzzleClear()
     {
         if (_inputPassword == _correctPassword)
         {

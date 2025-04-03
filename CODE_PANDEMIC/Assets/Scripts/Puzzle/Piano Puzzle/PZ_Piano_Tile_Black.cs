@@ -1,8 +1,7 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PZ_Piano_Tile_Black : MonoBehaviour, IPointerClickHandler
+public class PZ_Piano_Tile_Black : UI_Base
 {
     // 검은 건반 enum
     private enum PianoNoteBlack
@@ -19,15 +18,10 @@ public class PZ_Piano_Tile_Black : MonoBehaviour, IPointerClickHandler
     private PianoNoteBlack[] _pianoNoteTypes; // 건반 음 종류
     private PianoNoteBlack _pianoTileNote; // 현재 건반 음
 
-    public bool Init()
+    private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
         _pianoBase = GetComponentInParent<PZ_Piano_Base>();
-
-        if (!_rectTransform || !_pianoBase)
-        {
-            return false;
-        }
 
         // 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -38,15 +32,7 @@ public class PZ_Piano_Tile_Black : MonoBehaviour, IPointerClickHandler
         // enum 값들을 배열로 가져옴
         _pianoNoteTypes = (PianoNoteBlack[])System.Enum.GetValues(typeof(PianoNoteBlack));
 
-        return true;
-    }
-
-    private void Start()
-    {
-        if (!Init())
-        {
-            return;
-        }
+        BindEvent(gameObject, OnButtonClick);
     }
 
     // 건반 기본 세팅
@@ -75,10 +61,10 @@ public class PZ_Piano_Tile_Black : MonoBehaviour, IPointerClickHandler
     }
 
     // 건반 클릭 이벤트
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnButtonClick()
     {
         Debug.Log("누른 검은 건반 : " + _pianoTileNote.ToString());
 
-        _pianoBase.IsPuzzleClear(_pianoTileNote.ToString());
+        _pianoBase.CheckPuzzleClear(_pianoTileNote.ToString());
     }
 }
