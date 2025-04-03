@@ -17,58 +17,13 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 716a63ac468f1fe4bb430d2e30d23e26
   m_SerializeEntries:
-  - m_GUID: 6a58d6dc34186b744858f51338019cbc
-    m_Address: ItemData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 80a481aaa551f2b4b807832907d9be36
-    m_Address: StageData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 54891f4b8e8def04682fe93ec80ff22e
     m_Address: EventSystem
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 015a64be52984334882dc888abfaafd3
-    m_Address: UI_GameScene
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b234cc36c24902d468e8199a98b262b5
     m_Address: UI_TitleScene
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7234bf2d8e9b7ed4e9dc653adb20777d
-    m_Address: UI_Inventory
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e02355dcfa2e5424ab4d356f7be07e6b
-    m_Address: ItemActionButton
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e4f9413341bc5484ca6cced58f5743ee
-    m_Address: ItemActionPanel
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 16245714b8b921242a2b76eeaa56dd4e
-    m_Address: ItemSlot
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a2f44ba0583091446bc55428d8bb43e3
-    m_Address: MouseSlot
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ab90c665eeb61284ba4eb3164ed477be
-    m_Address: UI_FadeImage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -114,6 +69,9 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ba739705f329a4b419342eaeca1cee48
     m_Address: PZ_Password_Board_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6c4c074571f00b147ab82c9f709026b3
     m_Address: UI_TitleOptionPopUp
     m_ReadOnly: 0
@@ -124,8 +82,58 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 15b27636f3b691146ab0ce8ea1c2855d
-    m_Address: UI_PausePopUp
+  - m_GUID: b7d4f527f1a1daf4fb15b8492c8d7a79
+    m_Address: Assets/@Resources/Prefab/Puzzle/Password Puzzle/PZ_Password_Board.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15a807bc9f73c3049882a2d326072376
+    m_Address: PZ_Password_InputUI_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1efe18befc54d084fa8dd51685f964a3
+    m_Address: PZ_Sliding_Tile_1_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a35e7cd850352f45b3b248f2399962a
+    m_Address: PZ_Sliding_Tile_2_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42e892081ecad6f439d8fa808179d9b3
+    m_Address: PZ_Sliding_Tile_3_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61b5e13f1ac6585488a1504fe6fce4cc
+    m_Address: PZ_Sliding_Tile_4_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd6e52bd9bdbade4a885567a5a8e884b
+    m_Address: PZ_Sliding_Tile_5_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 242f29627c1cef7449f340d016995534
+    m_Address: PZ_Sliding_Tile_6_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 391f7f746c0aacc438134971948e28ac
+    m_Address: PZ_Sliding_Tile_7_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 813854d34d095374ba8e9c31ccb14d18
+    m_Address: PZ_Sliding_Tile_8_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a71b04b5a587cd24f821ec7459863fe5
+    m_Address: PZ_Sliding_Tile_9_Sprite
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
