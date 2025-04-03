@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
@@ -7,8 +5,6 @@ public class PlayerCombat : MonoBehaviour
     private WeaponBase equippedWeapon;
     [SerializeField] private GameObject macePrefab;
     [SerializeField] private GameObject gunPrefab;
-
-    private float fireTimer;
 
     void Start()
     {
@@ -20,21 +16,7 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
-        HandleAttack();
         HandleWeaponSwap();
-    }
-
-    private void HandleAttack()
-    {
-        if (equippedWeapon != null && Input.GetMouseButtonDown(0) && fireTimer <= 0f)
-        {
-            equippedWeapon.Attack();
-            fireTimer = equippedWeapon.fireRate;
-        }
-        else
-        {
-            fireTimer -= Time.deltaTime;
-        }
     }
 
     private void HandleWeaponSwap()
@@ -53,7 +35,6 @@ public class PlayerCombat : MonoBehaviour
     {
         if (weaponPrefab == null)
         {
-            Debug.LogWarning("WeaponPrefab is null!");
             return;
         }
 
@@ -64,14 +45,10 @@ public class PlayerCombat : MonoBehaviour
 
         WeaponBase newWeapon = Instantiate(weaponPrefab, transform).GetComponent<WeaponBase>();
 
-        if (newWeapon == null)
+        if (newWeapon != null)
         {
-            Debug.LogError("WeaponBase component is missing from the prefab!");
-            return;
+            EquipWeapon(newWeapon);
         }
-
-        EquipWeapon(newWeapon);
-        Debug.Log("Weapon Swapped to: " + newWeapon.weaponName);
     }
 
     public void EquipWeapon(WeaponBase newWeapon)
@@ -81,4 +58,3 @@ public class PlayerCombat : MonoBehaviour
         equippedWeapon.transform.localPosition = Vector3.zero;
     }
 }
-
