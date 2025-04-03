@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 746409306}
   - component: {fileID: 746409305}
   - component: {fileID: 746409309}
+  - component: {fileID: 746409310}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -377,8 +378,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4704caea94f0bac44a1b185ff14d65ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8502746645724349979, guid: c4289481e008be04dad2a8d94e80fe56, type: 3}
-  firingPoint: {fileID: 2044814337}
+--- !u!114 &746409310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746409304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318c6c942881db4fa0085e56b2157eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  macePrefab: {fileID: 0}
+  gunPrefab: {fileID: 165511242}
 --- !u!1 &1780001180
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,14 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerCombat : MonoBehaviour
 {
-    private float playerSpeed = 1f;
-    private float playerRunMultiplier = 2f;
-    private Vector2 move;
-    private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
-
     private WeaponBase equippedWeapon;
     [SerializeField] private GameObject macePrefab;
     [SerializeField] private GameObject gunPrefab;
@@ -18,10 +12,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-
         if (macePrefab != null)
         {
             EquipWeapon(Instantiate(macePrefab, transform).GetComponent<WeaponBase>());
@@ -30,14 +20,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        HandleAttack();
+        HandleWeaponSwap();
+    }
 
-        move = new Vector2(horizontal, vertical).normalized;
-
-        if (horizontal != 0)
-            spriteRenderer.flipX = horizontal < 0;
-
+    private void HandleAttack()
+    {
         if (equippedWeapon != null && Input.GetMouseButtonDown(0) && fireTimer <= 0f)
         {
             equippedWeapon.Attack();
@@ -47,8 +35,10 @@ public class Player : MonoBehaviour
         {
             fireTimer -= Time.deltaTime;
         }
+    }
 
-
+    private void HandleWeaponSwap()
+    {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SwapWeapon(macePrefab);
@@ -59,21 +49,29 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? playerSpeed * playerRunMultiplier : playerSpeed;
-        rb.velocity = move * currentSpeed;
-    }
-
     private void SwapWeapon(GameObject weaponPrefab)
     {
+        if (weaponPrefab == null)
+        {
+            Debug.LogWarning("WeaponPrefab is null!");
+            return;
+        }
+
         if (equippedWeapon != null)
         {
             Destroy(equippedWeapon.gameObject);
         }
 
         WeaponBase newWeapon = Instantiate(weaponPrefab, transform).GetComponent<WeaponBase>();
+
+        if (newWeapon == null)
+        {
+            Debug.LogError("WeaponBase component is missing from the prefab!");
+            return;
+        }
+
         EquipWeapon(newWeapon);
+        Debug.Log("Weapon Swapped to: " + newWeapon.weaponName);
     }
 
     public void EquipWeapon(WeaponBase newWeapon)
@@ -83,3 +81,4 @@ public class Player : MonoBehaviour
         equippedWeapon.transform.localPosition = Vector3.zero;
     }
 }
+
