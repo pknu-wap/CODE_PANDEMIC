@@ -20,8 +20,8 @@ namespace Inventory.UI
         {
             BG,
             ImagePanel,
-            
             DescriptionPanel
+            
         }
         enum Images
         {   
@@ -35,18 +35,7 @@ namespace Inventory.UI
             DescriptionText
         }
 
-      //public void Awake()
-      //{
-      //      BindImage(typeof(Images));
-      //      BindObject(typeof(GameObjects));    
-      //      BindText(typeof(Texts));
-
-      //      _itemImage = GetImage((int)Images.ItemImage);
-      //      _title = GetText((int)Texts.TitleText);
-      //      _description = GetText((int)Texts.DescriptionText);
-
-      //      ResetDescription();
-      //}
+    
         public override bool Init()
         {
             if (base.Init() == false) return false;
@@ -65,13 +54,9 @@ namespace Inventory.UI
         public void ResetDescription()
         {
             Debug.Log("Reset");
-            
-             //_itemImage.gameObject.SetActive(false);
-             _title.text = "";
-             _description.text = "";
-            //_itemImage.gameObject.SetActive(false);
-           // title.text = "";
-            //_description.text = "";
+            _title.text = "";
+            _description.text = "";
+          
         }
         //각자 아이템 관련 dataloader 캐싱 필요해보임 
         public void SetDescription(Sprite sprite, string itemName, string itemDescription)

@@ -11,11 +11,19 @@ public class MouseFollower : MonoBehaviour, IDragHandler
 
     private bool _isFollowing = false;
 
-    void Awake()
+    public void Init()
     {
-
-        _canvas = transform.root.GetComponent<Canvas>();
-        _canvas.worldCamera = Camera.main; // 또는 직접 지정
+        
+        Transform uiRoot = GameObject.Find("UI_Root")?.transform;
+        if (uiRoot != null)
+        {
+            Transform gameSceneCanvas = uiRoot.Find("UI_GameScene");
+            if (gameSceneCanvas != null)
+            {
+                _canvas = gameSceneCanvas.GetComponent<Canvas>();
+            }
+        }
+        _canvas.worldCamera = Camera.main;
 
         _inventoryItem = GetComponentInChildren<UI_InventoryItem>();
         _inventoryItem.Initialize();
@@ -24,7 +32,7 @@ public class MouseFollower : MonoBehaviour, IDragHandler
             Debug.LogError("MouseFollower: UIInventoryItem이 존재하지 않습니다! 인스펙터에서 확인하세요.");
 
         }
-
+        StopFollowing();
     }
 
     void Update()

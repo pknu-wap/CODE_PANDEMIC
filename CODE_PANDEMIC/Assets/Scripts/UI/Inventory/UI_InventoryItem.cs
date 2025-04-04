@@ -92,7 +92,11 @@ namespace Inventory.UI
         public void OnPointerClick(PointerEventData pointerEventData)
         {
 
-            if (pointerEventData.button == PointerEventData.InputButton.Right) OnRightMouseButtonClick?.Invoke(this); //정보보기 
+            if (pointerEventData.button == PointerEventData.InputButton.Right)
+            {
+                Debug.Log("right");
+                OnRightMouseButtonClick?.Invoke(this); //정보보기
+            }
             else OnItemClicked?.Invoke(this); //단지 선택하는거 
         }
 

@@ -9,10 +9,7 @@ namespace Inventory.UI
 {
     public class UI_Inventory :UI_Base //¿Ã»ƒø° UIBASE
     {
-        public enum Images
-        {
-            Frame
-        }
+       
         public enum GameObjects
         {
             InventoryContent,
@@ -20,8 +17,7 @@ namespace Inventory.UI
             MouseFollower,
             ItemActionPanel
         }
-        //[SerializeField]
-        // UIInventoryItem _item;
+        
         [SerializeField]
         RectTransform _contentPanel;
 
@@ -46,7 +42,7 @@ namespace Inventory.UI
         public override bool Init()
         {
             if (base.Init() == false) return false;
-            BindImage(typeof(Images));
+           
             BindObject(typeof(GameObjects));
 
             _contentPanel = Utils.FindChild(GetObject((int)GameObjects.InventoryContent), "BG", true).GetComponent<RectTransform>();
@@ -54,11 +50,14 @@ namespace Inventory.UI
             _mouseFollower=GetObject((int)GameObjects.MouseFollower)?.GetComponent<MouseFollower>();    
             _actionPanel=GetObject((int)GameObjects.ItemActionPanel)?.GetComponent<ItemActionPanel>();
 
-            _mouseFollower.StopFollowing();
-            _description.ResetDescription();
+            if (_mouseFollower != null)
+                _mouseFollower.Init();
+            if (_description != null)
+                _description.Init();
+
             Hide();
-            
             return true;
+            
         }
         public void InitializeInventoryUI(int inventorySize)
         {
@@ -108,6 +107,7 @@ namespace Inventory.UI
                 ResetDraggedItem();
                 return;
             }
+            Debug.Log("handle");
             OnItemActionRequested?.Invoke(index);
         }
 
@@ -179,6 +179,7 @@ namespace Inventory.UI
         }
         public void AddAction(string actionName ,Action performAction)
         {
+          
             _actionPanel.AddButton(actionName, performAction);
         }
         public  void ShowItemAction(int itemIndex)

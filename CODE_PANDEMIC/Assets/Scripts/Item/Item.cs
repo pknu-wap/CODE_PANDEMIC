@@ -47,7 +47,7 @@ public class Item : MonoBehaviour
 
     public void DestroyItem()
     {
-        GetComponent<Collider>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
         StartCoroutine(AnimateItempPickUp());
     }
 

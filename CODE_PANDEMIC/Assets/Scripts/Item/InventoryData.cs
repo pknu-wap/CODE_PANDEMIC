@@ -10,7 +10,10 @@ namespace Inventory.Model
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography;
+    using Unity.VisualScripting;
     using UnityEngine;
+    using UnityEngine.U2D;
     using static Define;
 
     namespace Inventory.Model
@@ -33,19 +36,28 @@ namespace Inventory.Model
                     _inventoryItems.Add(InventoryItem.GetEmptyItem());
                 }
             }
-
             public int AddItem(ItemData item, int quantity, List<ItemParameter> itemState = null)
             {
-                if (!item.IsStackable) // 스택 불가능한 경우
+                ItemData newItem = ItemFactoryManager.CreateItem(item.Type, item);
+                if (newItem == null)
+                {
+                    Debug.LogError("아이템 생성 실패");
+                    return quantity;
+                }
+
+               
+                if (!newItem.IsStackable)
                 {
                     while (quantity > 0 && !IsInventoryFull())
                     {
-                        quantity -= AddItemToFreeSlot(item, 1, itemState);
+                        
+                        quantity -= AddItemToFreeSlot(newItem, 1, itemState);
                     }
                 }
                 else // 스택 가능한 경우
                 {
-                    quantity = AddStackableItem(item, quantity);
+                    
+                    quantity = AddStackableItem(newItem, quantity);
                 }
 
                 InformAboutChange();

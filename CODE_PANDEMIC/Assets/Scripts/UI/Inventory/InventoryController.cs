@@ -2,6 +2,7 @@ using Inventory.Model;
 using Inventory.Model.Inventory.Model;
 using Inventory.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -29,15 +30,32 @@ namespace Inventory
         private void Start()
         {
             _inventoryData = Managers.Game.Inventory;
-            Debug.Log($"{_inventoryData}");
-
-            if (UIInventory == null)
+            if (_inventoryData == null)
             {
-                Debug.LogError("InventoryUI가 할당되지 않았습니다.");
+                Debug.LogError("InventoryData가 초기화되지 않았습니다.");
                 return;
             }
-            PrepareInventoryUI();
-            PrepareInventoryData();
+
+            
+            StartCoroutine(CoWaitLoad(() =>
+            {
+                Managers.UI.ShowInventoryUI((inventoryUI) =>
+                {
+                    _inventoryUI = inventoryUI;
+                    PrepareInventoryUI();
+                    PrepareInventoryData();
+                });
+            }));
+        }
+        private IEnumerator CoWaitLoad(Action callback)
+        {
+            // SceneUI가 null이 아니게 될 때까지 대기
+            while (Managers.UI.SceneUI == null)
+            {
+                yield return null;
+            }
+            // 대기 후 콜백 실행
+            callback?.Invoke();
         }
 
         private void PrepareInventoryData()
@@ -85,16 +103,20 @@ namespace Inventory
         {
             InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
             if (inventoryItem.IsEmpty) return;
-            IItemAction itemAction = inventoryItem._item as IItemAction;
-            if (itemAction != null)
-            {
-                UIInventory.ShowItemAction(index);
-                UIInventory.AddAction(itemAction.ActionName, () => PerformAction(index));
-            }
+            //IItemAction itemAction = inventoryItem._item as IItemAction;
+
+            // UIInventory.ShowItemAction(index);
+            //  UIInventory.AddAction(itemAction.ActionName, () => PerformAction(index));
+            UIInventory.ShowItemAction(index);
             IDestroyableItem destroyableItem = inventoryItem._item as IDestroyableItem;
             if (destroyableItem != null)
             {
+                Debug.Log("Drop");
                 UIInventory.AddAction("Drop", () => DropItem(index, inventoryItem._quantity));
+            }
+            else
+            {
+                Debug.Log($"{inventoryItem._item.Name}");
             }
         }
 

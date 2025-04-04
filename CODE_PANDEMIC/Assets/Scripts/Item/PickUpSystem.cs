@@ -13,7 +13,7 @@ public class PickUpSystem : MonoBehaviour
         _inventoryData = Managers.Game.Inventory;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Item item = other.gameObject.GetComponent<Item>();
         Debug.Log("abc");
@@ -24,4 +24,5 @@ public class PickUpSystem : MonoBehaviour
             else item.Quantity = reminder;
         }
     }
+  
 }
