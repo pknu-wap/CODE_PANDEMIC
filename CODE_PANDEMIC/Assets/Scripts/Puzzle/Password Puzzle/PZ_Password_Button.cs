@@ -6,7 +6,7 @@ public class PZ_Password_Button : UI_Base
 {
     private Image _image;
 
-    private TextMeshProUGUI _buttonNumberText; // 테스트용 현재 버튼 번호 출력을 위한 text
+    private TextMeshProUGUI _buttonNumberText; // 현재 버튼 text
     private int _buttonNumber; // 현재 버튼 번호
 
     private PZ_Password_Board _passwordBoard;
@@ -15,15 +15,11 @@ public class PZ_Password_Button : UI_Base
     {
         get { return _buttonNumber; }
 
-        set
-        {
-            _buttonNumber = value;
-            _buttonNumberText.text = _buttonNumber.ToString();
-        }
+        set { _buttonNumber = value; }
     }
 
     // 버튼의 고유 값 설정
-    public void ButtonSetup(int index)
+    public void ButtonSetup()
     {
         _image = GetComponent<Image>();
 
@@ -36,20 +32,6 @@ public class PZ_Password_Button : UI_Base
 
         _buttonNumberText = GetComponentInChildren<TextMeshProUGUI>();
 
-        if (index == 10 || index == 12)
-        {
-            GetComponent<Image>().enabled = false;
-            _buttonNumberText.enabled = false;
-        }
-        else if (index == 11)
-        {
-            ButtonNumber = 0;
-        }
-        else
-        {
-            ButtonNumber = index;
-        }
-
         BindEvent(gameObject, OnButtonClick);
     }
 
@@ -57,6 +39,6 @@ public class PZ_Password_Button : UI_Base
     public void OnButtonClick()
     {
         // 해당 버튼의 값을 입력
-        _passwordBoard.InputPassword(_buttonNumber);
+        _passwordBoard.InputPassword(_buttonNumberText.text);
     }
 }
