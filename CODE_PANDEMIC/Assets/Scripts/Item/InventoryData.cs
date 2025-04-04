@@ -15,7 +15,7 @@ namespace Inventory.Model
 
     namespace Inventory.Model
     {
-        public class InventoryData : MonoBehaviour
+        public class InventoryData
         {
             [field: SerializeField]
             public List<InventoryItem> _inventoryItems;

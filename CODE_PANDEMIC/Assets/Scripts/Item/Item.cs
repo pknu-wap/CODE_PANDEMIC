@@ -15,23 +15,34 @@ public class Item : MonoBehaviour
 
     private void Start()
     {
-        _spriteRenderer= gameObject.GetOrAddComponent<SpriteRenderer>();    
-        // DataManager에서 ItemData를 로드하여 할당
-        if (Managers.Data != null && Managers.Data.Items.TryGetValue(itemID, out ItemData itemData))
+        _spriteRenderer = gameObject.GetOrAddComponent<SpriteRenderer>();
+
+        // 데이터가 초기화되었는지 먼저 확인
+        if (Managers.Data == null)
         {
+            Debug.LogError("Data manager" );
+            return;
+        }
+        if ( Managers.Data.Items == null)
+        {
+            Debug.LogError(" item dictionary is null.");
+            return;
+        }
+        // ItemData 로드 시도
+        if (Managers.Data.Items.TryGetValue(itemID, out ItemData itemData))
+        {
+            Debug.Log($"ItemData found: {itemData.Name} (ID: {itemID})");
             InventoryItem = itemData;
             Managers.Resource.LoadAsync<Sprite>(InventoryItem.Sprite, callback: (obj) =>
             {
                 _spriteRenderer.sprite = obj;
             });
-          
         }
         else
         {
-            Debug.LogError($"ItemData with ID {itemID} not found.");
-            Destroy(gameObject); // ItemData를 찾을 수 없으면 아이템 삭제
+            Debug.LogError($"ItemData with ID {itemID} not found. Available IDs: {string.Join(", ", Managers.Data.Items.Keys)}");
+            Destroy(gameObject);
         }
-            
     }
 
     public void DestroyItem()

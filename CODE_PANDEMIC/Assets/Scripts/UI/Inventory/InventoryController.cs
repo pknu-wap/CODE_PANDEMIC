@@ -14,6 +14,7 @@ namespace Inventory
     {
         [SerializeField]
         private UI_Inventory _inventoryUI;
+
         [SerializeField] 
         private InventoryData _inventoryData;
 
@@ -29,6 +30,7 @@ namespace Inventory
         {
             _inventoryData = Managers.Game.Inventory;
             Debug.Log($"{_inventoryData}");
+
             if (UIInventory == null)
             {
                 Debug.LogError("InventoryUI가 할당되지 않았습니다.");

@@ -8,7 +8,11 @@ public class PickUpSystem : MonoBehaviour
 {
 
     [SerializeField] private InventoryData _inventoryData;
-   
+    private void Start()
+    {
+        _inventoryData = Managers.Game.Inventory;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Item item = other.gameObject.GetComponent<Item>();

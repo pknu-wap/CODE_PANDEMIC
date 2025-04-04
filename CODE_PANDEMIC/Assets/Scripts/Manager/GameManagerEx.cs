@@ -26,7 +26,7 @@ public class GameData
 }
 
 
-public class GameManagerEx : MonoBehaviour
+public class GameManagerEx 
 {
     private GameData _gameData = new GameData();
     private bool _isPaused;
