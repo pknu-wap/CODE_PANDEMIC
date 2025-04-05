@@ -120,3 +120,34 @@ public class InventorySaveData
 {
     public List<InventoryItemData> InventoryItems;
 }
+
+
+[Serializable]
+public class WeaponData
+{
+    public int TemplateID;
+    public int BulletCount;
+    public float Damage; //damage
+    public float FireRate; //firerate
+    public float BulletSpeed;
+    public float Range;
+    public float ReloadTime;
+    public float SpreadAngle; 
+    public string BulletPrefab;
+    public string MuzzleEffect;
+}
+public class WeaponDataLoader : ILoader<int, WeaponData>
+{
+    public List<WeaponData> items = new List<WeaponData>();
+    public Dictionary<int, WeaponData> MakeDic()
+    {
+        Dictionary<int, WeaponData> dic = new Dictionary<int, WeaponData>();
+        foreach (WeaponData stage in items)
+            dic.Add(stage.TemplateID, stage);
+        return dic;
+    }
+    public bool Validate()
+    {
+        return true;
+    }
+}

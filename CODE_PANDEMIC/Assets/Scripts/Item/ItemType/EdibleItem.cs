@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Inventory.Model
 {
-
     public class EdibleItem : ItemData,IDestroyableItem, IItemAction
     {
         public List<ItemParameter> parameters = new(); // JSON에서 직접 로드

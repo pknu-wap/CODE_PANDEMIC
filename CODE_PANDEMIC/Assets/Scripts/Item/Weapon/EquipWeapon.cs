@@ -4,26 +4,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AgentWeapon : MonoBehaviour
+public class EquipWeapon : MonoBehaviour
 {
     [SerializeField]
     private EquippableItem _weapon;
     [SerializeField]
-    private InventoryData _inventoryData;
+    private QuickSlot _quickSlot;
     [SerializeField]
     private List<ItemParameter> _parametersToModify, _itemCurrentState;
     private void Start()
     {
-        _inventoryData = Managers.Game.Inventory;
+       _quickSlot = Managers.Game.QuickSlot;
     }
-    public void SetWeapon(EquippableItem weaponItemSO, List<ItemParameter>itemState)
+    public void SetWeapon(EquippableItem weaponItem, List<ItemParameter>itemState)
     {
         Debug.Log("Setweapon");
-        if(_weapon!=null)
-        {
-            _inventoryData.AddItem(_weapon, 1, _itemCurrentState);
-        }
-        _weapon = weaponItemSO;
+        _weapon = weaponItem;
         _itemCurrentState = new List<ItemParameter>(itemState);
         ModifyParameters();
     }
