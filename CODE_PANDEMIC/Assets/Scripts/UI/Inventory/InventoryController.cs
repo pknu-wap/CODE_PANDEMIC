@@ -103,21 +103,35 @@ namespace Inventory
         {
             InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
             if (inventoryItem.IsEmpty) return;
-            //IItemAction itemAction = inventoryItem._item as IItemAction;
 
-            // UIInventory.ShowItemAction(index);
-            //  UIInventory.AddAction(itemAction.ActionName, () => PerformAction(index));
             UIInventory.ShowItemAction(index);
+
+            if (inventoryItem._item is ItemData itemData)
+            {
+                if (itemData.Type == Define.ItemType.Equippable || itemData.Type == Define.ItemType.Edible)
+                {
+                    UIInventory.AddAction("Slot", () => SlotItem(index, inventoryItem._quantity));
+                }
+            }
+            // Drop
             IDestroyableItem destroyableItem = inventoryItem._item as IDestroyableItem;
             if (destroyableItem != null)
             {
-                Debug.Log("Drop");
                 UIInventory.AddAction("Drop", () => DropItem(index, inventoryItem._quantity));
             }
-            else
-            {
-                Debug.Log($"{inventoryItem._item.Name}");
-            }
+
+            // Slot
+        }
+        private void SlotItem(int index, int quantity)
+        {
+            InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
+            if (inventoryItem.IsEmpty) return;
+
+            ItemData itemData = inventoryItem._item;
+            Debug.Log("SlotItem");
+            Managers.Game.QuickSlot.RegisterQuickSlot(itemData, quantity);
+            _inventoryData.RemoveItem(index, quantity);
+            UIInventory.ResetSelection();
         }
 
         private void DropItem(int index, int quantity)

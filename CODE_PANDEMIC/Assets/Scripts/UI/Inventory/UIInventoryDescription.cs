@@ -53,12 +53,13 @@ namespace Inventory.UI
 
         public void ResetDescription()
         {
-            Debug.Log("Reset");
+        
+            _itemImage.sprite = null;
             _title.text = "";
             _description.text = "";
           
         }
-        //각자 아이템 관련 dataloader 캐싱 필요해보임 
+       
         public void SetDescription(Sprite sprite, string itemName, string itemDescription)
         {
             _itemImage.gameObject.SetActive(true);
@@ -66,7 +67,7 @@ namespace Inventory.UI
             _title.text = itemName;
             _description.text = itemDescription;
           
-
         }
+
     }
 }

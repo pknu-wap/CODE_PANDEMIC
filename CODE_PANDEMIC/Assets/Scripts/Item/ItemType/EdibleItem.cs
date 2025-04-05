@@ -2,27 +2,38 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace Inventory.Model
 {
-    public class EdibleItem :ItemData,IDestroyableItem, IItemAction
+
+    public class EdibleItem : ItemData,IDestroyableItem, IItemAction
     {
-        [SerializeField]
-        private List<ModifierData>_modifierData =new List<ModifierData>();
- 
+        public List<ItemParameter> parameters = new(); // JSON에서 직접 로드
         public string ActionName => "Consume";
 
-        public bool PerformAction(GameObject character , List<ItemParameter> itemState = null)
+        public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
         {
-            foreach(ModifierData data in _modifierData)
-            {
-                data._statModifier.AffectCharacter(character, data._value);
-            }
-            return true;
+            var parametersToUse = itemState ?? parameters;
 
+            foreach (ItemParameter param in parametersToUse)
+            {
+                switch (param.parameterName)
+                {
+                    case "Health":
+                        Debug.Log($"{param.parameterName}:{param.value}");
+                     
+                        break;
+
+                        // 추후 Stamina, Mana, Buff 등 확장 가능
+                }
+            }
+
+            return true;
         }
     }
+
     public interface  IDestroyableItem
     {
 

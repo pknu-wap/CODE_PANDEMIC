@@ -98,10 +98,10 @@ RectTransform:
   - {fileID: 6146853381085162504}
   m_Father: {fileID: 4339874036154835214}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 175, y: -275.85077}
+  m_SizeDelta: {x: 350, y: 348.29852}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &394786210881245726
 CanvasRenderer:
@@ -1180,10 +1180,10 @@ RectTransform:
   - {fileID: 9011599439038326429}
   m_Father: {fileID: 4339874036154835214}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 175, y: -50.850746}
+  m_SizeDelta: {x: 350, y: 101.70149}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5168311002548631913
 CanvasRenderer:
@@ -1274,10 +1274,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2617549030514350007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 483, y: 650}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &94382383764042932
 MonoBehaviour:
@@ -1466,11 +1466,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6403744354002872097, guid: e4f9413341bc5484ca6cced58f5743ee, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 18.477087
       objectReference: {fileID: 0}
     - target: {fileID: 6403744354002872097, guid: e4f9413341bc5484ca6cced58f5743ee, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 11.985196
       objectReference: {fileID: 0}
     - target: {fileID: 6403744354002872097, guid: e4f9413341bc5484ca6cced58f5743ee, type: 3}
       propertyPath: m_LocalPosition.x

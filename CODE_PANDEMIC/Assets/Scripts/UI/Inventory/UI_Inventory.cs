@@ -107,7 +107,7 @@ namespace Inventory.UI
                 ResetDraggedItem();
                 return;
             }
-            Debug.Log("handle");
+           
             OnItemActionRequested?.Invoke(index);
         }
 
@@ -179,9 +179,9 @@ namespace Inventory.UI
         }
         public void AddAction(string actionName ,Action performAction)
         {
-          
             _actionPanel.AddButton(actionName, performAction);
         }
+          
         public  void ShowItemAction(int itemIndex)
         {
             _actionPanel.Toggle(true);
