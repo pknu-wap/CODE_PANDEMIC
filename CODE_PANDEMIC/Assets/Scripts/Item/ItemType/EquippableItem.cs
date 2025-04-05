@@ -14,7 +14,7 @@ namespace Inventory.Model
         public bool PerformAction(GameObject obj, List<ItemParameter> itemState)
         {
            
-           EquipWeapon weaponSystem =obj.GetComponent<EquipWeapon>();
+            EquipWeapon weaponSystem =obj.GetComponent<EquipWeapon>();
             if(weaponSystem!=null)
             {
                 Debug.Log("EquipAction");

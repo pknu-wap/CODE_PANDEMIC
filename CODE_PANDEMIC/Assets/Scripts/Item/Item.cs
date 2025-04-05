@@ -6,32 +6,22 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     [SerializeField]
-    private int itemID; // ItemData의 ID를 저장할 변수
+    private int itemID;
+
     public ItemData InventoryItem { get; private set; }
     public int Quantity { get; set; } = 1;
-    SpriteRenderer _spriteRenderer;
-    [SerializeField]
-    private float duration = 0.3f;
 
+    SpriteRenderer _spriteRenderer;
+    [SerializeField] private float floatAmplitude = 0.1f; // 위아래 움직임 범위
+    [SerializeField] private float floatFrequency = 2f;   // 움직임 속도
+    private Vector3 _startPos;
     private void Start()
     {
-        _spriteRenderer = gameObject.GetOrAddComponent<SpriteRenderer>();
+        _spriteRenderer = gameObject.GetOrAddComponent<SpriteRenderer>();   
+        _startPos = transform.position;
 
-        // 데이터가 초기화되었는지 먼저 확인
-        if (Managers.Data == null)
-        {
-            Debug.LogError("Data manager" );
-            return;
-        }
-        if ( Managers.Data.Items == null)
-        {
-            Debug.LogError(" item dictionary is null.");
-            return;
-        }
-        // ItemData 로드 시도
         if (Managers.Data.Items.TryGetValue(itemID, out ItemData itemData))
         {
-            Debug.Log($"ItemData found: {itemData.Name} (ID: {itemID})");
             InventoryItem = itemData;
             Managers.Resource.LoadAsync<Sprite>(InventoryItem.Sprite, callback: (obj) =>
             {
@@ -40,9 +30,17 @@ public class Item : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"ItemData with ID {itemID} not found. Available IDs: {string.Join(", ", Managers.Data.Items.Keys)}");
+            Debug.LogError($"ItemData with ID {itemID} not found.");
             Destroy(gameObject);
         }
+    }
+
+    private void Update()
+    {
+        //sin 함수활용 -1~1
+        float yOffset = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
+        transform.position = _startPos + new Vector3(0, yOffset, 0);
+
     }
 
     public void DestroyItem()
@@ -56,6 +54,8 @@ public class Item : MonoBehaviour
         Vector3 startScale = transform.localScale;
         Vector3 endScale = Vector3.zero;
         float currentTime = 0;
+        float duration = 0.3f;
+
         while (currentTime < duration)
         {
             currentTime += Time.deltaTime;
