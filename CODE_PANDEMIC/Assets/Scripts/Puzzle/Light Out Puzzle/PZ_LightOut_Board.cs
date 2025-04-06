@@ -15,8 +15,8 @@ public class PZ_LightOut_Board : PZ_Puzzle_Base
 
     public override bool Init()
     {
-        _rectTransform = GetComponent<RectTransform>();
-        _image = GetComponent<Image>();
+        SetComponents();
+
         _gridLayoutGroup = GetComponent<GridLayoutGroup>();
 
         Managers.Resource.Instantiate("PZ_LightOut_Reset_Prefab", GetComponentInParent<Canvas>().transform, (resetButton) =>

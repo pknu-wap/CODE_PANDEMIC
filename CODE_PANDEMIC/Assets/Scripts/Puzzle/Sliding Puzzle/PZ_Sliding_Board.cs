@@ -10,20 +10,25 @@ public class PZ_Sliding_Board : PZ_Puzzle_Base
     private List<PZ_Sliding_Tile> _tileList = new List<PZ_Sliding_Tile>(); // 생성된 타일을 저장
 
     private int _slidingPuzzleSize = 9; // 퍼즐 사이즈
-    private float _needMoveDistance = 232f; // 타일이 이동해야 하는 거리
+    private float _needMoveDistance = 235f; // 타일이 이동해야 하는 거리
 
     public Vector3 EmptyTilePosition { get; set; } // 빈 타일의 위치
 
     private IEnumerator Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        SetComponents();
+
+        Managers.Resource.LoadAsync<Sprite>("PZ_Sliding_Board_Sprite", (imageSprite) =>
+        {
+            _image.sprite = imageSprite;
+        });
 
         // 보드 기본 설정
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         _rectTransform.pivot = new Vector2(0.5f, 0.5f);
         _rectTransform.anchoredPosition = Vector2.zero;
-        _rectTransform.sizeDelta = new Vector2(730, 730);
+        _rectTransform.sizeDelta = new Vector2(900, 900);
 
         GetSpawnedTiles();
 

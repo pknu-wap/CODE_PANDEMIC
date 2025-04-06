@@ -17,15 +17,14 @@ public class PZ_Password_Board : PZ_Puzzle_Base
 
     private void Init()
     {
+        SetComponents();
+
         Managers.Resource.Instantiate("PZ_Password_InputUI_Prefab", GetComponentInParent<Canvas>().transform, (spawnedInputUI) =>
         {
             _passwordInputUI = spawnedInputUI.GetComponent<PZ_Password_InputUI>();
         });
 
-        _rectTransform = GetComponent<RectTransform>();
         _layoutGroup = GetComponent<GridLayoutGroup>();
-
-        _image = GetComponent<Image>();
 
         Managers.Resource.LoadAsync<Sprite>("PZ_Password_Board_Sprite", (getSprite) =>
         {
