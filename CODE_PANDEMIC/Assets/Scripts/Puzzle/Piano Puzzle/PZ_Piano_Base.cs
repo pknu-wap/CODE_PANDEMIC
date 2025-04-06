@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PZ_Piano_Base : UI_PopUp
+public class PZ_Piano_Base : PZ_Puzzle_Base
 {
+    #region Base
+
     private List<PZ_Piano_Tile_White> _whiteList = new List<PZ_Piano_Tile_White>();
     private List<PZ_Piano_Tile_Black> _blackList = new List<PZ_Piano_Tile_Black>();
 
@@ -16,6 +18,10 @@ public class PZ_Piano_Base : UI_PopUp
     {
         GetSpawnedPianoTiles();
     }
+
+    #endregion
+
+    #region Setting
 
     // 피아노 타일 가져오기
     private void GetSpawnedPianoTiles()
@@ -41,6 +47,10 @@ public class PZ_Piano_Base : UI_PopUp
         }
     }
 
+    #endregion
+
+    #region Clear
+
     // 퍼즐 클리어 여부 체크
     public void CheckPuzzleClear(string selectedNote)
     {
@@ -48,8 +58,9 @@ public class PZ_Piano_Base : UI_PopUp
 
         if (_currentPianoNotes == _correctPianoNotes)
         {
-            Debug.LogWarning("Piano Puzzle Clear!!!");
-            // 여기에 퍼즐 클리어 로직 구현
+            PuzzleClear();
+
+            return;
         }
 
         _currentPianoCount++;
@@ -63,4 +74,18 @@ public class PZ_Piano_Base : UI_PopUp
             Debug.LogWarning("Puzzle Reset");
         }
     }
+
+    protected override void PuzzleClear()
+    {
+        if (!_puzzleOwner)
+        {
+            return;
+        }
+
+        Debug.LogWarning("Piano Puzzle Clear!!!");
+
+        _puzzleOwner.ClearPuzzle();
+    }
+
+    #endregion
 }

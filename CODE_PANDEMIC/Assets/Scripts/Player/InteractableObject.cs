@@ -4,6 +4,6 @@ public class InteractableObject : MonoBehaviour, IInteractable
 {
     public void Interact()
     {
-        Debug.Log("리볼버를 획득했습니다.");
+        Debug.Log("Get revolver");
     }
 }
