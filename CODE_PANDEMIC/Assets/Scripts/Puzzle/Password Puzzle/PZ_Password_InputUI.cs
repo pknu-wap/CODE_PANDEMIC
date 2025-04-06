@@ -1,27 +1,19 @@
 using UnityEngine;
 using TMPro;
 
-public class PZ_Password_InputUI : MonoBehaviour
+public class PZ_Password_InputUI : UI_Base
 {
-    [SerializeField]
     private RectTransform _rectTransform;
-
-    [SerializeField]
-    private TextMeshProUGUI _passwordText;
-
-    [SerializeField]
     private RectTransform _textRectTransform;
+
+    private TextMeshProUGUI _textMeshPro;
 
     private void Start()
     {
-        if(!_passwordText)
-        {
-            Debug.Log("스타트에서도 없음");
-        }
-        else
-        {
-            Debug.Log("스타트에서는 있음");
-        }
+        _rectTransform = GetComponent<RectTransform>();
+
+        _textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
+        _textRectTransform = _textMeshPro.gameObject.GetComponent<RectTransform>();
 
         // 크기 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 1f);
@@ -36,9 +28,6 @@ public class PZ_Password_InputUI : MonoBehaviour
         _textRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         _textRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         _rectTransform.pivot = new Vector2(0.5f, 0.5f);
-
-        //GameObject spawnedText = Instantiate(_passwordTextPrefab, transform);
-        //_passwordText = spawnedText.GetComponent<TextMeshProUGUI>();
     }
 
     // 화면에 출력할 현재 입력된 번호 출력
@@ -46,13 +35,6 @@ public class PZ_Password_InputUI : MonoBehaviour
     {
         Debug.Log("Check Password : " + passwordText);
 
-        if (_passwordText)
-        {
-            _passwordText.text = passwordText;
-        }
-        else
-        {
-            Debug.Log("할당 안됨");
-        }
+        _textMeshPro.text = passwordText;
     }
 }
