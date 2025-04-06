@@ -14,35 +14,24 @@ public abstract class AI_Base : MonoBehaviour
 
     protected AI_State _state = AI_State.Idle;
 
-    /// <summary>
-    /// AI 초기화를 위한 공통 메서드. 하위 클래스에서 추가로 초기화할 수 있습니다.
-    /// </summary>
+
     public virtual bool Init()
     {
-        // 기본 초기화 작업 (예: 컴포넌트 캐싱 등)
+
         _state = AI_State.Idle;
         return true;
     }
 
-    /// <summary>
-    /// AI 상태를 설정합니다.
-    /// </summary>
     public virtual void SetState(AI_State state)
     {
         _state = state;
     }
 
-    /// <summary>
-    /// 현재 AI 상태를 반환합니다.
-    /// </summary>
     public AI_State GetState()
     {
         return _state;
     }
 
-    /// <summary>
-    /// AI가 데미지를 받을 때 호출합니다.
-    /// </summary>
     public virtual void TakeDamage(float amount)
     {
         _aiHealth -= amount;
@@ -53,20 +42,11 @@ public abstract class AI_Base : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// AI가 사망할 때 호출됩니다.
-    /// </summary>
     protected virtual void Die()
     {
         _state = AI_State.Dead;
         Debug.Log("AI 사망");
-        // 추가 처리: 애니메이션 재생, 콜라이더 비활성화, 게임 오브젝트 제거 등
-        // 예: Destroy(gameObject);
-    }
-
-    /// <summary>
-    /// AI의 이동 속도, 감지 범위 등 공통 프로퍼티에 접근하는 프로퍼티들
-    /// </summary>
+            }
     public float MoveSpeed { get { return _aiMoveSpeed; } }
     public float DetectionRange { get { return _aiDetectionRange; } }
     public float DetectionAngle { get { return _aiDetectionAngle; } }

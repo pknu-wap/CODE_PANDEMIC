@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
-public class AI_Fov : AI_Base 
+public class AI_Fov : MonoBehaviour
 {
     [Range(0, 360)]
     public float _fov = 120f;
