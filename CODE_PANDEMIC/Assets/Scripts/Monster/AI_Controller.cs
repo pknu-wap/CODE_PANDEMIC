@@ -1,31 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
+//Todo: fov로 시야각 구현(완) , ai base 만들기(데미지나 사거리 같은거 클래스로 때놓기) -> 베이스는 만들었어용 , 보스 컨트롤러(틀은 만듦) , 
+// 사거리 안에 왔을 때 전투 상태 돌입(스킬 사용) -> 얘도 대충? & 공격 상태, 스포너
 
-enum AI_State2
+public enum AI_State
 {
-    Idle,
+     Idle,
     Walk,
     Attack,
     Dead
 }
 
-public class AI_Controller : MonoBehaviour
+public class AI_Controller : AI_Base
 {
     private Transform _player;
     private Rigidbody2D _rb;
     private Coroutine _aiDamageCoroutine;
     private SpriteRenderer _renderer;
+    private AI_Fov _aiFov;
+    private AIPath _aiPath;
 
-    private float _aiDamage = 10f;
-    private float _aiDetectionRange = 7.5f;
-    private float _aiDetectionAngle = 120f;
-    private float _aiDamageDelay = 0.5f;
-    
-    private float _currentAngle;
-    private float _currentDistance;
-    
-    public virtual bool Init()
+
+    public override bool Init()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj == null)
@@ -34,7 +32,7 @@ public class AI_Controller : MonoBehaviour
             return false;
         }
         _player = playerObj.transform;
-        
+
         _rb = GetComponent<Rigidbody2D>();
         if (_rb == null)
         {
@@ -42,17 +40,31 @@ public class AI_Controller : MonoBehaviour
             return false;
         }
         _rb.freezeRotation = true;
-        
+
         _renderer = GetComponent<SpriteRenderer>();
         if (_renderer == null)
         {
             Debug.LogError("Sprite 없음");
             return false;
         }
-        
+
+        _aiFov = GetComponentInChildren<AI_Fov>();
+        if (_aiFov == null)
+        {
+            Debug.LogError("AI_Fov 컴포넌트를 찾을 수 없습니다.");
+            return false;
+        }
+
+        _aiPath = GetComponent<AIPath>();
+        if (_aiPath == null)
+        {
+            Debug.LogError("AIPath 없음");
+            return false;
+        }
+
         return true;
     }
-    
+
     void Start()
     {
         if (!Init())
@@ -61,60 +73,51 @@ public class AI_Controller : MonoBehaviour
             return;
         }
     }
-    
+
     private void Update()
     {
         if (_player == null)
             return;
-        
-        _currentAngle = CalculateAngle();
-        _currentDistance = CalculateDistance();
+
+        UpdateFovDirection();
     }
-    
+
     private void FixedUpdate()
     {
         if (_player == null)
             return;
-            
-        if (_currentDistance <= _aiDetectionRange)
+
+        _renderer.flipX = _player.position.x < transform.position.x;
+        if (_aiFov.GetDetectedObjects().Contains(_player.gameObject))
         {
-            if (_currentAngle <= _aiDetectionAngle / 2)
-            {
-                ChasePlayer();
-            }
-            else
-            {
-                StopMoving();
-            }
+            ChasePlayer();
         }
         else
         {
             StopMoving();
         }
     }
-    
-    private float CalculateAngle()
+
+    private void UpdateFovDirection()
     {
-        Vector2 aiDirection = (_player.position - transform.position).normalized;
-        Vector2 aiForward = (_player.position.x < transform.position.x) ? Vector2.left : Vector2.right;
-        return Vector2.Angle(aiForward, aiDirection);
+        if (_aiFov != null)
+        {
+            // _renderer.flipX가 true이면 좀비가 왼쪽을 바라보므로 FOV 자식 오브젝트의 localRotation을 180°로 설정
+            float angle = _renderer.flipX ? 180f : 0f;
+            _aiFov.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+        }
     }
-    
-    private float CalculateDistance()
-    {
-        return Vector2.Distance(_player.position, transform.position);
-    }
-    
+
     private void ChasePlayer()
     {
-        // 좀비가 플레이어를 향하도록 스프라이트 flip 처리
-        _renderer.flipX = _player.position.x < transform.position.x;
+        _aiPath.canMove = true;
     }
-    
+
     private void StopMoving()
     {
+        _aiPath.canMove = false;
     }
-    
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -122,7 +125,7 @@ public class AI_Controller : MonoBehaviour
             _aiDamageCoroutine ??= StartCoroutine(AttackPlayer());
         }
     }
-    
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player") && _aiDamageCoroutine != null)
@@ -131,7 +134,7 @@ public class AI_Controller : MonoBehaviour
             _aiDamageCoroutine = null;
         }
     }
-    
+
     private IEnumerator AttackPlayer()
     {
         Debug.Log(_aiDamage + " 데미지");
