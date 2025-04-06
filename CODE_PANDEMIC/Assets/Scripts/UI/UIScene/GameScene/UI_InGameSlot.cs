@@ -42,10 +42,11 @@ public class UI_InGameSlot : UI_Base
 
     public void UpdateSlot(int slotIndex, QuickSlotItem quickSlotItem)
     {
+        int index = slotIndex - 1;
         ItemData itemData = quickSlotItem?.ItemData;
-        UpdateSlotImage(slotIndex, itemData);
+        UpdateSlotImage(index, itemData);
 
-        if ((Images)slotIndex == Images.PortionImage)
+        if ((Images)index == Images.PortionImage)
         {
             int count = quickSlotItem?.Quantity ?? 0;
             UpdatePortionCount(count);
@@ -54,7 +55,7 @@ public class UI_InGameSlot : UI_Base
 
     public void UpdateSlotImage(int slotIndex, ItemData itemData)
     {
-        Image targetImage = GetImage(slotIndex-1);
+        Image targetImage = GetImage(slotIndex);
 
         if (targetImage == null)
         {

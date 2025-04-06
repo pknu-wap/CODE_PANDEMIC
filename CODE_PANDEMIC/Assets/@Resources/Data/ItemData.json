@@ -3,18 +3,77 @@
     {
       "TemplateID": 1,
       "Name": "붕대",
-      "Description": "부상을 응급처치할 때 사용하는 붕대입니다. 체력을 소량 회복합니다.",
+      "Description": "응급처치할 때 사용하는 붕대이다. 체력을 소량 회복한다.",
       "IsStackable": true,
       "MaxStackSize": 50,
       "Sprite": "Portion_1",
-      "Type": "Edible",
-      "Weapon": "None",
+      "Type": 0,
+      "Weapon": 0,
       "Parameters": [
         {
           "parameterName": "Health",
           "value": 20
         }
       ]
+    },
+    {
+      "TemplateID": 101,
+      "Name": "일반 권총",
+      "Description": "기본적인 반자동 권총이다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Pistol_1",
+      "Type": 1,
+      "Weapon": 2,
+      "Parameters": [
+        {
+          "parameterName": "공격력",
+          "value": 10
+        }
+      ]
+
+    },
+    {
+      "TemplateID": 102,
+      "Name": "일반 소총",
+      "Description": "기본적인 소총이다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Range_1",
+      "Type": 1,
+      "Weapon": 3,
+      "Parameters": [
+        {
+          "parameterName": "공격력",
+          "value": 10
+        },
+        {
+          "parameterName": "Bullet",
+          "value": 50
+        }
+      ]
+    },
+    {
+      "TemplateID": 103,
+      "Name": "쇠파이프",
+      "Description": "이거에 맞으면 아프다",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Short_1",
+      "Type": 1,
+      "Weapon": 1,
+      "Parameters": [
+        {
+          "parameterName": "공격력",
+          "value": 50
+        }
+
+      ]
+
+
     }
   ]
 }
+
+
+           

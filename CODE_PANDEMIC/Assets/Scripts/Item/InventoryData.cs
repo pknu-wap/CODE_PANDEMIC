@@ -38,6 +38,7 @@ namespace Inventory.Model
             }
             public int AddItem(ItemData item, int quantity, List<ItemParameter> itemState = null)
             {
+               
                 ItemData newItem = ItemFactoryManager.CreateItem(item.Type, item);
                 if (newItem == null)
                 {
@@ -45,7 +46,13 @@ namespace Inventory.Model
                     return quantity;
                 }
 
-               
+                if (newItem.Type == ItemType.Edible && Managers.Game.QuickSlot.HasItem(item))
+                {
+                    quantity = Managers.Game.QuickSlot.AddStackableItem( quantity);
+                    InformAboutChange();
+                    return quantity;
+                }
+
                 if (!newItem.IsStackable)
                 {
                     while (quantity > 0 && !IsInventoryFull())

@@ -39,7 +39,23 @@ public class QuickSlot
 
         NotifySlotUpdate(slotIndex, _slotItems[slotIndex]);
     }
-
+    public bool HasItem(ItemData itemData)
+    {
+        int slotIndex = QuickSlotIndex.GetSlotIndex(itemData.Weapon);
+        if (_slotItems.TryGetValue(slotIndex, out var slotItem))
+        {
+            return slotItem.ItemData.TemplateID == itemData.TemplateID;
+        }
+        return false;
+    }
+    public int AddStackableItem(int amount)
+    {
+        int index = QuickSlotIndex.GetSlotIndex(Define.WeaponType.None);
+        int remain = _slotItems[index].IncreaseQuantity(amount);
+        NotifySlotUpdate(index, _slotItems[index]);
+        return remain;
+    }
+   
     public void UseQuickSlot(int slotIndex, GameObject user)
     {
         if (!_slotItems.TryGetValue(slotIndex, out var quickSlotItem)) return;
@@ -121,6 +137,14 @@ public class QuickSlotItem
     public void DecreaseQuantity(int amount = 1)
     {
         Quantity = Mathf.Max(Quantity - amount, 0);
+    }
+    public int IncreaseQuantity(int amount)
+    {
+        int remain = 0;
+        if(Quantity+amount>ItemData.MaxStackSize)remain=Quantity+amount-ItemData.MaxStackSize;  
+        Quantity = Mathf.Min(Quantity+amount, ItemData.MaxStackSize);
+
+        return remain;
     }
 
     public bool IsEmpty => Quantity <= 0;
