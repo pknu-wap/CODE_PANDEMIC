@@ -120,3 +120,20 @@ public class InventorySaveData
 {
     public List<InventoryItemData> InventoryItems;
 }
+
+[Serializable]
+public class PlayerData
+{
+    // 장난임 빼삼
+    public string Name = "로건 케인";
+    public string Height = "185cm";
+    public string Weight = "78kg";
+    public string Muscle = "실압근";
+    public int SonCount = 2;
+
+    public int MaxHp; // 최대 체력
+    public int Hp; // 현재 체력
+
+    public int Speed; // 기본 이동 속도
+    public int SpeedMultiplier; // 이동 속도 가속 수치 (달리기)
+}
