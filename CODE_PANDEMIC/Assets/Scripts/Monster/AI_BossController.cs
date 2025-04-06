@@ -24,10 +24,10 @@ public class AI_BossController : MonoBehaviour
 
     private void Start()
     {
-        var playerComponent = FindObjectOfType<PlayerMovement>();
-        if (playerComponent != null)
+        var PlayerController = FindObjectOfType<PlayerController>();
+        if (PlayerController != null)
         {
-            _player = playerComponent.transform;
+            _player = PlayerController.transform;
         }
         else
         {

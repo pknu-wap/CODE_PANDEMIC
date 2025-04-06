@@ -25,7 +25,7 @@ public class AI_Controller : AI_Base
     public override bool Init()
     {
 
-        PlayerMovement playerComponent = FindObjectOfType<PlayerMovement>();
+        PlayerController playerComponent = FindObjectOfType<PlayerController>();
         if (playerComponent == null)
         {
             Debug.LogError("Player 없음");
