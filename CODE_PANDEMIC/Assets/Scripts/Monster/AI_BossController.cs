@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class AI_BossController : MonoBehaviour
 {
-    [SerializeField] private float _health = 100f;
-    [SerializeField] private float _moveSpeed = 3f;
-    [SerializeField] private bool _isBerserk = false;
+    private float _health = 100f;
+    private float _moveSpeed = 3f;
+    private bool _isBerserk = false;
 
-    [SerializeField] private float _sweepRange = 4f;
-    [SerializeField] private float _syringeRange = 4f;
-    [SerializeField] private float _chargeWidth = 6f;
+    private float _sweepRange = 4f;
+    private float _syringeRange = 4f;
+    private float _chargeWidth = 6f;
 
     private float _sweepCooldown = 0f;
     private float _syringeCooldown = 0f;
