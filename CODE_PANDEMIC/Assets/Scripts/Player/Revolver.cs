@@ -14,19 +14,21 @@ public class Revolver : WeaponBase
         range = 10f;
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && CanFire())
-        {
-            Attack();
-        }
-    }
-
     public override void Attack()
     {
-        if (bulletPrefab == null || firePoint == null) return;
+        Debug.Log("Revolver Attack() called");
 
-        SetNextFireTime();
+        if (bulletPrefab == null)
+        {
+            Debug.LogWarning("bulletPrefab is not assigned.");
+            return;
+        }
+
+        if (firePoint == null)
+        {
+            Debug.LogWarning("firePoint is not assigned.");
+            return;
+        }
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -35,11 +37,9 @@ public class Revolver : WeaponBase
         {
             rb.velocity = firePoint.up * bulletSpeed;
         }
-    }
-
-    public override void Reload()
-    {
-        Debug.Log(weaponName + " is reloading with revolver-specific animation.");
+        else
+        {
+            Debug.LogWarning("Bullet prefab has no Rigidbody2D.");
+        }
     }
 }
-
