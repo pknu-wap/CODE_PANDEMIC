@@ -6,7 +6,7 @@ public class AI_ : AI_Base
 {
     void Start()
     {
-       _aiName = "PatientZombie";
+        _aiName = "PatientZombie";
         _aiHealth = 100f;
         _aiDamage = 10f;
         _aiMoveSpeed = 100f;

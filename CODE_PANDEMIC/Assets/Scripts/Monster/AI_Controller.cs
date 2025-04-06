@@ -51,7 +51,7 @@ public class AI_Controller : AI_Base
         _aiFov = GetComponentInChildren<AI_Fov>();
         if (_aiFov == null)
         {
-            Debug.LogError("AI_Fov 컴포넌트를 찾을 수 없습니다.");
+            Debug.LogError("AI_Fov 없음");
             return false;
         }
 

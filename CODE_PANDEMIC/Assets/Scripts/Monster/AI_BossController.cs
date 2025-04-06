@@ -1,62 +1,70 @@
+using System.Collections;
 using UnityEngine;
 
 public class AI_BossController : MonoBehaviour
 {
-    public float health = 100f;
-    public float sweepRange = 4f;
-    public float syringeRange = 4f;
-    public float chargeWidth = 6f;
-    public bool isBerserk = false;
-    public float moveSpeed = 3f;
+    [SerializeField] private float _health = 100f;
+    [SerializeField] private float _moveSpeed = 3f;
+    [SerializeField] private bool _isBerserk = false;
 
-    private Transform player;
-    private float sweepCooldown = 0f;
-    private float syringeCooldown = 0f;
-    private float summonCooldown = 0f;
-    private float chargeCooldown = 0f;	
-    
-    private int baseSweepDamage = 10;
-    private int baseSyringeCount = 3;
+    [SerializeField] private float _sweepRange = 4f;
+    [SerializeField] private float _syringeRange = 4f;
+    [SerializeField] private float _chargeWidth = 6f;
 
-   
-    private bool isAttacking = false;
+    private float _sweepCooldown = 0f;
+    private float _syringeCooldown = 0f;
+    private float _summonCooldown = 0f;
+    private float _chargeCooldown = 0f;
 
-    void Start()
+    private int _baseSweepDamage = 10;
+    private int _baseSyringeCount = 3;
+    private bool _isAttacking = false;
+
+    private Transform _player;
+
+    private void Start()
     {
-        PlayerMovement playerComponent = FindObjectOfType<PlayerMovement>();
+        var playerComponent = FindObjectOfType<PlayerMovement>();
+        if (playerComponent != null)
+        {
+            _player = playerComponent.transform;
+        }
+        else
+        {
+            Debug.LogError("플레이어 없음");
+        }
     }
 
-    void Update()
+    private void Update()
     {
-        if (player == null) return;
+        if (_player == null) return;
 
-        if (isAttacking)
+        if (_isAttacking)
         {
             UpdateCooldowns();
             return;
         }
 
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, _player.position);
 
-        // 체력 50% 이하이면 광폭화 상태 전환
-        if (health <= 50f && !isBerserk)
+        if (_health <= 50f && !_isBerserk)
         {
             EnterBerserkMode();
         }
 
-        if (distanceToPlayer <= sweepRange && sweepCooldown <= 0f)
+        if (distanceToPlayer <= _sweepRange && _sweepCooldown <= 0f)
         {
             StartCoroutine(PerformSweep());
         }
-        else if (distanceToPlayer > syringeRange && syringeCooldown <= 0f)
+        else if (distanceToPlayer > _syringeRange && _syringeCooldown <= 0f)
         {
             StartCoroutine(PerformSyringeThrow());
         }
-        else if (summonCooldown <= 0f)
+        else if (_summonCooldown <= 0f)
         {
             StartCoroutine(PerformSummon());
         }
-        else if (isBerserk && chargeCooldown <= 0f)
+        else if (_isBerserk && _chargeCooldown <= 0f)
         {
             StartCoroutine(PerformCharge());
         }
@@ -68,78 +76,75 @@ public class AI_BossController : MonoBehaviour
         UpdateCooldowns();
     }
 
-    void UpdateCooldowns()
+    private void UpdateCooldowns()
     {
-        if (sweepCooldown > 0f) sweepCooldown -= Time.deltaTime;
-        if (syringeCooldown > 0f) syringeCooldown -= Time.deltaTime;
-        if (summonCooldown > 0f) summonCooldown -= Time.deltaTime;
-        if (chargeCooldown > 0f) chargeCooldown -= Time.deltaTime;
+        if (_sweepCooldown > 0f) _sweepCooldown -= Time.deltaTime;
+        if (_syringeCooldown > 0f) _syringeCooldown -= Time.deltaTime;
+        if (_summonCooldown > 0f) _summonCooldown -= Time.deltaTime;
+        if (_chargeCooldown > 0f) _chargeCooldown -= Time.deltaTime;
     }
 
-    void EnterBerserkMode()
+    private void EnterBerserkMode()
     {
-        isBerserk = true;
-        Debug.Log("보스가 광폭화 상태로 돌입! 휩쓸기 대미지 증가, 주사기 추가 발사!");
+        _isBerserk = true;
+        Debug.Log("Berserker");
     }
 
-    System.Collections.IEnumerator PerformSweep()
+    private IEnumerator PerformSweep()
     {
-        isAttacking = true;
-        int sweepDamage = isBerserk ? baseSweepDamage * 2 : baseSweepDamage;
-        Debug.Log($"보스가 휩쓸기 공격을 시작! (대미지: {sweepDamage})");
+        _isAttacking = true;
+        int sweepDamage = _isBerserk ? _baseSweepDamage * 2 : _baseSweepDamage;
+        Debug.Log($"Damage: {sweepDamage})");
 
         for (int i = 0; i < 10; i++)
         {
-            // 실제 공격 로직(예: 충돌 판정) 실행
-            Debug.Log($"휩쓸기 {i+1}/10 실행");
-            yield return new WaitForSeconds(0.2f);  // 각 공격 간 간격
+            Debug.Log($"Swipe {i + 1}/10 실행");
+            yield return new WaitForSeconds(0.2f);
         }
-        
-        sweepCooldown = 5f;  // 쿨타임
-        isAttacking = false;
+
+        _sweepCooldown = 5f;
+        _isAttacking = false;
     }
 
-    System.Collections.IEnumerator PerformSyringeThrow()
+    private IEnumerator PerformSyringeThrow()
     {
-        isAttacking = true;
-        int syringeCount = isBerserk ? baseSyringeCount + 1 : baseSyringeCount;
-        Debug.Log($"보스가 주사기를 {syringeCount}개 던지기 시작!");
+        _isAttacking = true;
+        int syringeCount = _isBerserk ? _baseSyringeCount + 1 : _baseSyringeCount;
+        Debug.Log($"{syringeCount}개 투척");
 
-        // 주사기 던지기 
-        yield return new WaitForSeconds(0.5f);  
-        
-        syringeCooldown = 8f;
-        isAttacking = false;
+        yield return new WaitForSeconds(0.5f);
+
+        _syringeCooldown = 8f;
+        _isAttacking = false;
     }
 
-    System.Collections.IEnumerator PerformSummon()
+    private IEnumerator PerformSummon()
     {
-        isAttacking = true;
-        Debug.Log("보스가 좀비 소환을 시작!");
-        
-        // 좀비 소환
-        yield return new WaitForSeconds(0.5f);  
-        
-        summonCooldown = 12f;
-        isAttacking = false;
+        _isAttacking = true;
+        Debug.Log("zombie summon");
+
+        yield return new WaitForSeconds(0.5f);
+
+        _summonCooldown = 12f;
+        _isAttacking = false;
     }
 
-    System.Collections.IEnumerator PerformCharge()
+    private IEnumerator PerformCharge()
     {
-        isAttacking = true;
-        Debug.Log("보스가 돌진 공격을 시작!");
-        
-        // 돌진 공격 
-        yield return new WaitForSeconds(0.5f);  
-        
-        chargeCooldown = 15f;
-        isAttacking = false;
+        _isAttacking = true;
+        Debug.Log("Charge Attack");
+
+        yield return new WaitForSeconds(0.5f);
+
+        _chargeCooldown = 15f;
+        _isAttacking = false;
     }
 
-    void ChasePlayer()
-    {
-        Vector3 direction = (player.position - transform.position).normalized;
-        transform.position += direction * moveSpeed * Time.deltaTime;
-        Debug.Log("보스가 플레이어에게 접근 중...");
+    private void ChasePlayer()
+    { 
+        // 일단 A* 적용 안함(A* 없어도 맵이 충분히 잘 따라 올 수 있음)
+        Vector3 direction = (_player.position - transform.position).normalized;
+        transform.position += direction * _moveSpeed * Time.deltaTime;
+        Debug.Log("chaseplayer");
     }
 }
