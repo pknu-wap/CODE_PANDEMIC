@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PZ_Puzzle_Item : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class PZ_Puzzle_Item : MonoBehaviour
     private BoxCollider2D _boxCollider;
     private BoxCollider2D _blockObject; // ¸ÞÀÎ ÆÛÁñÀÎ °æ¿ì Áö¿ªÀ» ¸·´Â ºí·°
     private Canvas _canvas; // Å×½ºÆ®¿ë
+
+    private Vector3 _original; // ¿ø·¡ À§Ä¡
+    private Vector3 _dongdong; // µÕµÕ À§Ä¡
 
     private PZ_Puzzle_Base _popupPuzzle; // ÆÛÁñ
 
@@ -35,6 +39,12 @@ public class PZ_Puzzle_Item : MonoBehaviour
         {
             _blockObject.isTrigger = true;
         }
+
+        _original = transform.position;
+        _dongdong = _original;
+        _dongdong.y += 0.2f;
+
+        StartCoroutine(MoveUp());
     }
 
     #endregion
@@ -55,6 +65,50 @@ public class PZ_Puzzle_Item : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         Managers.UI.ClosePopupUI(_popupPuzzle);
+    }
+
+    #endregion
+
+    #region Dong Dong
+
+    // À§·Î µÕµÕ
+    private IEnumerator MoveUp()
+    {
+        float currentTime = 0f;
+        float currentPecentage = 0f;
+        float moveDuration = 1f;
+
+        while (currentPecentage < 1)
+        {
+            currentTime += Time.deltaTime;
+            currentPecentage = currentTime / moveDuration;
+
+            transform.position = Vector3.Lerp(_original, _dongdong, currentPecentage);
+
+            yield return null;
+        }
+
+        StartCoroutine(MoveDown());
+    }
+
+    // ¾Æ·¡·Î µÕµÕ
+    private IEnumerator MoveDown()
+    {
+        float currentTime = 0f;
+        float currentPecentage = 0f;
+        float moveDuration = 1f;
+
+        while (currentPecentage < 1)
+        {
+            currentTime += Time.deltaTime;
+            currentPecentage = currentTime / moveDuration;
+
+            transform.position = Vector3.Lerp(_dongdong, _original, currentPecentage);
+
+            yield return null;
+        }
+
+        StartCoroutine(MoveUp());
     }
 
     #endregion

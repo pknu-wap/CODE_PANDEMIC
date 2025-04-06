@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1750460245, guid: c6db075ddcbbc344592d908aba6acf0f, type: 3}
+  m_Sprite: {fileID: 933372007, guid: c6db075ddcbbc344592d908aba6acf0f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -119,18 +119,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.004198909, y: 0.046247274}
+  m_Offset: {x: -0.00053130835, y: 0.0077150166}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.13, y: 0.15}
+    oldSize: {x: 0.16, y: 0.1}
     newSize: {x: 0.13, y: 0.15}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5723264, y: 0.25074768}
+  m_Size: {x: 0.1782959, y: 0.18436125}
   m_EdgeRadius: 0
 --- !u!114 &1279675412088512700
 MonoBehaviour:
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917330114707f254faaf386ea808e42e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _puzzleAddressable: PZ_Sliding_Board_Prefab
+  _puzzleAddressable: PZ_Password_Board_Prefab
   _isMainPuzzle: 1
 --- !u!1 &9059672527705246977
 GameObject:
