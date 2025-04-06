@@ -11,11 +11,18 @@ public class GameScene : BaseScene
         if (base.Init() == false) return false;
         SceneType = Define.SceneType.GameScene;
 
-        StartCoroutine(CowaitLoad());
+        PrepareStage();
         return true;
     }
+    public void PrepareStage()
+    {
+        StartCoroutine(CowaitLoad());
+    }
+       
+
     IEnumerator CowaitLoad()
     {
+        Managers.UI.FadeIn();
         while (Managers.Data.Loaded() == false) yield return null;
         int templateID = (Managers.Game.Chapter - 1) * Define.STAGES_PER_CHAPTER + Managers.Game.Stage;
         if (Managers.Data.Stages.TryGetValue(templateID, out StageData stageData) == false) yield break;
@@ -27,5 +34,21 @@ public class GameScene : BaseScene
         });
         Managers.Object.LoadStageData(_stageData);
 
+        Managers.UI.FadeIn();
     }
+
+    public void CompleteStage()
+    {
+        if(Managers.Game.Stage==Define.STAGES_PER_CHAPTER)
+        {
+            Managers.Game.Chapter++;
+            Managers.Game.Stage = 1;
+        }
+        else
+        {
+            Managers.Game.Stage++;
+        }
+        PrepareStage();
+    }
+  
 }

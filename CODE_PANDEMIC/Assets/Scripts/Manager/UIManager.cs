@@ -144,27 +144,39 @@ public class UIManager : MonoBehaviour
 
     public void FadeIn(Action onComplete = null)
     {
-        if(_fadeImage==null)
+        if (_fadeImage == null)
         {
-           Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) => 
-           {
-               _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
-           });
+            Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) =>
+            {
+                _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
+                SetCanvas(obj); // 
+                _fadeImage.Init();
+                _fadeImage.FadeIn(onComplete);
+            });
         }
-              
-        _fadeImage.FadeIn(onComplete);
+        else
+        {
+            _fadeImage.FadeIn(onComplete);
+        }
     }
-           
-    public void  FadeOut(Action onComplete = null)
+
+    public void FadeOut(Action onComplete = null)
     {
         if (_fadeImage == null)
         {
             Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) =>
             {
                 _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
+                SetCanvas(obj); // 
+                _fadeImage.Init();
+                _fadeImage.FadeOut(onComplete);
             });
         }
-        _fadeImage.FadeOut(onComplete);
-    } 
-        
+        else
+        {
+            _fadeImage.gameObject.SetActive(true);
+            _fadeImage.FadeOut(onComplete);
+        }
+    }
+
 }

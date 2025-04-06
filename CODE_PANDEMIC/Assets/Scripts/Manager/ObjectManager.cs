@@ -14,7 +14,7 @@ public class ObjectManager : MonoBehaviour
     }
     public void  LoadStageData(StageData stageData)
     { 
-        //lOAD STAGE DATA
+      
     }
     public void SpawnMonster()
     {

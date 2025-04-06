@@ -150,19 +150,14 @@ public class WeaponDataLoader : ILoader<int, WeaponData>
     {
         return true;
     }
+}
 [Serializable]
 public class PlayerData
 {
-    // �峭�� ����
-    public string Name = "�ΰ� ����";
-    public string Height = "185cm";
-    public string Weight = "78kg";
-    public string Muscle = "�Ǿб�";
-    public int SonCount = 2;
 
-    public int MaxHp; // �ִ� ü��
-    public int Hp; // ���� ü��
+    public int MaxHp; 
+    public int Hp; 
 
-    public int Speed; // �⺻ �̵� �ӵ�
-    public int SpeedMultiplier; // �̵� �ӵ� ���� ��ġ (�޸���)
+    public int Speed; 
+    public int SpeedMultiplier; 
 }
