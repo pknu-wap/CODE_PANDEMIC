@@ -5,12 +5,13 @@ using UnityEngine;
 public abstract class AI_Base : MonoBehaviour
 {
     // 기본 체력, 데미지, 이동 속도, 감지 범위, 시야각 등 공통 속성
-    [SerializeField] protected float _aiHealth = 100f;
-    [SerializeField] protected float _aiDamage = 10f;
-    [SerializeField] protected float _aiMoveSpeed = 200f;
-    [SerializeField] protected float _aiDetectionRange = 15f;
-    [SerializeField] protected float _aiDetectionAngle = 120f;
-    [SerializeField] protected float _aiDamageDelay = 0.5f; 
+    [SerializeField] protected float _aiHealth;
+    [SerializeField] protected float _aiDamage;
+    [SerializeField] protected float _aiMoveSpeed;
+    [SerializeField] protected float _aiDetectionRange;
+    [SerializeField] protected float _aiDetectionAngle;
+    [SerializeField] protected float _aiDamageDelay; 
+    [SerializeField] protected string _aiName;
 
     protected AI_State _state = AI_State.Idle;
 

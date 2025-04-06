@@ -6,7 +6,7 @@ using Pathfinding;
 
 public enum AI_State
 {
-     Idle,
+    Idle,
     Walk,
     Attack,
     Dead
@@ -24,13 +24,14 @@ public class AI_Controller : AI_Base
 
     public override bool Init()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj == null)
+
+        PlayerMovement playerComponent = FindObjectOfType<PlayerMovement>();
+        if (playerComponent == null)
         {
             Debug.LogError("Player 없음");
             return false;
         }
-        _player = playerObj.transform;
+        _player = playerComponent.transform;
 
         _rb = GetComponent<Rigidbody2D>();
         if (_rb == null)
@@ -77,7 +78,6 @@ public class AI_Controller : AI_Base
     {
         if (_player == null)
             return;
-
         UpdateFovDirection();
     }
 
