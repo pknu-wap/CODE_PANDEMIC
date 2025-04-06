@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
-//Todo: fov로 시야각 구현(완) , ai base 만들기(데미지나 사거리 같은거 클래스로 때놓기) -> 베이스는 만들었어용 , 보스 컨트롤러(틀은 만듦) , 
-// 사거리 안에 왔을 때 전투 상태 돌입(스킬 사용) -> 얘도 대충? & 공격 상태, 스포너
+
 
 public enum AI_State
 {
