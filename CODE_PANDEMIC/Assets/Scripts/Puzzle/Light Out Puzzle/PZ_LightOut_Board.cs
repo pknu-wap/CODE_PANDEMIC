@@ -2,13 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class PZ_LightOut_Board : UI_PopUp
+public class PZ_LightOut_Board : PZ_Puzzle_Base
 {
-    private RectTransform _rectTransform; // 추후 Bind 배우고 수정 예정
-    private Image _image; // 추후 Bind 배우고 수정 예정
+    #region Base
+
     private GridLayoutGroup _gridLayoutGroup;
 
     private List<PZ_LightOut_Button> _lightOutButtonList = new List<PZ_LightOut_Button>(); // 소환된 버튼들 관리
+    private PZ_LightOut_Reset _resetButton;
 
     private int _buttonMaxCount = 25; // Light 버튼 개수
 
@@ -18,7 +19,10 @@ public class PZ_LightOut_Board : UI_PopUp
         _image = GetComponent<Image>();
         _gridLayoutGroup = GetComponent<GridLayoutGroup>();
 
-        Managers.Resource.Instantiate("PZ_LightOut_Reset_Prefab", GetComponentInParent<Canvas>().transform);
+        Managers.Resource.Instantiate("PZ_LightOut_Reset_Prefab", GetComponentInParent<Canvas>().transform, (resetButton) =>
+        {
+            _resetButton = resetButton.GetComponent<PZ_LightOut_Reset>();
+        });
 
         // 보드 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -46,6 +50,18 @@ public class PZ_LightOut_Board : UI_PopUp
         return true;
     }
 
+    private void OnDestroy()
+    {
+        if (_resetButton)
+        {
+            Destroy(_resetButton.gameObject);
+        }
+    }
+
+    #endregion
+
+    #region Setting
+
     // Light Button 가져오기
     private void GetSpawnedButtons()
     {
@@ -59,6 +75,10 @@ public class PZ_LightOut_Board : UI_PopUp
             _lightOutButtonList.Add(spawnedButton);
         }
     }
+
+    #endregion
+
+    #region Click
 
     // 리셋
     public void ResetButtons()
@@ -100,6 +120,10 @@ public class PZ_LightOut_Board : UI_PopUp
         }
     }
 
+    #endregion
+
+    #region Clear
+
     // 버튼들이 전부 올바른 상태인지 체크
     public void CheckButtonsCorrect()
     {
@@ -110,9 +134,12 @@ public class PZ_LightOut_Board : UI_PopUp
     }
 
     // 퍼즐 클리어
-    private void PuzzleClear()
+    protected override void PuzzleClear()
     {
         Debug.LogWarning("Light Out Puzzle Clear!!!");
-        // 여기에 클리어 로직 구현
+
+        _puzzleOwner.ClearPuzzle();
     }
+
+    #endregion
 }

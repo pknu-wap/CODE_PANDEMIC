@@ -2,12 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class PZ_Password_Board : UI_PopUp
+public class PZ_Password_Board : PZ_Puzzle_Base
 {
+    #region Base
+
     private PZ_Password_InputUI _passwordInputUI;
 
-    private RectTransform _rectTransform; // 세팅
-    private Image _image; // 세팅
     private GridLayoutGroup _layoutGroup; // 세팅
 
     private List<PZ_Password_Button> _buttonList = new List<PZ_Password_Button>(); // 생성한 버튼 리스트
@@ -55,6 +55,18 @@ public class PZ_Password_Board : UI_PopUp
         GetSpawnedButtons();
     }
 
+    private void OnDestroy()
+    {
+        if (_passwordInputUI)
+        {
+            Destroy(_passwordInputUI.gameObject);
+        }
+    }
+
+    #endregion
+
+    #region Setting
+
     // 버튼 가져오기
     private void GetSpawnedButtons()
     {
@@ -67,6 +79,10 @@ public class PZ_Password_Board : UI_PopUp
         }
     }
 
+    #endregion
+
+    #region Password
+
     // 비밀 번호 입력
     public void InputPassword(string selectedWord)
     {
@@ -77,13 +93,18 @@ public class PZ_Password_Board : UI_PopUp
         CheckPuzzleClear();
     }
 
+    #endregion
+
+    #region Clear
+
     // 비밀 번호 일치 체크
     private void CheckPuzzleClear()
     {
         if (_inputPassword == _correctPassword)
         {
-            Debug.LogWarning("Password Puzzle Clear!!!");
-            // 여기에 퍼즐 클리어 로직 구현
+            PuzzleClear();
+
+            return;
         }
 
         // 비밀 번호 초기화
@@ -92,4 +113,15 @@ public class PZ_Password_Board : UI_PopUp
             _inputPassword = "";
         }
     }
+
+    // 퍼즐 클리어
+    protected override void PuzzleClear()
+    {
+        Debug.LogWarning("Password Puzzle Clear!!!");
+
+        Destroy(_passwordInputUI.gameObject);
+        _puzzleOwner.ClearPuzzle();
+    }
+
+    #endregion
 }

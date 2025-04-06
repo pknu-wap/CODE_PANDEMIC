@@ -2,36 +2,81 @@ using UnityEngine;
 
 public class PZ_Puzzle_Item : MonoBehaviour
 {
+    #region Base
+
     private BoxCollider2D _boxCollider;
-    private Canvas _canvas;
+    private BoxCollider2D _blockObject; // 메인 퍼즐인 경우 지역을 막는 블럭
+    private Canvas _canvas; // 테스트용
+
+    private PZ_Puzzle_Base _popupPuzzle; // 퍼즐
 
     [SerializeField]
     private string _puzzleAddressable; // 화면에 출력할 퍼즐 어드레서블
+    [SerializeField]
+    private bool _isMainPuzzle = true; // 메인 퍼즐인지 서브 퍼즐인지 체크
 
     private void Start()
     {
         if (_puzzleAddressable.Length == 0)
         {
             Debug.Log("퍼즐 할당 실패");
+            return;
         }
 
         _boxCollider = GetComponent<BoxCollider2D>();
+        _blockObject = GetComponentInChildren<BoxCollider2D>();
 
         _boxCollider.isTrigger = true;
         _boxCollider.offset = Vector2.zero;
 
-        _canvas = FindObjectOfType<Canvas>();
+        _canvas = FindObjectOfType<Canvas>(); // 삭제 예정
+
+        if (!_isMainPuzzle)
+        {
+            _blockObject.isTrigger = true;
+        }
     }
+
+    #endregion
+
+    #region Trigger
 
     // 퍼즐 띄우기
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Managers.UI.ShowPopupUI<UI_PopUp>(_puzzleAddressable, _canvas.transform); // 수정 예정
+        Managers.UI.ShowPopupUI<PZ_Puzzle_Base>(_puzzleAddressable, _canvas.transform, (popupPuzzle) =>
+        {
+            _popupPuzzle = popupPuzzle;
+            _popupPuzzle.SetPuzzleOwnerItem(this);
+        });
     }
 
     // 퍼즐 닫기
     private void OnTriggerExit2D(Collider2D other)
     {
-        Managers.UI.ClosePopupUI();
+        Managers.UI.ClosePopupUI(_popupPuzzle);
     }
+
+    #endregion
+
+    #region Clear
+
+    public void ClearPuzzle()
+    {
+        Managers.UI.ClosePopupUI();
+
+        // 메인 퍼즐 클리어 시 다음 스테이지로 갈 수 있게 길을 열어줌
+        if (_isMainPuzzle)
+        {
+            Destroy(gameObject);
+        }
+
+        // 서브 퍼즐 클리어 시
+        else
+        {
+            // 아이템 혹은 보상을 주는 로직 구현 예정
+        }
+    }
+
+    #endregion
 }
