@@ -64,6 +64,12 @@ public class BossDataLoader : ILoader<int, BossData>
 }
 
 [Serializable]
+public class SpawnerInfoData
+{
+    public int ID;
+    public Vector2Int Pos;
+}
+[Serializable]
 public class StageData
 {
     public int TemplateID;
@@ -71,7 +77,7 @@ public class StageData
     public int StageID;
     public int BossTemplateID;
     public string MapName;
-    
+    public List<SpawnerInfoData> Spawners;
 }
 [Serializable]
 public class StageDataLoader : ILoader<int, StageData>
@@ -82,6 +88,36 @@ public class StageDataLoader : ILoader<int, StageData>
         Dictionary<int, StageData> dic = new Dictionary<int, StageData>();
         foreach (StageData stage in stages)
             dic.Add(stage.TemplateID, stage);
+        return dic;
+    }
+    public bool Validate()
+    {
+        return true;
+    }
+}
+[Serializable]
+public class MonsterPosData
+{
+    public int ID;
+    public Vector2Int Pos;
+}
+
+[Serializable]
+public class SpawnerData
+{
+    public int TemplateID;
+    public string SpawnerPrefab;
+    public List<MonsterPosData> Monsterss;
+}
+[Serializable]
+public class SpawnerDataLoader : ILoader<int, SpawnerData>
+{
+    public List<SpawnerData> spawners = new List<SpawnerData>();
+    public Dictionary<int, SpawnerData> MakeDic()
+    {
+        Dictionary<int, SpawnerData> dic = new Dictionary<int, SpawnerData>();
+        foreach (SpawnerData spawner in spawners)
+            dic.Add(spawner.TemplateID, spawner);
         return dic;
     }
     public bool Validate()
@@ -180,6 +216,7 @@ public class WeaponDataLoader : ILoader<int, WeaponData>
         return true;
     }
 }
+
 [Serializable]
 public class PlayerData
 {
