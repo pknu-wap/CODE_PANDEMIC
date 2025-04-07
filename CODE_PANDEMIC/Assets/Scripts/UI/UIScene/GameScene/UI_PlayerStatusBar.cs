@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +9,12 @@ public class UI_PlayerStatusBar : UI_Base
 
     [SerializeField]
     private RectTransform _hpBarTransform;
-    private int _maxHp = 0;
     [SerializeField]
     private float _originalWidth;
 
+    private int _maxHp = 0;
+    private Coroutine _hpAnimRoutine;
 
-    //  체력 관련 이벤트만 `Action<int>` 사용
     public static event Action<int> OnMaxHpSet;
     public static event Action<int> OnHpUpdated;
 
@@ -23,7 +24,7 @@ public class UI_PlayerStatusBar : UI_Base
 
         BindImage(typeof(Images));
         _hpBarTransform = GetImage((int)Images.PlayerStatusBar).GetComponent<RectTransform>();
-        _originalWidth = _hpBarTransform.sizeDelta.x; 
+        _originalWidth = _hpBarTransform.sizeDelta.x;
 
         return true;
     }
@@ -31,25 +32,55 @@ public class UI_PlayerStatusBar : UI_Base
     private void OnEnable()
     {
         OnMaxHpSet += SetMaxHp;
-        OnHpUpdated += UpdateHpBar;
+        OnHpUpdated += AnimateHpBar;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         OnMaxHpSet -= SetMaxHp;
-        OnHpUpdated -= UpdateHpBar;
+        OnHpUpdated -= AnimateHpBar;
     }
 
     private void SetMaxHp(int hp)
     {
         _maxHp = hp;
-        UpdateHpBar(hp); // 초기 HP 바 설정
+        SetHpInstant(hp); 
     }
 
-    private void UpdateHpBar(int currentHp)
+    private void SetHpInstant(int currentHp)
     {
         if (_maxHp <= 0) return;
         float ratio = Mathf.Clamp(currentHp / (float)_maxHp, 0f, 1f);
         _hpBarTransform.sizeDelta = new Vector2(_originalWidth * ratio, _hpBarTransform.sizeDelta.y);
     }
+
+    private void AnimateHpBar(int currentHp)
+    {
+        if (_maxHp <= 0) return;
+
+        if (_hpAnimRoutine != null)
+            StopCoroutine(_hpAnimRoutine);
+
+        _hpAnimRoutine = StartCoroutine(AnimateBar(currentHp));
+    }
+
+    private IEnumerator AnimateBar(int currentHp)
+    {
+        float targetRatio = Mathf.Clamp(currentHp / (float)_maxHp, 0f, 1f);
+        float currentRatio = _hpBarTransform.sizeDelta.x / _originalWidth;
+
+        const float speed = 4f; // 작을수록 느리게 줄어듦
+
+        while (!Mathf.Approximately(currentRatio, targetRatio))
+        {
+            currentRatio = Mathf.MoveTowards(currentRatio, targetRatio, Time.deltaTime * speed);
+            _hpBarTransform.sizeDelta = new Vector2(_originalWidth * currentRatio, _hpBarTransform.sizeDelta.y);
+            yield return null;
+        }
+
+        // 마지막 정밀 보정
+        _hpBarTransform.sizeDelta = new Vector2(_originalWidth * targetRatio, _hpBarTransform.sizeDelta.y);
+        _hpAnimRoutine = null;
+    }
+   
 }
