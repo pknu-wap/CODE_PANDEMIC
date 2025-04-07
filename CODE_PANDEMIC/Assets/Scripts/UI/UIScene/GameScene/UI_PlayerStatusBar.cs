@@ -31,17 +31,17 @@ public class UI_PlayerStatusBar : UI_Base
 
     private void OnEnable()
     {
-        OnMaxHpSet += SetMaxHp;
+        OnMaxHpSet += SetInfo;
         OnHpUpdated += AnimateHpBar;
     }
 
     private void OnDestroy()
     {
-        OnMaxHpSet -= SetMaxHp;
+        OnMaxHpSet -= SetInfo;
         OnHpUpdated -= AnimateHpBar;
     }
 
-    private void SetMaxHp(int hp)
+    private void SetInfo(int hp)
     {
         _maxHp = hp;
         SetHpInstant(hp); 
@@ -69,7 +69,7 @@ public class UI_PlayerStatusBar : UI_Base
         float targetRatio = Mathf.Clamp(currentHp / (float)_maxHp, 0f, 1f);
         float currentRatio = _hpBarTransform.sizeDelta.x / _originalWidth;
 
-        const float speed = 4f; // 작을수록 느리게 줄어듦
+        const float speed = 4f; 
 
         while (!Mathf.Approximately(currentRatio, targetRatio))
         {
@@ -78,7 +78,7 @@ public class UI_PlayerStatusBar : UI_Base
             yield return null;
         }
 
-        // 마지막 정밀 보정
+   
         _hpBarTransform.sizeDelta = new Vector2(_originalWidth * targetRatio, _hpBarTransform.sizeDelta.y);
         _hpAnimRoutine = null;
     }

@@ -1,4 +1,5 @@
 using Inventory.Model;
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,8 +14,8 @@ public class MonsterData
     public string Prefab;
     public int Hp;
     public int AttackDamage;
-    public int moveSpeed;
-    public int AttackRange;
+    public float moveSpeed;
+    public float AttackRange;
   
 }
 [Serializable]
@@ -34,6 +35,34 @@ public Dictionary<int, MonsterData> MakeDic()
         return true;
     }
 }
+[Serializable]
+public class BossData
+{
+    public int TemplateID;
+    public string NameID;
+    public string Prefab;
+    public int Hp;
+    public int AttackDamage;
+    public float MoveSpeed;
+}
+[Serializable]
+public class BossDataLoader : ILoader<int, BossData>
+{
+    public List<BossData> bossMonsters = new List<BossData>();
+    public Dictionary<int, BossData> MakeDic()
+    {
+        Dictionary<int, BossData> dic = new Dictionary<int, BossData>();
+        foreach (BossData boss in bossMonsters)
+            dic.Add(boss.TemplateID, boss);
+        return dic;
+    }
+
+    public bool Validate()
+    {
+        return true;
+    }
+}
+
 [Serializable]
 public class StageData
 {
@@ -134,7 +163,7 @@ public class WeaponData
     public float ReloadTime;
     public float SpreadAngle; 
     public string BulletPrefab;
-    public string MuzzleEffect;
+    public WeaponType Weapon;
 }
 public class WeaponDataLoader : ILoader<int, WeaponData>
 {
@@ -154,10 +183,8 @@ public class WeaponDataLoader : ILoader<int, WeaponData>
 [Serializable]
 public class PlayerData
 {
-
     public int MaxHp; 
-    public int Hp; 
-
+    public int CurrentHp; 
     public int Speed; 
     public int SpeedMultiplier; 
 }
