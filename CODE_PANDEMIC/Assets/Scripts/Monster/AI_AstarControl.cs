@@ -13,7 +13,7 @@ public class AI_AstarControl : MonoBehaviour
     private int _gridDepth = 30;
     private float _nodeSize = 0.5f;
     private float _collisionDiameter = 1.3f;
-        private string _obstacleLayerName = "Obstacle";
+    private string _obstacleLayerName = "Obstacle";
 
     private void Start()
     {
@@ -39,11 +39,11 @@ public class AI_AstarControl : MonoBehaviour
     private void AssignDestinations()
     {
         AIDestinationSetter[] allDestinations = FindObjectsOfType<AIDestinationSetter>();
-        Transform playerTransform = GameObject.Find("Player")?.transform;
+        PlayerController playerComponent = FindObjectOfType<PlayerController>();
 
         foreach (AIDestinationSetter destinationSetter in allDestinations)
         {
-            destinationSetter.target = playerTransform;
+            destinationSetter.target = playerComponent.transform;
         }
     }
 

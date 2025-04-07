@@ -13,8 +13,10 @@ public abstract class AI_Base : MonoBehaviour
     [SerializeField] protected float _aiDamageDelay; 
     [SerializeField] protected string _aiName;
 
-    protected AI_State _state = AI_State.Idle;
+    
 
+    protected AI_State _state = AI_State.Idle;
+    public event System.Action OnDie;
 
     public virtual bool Init()
     {
@@ -42,11 +44,12 @@ public abstract class AI_Base : MonoBehaviour
         }
     }
 
-    protected virtual void Die()
+     protected virtual void Die()
     {
         _state = AI_State.Dead;
-        Debug.Log("AI 사망");
-            }
+        OnDie?.Invoke(); 
+        gameObject.SetActive(false);
+    }
     public float MoveSpeed { get { return _aiMoveSpeed; } }
     public float DetectionRange { get { return _aiDetectionRange; } }
     public float DetectionAngle { get { return _aiDetectionAngle; } }
