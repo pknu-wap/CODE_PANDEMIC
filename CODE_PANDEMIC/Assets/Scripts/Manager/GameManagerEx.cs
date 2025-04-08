@@ -66,6 +66,19 @@ public class GameManagerEx
         set => _gameData.Stage = value;
     }
 
+    public void CompleteStage()
+    {
+        if (Managers.Game.Stage == Define.STAGES_PER_CHAPTER)
+        {
+            Managers.Game.Chapter++;
+            Managers.Game.Stage = 1;
+        }
+        else
+        {
+            Managers.Game.Stage++;
+        }
+       SaveGame();
+    }
     public void Init()
     {
         _isPaused = false;
