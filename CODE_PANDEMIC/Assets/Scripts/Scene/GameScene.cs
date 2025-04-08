@@ -39,7 +39,9 @@ public class GameScene : BaseScene
 
     public void CompleteStage()
     {
+        Managers.Game.CompleteStage();
         PrepareStage();
     }
+    
   
 }

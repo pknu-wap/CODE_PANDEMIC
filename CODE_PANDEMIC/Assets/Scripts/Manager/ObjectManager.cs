@@ -17,8 +17,8 @@ public class ObjectManager : MonoBehaviour
         //맵 로딩되면 거기서 오브젝틀를 찾아야함?
     }
     public void  LoadStageData(StageData stageData)
-    { 
-      
+    {
+        RegisterSpawners();
     }
    
   
@@ -40,7 +40,11 @@ public class ObjectManager : MonoBehaviour
     }
     public void RegisterSpawners()
     {
-
+        Managers.Resource.Instantiate("Player", null, (obj) =>
+        {
+            PlayerStatus status = obj.GetComponent<PlayerStatus>();
+            status.SetInfo();
+        });
     }
     public void RegisterPuzzles()
     {
