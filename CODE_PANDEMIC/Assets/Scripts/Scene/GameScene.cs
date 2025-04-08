@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class GameScene : BaseScene
@@ -31,10 +32,12 @@ public class GameScene : BaseScene
         Managers.UI.ShowSceneUI<UI_GameScene>(callback: (UI) =>
         {
             _gameSceneUI = UI;
+           
         });
+        while(_gameSceneUI==null)yield return null;
         Managers.Object.LoadStageData(_stageData);
+           
 
-        Managers.UI.FadeIn();
     }
 
     public void CompleteStage()

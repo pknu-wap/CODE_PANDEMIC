@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UI_PlayerStatusBar : UI_Base
 {
@@ -9,8 +8,10 @@ public class UI_PlayerStatusBar : UI_Base
         PlayerStatusBar
     }
 
-    private Image _realHpBar;
-    private Image _effectHpBar;
+    private RectTransform _realHpBar;
+    private RectTransform _effectHpBar;
+
+    private float _originWidth;
 
     public override bool Init()
     {
@@ -19,15 +20,30 @@ public class UI_PlayerStatusBar : UI_Base
 
         BindImage(typeof(Images));
 
-        _realHpBar = GetImage((int)Images.PlayerStatusBar);
-        _effectHpBar = GetImage((int)Images.PlayerEffectStatusBar);
+        _realHpBar = GetImage((int)Images.PlayerStatusBar).GetComponent<RectTransform>();
+        _effectHpBar = GetImage((int)Images.PlayerEffectStatusBar).GetComponent<RectTransform>();
+
+        _originWidth = _realHpBar.sizeDelta.x;
 
         return true;
     }
 
     public void UpdateHp(float realRatio, float effectRatio)
     {
-        if (_realHpBar != null) _realHpBar.fillAmount = realRatio;
-        if (_effectHpBar != null) _effectHpBar.fillAmount = effectRatio;
+        Debug.Log($"HP 변경 (비율): Real={realRatio}, Effect={effectRatio}");
+
+        if (_realHpBar != null)
+        {
+            Vector2 size = _realHpBar.sizeDelta;
+            size.x = _originWidth * Mathf.Clamp01(realRatio);
+            _realHpBar.sizeDelta = size;
+        }
+
+        if (_effectHpBar != null)
+        {
+            Vector2 size = _effectHpBar.sizeDelta;
+            size.x = _originWidth * Mathf.Clamp01(effectRatio);
+            _effectHpBar.sizeDelta = size;
+        }
     }
 }

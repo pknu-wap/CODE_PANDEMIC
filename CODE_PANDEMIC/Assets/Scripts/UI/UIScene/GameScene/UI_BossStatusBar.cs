@@ -19,7 +19,10 @@ public class UI_BossStatusBar : UI_Base
 
     private int _maxHp;
     private int _currentHp;
-
+    public void SetInfo(int id)
+    {
+        //TODO: DATA
+    }
     public override bool Init()
     {
         if (base.Init() == false) return false;
@@ -30,9 +33,6 @@ public class UI_BossStatusBar : UI_Base
 
         return true;
     }
-    public void  SetInfo(int id)
-    {
-        
-    }
-
+   
+    
 }

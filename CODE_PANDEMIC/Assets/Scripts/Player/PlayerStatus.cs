@@ -3,29 +3,30 @@ using System.Collections;
 
 public class PlayerStatus : MonoBehaviour
 {
-    private int _maxRealHp = 100;
-    private float _realHp;
+    private int _maxHp = 100;
+    [SerializeField] private float _currentHp;
     private float _effectHp;
 
     public delegate void HpEffectUpdateDelegate(float realRatio, float effectRatio);
     private HpEffectUpdateDelegate _onHpEffectUpdated;
 
-    public float MaxRealHp => _maxRealHp;
-    public float RealHp => _realHp;
+    private Coroutine _damageEffectCoroutine;
+
+    public float MaxRealHp => _maxHp;
+    public float RealHp => _currentHp;
     public float EffectHp => _effectHp;
 
     public void SetInfo()
     {
-        _realHp = _maxRealHp;
-        _effectHp = _maxRealHp;
+        _currentHp = _maxHp;
+        _effectHp = _maxHp;
 
-        // UI_GameScene이 존재하면 델리게이트 연결
         if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StatusBar != null)
         {
             SetHpEffectDelegate(gameSceneUI.StatusBar.UpdateHp);
         }
 
-        _onHpEffectUpdated?.Invoke(_realHp / _maxRealHp, _effectHp / _maxRealHp);
+        _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
     }
 
     public void SetHpEffectDelegate(HpEffectUpdateDelegate updateMethod)
@@ -35,23 +36,26 @@ public class PlayerStatus : MonoBehaviour
 
     public void OnDamaged(float damageValue)
     {
-        _realHp = Mathf.Clamp(_realHp - damageValue, 0, _maxRealHp);
+        _currentHp = Mathf.Clamp(_currentHp - damageValue, 0, _maxHp);
 
-        if (_realHp <= 0)
+        if (_currentHp <= 0)
         {
-            // 사망 처리 등
+            // 사망 처리
             return;
         }
 
-        StartCoroutine(OnDamagedEffect());
+        if (_damageEffectCoroutine != null)
+            StopCoroutine(_damageEffectCoroutine);
+
+        _damageEffectCoroutine = StartCoroutine(OnDamagedEffect());
     }
 
     public void OnHealed(float healValue)
     {
-        _realHp = Mathf.Clamp(_realHp + healValue, 0, _maxRealHp);
-        _effectHp = Mathf.Max(_effectHp, _realHp);
+        _currentHp = Mathf.Clamp(_currentHp + healValue, 0, _maxHp);
+        _effectHp = Mathf.Max(_effectHp, _currentHp);
 
-        _onHpEffectUpdated?.Invoke(_realHp / _maxRealHp, _effectHp / _maxRealHp);
+        _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
     }
 
     private IEnumerator OnDamagedEffect()
@@ -59,18 +63,19 @@ public class PlayerStatus : MonoBehaviour
         float duration = 0.5f;
         float timer = 0f;
         float startHp = _effectHp;
+        float targetHp = _currentHp;
 
         while (timer < duration)
         {
             timer += Time.deltaTime;
             float t = timer / duration;
-            _effectHp = Mathf.Lerp(startHp, _realHp, t);
+            _effectHp = Mathf.SmoothStep(startHp, targetHp, t);  
 
-            _onHpEffectUpdated?.Invoke(_realHp / _maxRealHp, _effectHp / _maxRealHp);
+            _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
             yield return null;
         }
 
-        _effectHp = _realHp;
-        _onHpEffectUpdated?.Invoke(_realHp / _maxRealHp, _effectHp / _maxRealHp);
+        _effectHp = _currentHp;
+        _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
     }
 }

@@ -12,6 +12,7 @@ public class ObjectManager : MonoBehaviour
     //PlayerSpawner _playerSpawn;
     //StageExit 
     //List<Puzzles>퍼즐들 
+    public PlayerStatus Player { get; set; }
     public void SpawnPlayer()
     { 
         //맵 로딩되면 거기서 오브젝틀를 찾아야함?
@@ -42,10 +43,15 @@ public class ObjectManager : MonoBehaviour
     {
         Managers.Resource.Instantiate("Player", null, (obj) =>
         {
-            PlayerStatus status = obj.GetComponent<PlayerStatus>();
-            status.SetInfo();
+            Player= obj.GetComponent<PlayerStatus>();
+            obj.GetOrAddComponent<TempDamage>();
+            obj.GetComponent<TempDamage>().Status = Player;
+
+            Player.SetInfo();
         });
     }
+
+
     public void RegisterPuzzles()
     {
         _leftPuzzles++;
