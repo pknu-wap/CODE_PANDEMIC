@@ -55,7 +55,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Weapon"",
+                    ""name"": ""Equip1"",
                     ""type"": ""Button"",
                     ""id"": ""6db34863-8269-4100-bb17-810a76e03950"",
                     ""expectedControlType"": ""Button"",
@@ -67,6 +67,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Damage"",
                     ""type"": ""Button"",
                     ""id"": ""0f22f340-825e-419d-bb2d-2721828220ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Equip2"",
+                    ""type"": ""Button"",
+                    ""id"": ""8464b621-829c-42ac-a954-4d7d0cdb51f7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Equip3"",
+                    ""type"": ""Button"",
+                    ""id"": ""b0608990-f364-4bdc-8a0b-0dc8b975d562"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Equip4"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9f65068-20ce-4575-8844-4f985099e0d5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -169,40 +196,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Weapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b8fb6ea7-1ce2-4e3e-be04-d84c17effba3"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Weapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""286c873e-2663-46c0-a34b-4e7a6e18a2d4"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Weapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cda31ae0-109b-4e7b-9f16-a381122a3895"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Weapon"",
+                    ""action"": ""Equip1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -216,6 +210,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Damage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ab0a976-6478-418e-b18f-89a71a86eeb5"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equip2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3dbde7cb-e34a-4185-8f3f-45416a3729c6"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equip3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2041543f-e7ba-400d-a1b7-44eb6865472b"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equip4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -227,8 +254,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
-        m_Player_Weapon = m_Player.FindAction("Weapon", throwIfNotFound: true);
+        m_Player_Equip1 = m_Player.FindAction("Equip1", throwIfNotFound: true);
         m_Player_Damage = m_Player.FindAction("Damage", throwIfNotFound: true);
+        m_Player_Equip2 = m_Player.FindAction("Equip2", throwIfNotFound: true);
+        m_Player_Equip3 = m_Player.FindAction("Equip3", throwIfNotFound: true);
+        m_Player_Equip4 = m_Player.FindAction("Equip4", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -293,8 +323,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Inventory;
-    private readonly InputAction m_Player_Weapon;
+    private readonly InputAction m_Player_Equip1;
     private readonly InputAction m_Player_Damage;
+    private readonly InputAction m_Player_Equip2;
+    private readonly InputAction m_Player_Equip3;
+    private readonly InputAction m_Player_Equip4;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -302,8 +335,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
-        public InputAction @Weapon => m_Wrapper.m_Player_Weapon;
+        public InputAction @Equip1 => m_Wrapper.m_Player_Equip1;
         public InputAction @Damage => m_Wrapper.m_Player_Damage;
+        public InputAction @Equip2 => m_Wrapper.m_Player_Equip2;
+        public InputAction @Equip3 => m_Wrapper.m_Player_Equip3;
+        public InputAction @Equip4 => m_Wrapper.m_Player_Equip4;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -322,12 +358,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
-            @Weapon.started += instance.OnWeapon;
-            @Weapon.performed += instance.OnWeapon;
-            @Weapon.canceled += instance.OnWeapon;
+            @Equip1.started += instance.OnEquip1;
+            @Equip1.performed += instance.OnEquip1;
+            @Equip1.canceled += instance.OnEquip1;
             @Damage.started += instance.OnDamage;
             @Damage.performed += instance.OnDamage;
             @Damage.canceled += instance.OnDamage;
+            @Equip2.started += instance.OnEquip2;
+            @Equip2.performed += instance.OnEquip2;
+            @Equip2.canceled += instance.OnEquip2;
+            @Equip3.started += instance.OnEquip3;
+            @Equip3.performed += instance.OnEquip3;
+            @Equip3.canceled += instance.OnEquip3;
+            @Equip4.started += instance.OnEquip4;
+            @Equip4.performed += instance.OnEquip4;
+            @Equip4.canceled += instance.OnEquip4;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -341,12 +386,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
-            @Weapon.started -= instance.OnWeapon;
-            @Weapon.performed -= instance.OnWeapon;
-            @Weapon.canceled -= instance.OnWeapon;
+            @Equip1.started -= instance.OnEquip1;
+            @Equip1.performed -= instance.OnEquip1;
+            @Equip1.canceled -= instance.OnEquip1;
             @Damage.started -= instance.OnDamage;
             @Damage.performed -= instance.OnDamage;
             @Damage.canceled -= instance.OnDamage;
+            @Equip2.started -= instance.OnEquip2;
+            @Equip2.performed -= instance.OnEquip2;
+            @Equip2.canceled -= instance.OnEquip2;
+            @Equip3.started -= instance.OnEquip3;
+            @Equip3.performed -= instance.OnEquip3;
+            @Equip3.canceled -= instance.OnEquip3;
+            @Equip4.started -= instance.OnEquip4;
+            @Equip4.performed -= instance.OnEquip4;
+            @Equip4.canceled -= instance.OnEquip4;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -369,7 +423,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
-        void OnWeapon(InputAction.CallbackContext context);
+        void OnEquip1(InputAction.CallbackContext context);
         void OnDamage(InputAction.CallbackContext context);
+        void OnEquip2(InputAction.CallbackContext context);
+        void OnEquip3(InputAction.CallbackContext context);
+        void OnEquip4(InputAction.CallbackContext context);
     }
 }

@@ -55,7 +55,12 @@ public class QuickSlot
         NotifySlotUpdate(index, _slotItems[index]);
         return remain;
     }
-   
+    
+    public bool CheckSlot(int slotIndex)
+    {
+        if(!_slotItems.TryGetValue(slotIndex, out var quickSlotItem)) return false;
+        return true;
+    }
     public void UseQuickSlot(int slotIndex, GameObject user)
     {
         if (!_slotItems.TryGetValue(slotIndex, out var quickSlotItem)) return;

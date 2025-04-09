@@ -12,7 +12,7 @@ namespace Inventory.Model
         public string ActionName => "Equip";
 
         public bool PerformAction(GameObject obj, List<ItemParameter> itemState)
-        {
+        { //playerÀÇ weapon socket Àü´Þ 
            
             EquipWeapon weaponSystem =obj.GetComponent<EquipWeapon>();
             if(weaponSystem!=null)
