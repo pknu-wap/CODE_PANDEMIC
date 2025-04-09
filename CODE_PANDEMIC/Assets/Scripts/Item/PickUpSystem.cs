@@ -8,11 +8,15 @@ public class PickUpSystem : MonoBehaviour
 {
 
     [SerializeField] private InventoryData _inventoryData;
-   
-    private void OnTriggerEnter(Collider other)
+    private void Start()
+    {
+        _inventoryData = Managers.Game.Inventory;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Item item = other.gameObject.GetComponent<Item>();
-        Debug.Log("abc");
+       
         if (item != null)
         {
             int reminder = _inventoryData.AddItem(item.InventoryItem, item.Quantity);
@@ -20,4 +24,5 @@ public class PickUpSystem : MonoBehaviour
             else item.Quantity = reminder;
         }
     }
+  
 }

@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class UI_MiniMap : MonoBehaviour
 {
-    // Start is called before the first frame update
+    enum GameObjects
+    { 
+        LeftBottom,
+        RightBottom,
+        LeftTop,
+        RightTop,
+    }
+
     void Start()
     {
         

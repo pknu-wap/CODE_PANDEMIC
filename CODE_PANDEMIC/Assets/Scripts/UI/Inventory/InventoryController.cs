@@ -2,6 +2,7 @@ using Inventory.Model;
 using Inventory.Model.Inventory.Model;
 using Inventory.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -14,9 +15,11 @@ namespace Inventory
     {
         [SerializeField]
         private UI_Inventory _inventoryUI;
+        
         [SerializeField] 
         private InventoryData _inventoryData;
 
+        private PlayerControls _inputAction;
         public List<InventoryItem> _initialItems = new List<InventoryItem>();
 
         public UI_Inventory UIInventory
@@ -25,17 +28,51 @@ namespace Inventory
             private set { _inventoryUI = value; }
         }
 
+        private void Awake()
+        {
+            _inputAction = new PlayerControls();
+        }
+        private void OnEnable()
+        {
+            _inputAction.Enable();
+            _inputAction.Player.Inventory.performed -= ShowHide;
+            _inputAction.Player.Inventory.performed += ShowHide;
+
+        }
+
+        private void OnDisable()
+        {
+            _inputAction.Player.Inventory.performed -= ShowHide;
+        }
         private void Start()
         {
             _inventoryData = Managers.Game.Inventory;
-            Debug.Log($"{_inventoryData}");
-            if (UIInventory == null)
+            if (_inventoryData == null)
             {
-                Debug.LogError("InventoryUI가 할당되지 않았습니다.");
+                Debug.LogError("InventoryData가 초기화되지 않았습니다.");
                 return;
             }
-            PrepareInventoryUI();
-            PrepareInventoryData();
+
+            
+            StartCoroutine(CoWaitLoad(() =>
+            {
+                Managers.UI.ShowInventoryUI((inventoryUI) =>
+                {
+                    _inventoryUI = inventoryUI;
+                    PrepareInventoryUI();
+                    PrepareInventoryData();
+                });
+            }));
+        }
+        private IEnumerator CoWaitLoad(Action callback)
+        {
+            // SceneUI가 null이 아니게 될 때까지 대기
+            while (Managers.UI.SceneUI == null)
+            {
+                yield return null;
+            }
+            // 대기 후 콜백 실행
+            callback?.Invoke();
         }
 
         private void PrepareInventoryData()
@@ -83,17 +120,35 @@ namespace Inventory
         {
             InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
             if (inventoryItem.IsEmpty) return;
-            IItemAction itemAction = inventoryItem._item as IItemAction;
-            if (itemAction != null)
+
+            UIInventory.ShowItemAction(index);
+
+            if (inventoryItem._item is ItemData itemData)
             {
-                UIInventory.ShowItemAction(index);
-                UIInventory.AddAction(itemAction.ActionName, () => PerformAction(index));
+                if (itemData.Type == Define.ItemType.Equippable || itemData.Type == Define.ItemType.Edible)
+                {
+                    UIInventory.AddAction("Slot", () => SlotItem(index, inventoryItem._quantity));
+                }
             }
+            // Drop
             IDestroyableItem destroyableItem = inventoryItem._item as IDestroyableItem;
             if (destroyableItem != null)
             {
                 UIInventory.AddAction("Drop", () => DropItem(index, inventoryItem._quantity));
             }
+
+            // Slot
+        }
+        private void SlotItem(int index, int quantity)
+        {
+            InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
+            if (inventoryItem.IsEmpty) return;
+
+            ItemData itemData = inventoryItem._item;
+            Debug.Log("SlotItem");
+            Managers.Game.QuickSlot.RegisterQuickSlot(itemData, quantity);
+            _inventoryData.RemoveItem(index, quantity);
+            UIInventory.ResetSelection();
         }
 
         private void DropItem(int index, int quantity)

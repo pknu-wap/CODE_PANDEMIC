@@ -1,3 +1,4 @@
+using Inventory.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,8 @@ public class UIManager : MonoBehaviour
   
     Stack<UI_PopUp> _popupStack = new Stack<UI_PopUp>();
     UI_FadeImage _fadeImage;
-    
+    public UI_Inventory InventoryUI { get; private set; }
+
     public UI_Scene SceneUI { get; set; }
     //TODO : INVENTORY: NOT POPUP, NOT SCENE INVENTORY
 
@@ -97,29 +99,84 @@ public class UIManager : MonoBehaviour
         while (_popupStack.Count > 0) ClosePopupUI();
         SceneUI = null;
     }
-    public void FadeIn(Action onComplete = null)
+
+    public void ShowInventoryUI(Action<UI_Inventory> callback = null)
     {
-        if(_fadeImage==null)
-        {
-           Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) => 
-           {
-               _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
-           });
+       
+        if (InventoryUI == null)
+        {        
+            Managers.Resource.Instantiate("UI_Inventory", SceneUI.transform, (obj) =>
+            {
+                InventoryUI = Utils.GetOrAddComponent<UI_Inventory>(obj);
+                SetCanvas(obj, false);
+                callback?.Invoke(InventoryUI);
+                InventoryUI.Show();
+            });
         }
-              
-        _fadeImage.FadeIn(onComplete);
+        else
+        {
+            // 이미 있는 경우 활성화
+            InventoryUI.Show();
+            callback?.Invoke(InventoryUI);
+        }
     }
-           
-    public void  FadeOut(Action onComplete = null)
+
+    public void HideInventoryUI()
+    {
+        if (InventoryUI != null)
+            InventoryUI.Hide();
+    }
+
+    public bool IsInventoryVisible()
+    {
+        return InventoryUI != null && InventoryUI.gameObject.activeSelf;
+    }
+
+
+    public void CloseInventoryUI()
+    {
+        if (InventoryUI != null)
+        {
+            Managers.Resource.Destroy(InventoryUI.gameObject);
+            InventoryUI = null;
+        }
+    }
+
+    public void FadeIn(Action onComplete = null)
     {
         if (_fadeImage == null)
         {
             Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) =>
             {
                 _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
+                SetCanvas(obj); // 
+                _fadeImage.Init();
+                _fadeImage.FadeIn(onComplete);
             });
         }
-        _fadeImage.FadeOut(onComplete);
-    } 
-        
+        else
+        {
+            _fadeImage.FadeIn(onComplete);
+        }
+    }
+
+    public void FadeOut(Action onComplete = null)
+    {
+        if (_fadeImage == null)
+        {
+            Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) =>
+            {
+                _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
+                SetCanvas(obj); // 
+                _fadeImage.Init();
+                _fadeImage.FadeOut(onComplete);
+            });
+        }
+        else
+        {
+            _fadeImage.gameObject.SetActive(true);
+            _fadeImage.FadeOut(onComplete);
+        }
+    }
+
 }
