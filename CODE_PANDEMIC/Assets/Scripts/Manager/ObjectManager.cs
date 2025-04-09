@@ -12,14 +12,19 @@ public class ObjectManager : MonoBehaviour
     //PlayerSpawner _playerSpawn;
     //StageExit 
     //List<Puzzles>퍼즐들 
+    public GameObject MapObject;
     public PlayerStatus Player { get; set; }
-    public void SpawnPlayer()
-    { 
-        //맵 로딩되면 거기서 오브젝틀를 찾아야함?
-    }
+   
     public void  LoadStageData(StageData stageData)
     {
-        RegisterSpawners();
+        _leftPuzzles = 0;
+        _leftMonsters = 0;
+        Managers.Resource.Instantiate(stageData.MapAddress, null, (obj) =>
+        {
+            Debug.Log("Map");
+            SpawnPlayer();
+        });
+     
     }
    
   
@@ -41,33 +46,37 @@ public class ObjectManager : MonoBehaviour
     }
     public void RegisterSpawners()
     {
+        
+    }
+
+    public void SpawnPlayer()
+    {
         Managers.Resource.Instantiate("Player", null, (obj) =>
         {
-            Player= obj.GetComponent<PlayerStatus>();
+            Player = obj.GetComponent<PlayerStatus>();
             obj.GetOrAddComponent<TempDamage>();
             obj.GetComponent<TempDamage>().Status = Player;
 
             Player.SetInfo();
         });
     }
-
-
     public void RegisterPuzzles()
     {
         _leftPuzzles++;
+        Debug.Log($"{_leftPuzzles}");
     }
 
     public void UnRegisterSpawners()
+    {
+       
+    }
+    public void UnRegisterPuzzles()
     {
         _leftPuzzles--;
         if (_leftPuzzles <= 0)
         {
             OnAllPuzzlesCleared();
         }
-    }
-    public void UnRegisterPuzzles()
-    {
-
     }
     private void OnAllPuzzlesCleared()
     {

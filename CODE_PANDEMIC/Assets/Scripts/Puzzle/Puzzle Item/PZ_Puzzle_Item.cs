@@ -34,7 +34,7 @@ public class PZ_Puzzle_Item : MonoBehaviour
         _boxCollider.offset = Vector2.zero;
 
         _canvas = FindObjectOfType<Canvas>(); // 삭제 예정
-
+        Managers.Object.RegisterPuzzles();
         if (!_isMainPuzzle)
         {
             _blockObject.isTrigger = true;
@@ -118,7 +118,7 @@ public class PZ_Puzzle_Item : MonoBehaviour
     public void ClearPuzzle()
     {
         Managers.UI.ClosePopupUI();
-
+        Managers.Object.UnRegisterPuzzles();
         // 메인 퍼즐 클리어 시 다음 스테이지로 갈 수 있게 길을 열어줌
         if (_isMainPuzzle)
         {

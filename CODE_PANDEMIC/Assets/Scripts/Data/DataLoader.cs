@@ -76,6 +76,7 @@ public class StageData
     public int ChapterID;
     public int StageID;
     public int BossTemplateID;
+    public string MapAddress;
     public string MapName;
     public List<SpawnerInfoData> Spawners;
 }
