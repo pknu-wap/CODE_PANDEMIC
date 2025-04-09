@@ -75,7 +75,7 @@ public class AI_Controller : AI_Base
             Debug.LogError("AIPath 없음");
             return false;
         }
-         Debug.Log($"[Init] AI: {_aiName}, Damage: {_aiDamage}");
+ 
 
         ChangeState(new AI_StateIdle(this));
         return true;
