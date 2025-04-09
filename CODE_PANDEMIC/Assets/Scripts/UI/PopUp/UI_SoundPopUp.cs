@@ -32,7 +32,7 @@ public class UI_SoundPopUp :UI_PopUp
         BindEvent(_exitButton, OnClickExitButton);
         return true;
     }
-    //TODO: SOUND MANAGER와 SLIDER의 연동 
+    
     #region EventHandler 
     void OnClickExitButton()
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class UI_GameScene : UI_Scene
 {
+    public UI_PlayerStatusBar StatusBar { get; private set; }
     enum GameObjects
     {
         UI_MiniMap,
@@ -15,6 +16,7 @@ public class UI_GameScene : UI_Scene
     {
         if (base.Init() == false) return false;
         BindObject(typeof(GameObjects));
+        StatusBar = GetObject((int)GameObjects.UI_PlayerStatusBar).GetComponent<UI_PlayerStatusBar>();
         return true;
     }
 }

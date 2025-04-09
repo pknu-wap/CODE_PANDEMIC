@@ -5,18 +5,24 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+#region GameData ±¸Á¶Ã¼ Á¤ÀÇ
+[Serializable]
+public class QuickSlotItemData
+{
+    public int ItemID;
+    public int Quantity;
+}
+
 [Serializable]
 public class GameData
 {
     public int Chapter = 1;
     public int Stage = 1;
 
-    public int ShortWeaponID;
-    public int PistolID;
-    public int RangeWeaponID; //key slot data ÀúÀæ¤· 
+    public QuickSlotItemData[] QuickSlotItems = new QuickSlotItemData[4];
 
     public int MasterVolume;
-    public int BgmVolume; //volume ÀúÀå 
+    public int BgmVolume;
     public int EffectVolume;
 
     public Resolution SaveResolution;
@@ -24,27 +30,31 @@ public class GameData
 
     public static string FilePath => Application.persistentDataPath + "/SaveData.json";
 }
+#endregion
 
-
-public class GameManagerEx : MonoBehaviour
+#region GameManagerEx
+public class GameManagerEx
 {
     private GameData _gameData = new GameData();
     private bool _isPaused;
     private InventoryData _inventoryData;
     private InventorySaver _inventorySaver;
 
+    public QuickSlot QuickSlot { get; private set; }
+
     public GameData SaveData
     {
         get => _gameData;
         set => _gameData = value;
     }
+
     public InventoryData Inventory
     {
-        get=>_inventoryData;
-        private set => _inventoryData = value;  
+        get => _inventoryData;
+        private set => _inventoryData = value;
     }
 
-    public int Chapter //1chapter 1stage = º´¿ø 3Ãþ 
+    public int Chapter
     {
         get => _gameData.Chapter;
         set => _gameData.Chapter = value;
@@ -56,11 +66,25 @@ public class GameManagerEx : MonoBehaviour
         set => _gameData.Stage = value;
     }
 
+    public void CompleteStage()
+    {
+        if (Managers.Game.Stage == Define.STAGES_PER_CHAPTER)
+        {
+            Managers.Game.Chapter++;
+            Managers.Game.Stage = 1;
+        }
+        else
+        {
+            Managers.Game.Stage++;
+        }
+       SaveGame();
+    }
     public void Init()
     {
         _isPaused = false;
         _inventoryData = new InventoryData();
         _inventorySaver = new InventorySaver(_inventoryData);
+        QuickSlot = new QuickSlot();
         _inventorySaver.LoadInventory();
         LoadGame();
     }
@@ -101,8 +125,28 @@ public class GameManagerEx : MonoBehaviour
 
     public void SaveGame()
     {
-        string jsonStr = JsonUtility.ToJson(_gameData);
+        for (int i = 1; i <= 4; i++) // ½½·Ô ÀÎµ¦½º´Â 1,2,3,4
+        {
+            var slotItem = QuickSlot.GetSlotItem(i);
+            if (slotItem != null)
+            {
+                _gameData.QuickSlotItems[i - 1] = new QuickSlotItemData
+                {
+                    ItemID = slotItem.ItemData.TemplateID,
+                    Quantity = slotItem.Quantity
+                };
+            }
+            else
+            {
+                _gameData.QuickSlotItems[i - 1] = new QuickSlotItemData
+                {
+                    ItemID = -1,
+                    Quantity = 0
+                };
+            }
+        }
 
+        string jsonStr = JsonUtility.ToJson(_gameData);
         File.WriteAllText(GameData.FilePath, jsonStr);
 
         _inventorySaver.SaveInventory();
@@ -110,13 +154,30 @@ public class GameManagerEx : MonoBehaviour
         Debug.Log("Game saved.");
     }
 
+
     public bool LoadGame()
     {
         if (!File.Exists(GameData.FilePath)) return false;
 
         string fileStr = File.ReadAllText(GameData.FilePath);
         GameData data = JsonUtility.FromJson<GameData>(fileStr);
-        if (data != null) _gameData = data;
+        if (data != null)
+        {
+            _gameData = data;
+
+            for (int i = 1; i <= 4; i++) // 1~4 ½½·Ô ÀÎµ¦½º
+            {
+                var slotData = data.QuickSlotItems[i - 1];
+                if (slotData != null && slotData.ItemID != -1)
+                {
+                    if (Managers.Data.Items.TryGetValue(slotData.ItemID, out var itemData))
+                    {
+                        QuickSlot.RegisterQuickSlot(itemData, slotData.Quantity);
+                    }
+                }
+            }
+        }
+
         Debug.Log("Game loaded.");
         return true;
     }
@@ -131,7 +192,10 @@ public class GameManagerEx : MonoBehaviour
         Debug.Log("Game Quit.");
     }
 }
+#endregion
 
+
+#region InventorySaver
 public class InventorySaver
 {
     private InventoryData _inventoryData;
@@ -196,3 +260,4 @@ public class InventorySaver
         }
     }
 }
+#endregion

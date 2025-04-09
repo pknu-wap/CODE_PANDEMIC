@@ -54,7 +54,12 @@ public class UI_TitleScene : UI_Scene
     }
     private void OnClickStartButton()
     {
-        Managers.Scene.ChangeScene(Define.SceneType.GameScene);
+        Managers.UI.FadeOut(() =>
+        {
+            Managers.Scene.ChangeScene(Define.SceneType.GameScene);
+        });
     }
+        
+     
     #endregion
 }

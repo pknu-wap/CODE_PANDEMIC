@@ -9,9 +9,10 @@ public class ItemActionPanel : UI_Base
 {
  
     public void AddButton(string name, Action onclickAction)
-    {
+    {  
         Managers.Resource.Instantiate("ItemActionButton", transform,callback:(obj) =>
        {
+           
            Button button = obj.GetComponent<Button>();
            TMPro.TMP_Text buttonText = obj.GetComponentInChildren<TMPro.TMP_Text>();
 

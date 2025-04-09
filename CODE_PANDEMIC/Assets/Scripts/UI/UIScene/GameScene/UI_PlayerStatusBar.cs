@@ -1,55 +1,49 @@
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UI_PlayerStatusBar : UI_Base
 {
-    enum Images { PlayerStatusBar }
+    enum Images
+    {
+        PlayerEffectStatusBar,
+        PlayerStatusBar
+    }
 
-    [SerializeField]
-    private RectTransform _hpBarTransform;
-    private int _maxHp = 0;
-    [SerializeField]
-    private float _originalWidth;
+    private RectTransform _realHpBar;
+    private RectTransform _effectHpBar;
 
-
-    //  체력 관련 이벤트만 `Action<int>` 사용
-    public static event Action<int> OnMaxHpSet;
-    public static event Action<int> OnHpUpdated;
+    private float _originWidth;
 
     public override bool Init()
     {
-        if (!base.Init()) return false;
+        if (base.Init() == false)
+            return false;
 
         BindImage(typeof(Images));
-        _hpBarTransform = GetImage((int)Images.PlayerStatusBar).GetComponent<RectTransform>();
-        _originalWidth = _hpBarTransform.sizeDelta.x; 
+
+        _realHpBar = GetImage((int)Images.PlayerStatusBar).GetComponent<RectTransform>();
+        _effectHpBar = GetImage((int)Images.PlayerEffectStatusBar).GetComponent<RectTransform>();
+
+        _originWidth = _realHpBar.sizeDelta.x;
 
         return true;
     }
 
-    private void OnEnable()
+    public void UpdateHp(float realRatio, float effectRatio)
     {
-        OnMaxHpSet += SetMaxHp;
-        OnHpUpdated += UpdateHpBar;
-    }
+        Debug.Log($"HP 변경 (비율): Real={realRatio}, Effect={effectRatio}");
 
-    private void OnDisable()
-    {
-        OnMaxHpSet -= SetMaxHp;
-        OnHpUpdated -= UpdateHpBar;
-    }
+        if (_realHpBar != null)
+        {
+            Vector2 size = _realHpBar.sizeDelta;
+            size.x = _originWidth * Mathf.Clamp01(realRatio);
+            _realHpBar.sizeDelta = size;
+        }
 
-    private void SetMaxHp(int hp)
-    {
-        _maxHp = hp;
-        UpdateHpBar(hp); // 초기 HP 바 설정
-    }
-
-    private void UpdateHpBar(int currentHp)
-    {
-        if (_maxHp <= 0) return;
-        float ratio = Mathf.Clamp(currentHp / (float)_maxHp, 0f, 1f);
-        _hpBarTransform.sizeDelta = new Vector2(_originalWidth * ratio, _hpBarTransform.sizeDelta.y);
+        if (_effectHpBar != null)
+        {
+            Vector2 size = _effectHpBar.sizeDelta;
+            size.x = _originWidth * Mathf.Clamp01(effectRatio);
+            _effectHpBar.sizeDelta = size;
+        }
     }
 }
