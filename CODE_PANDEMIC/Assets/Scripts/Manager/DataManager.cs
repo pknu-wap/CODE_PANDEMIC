@@ -21,6 +21,7 @@ public class DataManager
     public Dictionary<int, StageData> Stages { get; private set; }
     public Dictionary<int, ItemData> Items { get; private set; }
    
+    public Dictionary<int, WeaponData> Weapons { get; private set; }
     public void Init(Action onComplete)
     {
         LoadJson<StageDataLoader, int, StageData>("StageData", (loader) => { Stages = loader.MakeDic(); });

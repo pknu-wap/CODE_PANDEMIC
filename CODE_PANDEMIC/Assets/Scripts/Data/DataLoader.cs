@@ -197,7 +197,8 @@ public class WeaponData
     public float BulletSpeed;
     public float Range;
     public float ReloadTime;
-    public float SpreadAngle; 
+    public float SpreadAngle;
+    public string WeaponPrefab;
     public string BulletPrefab;
     public WeaponType Weapon;
 }

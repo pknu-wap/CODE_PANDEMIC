@@ -79,8 +79,6 @@ public class QuickSlot
             {
                 case Define.ItemType.Edible:
                     quickSlotItem.DecreaseQuantity();
-                    Debug.Log($"[QuickSlot] {quickSlotItem.ItemData.Name} 사용 완료");
-
                     if (quickSlotItem.IsEmpty)
                         ClearSlot(slotIndex);
                     else
@@ -90,6 +88,7 @@ public class QuickSlot
                 case Define.ItemType.Equippable:
                     Debug.Log($"[QuickSlot] {quickSlotItem.ItemData.Name} 장착 완료");
                     break;
+                  
             }
         }
     }

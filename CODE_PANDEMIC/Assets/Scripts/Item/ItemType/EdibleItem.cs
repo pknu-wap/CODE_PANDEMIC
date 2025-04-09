@@ -21,8 +21,8 @@ namespace Inventory.Model
                 switch (param.parameterName)
                 {
                     case "Health":
-                        Debug.Log($"{param.parameterName}:{param.value}");
-                     
+                       PlayerStatus obj= Managers.Object.Player.GetComponent<PlayerStatus>();
+                        obj.OnHealed(param.value);
                         break;
 
                         // 추후 Stamina, Mana, Buff 등 확장 가능
