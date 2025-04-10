@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Inventory;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -9,10 +10,12 @@ public class PlayerController : MonoBehaviour
 
     PlayerControls action;
     InputAction moveAction;
-
+    InventoryController _inventory;
     private void Awake()
     {
         action = new PlayerControls();
+        _inventory = Utils.GetOrAddComponent<InventoryController>(gameObject);
+
         moveAction = action.Player.Move;
     }
 
