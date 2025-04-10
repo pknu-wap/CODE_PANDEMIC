@@ -29,7 +29,7 @@ public class BaseScene : MonoBehaviour
     {
         //ui  manager ?
 
-    }
+    } 
 
     public void FadeOut()
     {

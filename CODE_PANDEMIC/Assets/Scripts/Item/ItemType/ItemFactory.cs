@@ -1,63 +1,68 @@
 using Inventory.Model;
 using static Define;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 public interface IItemFactory
 {
-    ItemData CreateItem(int templateID, string name, string description, bool isStackable, int maxStackSize, string sprite, WeaponType weapon, List<ItemParameter> parameters);
+    ItemData CreateItem(ItemData data);
 }
 
 public class EdibleItemFactory : IItemFactory
 {
-    public ItemData CreateItem(int templateID, string name, string description, bool isStackable, int maxStackSize, string sprite, WeaponType weapon, List<ItemParameter> parameters)
+    public ItemData CreateItem(ItemData data)
     {
-        return new ItemData
+        if (data == null) throw new ArgumentNullException(nameof(data));
+
+        return new EdibleItem
         {
-            TemplateID = templateID,
-            Name = name,
-            Description = description,
-            IsStackable = isStackable,
-            MaxStackSize = maxStackSize,
-            Sprite = sprite,
+            TemplateID = data.TemplateID,
+            Name = data.Name,
+            Description = data.Description,
+            IsStackable = data.IsStackable,
+            MaxStackSize = data.MaxStackSize,
+            Sprite = data.Sprite,
             Type = ItemType.Edible,
             Weapon = WeaponType.None,
-            Parameters= parameters
+            Parameters = data.Parameters
         };
     }
 }
 
 public class EquippableItemFactory : IItemFactory
 {
-    public ItemData CreateItem(int templateID, string name, string description, bool isStackable, int maxStackSize, string sprite, WeaponType weapon, List<ItemParameter> parameters)
+    public ItemData CreateItem(ItemData data)
     {
-        return new ItemData
+        if (data == null) throw new ArgumentNullException(nameof(data));
+
+        return new EquippableItem
         {
-            TemplateID = templateID,
-            Name = name,
-            Description = description,
-            IsStackable = isStackable,
-            MaxStackSize = maxStackSize,
-            Sprite = sprite,
+            TemplateID = data.TemplateID,
+            Name = data.Name,
+            Description = data.Description,
+            IsStackable = data.IsStackable,
+            MaxStackSize = data.MaxStackSize,
+            Sprite = data.Sprite,
             Type = ItemType.Equippable,
-            Weapon = weapon,
-            Parameters = parameters
+            Weapon = data.Weapon,
+            Parameters = data.Parameters
         };
     }
 }
-
 public class ItemFactoryManager
 {
-    private static readonly IItemFactory EdibleFactory = new EdibleItemFactory();
-    private static readonly IItemFactory EquippableFactory = new EquippableItemFactory();
-
-    public static ItemData CreateItem(ItemType type, int templateID, string name, string description, bool isStackable, int maxStackSize, string sprite, WeaponType weapon, List<ItemParameter> parameters)
+    private static readonly Dictionary<ItemType, IItemFactory> FactoryMap = new Dictionary<ItemType, IItemFactory>
     {
-        return type switch
+        { ItemType.Edible, new EdibleItemFactory() },
+        { ItemType.Equippable, new EquippableItemFactory() }
+    };
+
+    public static ItemData CreateItem(ItemType type, ItemData data)
+    {
+        if (FactoryMap.TryGetValue(type, out IItemFactory factory))
         {
-            ItemType.Edible => EdibleFactory.CreateItem(templateID, name, description, isStackable, maxStackSize, sprite, weapon, parameters),
-            ItemType.Equippable => EquippableFactory.CreateItem(templateID, name, description, isStackable, maxStackSize, sprite, weapon, parameters),
-            _ => throw new ArgumentException($"Unknown item type: {type}")
-        };
+            return factory.CreateItem(data);
+        }
+        throw new ArgumentException($"Unknown item type: {type}");
     }
 }

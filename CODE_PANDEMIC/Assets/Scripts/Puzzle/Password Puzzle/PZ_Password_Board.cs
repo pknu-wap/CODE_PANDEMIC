@@ -2,30 +2,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class PZ_Password_Board : UI_PopUp
+public class PZ_Password_Board : PZ_Puzzle_Base
 {
+    #region Base
+
     private PZ_Password_InputUI _passwordInputUI;
 
-    private RectTransform _rectTransform; // 세팅
-    private Image _image; // 세팅
     private GridLayoutGroup _layoutGroup; // 세팅
 
     private List<PZ_Password_Button> _buttonList = new List<PZ_Password_Button>(); // 생성한 버튼 리스트
 
-    private string _correctPassword = "1234"; // 정답 비밀 번호
+    private string _correctPassword = "IUYC"; // 정답 비밀 번호
     private string _inputPassword; // 입력 받는 비밀 번호
 
     private void Init()
     {
+        SetComponents();
+
         Managers.Resource.Instantiate("PZ_Password_InputUI_Prefab", GetComponentInParent<Canvas>().transform, (spawnedInputUI) =>
         {
             _passwordInputUI = spawnedInputUI.GetComponent<PZ_Password_InputUI>();
         });
 
-        _rectTransform = GetComponent<RectTransform>();
         _layoutGroup = GetComponent<GridLayoutGroup>();
-
-        _image = GetComponent<Image>();
 
         Managers.Resource.LoadAsync<Sprite>("PZ_Password_Board_Sprite", (getSprite) =>
         {
@@ -55,6 +54,18 @@ public class PZ_Password_Board : UI_PopUp
         GetSpawnedButtons();
     }
 
+    private void OnDestroy()
+    {
+        if (_passwordInputUI)
+        {
+            Destroy(_passwordInputUI.gameObject);
+        }
+    }
+
+    #endregion
+
+    #region Setting
+
     // 버튼 가져오기
     private void GetSpawnedButtons()
     {
@@ -62,28 +73,37 @@ public class PZ_Password_Board : UI_PopUp
         {
             Transform childButton = transform.GetChild(index);
             PZ_Password_Button spawnedButton = childButton.gameObject.GetComponent<PZ_Password_Button>();
-            spawnedButton.ButtonSetup(index + 1);
+            spawnedButton.ButtonSetup();
             _buttonList.Add(spawnedButton);
         }
     }
 
+    #endregion
+
+    #region Password
+
     // 비밀 번호 입력
-    public void InputPassword(int selectedNumber)
+    public void InputPassword(string selectedWord)
     {
-        _inputPassword += selectedNumber.ToString();
+        _inputPassword += selectedWord;
 
         _passwordInputUI.SetPasswordText(_inputPassword);
 
         CheckPuzzleClear();
     }
 
+    #endregion
+
+    #region Clear
+
     // 비밀 번호 일치 체크
     private void CheckPuzzleClear()
     {
         if (_inputPassword == _correctPassword)
         {
-            Debug.LogWarning("Password Puzzle Clear!!!");
-            // 여기에 퍼즐 클리어 로직 구현
+            PuzzleClear();
+
+            return;
         }
 
         // 비밀 번호 초기화
@@ -92,4 +112,15 @@ public class PZ_Password_Board : UI_PopUp
             _inputPassword = "";
         }
     }
+
+    // 퍼즐 클리어
+    protected override void PuzzleClear()
+    {
+        Debug.LogWarning("Password Puzzle Clear!!!");
+
+        Destroy(_passwordInputUI.gameObject);
+        _puzzleOwner.ClearPuzzle();
+    }
+
+    #endregion
 }
