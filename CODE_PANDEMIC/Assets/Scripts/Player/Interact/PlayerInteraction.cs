@@ -15,12 +15,19 @@ public class PlayerInteraction : MonoBehaviour
 
     void Interact()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, interactionRange, interactableLayer);
+        Vector2 direction = transform.right;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactionRange, interactableLayer);
 
         if (hit.collider != null)
         {
-            Debug.Log("상호작용: " + hit.collider.name);
+            Debug.Log("interact: " + hit.collider.name);
             hit.collider.GetComponent<IInteractable>()?.Interact();
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + transform.right * interactionRange);
     }
 }
