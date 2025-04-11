@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 527054359}
   - component: {fileID: 527054360}
   - component: {fileID: 527054361}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,7 +540,7 @@ Transform:
   m_GameObject: {fileID: 527054353}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 956.3, y: 80.5, z: 0}
+  m_LocalPosition: {x: 429.3, y: 86.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -631,6 +631,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3927db0fa58f0409a3fea9f3d95bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &527054361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,7 +646,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b0a067ad2678e43a9e5713e7e0d085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  revolverPrefab: {fileID: 0}
+  walkSpeed: 5
+  runSpeed: 8
+  dashSpeed: 20
+  dashDuration: 0.15
+  dashCooldown: 0.5
+  spriteRenderer: {fileID: 0}
 --- !u!1 &1969719032
 GameObject:
   m_ObjectHideFlags: 0

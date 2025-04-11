@@ -64,7 +64,7 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
         });
     }
     
-    // 퍼즐 닫기
+    // 퍼즐 닫기, ESC를 눌렀을 때 이 함수를 호출해야 함
     public void ClosePuzzle()
     {
         Managers.UI.ClosePopupUI(_popupPuzzle);
