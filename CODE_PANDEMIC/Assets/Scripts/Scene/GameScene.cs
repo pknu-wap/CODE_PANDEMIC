@@ -19,11 +19,11 @@ public class GameScene : BaseScene
     {
         StartCoroutine(CowaitLoad());
     }
-       
+
 
     IEnumerator CowaitLoad()
     {
-        
+        Managers.UI.FadeIn();
         while (Managers.Data.Loaded() == false) yield return null;
         int templateID = (Managers.Game.Chapter - 1) * Define.STAGES_PER_CHAPTER + Managers.Game.Stage;
         if (Managers.Data.Stages.TryGetValue(templateID, out StageData stageData) == false) yield break;
@@ -32,20 +32,19 @@ public class GameScene : BaseScene
         Managers.UI.ShowSceneUI<UI_GameScene>(callback: (UI) =>
         {
             _gameSceneUI = UI;
-           
-        });
-        while(_gameSceneUI==null)yield return null;
-        if (Managers.Object.LoadStageData(stageData)) Managers.UI.FadeIn();
-        
-    }
 
-           
+        });
+        while (_gameSceneUI == null) yield return null;
+        Managers.Object.LoadStageData(_stageData);
+
+
+    }
 
     public void CompleteStage()
     {
         Managers.Game.CompleteStage();
         PrepareStage();
     }
-    
-  
+
+
 }
