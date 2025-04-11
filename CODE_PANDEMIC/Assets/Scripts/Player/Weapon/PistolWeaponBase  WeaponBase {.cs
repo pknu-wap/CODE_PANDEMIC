@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PistolWeaponBase : WeaponBase
 {
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform firePoint;
+    public GameObject bulletPrefab;
+    public Transform firePoint;
 
     public override void Attack()
     {
