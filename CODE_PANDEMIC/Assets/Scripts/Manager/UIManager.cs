@@ -10,9 +10,9 @@ public class UIManager : MonoBehaviour
     int _index = 20;
   
     Stack<UI_PopUp> _popupStack = new Stack<UI_PopUp>();
-    UI_FadeImage _fadeImage;
+    GameObject _fadeImage;
     public UI_Inventory InventoryUI { get; private set; }
-
+  
     public UI_Scene SceneUI { get; set; }
     //TODO : INVENTORY: NOT POPUP, NOT SCENE INVENTORY
 
@@ -41,7 +41,9 @@ public class UIManager : MonoBehaviour
         {
             canvas.sortingOrder = 0;
         }
-        
+
+       
+           
     }
     public void ShowSceneUI<T>(string key=null,Action<T>callback=null)where T : UI_Scene    
     {
@@ -83,6 +85,10 @@ public class UIManager : MonoBehaviour
         }
 
         ClosePopupUI();
+    }
+    public bool HasPopUpUI()
+    {
+        return _popupStack.Count > 0;
     }
     public void ClosePopupUI()
     {
@@ -148,15 +154,18 @@ public class UIManager : MonoBehaviour
         {
             Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) =>
             {
-                _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
-                SetCanvas(obj); // 
-                _fadeImage.Init();
-                _fadeImage.FadeIn(onComplete);
+
+                _fadeImage = obj;
+
+                SetCanvas(obj);
+              
+                _fadeImage.GetOrAddComponent<UI_FadeImage>().Init();
+                _fadeImage.GetOrAddComponent<UI_FadeImage>().FadeIn(onComplete);
             });
         }
         else
         {
-            _fadeImage.FadeIn(onComplete);
+            _fadeImage.GetOrAddComponent<UI_FadeImage>().FadeIn(onComplete);
         }
     }
 
@@ -166,16 +175,17 @@ public class UIManager : MonoBehaviour
         {
             Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) =>
             {
-                _fadeImage = obj.GetOrAddComponent<UI_FadeImage>();
+                _fadeImage = obj;
                 SetCanvas(obj); // 
-                _fadeImage.Init();
-                _fadeImage.FadeOut(onComplete);
+             
+                _fadeImage.GetOrAddComponent<UI_FadeImage>().Init();
+                _fadeImage.GetOrAddComponent<UI_FadeImage>().FadeOut(onComplete);
             });
         }
         else
         {
             _fadeImage.gameObject.SetActive(true);
-            _fadeImage.FadeOut(onComplete);
+            _fadeImage.GetOrAddComponent<UI_FadeImage>().FadeOut(onComplete);
         }
     }
 

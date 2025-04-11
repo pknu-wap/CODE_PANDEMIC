@@ -12,13 +12,17 @@ public class TitleScene : BaseScene
     {
         if (base.Init() == false) return false;
         SceneType = Define.SceneType.TitleScene;
-
+      
         Managers.UI.ShowSceneUI<UI_TitleScene>(callback: (titleSceneUI) =>
         {
+           
             _titleSceneUI = titleSceneUI;
-
+            
         });
+
         return true;
+
     }
+
 
 }

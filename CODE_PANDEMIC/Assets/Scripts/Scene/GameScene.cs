@@ -23,7 +23,7 @@ public class GameScene : BaseScene
 
     IEnumerator CowaitLoad()
     {
-        Managers.UI.FadeIn();
+        
         while (Managers.Data.Loaded() == false) yield return null;
         int templateID = (Managers.Game.Chapter - 1) * Define.STAGES_PER_CHAPTER + Managers.Game.Stage;
         if (Managers.Data.Stages.TryGetValue(templateID, out StageData stageData) == false) yield break;
@@ -35,10 +35,11 @@ public class GameScene : BaseScene
            
         });
         while(_gameSceneUI==null)yield return null;
-        Managers.Object.LoadStageData(_stageData);
-           
-
+        if (Managers.Object.LoadStageData(stageData)) Managers.UI.FadeIn();
+        
     }
+
+           
 
     public void CompleteStage()
     {

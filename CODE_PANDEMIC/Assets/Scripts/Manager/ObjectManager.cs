@@ -15,8 +15,9 @@ public class ObjectManager : MonoBehaviour
     public GameObject MapObject;
     public PlayerStatus Player { get; set; }
    
-    public void  LoadStageData(StageData stageData)
+    public bool  LoadStageData(StageData stageData)
     {
+        if (stageData == null) return false;
         _leftPuzzles = 0;
         _leftMonsters = 0;
         Managers.Resource.Instantiate(stageData.MapAddress, null, (obj) =>
@@ -24,7 +25,8 @@ public class ObjectManager : MonoBehaviour
             Debug.Log("Map");
             SpawnPlayer();
         });
-     
+
+        return true;
     }
    
   

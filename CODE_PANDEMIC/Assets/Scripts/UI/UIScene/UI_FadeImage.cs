@@ -10,7 +10,7 @@ public class UI_FadeImage : UI_Base
         FadeImage,
     }
     
-    [SerializeField] private float _fadeDuration = 0.5f;
+    [SerializeField] private float _fadeDuration = 1.0f;
     [SerializeField]
     private Image _fadeImage;
     private bool _isFading = false;
@@ -66,7 +66,7 @@ public class UI_FadeImage : UI_Base
     public void FadeOut(Action onComplete = null)
     {
         if (_isFading) return;
-       
+        this.gameObject.SetActive(true);
         StartCoroutine(Fade(0f, 1f, onComplete));
     }
 }

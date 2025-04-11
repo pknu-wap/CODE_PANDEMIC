@@ -176,13 +176,31 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Inventory"",
+            ""name"": ""UI"",
             ""id"": ""8f08d43b-4cef-46c2-8f48-405c780368c7"",
             ""actions"": [
                 {
                     ""name"": ""Inventory"",
                     ""type"": ""Button"",
                     ""id"": ""bdd6e075-d953-47b7-9e54-992b54439103"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MiniMap"",
+                    ""type"": ""Button"",
+                    ""id"": ""df62929d-5daf-4493-8331-aae3baee4bf2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""50982fc7-d064-4bef-b8c3-0dcf98293fb4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -198,6 +216,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba500ba0-ed71-4a74-849f-332b88303a6c"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiniMap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""827b9b9c-6fa2-4f91-9675-845cde67dbd7"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -301,9 +341,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Damage = m_Player.FindAction("Damage", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        // Inventory
-        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
-        m_Inventory_Inventory = m_Inventory.FindAction("Inventory", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Inventory = m_UI.FindAction("Inventory", throwIfNotFound: true);
+        m_UI_MiniMap = m_UI.FindAction("MiniMap", throwIfNotFound: true);
+        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         // QuickSlot
         m_QuickSlot = asset.FindActionMap("QuickSlot", throwIfNotFound: true);
         m_QuickSlot_Equip1 = m_QuickSlot.FindAction("Equip1", throwIfNotFound: true);
@@ -446,51 +488,67 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     }
     public PlayerActions @Player => new PlayerActions(this);
 
-    // Inventory
-    private readonly InputActionMap m_Inventory;
-    private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
-    private readonly InputAction m_Inventory_Inventory;
-    public struct InventoryActions
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_Inventory;
+    private readonly InputAction m_UI_MiniMap;
+    private readonly InputAction m_UI_Pause;
+    public struct UIActions
     {
         private @PlayerInput m_Wrapper;
-        public InventoryActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Inventory => m_Wrapper.m_Inventory_Inventory;
-        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
+        public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Inventory => m_Wrapper.m_UI_Inventory;
+        public InputAction @MiniMap => m_Wrapper.m_UI_MiniMap;
+        public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
-        public void AddCallbacks(IInventoryActions instance)
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
         {
-            if (instance == null || m_Wrapper.m_InventoryActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
+            @MiniMap.started += instance.OnMiniMap;
+            @MiniMap.performed += instance.OnMiniMap;
+            @MiniMap.canceled += instance.OnMiniMap;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
-        private void UnregisterCallbacks(IInventoryActions instance)
+        private void UnregisterCallbacks(IUIActions instance)
         {
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
+            @MiniMap.started -= instance.OnMiniMap;
+            @MiniMap.performed -= instance.OnMiniMap;
+            @MiniMap.canceled -= instance.OnMiniMap;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
-        public void RemoveCallbacks(IInventoryActions instance)
+        public void RemoveCallbacks(IUIActions instance)
         {
-            if (m_Wrapper.m_InventoryActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IInventoryActions instance)
+        public void SetCallbacks(IUIActions instance)
         {
-            foreach (var item in m_Wrapper.m_InventoryActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public InventoryActions @Inventory => new InventoryActions(this);
+    public UIActions @UI => new UIActions(this);
 
     // QuickSlot
     private readonly InputActionMap m_QuickSlot;
@@ -569,9 +627,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
     }
-    public interface IInventoryActions
+    public interface IUIActions
     {
         void OnInventory(InputAction.CallbackContext context);
+        void OnMiniMap(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IQuickSlotActions
     {
