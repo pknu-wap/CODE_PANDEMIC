@@ -12,31 +12,31 @@ public class EquipWeapon : MonoBehaviour
     private EquippableItem _weapon;
     private QuickSlot _quickSlot;
    
-    PlayerControls _weaponInput;
+    PlayerInput _weaponInput;
     public GameObject _weaponPrefab;
 
     //[SerializeField]
     // private List<ItemParameter> _parametersToModify, _itemCurrentState;
     private void Awake()
     {
-        _weaponInput=new PlayerControls();  
+        _weaponInput=new PlayerInput();  
     }
     private void OnEnable()
     {
-        _weaponInput.Player.Equip1.performed += Equip1;
-        _weaponInput.Player.Equip2.performed += Equip2;
-        _weaponInput.Player.Equip3.performed += Equip3;
-        _weaponInput.Player.Equip4.performed += Equip4;
+        _weaponInput.QuickSlot.Equip1.performed += Equip1;
+        _weaponInput.QuickSlot.Equip2.performed += Equip2;
+        _weaponInput.QuickSlot.Equip3.performed += Equip3;
+        _weaponInput.QuickSlot.Equip4.performed += Equip4;
 
         _weaponInput.Enable();
 
     }
     private void OnDisable()
     {
-        _weaponInput.Player.Equip1.performed -= Equip1;
-        _weaponInput.Player.Equip2.performed -= Equip2;
-        _weaponInput.Player.Equip3.performed -= Equip3;
-        _weaponInput.Player.Equip4.performed -= Equip4;
+        _weaponInput.QuickSlot.Equip1.performed -= Equip1;
+        _weaponInput.QuickSlot.Equip2.performed -= Equip2;
+        _weaponInput.QuickSlot.Equip3.performed -= Equip3;
+        _weaponInput.QuickSlot.Equip4.performed -= Equip4;
 
         _weaponInput.Disable();
     }
