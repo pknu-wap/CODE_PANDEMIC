@@ -19,7 +19,7 @@ namespace Inventory
         [SerializeField] 
         private InventoryData _inventoryData;
 
-        private PlayerControls _inputAction;
+        private PlayerInput _inputAction;
         public List<InventoryItem> _initialItems = new List<InventoryItem>();
 
         public UI_Inventory UIInventory
@@ -30,19 +30,21 @@ namespace Inventory
 
         private void Awake()
         {
-            _inputAction = new PlayerControls();
+            _inputAction = new PlayerInput();
         }
         private void OnEnable()
         {
-            _inputAction.Enable();
-            _inputAction.Player.Inventory.performed -= ShowHide;
-            _inputAction.Player.Inventory.performed += ShowHide;
+         
+            _inputAction.Inventory.Enable();
+            _inputAction.Inventory.Inventory.performed -= ShowHide;
+            _inputAction.Inventory.Inventory.performed += ShowHide;
 
         }
 
+
         private void OnDisable()
         {
-            _inputAction.Player.Inventory.performed -= ShowHide;
+            _inputAction.Inventory.Inventory.performed -= ShowHide;
         }
         private void Start()
         {
