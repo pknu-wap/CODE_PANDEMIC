@@ -7,11 +7,11 @@ using UnityEngine.InputSystem;
 public class TempDamage : MonoBehaviour
 {
     [SerializeField] PlayerStatus _status;
-    PlayerControls _inputActions;
+    PlayerInput _inputActions;
     public PlayerStatus Status { get { return _status; } set { _status = value; } }
     void  Awake()
     {
-        _inputActions=new PlayerControls();
+        _inputActions=new PlayerInput();
     }
     private void OnEnable()
     {
