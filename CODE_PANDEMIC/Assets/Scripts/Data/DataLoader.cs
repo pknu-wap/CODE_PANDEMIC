@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using static Define;
 
@@ -14,7 +15,10 @@ public class MonsterData
     public string Prefab;
     public int Hp;
     public int AttackDamage;
-    public float moveSpeed;
+    public float AttackDelay;
+    public float DetectionRange;
+    public float DetectionAngle;
+    public float MoveSpeed;
     public float AttackRange;
   
 }
@@ -192,15 +196,15 @@ public class InventorySaveData
 public class WeaponData
 {
     public int TemplateID;
-    public int BulletCount;
-    public float Damage; //damage
+    public int Damage; //damage
     public float FireRate; //firerate
     public float BulletSpeed;
     public float Range;
     public float ReloadTime;
     public float SpreadAngle;
     public string WeaponPrefab;
-    public string BulletPrefab;
+    public int BulletID;
+    public int BulletCount;
     public WeaponType Weapon;
 }
 public class WeaponDataLoader : ILoader<int, WeaponData>
