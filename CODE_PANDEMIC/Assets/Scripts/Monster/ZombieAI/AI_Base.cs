@@ -21,7 +21,6 @@ public abstract class AI_Base : MonoBehaviour
 
     public virtual bool Init()
     {
-        _state = AI_State.Idle;
         return true;
     }
 

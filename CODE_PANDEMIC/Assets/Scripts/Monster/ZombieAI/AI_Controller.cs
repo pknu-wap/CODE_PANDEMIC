@@ -22,7 +22,6 @@ public class AI_Controller : AI_Base
     private AI_IState _currentState;
 
     private Coroutine _aiDamageCoroutine;
-    public bool _playerInTrigger = true;
 
     private bool _isAttacking;
 
@@ -78,6 +77,7 @@ public class AI_Controller : AI_Base
  
 
         ChangeState(new AI_StateIdle(this));
+        _state = AI_State.Idle;
         return true;
     }
 
@@ -123,6 +123,7 @@ public class AI_Controller : AI_Base
 
     public void ChangeState(AI_IState newState)
     {
+        Debug.Log($"[StateChange] {_aiName} 상태 전환: {_currentState?.GetType().Name ?? "None"} → {newState.GetType().Name}");
         _currentState?.OnExit();
         _currentState = newState;
         _currentState.OnEnter();
@@ -158,9 +159,8 @@ public class AI_Controller : AI_Base
     private void OnTriggerEnter2D(Collider2D other)
     {
         PlayerController player = other.GetComponent<PlayerController>();
-        if (player != null && !_playerInTrigger)
+        if (player != null)
         {
-            _playerInTrigger = true;
             if (_currentState is AI_StateWalk)
             {
                 ChangeState(new AI_StateAttack(this));
@@ -173,7 +173,7 @@ public class AI_Controller : AI_Base
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
         {
-            _playerInTrigger = false;
+
             if (_aiDamageCoroutine != null)
             {
                 StopCoroutine(_aiDamageCoroutine);
@@ -189,7 +189,7 @@ public class AI_Controller : AI_Base
     private IEnumerator ZombieColliderAttack(PlayerController player)
     {
         WaitForSeconds wait = new WaitForSeconds(_aiDamageDelay);
-        while (_playerInTrigger)
+        while (_isAttacking && player != null && IsPlayerInAttackRange())
         {
             if (player == null)
                 yield break;

@@ -11,7 +11,6 @@ public class AI_Fov : MonoBehaviour
     public int _rayCount = 90;
     public float _viewDistance = 7.5f;
     public LayerMask _layerMask;
-
     private Mesh _mesh;
     private List<GameObject> _detectedObjects = new List<GameObject>();
     private void Awake()

@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 public class AI_StateWalk : AI_IState
 {
     private readonly AI_Controller _controller;
@@ -9,6 +11,7 @@ public class AI_StateWalk : AI_IState
 
     public void OnEnter()
     {
+        Debug.WriteLine("AI_StateWalk OnEnter() called");
         _controller.ChasePlayer();
     }
 
