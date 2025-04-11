@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [Header("Sprite")]
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    private Playerinput action;
+    private PlayerInput _action;
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction dashAction;
@@ -28,11 +28,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        action = new Playerinput();
+        _action = new PlayerInput();
 
-        moveAction = action.Player.Move;
-        runAction = action.Player.Run;
-        dashAction = action.Player.Dash;
+        moveAction = _action.Player.Move;
+        runAction = _action.Player.Run;
+        dashAction = _action.Player.Dash;
     }
 
     private void OnEnable()
