@@ -2,41 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class ObjectManager : MonoBehaviour
 {
-    //monstercontroller list 
+     
     private int _leftMonsters;
     private int _leftPuzzles;
     //Dictionary<SpawnerBase int>_leftMonsterSpawners;
     //PlayerSpawner _playerSpawn;
     //StageExit 
     //List<Puzzles>퍼즐들 
+    public bool Loaded { get; private set; }
     public GameObject MapObject;
     public PlayerStatus Player { get; set; }
    
-    public bool  LoadStageData(StageData stageData)
+  
+  
+    public IEnumerator CoLoadStageData(StageData stageData)
     {
-        if (stageData == null) return false;
-        _leftPuzzles = 0;
+        Loaded = false;
         _leftMonsters = 0;
+        _leftPuzzles = 0;
+
+        // 맵 로드
+        bool mapLoaded = false;
         Managers.Resource.Instantiate(stageData.MapAddress, null, (obj) =>
         {
-            Debug.Log("Map");
-            SpawnPlayer();
+            MapObject = obj;
+            mapLoaded = true;
         });
+        while (!mapLoaded) yield return null;
 
-        return true;
+        RegisterSpawners();
+        SpawnPlayer();
+        SpawnMonster();
+
+        Loaded = true;
     }
-   
-  
+
     public void SpawnMonster()
     {
-
+        //TODO SPAWNER 이후 
     }
     public void ReleaseMonster()
     {
-
+        //TODO WHEN MONSTER DIED
     }
     public void OnStageCleared()
     {
@@ -44,13 +55,16 @@ public class ObjectManager : MonoBehaviour
     }
     private void ResetStageObjects()
     {
-         // scene 에 소환된 오브젝트 남아있는거 다파괴 
+         //TODO scene 에 소환된 오브젝트 남아있는거 다파괴 
     }
     public void RegisterSpawners()
     {
-        
+        //TODO WHEN SPAWNER COMPLETE
     }
-
+    public void UnRegisterSpawners()
+    {
+        //TODO WHEN SPAWNER COMPLETE
+    }
     public void SpawnPlayer()
     {
         Managers.Resource.Instantiate("Player", null, (obj) =>
@@ -68,10 +82,7 @@ public class ObjectManager : MonoBehaviour
         Debug.Log($"{_leftPuzzles}");
     }
 
-    public void UnRegisterSpawners()
-    {
-       
-    }
+    
     public void UnRegisterPuzzles()
     {
         _leftPuzzles--;

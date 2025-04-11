@@ -31,7 +31,10 @@ public class UI_FadeImage : UI_Base
 
         return _fadeImage != null;
     }
-
+    public void FadeAtOnce()
+    {
+        _fadeImage.color = Color.black;
+    }
     private IEnumerator Fade(float startAlpha, float endAlpha, Action onComplete)
     {
         _isFading = true;

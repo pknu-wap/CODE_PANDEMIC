@@ -1,6 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
+
 using UnityEngine;
 
 public class GameScene : BaseScene
@@ -23,7 +22,8 @@ public class GameScene : BaseScene
 
     IEnumerator CowaitLoad()
     {
-        Managers.UI.FadeIn();
+        Managers.UI.FadeAtOnce();
+
         while (Managers.Data.Loaded() == false) yield return null;
         int templateID = (Managers.Game.Chapter - 1) * Define.STAGES_PER_CHAPTER + Managers.Game.Stage;
         if (Managers.Data.Stages.TryGetValue(templateID, out StageData stageData) == false) yield break;
@@ -34,10 +34,11 @@ public class GameScene : BaseScene
             _gameSceneUI = UI;
 
         });
-        while (_gameSceneUI == null) yield return null;
-        Managers.Object.LoadStageData(_stageData);
 
-
+        StartCoroutine(Managers.Object.CoLoadStageData(stageData));
+        while (Managers.Object.Loaded == false) yield return null;
+       
+        Managers.UI.FadeIn();
     }
 
     public void CompleteStage()

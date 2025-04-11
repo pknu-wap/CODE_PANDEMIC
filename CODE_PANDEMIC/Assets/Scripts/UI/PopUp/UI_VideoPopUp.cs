@@ -48,13 +48,6 @@ public class UI_VideoPopUp : UI_PopUp
         _resolutions.Add(new Resolution { width = 1600, height = 900 });
         _resolutions.Add(new Resolution { width = 1680, height = 1050 });
         _resolutions.Add(new Resolution { width = 1920, height = 1080 });
-        _resolutions.Add(new Resolution { width = 1920, height = 1200 });
-        _resolutions.Add(new Resolution { width = 2048, height = 1280 });
-        _resolutions.Add(new Resolution { width = 2560, height = 1440 });
-        _resolutions.Add(new Resolution { width = 2560, height = 1600 });
-        _resolutions.Add(new Resolution { width = 2880, height = 1800 });
-        _resolutions.Add(new Resolution { width = 3480, height = 2160 });
-
   
         _prevButton = GetButton((int)Buttons.PrevResolutionButton).gameObject;
         _nextButton = GetButton((int)Buttons.NextResolutionButton).gameObject;

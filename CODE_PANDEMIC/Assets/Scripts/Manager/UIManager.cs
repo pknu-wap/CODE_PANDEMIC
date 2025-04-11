@@ -147,7 +147,26 @@ public class UIManager : MonoBehaviour
             InventoryUI = null;
         }
     }
+    public void FadeAtOnce()
+    {
+        if (_fadeImage == null)
+        {
+            Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) =>
+            {
 
+                _fadeImage = obj;
+
+                SetCanvas(obj);
+
+                _fadeImage.GetOrAddComponent<UI_FadeImage>().Init();
+                _fadeImage.GetOrAddComponent<UI_FadeImage>().FadeAtOnce();
+            });
+        }
+        else
+        {
+            _fadeImage.GetOrAddComponent<UI_FadeImage>().FadeAtOnce();
+        }
+    }
     public void FadeIn(Action onComplete = null)
     {
         if (_fadeImage == null)
