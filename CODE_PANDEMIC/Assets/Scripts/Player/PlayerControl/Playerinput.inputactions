@@ -1,5 +1,5 @@
 {
-    "name": "PlayerControls",
+    "name": "Playerinput",
     "maps": [
         {
             "name": "Player",
@@ -24,6 +24,31 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Run",
+                    "type": "Value",
+                    "id": "a8ce3e70-c1a7-4b45-a0e6-9762f1aa0d42",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Dash",
+                    "type": "Value",
+                    "id": "54d67e80-699a-45cf-88d7-7481092ac39d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Interact",
+                    "type": "Value",
+                    "id": "ef342356-9f17-4b95-9799-14cbcf8de7a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                     "name": "Inventory",
                     "type": "Button",
                     "id": "7585801a-24b9-4d09-a087-1506def2e061",
@@ -158,6 +183,12 @@
                 },
                 {
                     "name": "",
+                    "id": "0eab9eba-96f1-49cb-983f-dd24319f2ea6",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
                     "id": "4e202cd8-aebc-459b-9f1a-7eb4751625e1",
                     "path": "<Keyboard>/i",
                     "interactions": "",
@@ -169,6 +200,12 @@
                 },
                 {
                     "name": "",
+                    "id": "56d88ef2-492e-44e7-8050-bd66fcb843a5",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "id": "d5ce3c4f-d9c0-42a9-b6f3-f5f26b716bd6",
                     "path": "<Keyboard>/1",
                     "interactions": "",
@@ -180,6 +217,12 @@
                 },
                 {
                     "name": "",
+                    "id": "0daed680-314a-40b2-a3d2-b5c1850ff1e4",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "id": "cc00675d-ca49-42ff-8c3e-71d2ebc037f0",
                     "path": "<Keyboard>/d",
                     "interactions": "",

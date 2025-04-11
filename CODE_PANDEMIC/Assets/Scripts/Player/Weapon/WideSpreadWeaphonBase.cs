@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class RangeWeaponBase : WeaponBase
+public class WideSpreadWeaphonBase : WeaponBase
 {
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] protected GameObject bulletPrefab;
+    [SerializeField] protected Transform firePoint;
 
     public override void Attack()
     {
