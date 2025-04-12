@@ -23,6 +23,7 @@ public class MonsterData
   
 }
 [Serializable]
+
 public class MonsterDataLoader:ILoader<int, MonsterData>
 {
     public List<MonsterData> monsters = new List<MonsterData>();
@@ -71,7 +72,7 @@ public class BossDataLoader : ILoader<int, BossData>
 public class SpawnerInfoData
 {
     public int ID;
-    public Vector2Int Pos;
+    public Vector2 Pos;
 }
 [Serializable]
 public class StageData
@@ -104,15 +105,14 @@ public class StageDataLoader : ILoader<int, StageData>
 public class MonsterPosData
 {
     public int ID;
-    public Vector2Int Pos;
+    public Vector2 Pos;
 }
 
 [Serializable]
 public class SpawnerData
 {
     public int TemplateID;
-    public string SpawnerPrefab;
-    public List<MonsterPosData> Monsterss;
+    public List<MonsterPosData> Monsters;
 }
 [Serializable]
 public class SpawnerDataLoader : ILoader<int, SpawnerData>
