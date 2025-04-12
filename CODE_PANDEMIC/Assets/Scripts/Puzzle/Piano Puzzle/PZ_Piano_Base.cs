@@ -71,6 +71,7 @@ public class PZ_Piano_Base : PZ_Puzzle_Base
         if (_currentPianoCount >= _maxPianoCount)
         {
             _currentPianoNotes = "";
+            _currentPianoCount = 0;
             Debug.LogWarning("Puzzle Reset");
         }
     }

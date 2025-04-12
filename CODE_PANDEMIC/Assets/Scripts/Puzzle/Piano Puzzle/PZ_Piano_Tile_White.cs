@@ -21,7 +21,7 @@ public class PZ_Piano_Tile_White : UI_Base
     private PianoNoteWhite[] _pianoNoteTypes; // 건반 음 종류
     private PianoNoteWhite _pianoTileNote; // 현재 건반 음
 
-    private void Start()
+    private void Setting()
     {
         _rectTransform = GetComponent<RectTransform>();
         _outLine = GetComponent<Outline>();
@@ -44,6 +44,8 @@ public class PZ_Piano_Tile_White : UI_Base
     // 건반 기본 세팅
     public void TileSetup(int index)
     {
+        Setting();
+
         int setTileX = -450 + 150 * index;
         _rectTransform.anchoredPosition = new Vector2(setTileX, 0);
         _pianoTileNote = _pianoNoteTypes[index];

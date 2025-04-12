@@ -18,7 +18,7 @@ public class PZ_Piano_Tile_Black : UI_Base
     private PianoNoteBlack[] _pianoNoteTypes; // 건반 음 종류
     private PianoNoteBlack _pianoTileNote; // 현재 건반 음
 
-    private void Start()
+    private void Setting()
     {
         _rectTransform = GetComponent<RectTransform>();
         _pianoBase = GetComponentInParent<PZ_Piano_Base>();
@@ -38,6 +38,8 @@ public class PZ_Piano_Tile_Black : UI_Base
     // 건반 기본 세팅
     public void TileSetup(int index)
     {
+        Setting();
+
         // 중간의 빈 검은 타일
         if (index == 2)
         {
