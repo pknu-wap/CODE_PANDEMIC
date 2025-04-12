@@ -9,11 +9,6 @@ public class AI_Spawner : SpawnBase
 
         foreach (MonsterPosData monsterData in spawnerData.Monsterss)
         {
-            if (monsterData.ID < 0 || monsterData.ID >= _enemyPrefabs.Length)
-            {
-                Debug.LogWarning($"유효하지 않은 몬스터 ID: {monsterData.ID}");
-                continue;
-            }
 
             GameObject prefab = _enemyPrefabs[monsterData.ID];
             Vector2Int spawnPos = monsterData.Pos; 
