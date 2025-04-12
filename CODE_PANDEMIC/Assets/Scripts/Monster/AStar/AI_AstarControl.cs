@@ -7,13 +7,14 @@ public class AI_AstarControl : MonoBehaviour
     private float _height = 0.01f;
     private float _speed = 3.0f;
     private float _pickNextWaypointDist = 1.2f;
+    private Vector3 _gravity = new(0, 0, 0);
 
     
     private int _gridWidth = 50;
     private int _gridDepth = 30;
     private float _nodeSize = 0.5f;
     private float _collisionDiameter = 1.3f;
-    private string _obstacleLayerName = "Obstacle";
+    private string _obstacleLayerName = "Interact";
 
     private void Start()
     {
@@ -33,6 +34,7 @@ public class AI_AstarControl : MonoBehaviour
             aiPath.pickNextWaypointDist = _pickNextWaypointDist;
             aiPath.orientation = OrientationMode.YAxisForward; // 2D 모드
             aiPath.enableRotation = false;
+            aiPath.gravity = _gravity;
         }
     }
 

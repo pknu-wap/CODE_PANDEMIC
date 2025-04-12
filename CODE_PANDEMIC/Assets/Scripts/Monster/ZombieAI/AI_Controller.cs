@@ -13,13 +13,14 @@ public enum AI_State
 
 public class AI_Controller : AI_Base
 {
-    private Transform _player;
+    public Transform _player;
     private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
     private AI_Fov _aiFov;
-    protected AIPath _aiPath;
+    public AIPath _aiPath;
 
     private AI_IState _currentState;
+    
 
     private Coroutine _aiDamageCoroutine;
 
@@ -123,7 +124,6 @@ public class AI_Controller : AI_Base
 
     public void ChangeState(AI_IState newState)
     {
-        Debug.Log($"[StateChange] {_aiName} 상태 전환: {_currentState?.GetType().Name ?? "None"} → {newState.GetType().Name}");
         _currentState?.OnExit();
         _currentState = newState;
         _currentState.OnEnter();
@@ -173,15 +173,15 @@ public class AI_Controller : AI_Base
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
         {
-
-            if (_aiDamageCoroutine != null)
+            // 여기서는 공격 상태인 경우에는 상태 전환을 발생시키지 않음
+            if (!(_currentState is AI_StateAttack))
             {
-                StopCoroutine(_aiDamageCoroutine);
-                _aiDamageCoroutine = null;
-            }
-            if (_currentState is AI_StateAttack)
-            {
-                ChangeState(new AI_StateWalk(this));
+                if (_aiDamageCoroutine != null)
+                {
+                    StopCoroutine(_aiDamageCoroutine);
+                    _aiDamageCoroutine = null;
+                }
+                // 만약 기본 공격 상태라면 추가 처리 가능
             }
         }
     }
@@ -189,12 +189,13 @@ public class AI_Controller : AI_Base
     private IEnumerator ZombieColliderAttack(PlayerController player)
     {
         WaitForSeconds wait = new WaitForSeconds(_aiDamageDelay);
-        while (_isAttacking && player != null && IsPlayerInAttackRange())
+        // _isAttacking 플래그는 Attack 상태에서 관리됨
+        while (_isAttacking)
         {
             if (player == null)
                 yield break;
 
-            Debug.Log($"{_aiName}이 {_aiDamage} 데미지");
+            Debug.Log($"{_aiName}이 {_aiDamage} 데미지 주는 공격 실행 중");
 
             yield return wait;
         }
