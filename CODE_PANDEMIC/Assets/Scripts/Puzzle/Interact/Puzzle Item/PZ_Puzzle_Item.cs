@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PZ_Puzzle_Item : MonoBehaviour
+public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 {
     #region Base
 
@@ -49,20 +49,23 @@ public class PZ_Puzzle_Item : MonoBehaviour
 
     #endregion
 
-    #region Trigger
+    #region Interact
 
     // 퍼즐 띄우기
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Interact()
     {
+        Debug.Log("퍼즐 상호 작용");
+
+        // 캔버스 부분 수정 예정
         Managers.UI.ShowPopupUI<PZ_Puzzle_Base>(_puzzleAddressable, _canvas.transform, (popupPuzzle) =>
         {
             _popupPuzzle = popupPuzzle;
             _popupPuzzle.SetPuzzleOwnerItem(this);
         });
     }
-
-    // 퍼즐 닫기
-    private void OnTriggerExit2D(Collider2D other)
+    
+    // 퍼즐 닫기, ESC를 눌렀을 때 이 함수를 호출해야 함
+    public void ClosePuzzle()
     {
         Managers.UI.ClosePopupUI(_popupPuzzle);
     }
@@ -96,7 +99,7 @@ public class PZ_Puzzle_Item : MonoBehaviour
     {
         float currentTime = 0f;
         float currentPecentage = 0f;
-        float moveDuration = 1f;
+        float moveDuration = 3f;
 
         while (currentPecentage < 1)
         {
@@ -117,16 +120,12 @@ public class PZ_Puzzle_Item : MonoBehaviour
 
     public void ClearPuzzle()
     {
-        Managers.UI.ClosePopupUI();
+        ClosePuzzle();
+
         Managers.Object.UnRegisterPuzzles();
-        // 메인 퍼즐 클리어 시 다음 스테이지로 갈 수 있게 길을 열어줌
-        if (_isMainPuzzle)
-        {
-            Destroy(gameObject);
-        }
 
         // 서브 퍼즐 클리어 시
-        else
+        if(!_isMainPuzzle)
         {
             // 아이템 혹은 보상을 주는 로직 구현 예정
         }
