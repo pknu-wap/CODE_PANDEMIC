@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7487968100188184728}
   - component: {fileID: 1564064500113882187}
   - component: {fileID: 1279675412088512700}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PZ_Puzzle_Item_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.00053130835, y: 0.0077150166}
