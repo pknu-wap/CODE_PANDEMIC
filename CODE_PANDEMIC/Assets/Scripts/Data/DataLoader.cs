@@ -72,6 +72,7 @@ public class BossDataLoader : ILoader<int, BossData>
 public class SpawnerInfoData
 {
     public int ID;
+    public string Name;
     public Vector2 Pos;
 }
 [Serializable]

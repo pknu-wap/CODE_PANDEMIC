@@ -6,11 +6,9 @@ using UnityEngine.Android;
 
 public class ObjectManager : MonoBehaviour
 {
-     
-    private int _leftMonsters;
+    
     private int _leftPuzzles;
-    //Dictionary<SpawnerBase int>_leftMonsterSpawners;
-    //PlayerSpawner _playerSpawn;
+    private List<SpawnBase> _spawnList=new List<SpawnBase> ();
     //StageExit 
     //List<Puzzles>퍼즐들 
     public bool Loaded { get; private set; }
@@ -22,7 +20,6 @@ public class ObjectManager : MonoBehaviour
     public IEnumerator CoLoadStageData(StageData stageData)
     {
         Loaded = false;
-        _leftMonsters = 0;
         _leftPuzzles = 0;
 
         // 맵 로드
@@ -34,48 +31,66 @@ public class ObjectManager : MonoBehaviour
         });
         while (!mapLoaded) yield return null;
 
-        RegisterSpawners();
-        SpawnPlayer();
-        SpawnMonster();
 
+        SpawnSpawners(stageData.Spawners);
+        while(Player==null) yield return null;
+        while (_spawnList.Count < stageData.Spawners.Count) yield return null;
         Loaded = true;
     }
 
-    public void SpawnMonster()
+    public void SpawnSpawners(List<SpawnerInfoData> spawners)
     {
-        //TODO SPAWNER 이후 
+        for (int i = 0; i < spawners.Count; i++)
+        {
+            var spawnerData = spawners[i]; 
+            Managers.Resource.Instantiate(spawnerData.Name, null, (obj) =>
+            {
+                obj.transform.position = new Vector3(spawnerData.Pos.x,spawnerData.Pos.y, 0);
+                AI_Spawner monsterSpawner = obj.GetComponent<AI_Spawner>();
+                if (monsterSpawner != null)
+                {
+                    Debug.Log(spawnerData.ID); 
+          
+                    monsterSpawner.SetInfo(spawnerData.ID);
+                    monsterSpawner.SpawnObjects();
+                }
+                else
+                {
+                    obj.GetComponent<SpawnBase>().SpawnObjects();
+                }
+              
+            });
+        }
     }
-    public void ReleaseMonster()
-    {
-        //TODO WHEN MONSTER DIED
-    }
+
     public void OnStageCleared()
     {
         ResetStageObjects();
     }
     private void ResetStageObjects()
     {
-         //TODO scene 에 소환된 오브젝트 남아있는거 다파괴 
-    }
-    public void RegisterSpawners()
-    {
-        //TODO WHEN SPAWNER COMPLETE
-    }
-    public void UnRegisterSpawners()
-    {
-        //TODO WHEN SPAWNER COMPLETE
-    }
-    public void SpawnPlayer()
-    {
-        Managers.Resource.Instantiate("Player", null, (obj) =>
+        _leftPuzzles = 0;
+        foreach (var spawner in _spawnList)
         {
-            Player = obj.GetComponent<PlayerStatus>();
-            obj.GetOrAddComponent<TempDamage>();
-            obj.GetComponent<TempDamage>().Status = Player;
-
-            Player.SetInfo();
-        });
+            Destroy(spawner.gameObject);
+        }
+        Destroy(Player.gameObject);
+        Destroy(MapObject);
     }
+    public void RegisterPlayer(PlayerStatus player)
+    {
+        Player= player;
+    }
+    public void RegisterSpawners(SpawnBase spawner)
+    {
+        Debug.Log(_spawnList.Count);
+        _spawnList.Add(spawner);
+    }
+    public void UnRegisterSpawners(SpawnBase spawner)
+    {
+        _spawnList.Remove(spawner);
+    }
+    
     public void RegisterPuzzles()
     {
         _leftPuzzles++;
@@ -96,6 +111,10 @@ public class ObjectManager : MonoBehaviour
         Debug.Log("모든 퍼즐 클리어됨, 문을 여시오");
 
     }
+    public void ResetStage()
+    {
        
-        
+    }
+
+
 }
