@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class PZ_Password_Board : PZ_Puzzle_Base
+public class PZ_Password_Board : PZ_Puzzle_Main
 {
     #region Base
 

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PZ_Sliding_Board : PZ_Puzzle_Base
+public class PZ_Sliding_Board : PZ_Puzzle_Main
 {
     #region Base
 

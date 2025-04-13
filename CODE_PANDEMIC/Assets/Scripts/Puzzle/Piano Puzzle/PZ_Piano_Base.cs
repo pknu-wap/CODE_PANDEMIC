@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PZ_Piano_Base : PZ_Puzzle_Base
+public class PZ_Piano_Base : PZ_Puzzle_Main
 {
     #region Base
 

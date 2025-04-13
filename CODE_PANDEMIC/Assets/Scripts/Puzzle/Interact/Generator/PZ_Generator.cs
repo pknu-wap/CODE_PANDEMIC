@@ -1,7 +1,7 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
-public class PZ_Generator : MonoBehaviour, IInteractable
+public class PZ_Generator : PZ_Puzzle_Base, IInteractable
 {
     private Transform _handleTransform;
     private Animator _animator;
@@ -24,13 +24,7 @@ public class PZ_Generator : MonoBehaviour, IInteractable
 
         Debug.Log("발전기 상호 작용");
 
-        StartCoroutine(SettingLeverPosition());
-
-        _animator.SetBool("IsInteracted", true);
-
         // 여기에 발전기 퍼즐 띄우는 로직 구현 예정
-
-        _isInteracted = true;
     }
 
     private IEnumerator SettingLeverPosition()
@@ -42,5 +36,16 @@ public class PZ_Generator : MonoBehaviour, IInteractable
         yield return new WaitForSeconds(0.18f);
 
         _handleTransform.localPosition = new Vector3(-0.242f, 0.88f, 0);
+    }
+
+    protected override void PuzzleClear()
+    {
+        StartCoroutine(SettingLeverPosition());
+
+        _animator.SetBool("IsInteracted", true);
+
+        _isInteracted = true;
+
+        // 여기에 맵의 그림자를 걷어내는 로직 구현 예정
     }
 }
