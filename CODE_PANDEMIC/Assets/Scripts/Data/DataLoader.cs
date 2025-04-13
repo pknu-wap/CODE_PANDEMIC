@@ -232,3 +232,19 @@ public class PlayerData
     public int Speed; 
     public int SpeedMultiplier; 
 }
+
+[Serializable]
+public class PuzzleData
+{
+    public int PuzzleID;
+    public string PuzzleName;
+    public bool IsPuzzleClear;
+    public PuzzleType Type;
+    public int RewardItemID;
+    public int RewardItemAmount;
+    public string Addressable;
+    public Vector3 PuzzlePosition;
+    public Vector3 InvisibleBlockPosition;
+    public Vector2 InvisibleBlockOffset;
+    public Vector2 InvisibleBlockSize;
+}
