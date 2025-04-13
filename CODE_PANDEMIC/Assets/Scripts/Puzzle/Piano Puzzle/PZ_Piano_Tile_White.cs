@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PZ_Piano_Tile_White : UI_Base
 {
@@ -16,16 +17,34 @@ public class PZ_Piano_Tile_White : UI_Base
     }
 
     private RectTransform _rectTransform;
+    private Image _image;
     private Outline _outLine;
     private PZ_Piano_Base _pianoBase;
     private PianoNoteWhite[] _pianoNoteTypes; // 건반 음 종류
     private PianoNoteWhite _pianoTileNote; // 현재 건반 음
 
-    private void Start()
+    private Material _normalMaterial;
+    private Material _pressedMaterial;
+
+    private void Setting()
     {
         _rectTransform = GetComponent<RectTransform>();
+        _image = GetComponent<Image>();
         _outLine = GetComponent<Outline>();
         _pianoBase = GetComponentInParent<PZ_Piano_Base>();
+
+        Managers.Resource.LoadAsync<Material>("PZ_Piano_Tile_White_Normal_Material", (getMaterial) =>
+        {
+            _normalMaterial = getMaterial;
+
+            _image.material = _normalMaterial;
+            _image.SetMaterialDirty();
+        });
+
+        Managers.Resource.LoadAsync<Material>("PZ_Piano_Tile_White_Pressed_Material", (getMaterial) =>
+        {
+            _pressedMaterial = getMaterial;
+        });
 
         // 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -44,6 +63,8 @@ public class PZ_Piano_Tile_White : UI_Base
     // 건반 기본 세팅
     public void TileSetup(int index)
     {
+        Setting();
+
         int setTileX = -450 + 150 * index;
         _rectTransform.anchoredPosition = new Vector2(setTileX, 0);
         _pianoTileNote = _pianoNoteTypes[index];
@@ -54,6 +75,19 @@ public class PZ_Piano_Tile_White : UI_Base
     {
         Debug.Log("누른 흰 건반 : " + _pianoTileNote.ToString());
 
+        StartCoroutine(ChangeTileColor());
+
         _pianoBase.CheckPuzzleClear(_pianoTileNote.ToString());
+    }
+
+    private IEnumerator ChangeTileColor()
+    {
+        _image.material = _pressedMaterial;
+        _image.SetMaterialDirty();
+
+        yield return new WaitForSeconds(0.1f);
+
+        _image.material = _normalMaterial;
+        _image.SetMaterialDirty();
     }
 }

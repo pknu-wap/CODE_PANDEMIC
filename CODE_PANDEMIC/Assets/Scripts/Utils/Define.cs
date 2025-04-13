@@ -32,6 +32,13 @@ public class Define
         Edible,
         Equippable
     }
+    public enum PuzzleType
+    {
+        MainPuzzle,
+        SidePuzzle,
+        Generator
+    }
+
     public const int STAGES_PER_CHAPTER = 4; //3 normal 1 boss
 }
 public static class QuickSlotIndex
