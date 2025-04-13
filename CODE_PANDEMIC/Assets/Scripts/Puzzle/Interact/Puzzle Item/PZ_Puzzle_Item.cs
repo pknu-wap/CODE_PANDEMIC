@@ -129,6 +129,8 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
         {
             // 아이템 혹은 보상을 주는 로직 구현 예정
         }
+
+        Destroy(gameObject);
     }
 
     #endregion

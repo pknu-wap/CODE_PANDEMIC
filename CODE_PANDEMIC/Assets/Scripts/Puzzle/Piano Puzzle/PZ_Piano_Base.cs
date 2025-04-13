@@ -8,15 +8,26 @@ public class PZ_Piano_Base : PZ_Puzzle_Main
     private List<PZ_Piano_Tile_White> _whiteList = new List<PZ_Piano_Tile_White>();
     private List<PZ_Piano_Tile_Black> _blackList = new List<PZ_Piano_Tile_Black>();
 
-    private string _correctPianoNotes = "SolSolLaLaSolSolMi"; // 정답
-    private string _currentPianoNotes = ""; // 현재 선택된 음들
+    private List<string> _correctPianoNotes = new List<string>(); // 정답
 
     private int _maxPianoCount = 7; // 최대 선택될 음 개수 ( == 정답 음의 개수)
-    private int _currentPianoCount = 0; // 현재 선택된 음 개수
+    private int _currentIndex = 0;
 
     private void Start()
     {
+        SettingCorrectPianoNotes();
         GetSpawnedPianoTiles();
+    }
+
+    private void SettingCorrectPianoNotes()
+    {
+        _correctPianoNotes.Add("Sol");
+        _correctPianoNotes.Add("Sol");
+        _correctPianoNotes.Add("La");
+        _correctPianoNotes.Add("La");
+        _correctPianoNotes.Add("Sol");
+        _correctPianoNotes.Add("Sol");
+        _correctPianoNotes.Add("Mi");
     }
 
     #endregion
@@ -54,26 +65,27 @@ public class PZ_Piano_Base : PZ_Puzzle_Main
     // 퍼즐 클리어 여부 체크
     public void CheckPuzzleClear(string selectedNote)
     {
-        _currentPianoNotes += selectedNote;
-
-        if (_currentPianoNotes == _correctPianoNotes)
+        if (_correctPianoNotes[_currentIndex] != selectedNote)
         {
-            PuzzleClear();
+            Debug.LogWarning("Puzzle Reset");
+
+            _currentIndex = 0;
 
             return;
         }
 
-        _currentPianoCount++;
-
-        Debug.Log("누적된 피아노 음 : " + _currentPianoNotes);
-
-        // 초기화
-        if (_currentPianoCount >= _maxPianoCount)
+        if (_currentIndex == _maxPianoCount - 1 && _correctPianoNotes[_currentIndex] == selectedNote)
         {
-            _currentPianoNotes = "";
-            _currentPianoCount = 0;
-            Debug.LogWarning("Puzzle Reset");
+            Debug.LogWarning("Piano Puzzle Clear!!!");
+
+            PuzzleClear();
+
+            _currentIndex = 0;
+
+            return;
         }
+
+        _currentIndex++;
     }
 
     protected override void PuzzleClear()
@@ -82,8 +94,6 @@ public class PZ_Piano_Base : PZ_Puzzle_Main
         {
             return;
         }
-
-        Debug.LogWarning("Piano Puzzle Clear!!!");
 
         _puzzleOwner.ClearPuzzle();
     }
