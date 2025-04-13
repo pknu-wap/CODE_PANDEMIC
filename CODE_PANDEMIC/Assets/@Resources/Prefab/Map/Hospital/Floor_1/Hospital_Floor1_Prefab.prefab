@@ -682,6 +682,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4691941943280161308}
     m_Modifications:
+    - target: {fileID: 988941607774884692, guid: 050775253dd5cb94cb808b3560ee7c0f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2574198197419816963, guid: 050775253dd5cb94cb808b3560ee7c0f, type: 3}
+      propertyPath: m_Size.x
+      value: 8.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2574198197419816963, guid: 050775253dd5cb94cb808b3560ee7c0f, type: 3}
+      propertyPath: m_Size.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2574198197419816963, guid: 050775253dd5cb94cb808b3560ee7c0f, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2574198197419816963, guid: 050775253dd5cb94cb808b3560ee7c0f, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2635209076995851079, guid: 050775253dd5cb94cb808b3560ee7c0f, type: 3}
       propertyPath: m_Name
       value: Corridor
