@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PZ_Piano_Tile_Black : UI_Base
 {
@@ -14,14 +15,32 @@ public class PZ_Piano_Tile_Black : UI_Base
     }
 
     private RectTransform _rectTransform;
+    private Image _image;
     private PZ_Piano_Base _pianoBase;
     private PianoNoteBlack[] _pianoNoteTypes; // 건반 음 종류
     private PianoNoteBlack _pianoTileNote; // 현재 건반 음
 
+    private Material _normalMaterial;
+    private Material _pressedMaterial;
+
     private void Setting()
     {
         _rectTransform = GetComponent<RectTransform>();
+        _image = GetComponent<Image>();
         _pianoBase = GetComponentInParent<PZ_Piano_Base>();
+
+        Managers.Resource.LoadAsync<Material>("PZ_Piano_Tile_Black_Normal_Material", (getMaterial) =>
+        {
+            _normalMaterial = getMaterial;
+
+            _image.material = _normalMaterial;
+            _image.SetMaterialDirty();
+        });
+
+        Managers.Resource.LoadAsync<Material>("PZ_Piano_Tile_Black_Pressed_Material", (getMaterial) =>
+        {
+            _pressedMaterial = getMaterial;
+        });
 
         // 기본 세팅
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -43,7 +62,7 @@ public class PZ_Piano_Tile_Black : UI_Base
         // 중간의 빈 검은 타일
         if (index == 2)
         {
-            GetComponent<Image>().enabled = false;
+            _image.enabled = false;
             return;
         }
 
@@ -67,6 +86,19 @@ public class PZ_Piano_Tile_Black : UI_Base
     {
         Debug.Log("누른 검은 건반 : " + _pianoTileNote.ToString());
 
+        StartCoroutine(ChangeTileColor());
+
         _pianoBase.CheckPuzzleClear(_pianoTileNote.ToString());
+    }
+
+    private IEnumerator ChangeTileColor()
+    {
+        _image.material = _pressedMaterial;
+        _image.SetMaterialDirty();
+
+        yield return new WaitForSeconds(0.1f);
+
+        _image.material = _normalMaterial;
+        _image.SetMaterialDirty();
     }
 }
