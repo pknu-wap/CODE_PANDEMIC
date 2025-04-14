@@ -6,7 +6,6 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     #region Base
 
     private BoxCollider2D _boxCollider;
-    private BoxCollider2D _blockObject; // 메인 퍼즐인 경우 지역을 막는 블럭
 
     private Vector3 _original; // 원래 위치
     private Vector3 _dongdong; // 둥둥 위치
@@ -23,26 +22,20 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     [SerializeField] private string _puzzleAddressable; // 화면에 출력할 퍼즐 어드레서블
     [SerializeField] private bool _isMainPuzzle = true; // 메인 퍼즐인지 서브 퍼즐인지 체크
 
-    private void Start()
+    public void SetInfo(PuzzleData data)
     {
-        if (_puzzleAddressable.Length == 0)
-        {
-            Debug.Log("퍼즐 할당 실패");
-            return;
-        }
+        _puzzleAddressable = data.UIPath;
+        _isMainPuzzle = data.IsMain;
+    }
 
-        _boxCollider = GetComponent<BoxCollider2D>();
-        _blockObject = GetComponentInChildren<BoxCollider2D>();
+    public  void SettingPuzzle()
+    {
+        _boxCollider = Utils.GetOrAddComponent<BoxCollider2D>(gameObject);
 
         _boxCollider.isTrigger = true;
         _boxCollider.offset = Vector2.zero;
-
+     
         Managers.Object.RegisterPuzzles();
-
-        if (!_isMainPuzzle)
-        {
-            _blockObject.isTrigger = true;
-        }
 
         _original = transform.position;
         _dongdong = _original;
@@ -72,7 +65,6 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     {
         Debug.Log("퍼즐 상호 작용");
 
-        // 캔버스 부분 수정 예정
         Managers.UI.ShowPopupUI<PZ_Puzzle_Base>(_puzzleAddressable, null, (popupPuzzle) =>
         {
             _popupPuzzle = popupPuzzle;

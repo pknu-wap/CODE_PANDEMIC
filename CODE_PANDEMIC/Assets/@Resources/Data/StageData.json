@@ -6,7 +6,75 @@
       "StageID": 1,
       "BossTemplateID": 0,
       "MapAddress": "Map1_1",
-      "MapName": "병원 3층"
+      "MapName": "병원 3층",
+      "Spawners": [
+        {
+          "ID": 1,
+          "Name": "PlayerSpawner",
+          "Pos": {
+            "x": 932.08,
+            "y": 66.49
+          }
+        },
+        {
+          "ID": 101,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 943.93,
+            "y": 66.91
+          }
+        },
+        {
+          "ID": 102,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 956.1,
+            "y": 66.96
+          }
+        },
+        {
+          "ID": 103,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 923.58,
+            "y": 87.18
+          }
+        },
+        {
+          "ID": 104,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 941.06,
+            "y": 92.6
+          }
+        },
+        {
+          "ID": 105,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 957.09,
+            "y": 92.92
+          }
+        },
+        {
+          "ID": 106,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 931.42,
+            "y": 78.73
+          }
+        },
+        {
+          "ID": 107,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 963.3,
+            "y": 81.94
+          }
+        }
+
+      ],
+      "Puzzles": [1,2]
     },
 
     {
@@ -15,7 +83,115 @@
       "StageID": 2,
       "BossTemplateID": 0,
       "MapAddress": "Map1_2",
-      "MapName": "병원 2층"
+      "MapName": "병원 2층",
+      "Spawners": [
+        {
+          "ID": 2,
+          "Name": "PlayerSpawner",
+          "Pos": {
+            "x": 381.6,
+            "y": 124.1
+          }
+        },
+        {
+          "ID": 108,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 335.32,
+            "y": 122.71
+          }
+        },
+        {
+          "ID": 109,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 335.31,
+            "y": 107.54
+          }
+        },
+        {
+          "ID": 110,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 337.25,
+            "y": 93.58
+          }
+        },
+        {
+          "ID": 111,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 331.16,
+            "y": 83.62
+          }
+        },
+        {
+          "ID": 112,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 350.15,
+            "y": 75.16
+          }
+        },
+        {
+          "ID": 113,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 398.58,
+            "y": 73.73
+          }
+        },
+        {
+          "ID": 114,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 392.96,
+            "y": 92.13
+          }
+        },
+        {
+          "ID": 115,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 389.38,
+            "y": 102.17
+          }
+        },
+        {
+          "ID": 116,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 382.09,
+            "y": 114.08
+          }
+        },
+        {
+          "ID": 117,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 363.1,
+            "y": 108.75
+          }
+        },
+        {
+          "ID": 118,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 362.8,
+            "y": 118
+          }
+        },
+        {
+          "ID": 119,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 370.99,
+            "y": 84.45
+          }
+        }
+
+      ],
+      "Puzzles": [3,4,5]
     },
     {
       "TemplateID": 3,
@@ -23,7 +199,98 @@
       "StageID": 3,
       "BossTemplateID": 0,
       "MapAddress": "Map1_3",
-      "MapName": "병원 1층"
+      "MapName": "병원 1층",
+      "Spawners": [
+        {
+          "ID": 3,
+          "Name": "PlayerSpawner",
+          "Pos": {
+            "x": 381.87,
+            "y": 117.61
+          }
+        },
+        {
+          "ID": 120,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 389.5,
+            "y": 94.57
+          }
+        },
+        {
+          "ID": 121,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 400.92,
+            "y": 72.14
+          }
+        },
+        {
+          "ID": 122,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 420,
+            "y": 106.21
+          }
+        },
+        {
+          "ID": 123,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 442.29,
+            "y": 116.54
+          }
+        },
+        {
+          "ID": 124,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 442.43,
+            "y": 103.3
+          }
+        },
+        {
+          "ID": 125,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 442.38,
+            "y": 90.55
+          }
+        },
+        {
+          "ID": 126,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 455.31,
+            "y": 96.38
+          }
+        },
+        {
+          "ID": 127,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 409.91,
+            "y": 108.19
+          }
+        },
+        {
+          "ID": 128,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 431,
+            "y": 104.56
+          }
+        },
+        {
+          "ID": 129,
+          "Name": "RoomSpawner",
+          "Pos": {
+            "x": 427.61,
+            "y": 80.11
+          }
+        }
+      ],
+      "Puzzles": [ 6,7 ]
     },
     {
       "TemplateID": 4,

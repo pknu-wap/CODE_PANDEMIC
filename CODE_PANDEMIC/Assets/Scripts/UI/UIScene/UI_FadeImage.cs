@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using UnityEngine;
@@ -9,8 +10,8 @@ public class UI_FadeImage : UI_Base
     {
         FadeImage,
     }
-    
-    [SerializeField] private float _fadeDuration = 0.5f;
+
+    [SerializeField] private float _fadeDuration = 1.0f;
     [SerializeField]
     private Image _fadeImage;
     private bool _isFading = false;
@@ -25,12 +26,15 @@ public class UI_FadeImage : UI_Base
 
         if (_fadeImage == null)
         {
-            Debug.LogError("UI_FadeImage: FadeImage Image is NULL. 프리팹에 FadeImage가 없거나 BindImage 실패.");
+            Debug.LogError("UI_FadeImage: FadeImage Image is NULL.");
         }
 
         return _fadeImage != null;
     }
-
+    public void FadeAtOnce()
+    {
+        _fadeImage.color = Color.black;
+    }
     private IEnumerator Fade(float startAlpha, float endAlpha, Action onComplete)
     {
         _isFading = true;
@@ -54,19 +58,19 @@ public class UI_FadeImage : UI_Base
     public void FadeIn(Action onComplete = null)
     {
         if (_isFading) return;
-        
+
         StartCoroutine(Fade(1f, 0f, () =>
         {
             onComplete?.Invoke();
             this.gameObject.SetActive(false);
         }));
-     
+
     }
 
     public void FadeOut(Action onComplete = null)
     {
         if (_isFading) return;
-       
+
         StartCoroutine(Fade(0f, 1f, onComplete));
     }
 }
