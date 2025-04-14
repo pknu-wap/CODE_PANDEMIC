@@ -151,7 +151,9 @@ namespace Inventory.Model
         {
             if (index >= 0 && index < Parameters.Count)
             {
-                return $"{Parameters[index].parameterName} : {Parameters[index].value}";
+                string color = Parameters[index].parameterName == "Health" ? "#00FFFF" : "#FF4444";
+                return $"{Parameters[index].parameterName} : <color={color}>{Parameters[index].value}</color>";
+              
             }
             return string.Empty;
         }
