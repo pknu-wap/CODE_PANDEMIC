@@ -269,3 +269,12 @@ public class PlayerData
     public int Speed;
     public int SpeedMultiplier;
 }
+
+[Serializable]
+public class BlockData
+{
+    public int ID;
+    public Vector3 Position;
+    public Vector2Int Offset;
+    public Vector2Int Size;
+}

@@ -12,15 +12,10 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 
     private PZ_Puzzle_Base _popupPuzzle; // 퍼즐
 
-    private GameObject _mainBlockObject; // 길 막는 오브젝트
+    private PZ_Main_Block _mainBlock; // 길 막는 오브젝트
 
-    // 길 막는 오브젝트 설정
-    [SerializeField] private Vector3 _blockPosition;
-    [SerializeField] private Vector2Int _blockOffset = Vector2Int.zero;
-    [SerializeField] private Vector2Int _blockSize;
-
-    [SerializeField] private string _puzzleAddressable; // 화면에 출력할 퍼즐 어드레서블
-    [SerializeField] private bool _isMainPuzzle = true; // 메인 퍼즐인지 서브 퍼즐인지 체크
+    private string _puzzleAddressable; // 화면에 출력할 퍼즐 어드레서블
+    private bool _isMainPuzzle = true; // 메인 퍼즐인지 서브 퍼즐인지 체크
 
     public void SetInfo(PuzzleData data)
     {
@@ -43,14 +38,9 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 
         Managers.Resource.Instantiate("PZ_Main_Block_Prefab", null, (mainBlockObject) =>
         {
-            _mainBlockObject = mainBlockObject;
+            _mainBlock = mainBlockObject.GetComponent<PZ_Main_Block>();
 
-            Transform mainBlockTransform = _mainBlockObject.GetComponent<Transform>();
-            mainBlockTransform.position = _blockPosition;
-
-            BoxCollider2D mainBlockCollider = _mainBlockObject.GetComponent<BoxCollider2D>();
-            mainBlockCollider.offset = _blockOffset;
-            mainBlockCollider.size = _blockSize;
+            // 여기에 데이터 넣어주삼
         });
 
         StartCoroutine(MoveUp());
@@ -138,7 +128,7 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
             // 아이템 혹은 보상을 주는 로직 구현 예정
         }
 
-        Destroy(_mainBlockObject);
+        Destroy(_mainBlock.gameObject);
         Destroy(gameObject);
     }
 
