@@ -42,33 +42,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ac14e4897f4459a43b174339cec96fee
-    m_Address: PZ_LightOut_Correct_Sprite
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3b0a7ef0705f0d1418a9590ad7def993
-    m_Address: PZ_LightOut_Wrong_Sprite
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d598c78209d76994eb65e2c245d5a634
     m_Address: PZ_LightOut_Reset_Prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: efb0f9306cf95bf41a74d9f3e1b54cbd
-    m_Address: PZ_LightOut_Board_Sprite
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0e498acfa9384b54fa3abdbbe877387f
-    m_Address: PZ_Password_Button_Sprite
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ba739705f329a4b419342eaeca1cee48
-    m_Address: PZ_Password_Board_Sprite
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -147,12 +122,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dcab8041d12ff144e8072d4cbd4fdb55
-    m_Address: PZ_Sliding_Board_Sprite
+  - m_GUID: 041813a8ed19b8840994ecce78396fb0
+    m_Address: PuzzleData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ab90c665eeb61284ba4eb3164ed477be
+  - m_GUID: 7544c5651aea4d246b7b5d19b422bfe7
     m_Address: UI_FadeImage
     m_ReadOnly: 0
     m_SerializedLabels: []
@@ -167,6 +142,31 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15b27636f3b691146ab0ce8ea1c2855d
+    m_Address: UI_PausePopUp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68b97a5946a1b9948ac59d05df4978a8
+    m_Address: Assets/Scripts/UI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9485fa8e7d133e847893c5530384fdf9
+    m_Address: SpawnData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b906c267cf62b6b4b9b3167e369926b8
+    m_Address: RoomSpawner
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6749286a69e311644b2cda4e20d7c0a1
+    m_Address: PlayerSpawner
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0d8e4989f56e2de4fb7970f0a6166749
     m_Address: PZ_Generator_Prefab
     m_ReadOnly: 0
@@ -174,6 +174,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6cce450101e67b540835c854b71d1e81
     m_Address: PZ_Puzzle_Item_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c4c074571f00b147ab82c9f709026b3
+    m_Address: UI_TitleOptionPopUp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b2a74ac94151ad428b413fbb5f71536
+    m_Address: UI_SoundPopUp
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

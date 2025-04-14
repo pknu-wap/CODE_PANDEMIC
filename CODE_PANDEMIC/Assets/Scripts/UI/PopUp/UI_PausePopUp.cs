@@ -22,13 +22,13 @@ public class UI_PausePopUp :UI_PopUp
 
     private void OnEnable()
     {
-       // Debug.Log("Pause");
-        //Managers.Game.PauseGame();
+       Debug.Log("Pause");
+        Managers.Game.PauseGame();
     }
     private void OnDisable()
     {
-       // Debug.Log("Resume");
-       // Managers.Game.ResumeGame();
+       Debug.Log("Resume");
+       Managers.Game.ResumeGame();
     }
     public override bool Init()
     {
@@ -52,7 +52,7 @@ public class UI_PausePopUp :UI_PopUp
 
     private void OnClickExitButton()
     {
-        //Managers.UI.ClosePopupUI(this);
+        Managers.UI.ClosePopupUI(this);
     }
     private void OnClickVideoButton()
     {
