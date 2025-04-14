@@ -22,12 +22,15 @@ public class DataManager
     public Dictionary<int, ItemData> Items { get; private set; }
     public Dictionary<int, WeaponData> Weapons { get; private set; }
     public Dictionary<int, SpawnerData> Spawners { get; private set; }
-   
+    public Dictionary<int, PuzzleData> Puzzles { get; private set; }    
+
     public void Init(Action onComplete)
     {
         LoadJson<StageDataLoader, int, StageData>("StageData", (loader) => { Stages = loader.MakeDic(); });
         LoadJson<ItemDataLoader, int, ItemData>("ItemData", (loader) => { Items = loader.MakeDic(); });
-        LoadJson<SpawnerDataLoader,int,SpawnerData>("SpawnData",(loader) => { Spawners = loader.MakeDic(); }); 
+        LoadJson<SpawnerDataLoader,int,SpawnerData>("SpawnData",(loader) => { Spawners = loader.MakeDic(); });
+        LoadJson<PuzzleDataLoader, int, PuzzleData>("PuzzleData", (loader) => { Puzzles = loader.MakeDic(); });
+
         onComplete?.Invoke();
     }
     public bool Loaded()
@@ -41,6 +44,8 @@ public class DataManager
         if (Items == null)
             return false;
         if (Spawners == null) 
+            return false;
+        if(Puzzles==null) 
             return false;
         //if (Bosses == null)
         //    return false;

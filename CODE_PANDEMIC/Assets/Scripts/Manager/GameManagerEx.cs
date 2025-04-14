@@ -16,9 +16,10 @@ public class QuickSlotItemData
 [Serializable]
 public class GameData
 {
-    public int Chapter = 1;
+    public int HighestChapter = 1;
+    public int HighestStage = 1;
+    public int Chapter =1;
     public int Stage = 1;
-
     public QuickSlotItemData[] QuickSlotItems = new QuickSlotItemData[4];
 
     public int MasterVolume;
@@ -47,13 +48,22 @@ public class GameManagerEx
         get => _gameData;
         set => _gameData = value;
     }
-
+    
     public InventoryData Inventory
     {
         get => _inventoryData;
         private set => _inventoryData = value;
     }
-
+    public int HighestChapter
+    {
+        get => _gameData.HighestChapter;
+        set=>_gameData.HighestChapter = value;
+    }
+    public int HighestStage
+    {
+        get => _gameData.HighestStage;
+        set=> _gameData.HighestStage = value;   
+    }
     public int Chapter
     {
         get => _gameData.Chapter;
@@ -68,17 +78,34 @@ public class GameManagerEx
 
     public void CompleteStage()
     {
-        if (Managers.Game.Stage == Define.STAGES_PER_CHAPTER)
+        if (Stage == Define.STAGES_PER_CHAPTER)
         {
-            Managers.Game.Chapter++;
-            Managers.Game.Stage = 1;
+            Chapter++;
+            Stage = 1;
         }
         else
         {
-            Managers.Game.Stage++;
+            Stage++;
         }
+        if(Chapter>HighestChapter||Stage>HighestStage)
+        {
+            HighestChapter = Chapter;
+            HighestStage = Stage;
+        }
+
        SaveGame();
     }
+    public void PrevStage()
+    {
+        if (Chapter == 1 && Stage == 1) return;
+        Stage--;
+        if(Stage==0)
+        {
+            Chapter--;
+            Stage = Define.STAGES_PER_CHAPTER;
+        }
+    }
+
     public void Init()
     {
         _isPaused = false;

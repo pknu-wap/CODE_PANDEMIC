@@ -22,7 +22,7 @@ public class ObjectManager : MonoBehaviour
         Loaded = false;
         _leftPuzzles = 0;
 
-        // 맵 로드
+       
         bool mapLoaded = false;
         Managers.Resource.Instantiate(stageData.MapAddress, null, (obj) =>
         {
@@ -33,6 +33,7 @@ public class ObjectManager : MonoBehaviour
 
 
         SpawnSpawners(stageData.Spawners);
+        SpawnPuzzles(stageData.Puzzles);
         while(Player==null) yield return null;
         while (_spawnList.Count < stageData.Spawners.Count) yield return null;
         Loaded = true;
@@ -42,15 +43,14 @@ public class ObjectManager : MonoBehaviour
     {
         for (int i = 0; i < spawners.Count; i++)
         {
-            var spawnerData = spawners[i]; 
+            SpawnerInfoData spawnerData = spawners[i]; 
             Managers.Resource.Instantiate(spawnerData.Name, null, (obj) =>
             {
                 obj.transform.position = new Vector3(spawnerData.Pos.x,spawnerData.Pos.y, 0);
                 AI_Spawner monsterSpawner = obj.GetComponent<AI_Spawner>();
                 if (monsterSpawner != null)
                 {
-                    Debug.Log(spawnerData.ID); 
-          
+                  
                     monsterSpawner.SetInfo(spawnerData.ID);
                     monsterSpawner.SpawnObjects();
                 }
@@ -62,7 +62,29 @@ public class ObjectManager : MonoBehaviour
             });
         }
     }
+    public void SpawnPuzzles(List<int>Puzzles)
+    {
+        for(int i= 0 ; i<Puzzles.Count; i++)
+        {
+            if (!Managers.Data.Puzzles.TryGetValue(Puzzles[i], out PuzzleData data))
+            {
+                Debug.LogError($"Puzzle ID {Puzzles[i]} not found in data.");
+                continue;
+            }
+           
+            Managers.Resource.Instantiate(data.Prefab, null, (obj) =>
+            {
+                obj.transform.position = data.Pos;
+                PZ_Puzzle_Item item =obj.GetComponent<PZ_Puzzle_Item>();
+                if (item != null)
+                {
+                    item.SetInfo(data);
+                    item.SettingPuzzle();
+                }
 
+            });
+        }
+    }
     public void OnStageCleared()
     {
         ResetStageObjects();
@@ -83,7 +105,6 @@ public class ObjectManager : MonoBehaviour
     }
     public void RegisterSpawners(SpawnBase spawner)
     {
-        Debug.Log(_spawnList.Count);
         _spawnList.Add(spawner);
     }
     public void UnRegisterSpawners(SpawnBase spawner)
@@ -94,7 +115,6 @@ public class ObjectManager : MonoBehaviour
     public void RegisterPuzzles()
     {
         _leftPuzzles++;
-        Debug.Log($"{_leftPuzzles}");
     }
 
     
@@ -108,7 +128,7 @@ public class ObjectManager : MonoBehaviour
     }
     private void OnAllPuzzlesCleared()
     {
-        Debug.Log("모든 퍼즐 클리어됨, 문을 여시오");
+        
 
     }
     public void ResetStage()

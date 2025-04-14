@@ -20,10 +20,8 @@ public class MonsterData
     public float DetectionAngle;
     public float MoveSpeed;
     public float AttackRange;
-  
 }
 [Serializable]
-
 public class MonsterDataLoader:ILoader<int, MonsterData>
 {
     public List<MonsterData> monsters = new List<MonsterData>();
@@ -40,6 +38,7 @@ public Dictionary<int, MonsterData> MakeDic()
         return true;
     }
 }
+
 [Serializable]
 public class BossData
 {
@@ -49,6 +48,7 @@ public class BossData
     public int Hp;
     public int AttackDamage;
     public float MoveSpeed;
+   
 }
 [Serializable]
 public class BossDataLoader : ILoader<int, BossData>
@@ -85,6 +85,7 @@ public class StageData
     public string MapAddress;
     public string MapName;
     public List<SpawnerInfoData> Spawners;
+    public List<int> Puzzles;
 }
 [Serializable]
 public class StageDataLoader : ILoader<int, StageData>
@@ -102,6 +103,7 @@ public class StageDataLoader : ILoader<int, StageData>
         return true;
     }
 }
+
 [Serializable]
 public class MonsterPosData
 {
@@ -225,26 +227,45 @@ public class WeaponDataLoader : ILoader<int, WeaponData>
 }
 
 [Serializable]
-public class PlayerData
+public class RewardData
 {
-    public int MaxHp; 
-    public int CurrentHp; 
-    public int Speed; 
-    public int SpeedMultiplier; 
+    public int ID;
+    public int Quantity;
 }
-
 [Serializable]
 public class PuzzleData
 {
-    public int PuzzleID;
-    public string PuzzleName;
-    public bool IsPuzzleClear;
-    public PuzzleType Type;
-    public int RewardItemID;
-    public int RewardItemAmount;
-    public string Addressable;
-    public Vector3 PuzzlePosition;
-    public Vector3 InvisibleBlockPosition;
-    public Vector2 InvisibleBlockOffset;
-    public Vector2 InvisibleBlockSize;
+    public int ID;
+    public string Prefab;
+    public string UIPath=null;
+    public RewardData RewardItem;
+    public Vector3 Pos;
+    public bool IsMain;
+    public bool IsClear;
+}
+
+[Serializable]
+public class PuzzleDataLoader : ILoader<int, PuzzleData>
+{
+    public List<PuzzleData> puzzles = new List<PuzzleData>();
+    public Dictionary<int, PuzzleData> MakeDic()
+    {
+        Dictionary<int, PuzzleData> dic = new Dictionary<int, PuzzleData>();
+        foreach (PuzzleData puzzle in puzzles)
+            dic.Add(puzzle.ID, puzzle);
+        return dic;
+    }
+    public bool Validate()
+    {
+        return true;
+    }
+}
+
+[Serializable]
+public class PlayerData
+{
+    public int MaxHp;
+    public int CurrentHp;
+    public int Speed;
+    public int SpeedMultiplier;
 }

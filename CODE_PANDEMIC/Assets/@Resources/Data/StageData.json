@@ -10,7 +10,7 @@
       "Spawners": [
         {
           "ID": 1,
-          "Name":"PlayerSpawner",
+          "Name": "PlayerSpawner",
           "Pos": {
             "x": 932.08,
             "y": 66.49
@@ -18,7 +18,7 @@
         },
         {
           "ID": 101,
-          "Name":"RoomSpawner",
+          "Name": "RoomSpawner",
           "Pos": {
             "x": 943.93,
             "y": 66.91
@@ -72,9 +72,10 @@
             "y": 81.94
           }
         }
-          
-      ]
-   },
+
+      ],
+      "Puzzles": [1,2]
+    },
 
     {
       "TemplateID": 2,
@@ -189,7 +190,8 @@
           }
         }
 
-      ]
+      ],
+      "Puzzles": [3,4,5]
     },
     {
       "TemplateID": 3,
@@ -287,7 +289,8 @@
             "y": 80.11
           }
         }
-      ]
+      ],
+      "Puzzles": [ 6,7 ]
     },
     {
       "TemplateID": 4,
