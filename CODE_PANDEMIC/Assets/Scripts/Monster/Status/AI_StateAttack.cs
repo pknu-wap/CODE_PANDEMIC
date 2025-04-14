@@ -1,49 +1,53 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 public class AI_StateAttack : AI_IState
 {
-    private readonly AI_Controller _controller;
     private bool _isSkillPlaying;
+    private float _chargeDelay = 1f;
+    private readonly AI_Controller _controller;
 
-    public AI_StateAttack(AI_Controller controller)
-    {
+    public AI_StateAttack(AI_Controller controller) 
+    { 
         _controller = controller;
     }
 
-    public void OnEnter()
+    public virtual void OnEnter()
     {
         _controller.StopMoving();
-        Debug.Log($"[StateAttack] 공격 상태 진입");
-        // 시작 시 항상 스킬 실행 (공격 중에는 상태 전환 안 함)
+        Debug.Log($"[StateAttack] 의사 공격 상태 진입");
         _isSkillPlaying = true;
-        if (_controller is AI_DoctorZombie doctor && doctor.Skill != null)
+        _controller.StartCoroutine(ChargeAndExecuteSkill());
+    }
+
+    public virtual void OnUpdate()
+    {
+        if (_isSkillPlaying)
+            return;
+    }
+
+    public virtual void OnFixedUpdate() { }
+
+    public virtual void OnExit()
+    {
+        if (_controller.Skill != null)
+            _controller.Skill.StopSkill();
+        Debug.Log($"[StateAttack] 의사 공격 상태 종료");
+        _isSkillPlaying = false;
+    }
+
+    private IEnumerator ChargeAndExecuteSkill()
+    {
+        yield return new WaitForSeconds(_chargeDelay);
+
+        if (_controller.Skill != null && _controller.Skill.IsReady(_controller))
         {
-            doctor.Skill.StartSkill(_controller, OnSkillComplete);
+            _controller.Skill.StartSkill(_controller, OnSkillComplete);
         }
         else
         {
             OnSkillComplete();
         }
-    }
-
-    public void OnUpdate()
-    {
-        // 스킬이 진행 중이면 상태 전환하지 않음
-        if (_isSkillPlaying)
-            return;
-        // 만약 추가 조건이 있다면 여기서 처리
-    }
-
-    public void OnFixedUpdate() { }
-
-    public void OnExit()
-    {
-        if (_controller is AI_DoctorZombie doctor && doctor.Skill != null)
-        {
-            doctor.Skill.StopSkill();
-        }
-        Debug.Log($"[StateAttack] 공격 상태 종료");
     }
 
     private void OnSkillComplete()

@@ -131,10 +131,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a10914244c1ae4ebd87616b0c802c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SweepRange: 2
+  _player: {fileID: 0}
+  _aiPath: {fileID: 0}
+  SweepRange: 4
   SweepAngle: 90
   SweepCount: 5
   SweepInterval: 0.5
+  SkillCooldown: 15
+  SkillChargeDelay: 2
   TargetLayer:
     serializedVersion: 2
     m_Bits: 0

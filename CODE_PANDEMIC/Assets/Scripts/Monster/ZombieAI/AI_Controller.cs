@@ -20,7 +20,7 @@ public class AI_Controller : AI_Base
     public AIPath _aiPath;
 
     private AI_IState _currentState;
-    
+    public virtual ISkillBehavior Skill { get { return null; } }
 
     private Coroutine _aiDamageCoroutine;
 
@@ -89,6 +89,10 @@ public class AI_Controller : AI_Base
 
         UpdateFovDirection();
         _currentState?.OnUpdate();
+        if (_currentState is AI_StateWalk && IsPlayerInSkillRange() && Skill != null && Skill.IsReady(this))
+        {
+            ChangeState(new AI_StateAttack(this));
+        }
     }
 
     private void FixedUpdate()
@@ -143,12 +147,15 @@ public class AI_Controller : AI_Base
         return _aiFov != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject);
     }
 
-    public bool IsPlayerInAttackRange()
+    public bool IsPlayerInSkillRange()
     {
         if (_player == null) return false;
-
         float distance = Vector2.Distance(transform.position, _player.position);
-        return distance <= _aiAttackRange;
+        if (this is AI_DoctorZombie doctor)
+        {
+            return distance <= doctor.SweepRange * 0.5f;
+        }
+        return false;
     }
 
     public bool IsAttacking()
@@ -161,35 +168,22 @@ public class AI_Controller : AI_Base
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
         {
-            if (_currentState is AI_StateWalk)
-            {
-                ChangeState(new AI_StateAttack(this));
-            }
+            StartAttack();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        PlayerController player = other.GetComponent<PlayerController>();
-        if (player != null)
+        if (_aiDamageCoroutine != null)
         {
-            // 여기서는 공격 상태인 경우에는 상태 전환을 발생시키지 않음
-            if (!(_currentState is AI_StateAttack))
-            {
-                if (_aiDamageCoroutine != null)
-                {
-                    StopCoroutine(_aiDamageCoroutine);
-                    _aiDamageCoroutine = null;
-                }
-                // 만약 기본 공격 상태라면 추가 처리 가능
-            }
+            StopAttack();
         }
     }
+    
 
     private IEnumerator ZombieColliderAttack(PlayerController player)
     {
         WaitForSeconds wait = new WaitForSeconds(_aiDamageDelay);
-        // _isAttacking 플래그는 Attack 상태에서 관리됨
         while (_isAttacking)
         {
             if (player == null)
