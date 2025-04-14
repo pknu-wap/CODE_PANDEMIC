@@ -28,24 +28,7 @@ namespace Inventory
             private set { _inventoryUI = value; }
         }
 
-        private void Awake()
-        {
-            _inputAction = new PlayerInput();
-        }
-        private void OnEnable()
-        {
-         
-            _inputAction.Inventory.Enable();
-            _inputAction.Inventory.Inventory.performed -= ShowHide;
-            _inputAction.Inventory.Inventory.performed += ShowHide;
-
-        }
-
-
-        private void OnDisable()
-        {
-            _inputAction.Inventory.Inventory.performed -= ShowHide;
-        }
+      
         private void Start()
         {
             _inventoryData = Managers.Game.Inventory;
@@ -240,7 +223,7 @@ namespace Inventory
             return sb.ToString();
         }
 
-        private void ShowHide(InputAction.CallbackContext context)
+        public void ShowHide(InputAction.CallbackContext context)
         {
             if (!UIInventory.gameObject.activeSelf)
             {

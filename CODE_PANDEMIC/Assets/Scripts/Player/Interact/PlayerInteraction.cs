@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     private float interactionRange = 3f;
-    private LayerMask interactableLayer;
+    [SerializeField] private LayerMask interactableLayer;
 
     void Update()
     {

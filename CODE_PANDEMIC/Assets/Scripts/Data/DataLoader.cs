@@ -1,4 +1,4 @@
-using Inventory.Model;
+﻿using Inventory.Model;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
@@ -20,7 +20,6 @@ public class MonsterData
     public float DetectionAngle;
     public float MoveSpeed;
     public float AttackRange;
-  
 }
 [Serializable]
 public class MonsterDataLoader:ILoader<int, MonsterData>
@@ -39,6 +38,7 @@ public Dictionary<int, MonsterData> MakeDic()
         return true;
     }
 }
+
 [Serializable]
 public class BossData
 {
@@ -48,6 +48,7 @@ public class BossData
     public int Hp;
     public int AttackDamage;
     public float MoveSpeed;
+   
 }
 [Serializable]
 public class BossDataLoader : ILoader<int, BossData>
@@ -71,7 +72,8 @@ public class BossDataLoader : ILoader<int, BossData>
 public class SpawnerInfoData
 {
     public int ID;
-    public Vector2Int Pos;
+    public string Name;
+    public Vector2 Pos;
 }
 [Serializable]
 public class StageData
@@ -83,6 +85,7 @@ public class StageData
     public string MapAddress;
     public string MapName;
     public List<SpawnerInfoData> Spawners;
+    public List<int> Puzzles;
 }
 [Serializable]
 public class StageDataLoader : ILoader<int, StageData>
@@ -100,19 +103,19 @@ public class StageDataLoader : ILoader<int, StageData>
         return true;
     }
 }
+
 [Serializable]
 public class MonsterPosData
 {
     public int ID;
-    public Vector2Int Pos;
+    public Vector2 Pos;
 }
 
 [Serializable]
 public class SpawnerData
 {
     public int TemplateID;
-    public string SpawnerPrefab;
-    public List<MonsterPosData> Monsterss;
+    public List<MonsterPosData> Monsters;
 }
 [Serializable]
 public class SpawnerDataLoader : ILoader<int, SpawnerData>
@@ -224,10 +227,54 @@ public class WeaponDataLoader : ILoader<int, WeaponData>
 }
 
 [Serializable]
+public class RewardData
+{
+    public int ID;
+    public int Quantity;
+}
+[Serializable]
+public class PuzzleData
+{
+    public int ID;
+    public string Prefab;
+    public string UIPath=null;
+    public RewardData RewardItem;
+    public Vector3 Pos;
+    public bool IsMain;
+    public bool IsClear;
+}
+
+[Serializable]
+public class PuzzleDataLoader : ILoader<int, PuzzleData>
+{
+    public List<PuzzleData> puzzles = new List<PuzzleData>();
+    public Dictionary<int, PuzzleData> MakeDic()
+    {
+        Dictionary<int, PuzzleData> dic = new Dictionary<int, PuzzleData>();
+        foreach (PuzzleData puzzle in puzzles)
+            dic.Add(puzzle.ID, puzzle);
+        return dic;
+    }
+    public bool Validate()
+    {
+        return true;
+    }
+}
+
+[Serializable]
 public class PlayerData
 {
-    public int MaxHp; 
-    public int CurrentHp; 
-    public int Speed; 
-    public int SpeedMultiplier; 
+    public int MaxHp;
+    public int CurrentHp;
+    public int Speed;
+    public int SpeedMultiplier;
+}
+
+[Serializable]
+public class BlockData
+{
+    public int ID;
+    public Vector3 Position;
+    public Vector2Int Offset;
+    public Vector2Int Size;
 }

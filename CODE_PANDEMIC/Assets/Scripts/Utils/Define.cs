@@ -32,6 +32,7 @@ public class Define
         Edible,
         Equippable
     }
+  
     public const int STAGES_PER_CHAPTER = 4; //3 normal 1 boss
 }
 public static class QuickSlotIndex

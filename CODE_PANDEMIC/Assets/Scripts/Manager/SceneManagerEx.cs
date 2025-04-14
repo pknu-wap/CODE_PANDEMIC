@@ -20,10 +20,13 @@ public class SceneManagerEx : MonoBehaviour
 
     public void ChangeScene(SceneType type)
     {
+        
         CurrentScene.Clear();
         _currentSceneType = type;
         SceneManager.LoadScene(GetSceneName(type));
+ 
     }
+
     string GetSceneName(SceneType type)
     {
         string name =System.Enum.GetName(typeof(SceneType), type);

@@ -1,25 +1,25 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class PZ_Password_Board : PZ_Puzzle_Base
+public class PZ_Password_Board : PZ_Puzzle_Main
 {
     #region Base
 
     private PZ_Password_InputUI _passwordInputUI;
 
-    private GridLayoutGroup _layoutGroup; // ¼¼ÆÃ
+    private GridLayoutGroup _layoutGroup; // ì„¸íŒ…
 
-    private List<PZ_Password_Button> _buttonList = new List<PZ_Password_Button>(); // »ı¼ºÇÑ ¹öÆ° ¸®½ºÆ®
+    private List<PZ_Password_Button> _buttonList = new List<PZ_Password_Button>(); // ìƒì„±í•œ ë²„íŠ¼ ë¦¬ìŠ¤íŠ¸
 
-    private string _correctPassword = "IUYC"; // Á¤´ä ºñ¹Ğ ¹øÈ£
-    private string _inputPassword; // ÀÔ·Â ¹Ş´Â ºñ¹Ğ ¹øÈ£
+    private string _correctPassword = "IUYC"; // ì •ë‹µ ë¹„ë°€ ë²ˆí˜¸
+    private string _inputPassword; // ì…ë ¥ ë°›ëŠ” ë¹„ë°€ ë²ˆí˜¸
 
     private void Init()
     {
         SetComponents();
 
-        Managers.Resource.Instantiate("PZ_Password_InputUI_Prefab", GetComponentInParent<Canvas>().transform, (spawnedInputUI) =>
+        Managers.UI.ShowPopupUI<PZ_Password_InputUI>("PZ_Password_InputUI_Prefab", null, (spawnedInputUI) =>
         {
             _passwordInputUI = spawnedInputUI.GetComponent<PZ_Password_InputUI>();
         });
@@ -31,14 +31,14 @@ public class PZ_Password_Board : PZ_Puzzle_Base
             _image.sprite = getSprite;
         });
 
-        // ºñ¹Ğ ¹øÈ£ ÆÇ ±âº» ¼¼ÆÃ
+        // ë¹„ë°€ ë²ˆí˜¸ íŒ ê¸°ë³¸ ì„¸íŒ…
         _rectTransform.anchorMin = new Vector2(0.5f, 0f);
         _rectTransform.anchorMax = new Vector2(0.5f, 0f);
         _rectTransform.pivot = new Vector2(0.5f, 0.5f);
         _rectTransform.anchoredPosition = new Vector2(0, 420);
         _rectTransform.sizeDelta = new Vector2(600, 800);
 
-        // »ı¼ºÇÒ ¹öÆ°µéÀ» ¹èÄ¡ÇÒ ¼¼ÆÃ
+        // ìƒì„±í•  ë²„íŠ¼ë“¤ì„ ë°°ì¹˜í•  ì„¸íŒ…
         _layoutGroup.padding.left = 100;
         _layoutGroup.padding.right = 100;
         _layoutGroup.padding.top = 100;
@@ -66,7 +66,7 @@ public class PZ_Password_Board : PZ_Puzzle_Base
 
     #region Setting
 
-    // ¹öÆ° °¡Á®¿À±â
+    // ë²„íŠ¼ ê°€ì ¸ì˜¤ê¸°
     private void GetSpawnedButtons()
     {
         for (int index = 0; index < 12; index++)
@@ -82,7 +82,7 @@ public class PZ_Password_Board : PZ_Puzzle_Base
 
     #region Password
 
-    // ºñ¹Ğ ¹øÈ£ ÀÔ·Â
+    // ë¹„ë°€ ë²ˆí˜¸ ì…ë ¥
     public void InputPassword(string selectedWord)
     {
         _inputPassword += selectedWord;
@@ -96,7 +96,7 @@ public class PZ_Password_Board : PZ_Puzzle_Base
 
     #region Clear
 
-    // ºñ¹Ğ ¹øÈ£ ÀÏÄ¡ Ã¼Å©
+    // ë¹„ë°€ ë²ˆí˜¸ ì¼ì¹˜ ì²´í¬
     private void CheckPuzzleClear()
     {
         if (_inputPassword == _correctPassword)
@@ -106,14 +106,14 @@ public class PZ_Password_Board : PZ_Puzzle_Base
             return;
         }
 
-        // ºñ¹Ğ ¹øÈ£ ÃÊ±âÈ­
+        // ë¹„ë°€ ë²ˆí˜¸ ì´ˆê¸°í™”
         if (_inputPassword.Length >= 4)
         {
             _inputPassword = "";
         }
     }
 
-    // ÆÛÁñ Å¬¸®¾î
+    // í¼ì¦ í´ë¦¬ì–´
     protected override void PuzzleClear()
     {
         Debug.LogWarning("Password Puzzle Clear!!!");

@@ -29,8 +29,8 @@ public class EquipWeapon : MonoBehaviour
         _weaponInput.QuickSlot.Equip4.performed += Equip4;
 
         _weaponInput.Enable();
-
     }
+
     private void OnDisable()
     {
         _weaponInput.QuickSlot.Equip1.performed -= Equip1;
