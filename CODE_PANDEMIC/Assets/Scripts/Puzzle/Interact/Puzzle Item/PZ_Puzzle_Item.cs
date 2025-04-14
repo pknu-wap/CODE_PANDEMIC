@@ -14,7 +14,7 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 
     private PZ_Main_Block _mainBlock; // 길 막는 오브젝트
 
-    private string _puzzleAddressable; // 화면에 출력할 퍼즐 어드레서블
+    [SerializeField] private string _puzzleAddressable; // 화면에 출력할 퍼즐 어드레서블
     private bool _isMainPuzzle = true; // 메인 퍼즐인지 서브 퍼즐인지 체크
 
     public void SetInfo(PuzzleData data)
