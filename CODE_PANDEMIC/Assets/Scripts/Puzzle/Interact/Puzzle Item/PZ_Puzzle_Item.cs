@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
@@ -6,24 +6,28 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     #region Base
 
     private BoxCollider2D _boxCollider;
-    private BoxCollider2D _blockObject; // ¸ŞÀÎ ÆÛÁñÀÎ °æ¿ì Áö¿ªÀ» ¸·´Â ºí·°
-    private Canvas _canvas; // Å×½ºÆ®¿ë
+    private BoxCollider2D _blockObject; // ë©”ì¸ í¼ì¦ì¸ ê²½ìš° ì§€ì—­ì„ ë§‰ëŠ” ë¸”ëŸ­
 
-    private Vector3 _original; // ¿ø·¡ À§Ä¡
-    private Vector3 _dongdong; // µÕµÕ À§Ä¡
+    private Vector3 _original; // ì›ë˜ ìœ„ì¹˜
+    private Vector3 _dongdong; // ë‘¥ë‘¥ ìœ„ì¹˜
 
-    private PZ_Puzzle_Base _popupPuzzle; // ÆÛÁñ
+    private PZ_Puzzle_Base _popupPuzzle; // í¼ì¦
 
-    [SerializeField]
-    private string _puzzleAddressable; // È­¸é¿¡ Ãâ·ÂÇÒ ÆÛÁñ ¾îµå·¹¼­ºí
-    [SerializeField]
-    private bool _isMainPuzzle = true; // ¸ŞÀÎ ÆÛÁñÀÎÁö ¼­ºê ÆÛÁñÀÎÁö Ã¼Å©
+    private GameObject _mainBlockObject; // ê¸¸ ë§‰ëŠ” ì˜¤ë¸Œì íŠ¸
+
+    // ê¸¸ ë§‰ëŠ” ì˜¤ë¸Œì íŠ¸ ì„¤ì •
+    [SerializeField] private Vector3 _blockPosition;
+    [SerializeField] private Vector2Int _blockOffset = Vector2Int.zero;
+    [SerializeField] private Vector2Int _blockSize;
+
+    [SerializeField] private string _puzzleAddressable; // í™”ë©´ì— ì¶œë ¥í•  í¼ì¦ ì–´ë“œë ˆì„œë¸”
+    [SerializeField] private bool _isMainPuzzle = true; // ë©”ì¸ í¼ì¦ì¸ì§€ ì„œë¸Œ í¼ì¦ì¸ì§€ ì²´í¬
 
     private void Start()
     {
         if (_puzzleAddressable.Length == 0)
         {
-            Debug.Log("ÆÛÁñ ÇÒ´ç ½ÇÆĞ");
+            Debug.Log("í¼ì¦ í• ë‹¹ ì‹¤íŒ¨");
             return;
         }
 
@@ -33,8 +37,8 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
         _boxCollider.isTrigger = true;
         _boxCollider.offset = Vector2.zero;
 
-        _canvas = FindObjectOfType<Canvas>(); // »èÁ¦ ¿¹Á¤
         Managers.Object.RegisterPuzzles();
+
         if (!_isMainPuzzle)
         {
             _blockObject.isTrigger = true;
@@ -44,6 +48,18 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
         _dongdong = _original;
         _dongdong.y += 0.2f;
 
+        Managers.Resource.Instantiate("PZ_Main_Block_Prefab", null, (mainBlockObject) =>
+        {
+            _mainBlockObject = mainBlockObject;
+
+            Transform mainBlockTransform = _mainBlockObject.GetComponent<Transform>();
+            mainBlockTransform.position = _blockPosition;
+
+            BoxCollider2D mainBlockCollider = _mainBlockObject.GetComponent<BoxCollider2D>();
+            mainBlockCollider.offset = _blockOffset;
+            mainBlockCollider.size = _blockSize;
+        });
+
         StartCoroutine(MoveUp());
     }
 
@@ -51,20 +67,20 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 
     #region Interact
 
-    // ÆÛÁñ ¶ç¿ì±â
+    // í¼ì¦ ë„ìš°ê¸°
     public void Interact()
     {
-        Debug.Log("ÆÛÁñ »óÈ£ ÀÛ¿ë");
+        Debug.Log("í¼ì¦ ìƒí˜¸ ì‘ìš©");
 
-        // Äµ¹ö½º ºÎºĞ ¼öÁ¤ ¿¹Á¤
-        Managers.UI.ShowPopupUI<PZ_Puzzle_Base>(_puzzleAddressable, _canvas.transform, (popupPuzzle) =>
+        // ìº”ë²„ìŠ¤ ë¶€ë¶„ ìˆ˜ì • ì˜ˆì •
+        Managers.UI.ShowPopupUI<PZ_Puzzle_Base>(_puzzleAddressable, null, (popupPuzzle) =>
         {
             _popupPuzzle = popupPuzzle;
             _popupPuzzle.SetPuzzleOwnerItem(this);
         });
     }
     
-    // ÆÛÁñ ´İ±â, ESC¸¦ ´­·¶À» ¶§ ÀÌ ÇÔ¼ö¸¦ È£ÃâÇØ¾ß ÇÔ
+    // í¼ì¦ ë‹«ê¸°, ESCë¥¼ ëˆŒë €ì„ ë•Œ ì´ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•´ì•¼ í•¨
     public void ClosePuzzle()
     {
         Managers.UI.ClosePopupUI(_popupPuzzle);
@@ -74,7 +90,7 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 
     #region Dong Dong
 
-    // À§·Î µÕµÕ
+    // ìœ„ë¡œ ë‘¥ë‘¥
     private IEnumerator MoveUp()
     {
         float currentTime = 0f;
@@ -94,7 +110,7 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
         StartCoroutine(MoveDown());
     }
 
-    // ¾Æ·¡·Î µÕµÕ
+    // ì•„ë˜ë¡œ ë‘¥ë‘¥
     private IEnumerator MoveDown()
     {
         float currentTime = 0f;
@@ -124,12 +140,13 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 
         Managers.Object.UnRegisterPuzzles();
 
-        // ¼­ºê ÆÛÁñ Å¬¸®¾î ½Ã
+        // ì„œë¸Œ í¼ì¦ í´ë¦¬ì–´ ì‹œ
         if(!_isMainPuzzle)
         {
-            // ¾ÆÀÌÅÛ È¤Àº º¸»óÀ» ÁÖ´Â ·ÎÁ÷ ±¸Çö ¿¹Á¤
+            // ì•„ì´í…œ í˜¹ì€ ë³´ìƒì„ ì£¼ëŠ” ë¡œì§ êµ¬í˜„ ì˜ˆì •
         }
 
+        Destroy(_mainBlockObject);
         Destroy(gameObject);
     }
 

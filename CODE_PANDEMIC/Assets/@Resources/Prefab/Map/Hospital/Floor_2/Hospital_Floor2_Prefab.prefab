@@ -259,6 +259,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Corridor
       objectReference: {fileID: 0}
+    - target: {fileID: 3437280529729300728, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: _blockSize.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437280529729300728, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: _blockSize.y
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437280529729300728, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: _blockPosition.x
+      value: 353.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437280529729300728, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: _blockPosition.y
+      value: 123.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437280529729300728, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: _puzzleAddressable
+      value: PZ_Password_Board_Prefab
+      objectReference: {fileID: 0}
     - target: {fileID: 4532707563829526881, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
       propertyPath: m_Size.x
       value: 8.14
@@ -274,6 +294,22 @@ PrefabInstance:
     - target: {fileID: 4532707563829526881, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
       propertyPath: m_Offset.y
       value: 0.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540518174069508175, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: _blockSize.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540518174069508175, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: _blockSize.y
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540518174069508175, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: _blockPosition.x
+      value: 356.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540518174069508175, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: _blockPosition.y
+      value: 84.63
       objectReference: {fileID: 0}
     - target: {fileID: 6752894758234546646, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
       propertyPath: m_Size.x
@@ -332,8 +368,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7824160289019981972, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 362.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824160289019981972, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 80.4
+      value: 92.7
       objectReference: {fileID: 0}
     - target: {fileID: 8338156020832717441, guid: c6f2dc1cb0fa08d49a86ccf3526f62f1, type: 3}
       propertyPath: m_LocalPosition.x

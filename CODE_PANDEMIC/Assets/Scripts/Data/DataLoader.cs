@@ -1,4 +1,4 @@
-using Inventory.Model;
+﻿using Inventory.Model;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
@@ -243,7 +243,4 @@ public class PuzzleData
     public int RewardItemAmount;
     public string Addressable;
     public Vector3 PuzzlePosition;
-    public Vector3 InvisibleBlockPosition;
-    public Vector2 InvisibleBlockOffset;
-    public Vector2 InvisibleBlockSize;
 }
