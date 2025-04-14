@@ -1,25 +1,25 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class PZ_Elevator : MonoBehaviour, IInteractable
 {
-    private RectTransform _rectTransform;
+    private Transform _transform;
     private Animator _animator;
 
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        _transform = GetComponent<Transform>();
         _animator = GetComponent<Animator>();
 
-        _rectTransform.localScale = new Vector3(1.5f, 1.5f, 1);
+        _transform.localScale = new Vector3(1.5f, 1.5f, 1);
     }
 
-    // ¿¤·¹º£ÀÌÅÍ »óÈ£ ÀÛ¿ë
+    // ì—˜ë ˆë² ì´í„° ìƒí˜¸ ì‘ìš©
     public void Interact()
     {
-        Debug.Log("´ÙÀ½ ¸ÊÀ¸·Î ÀÌµ¿");
+        Debug.Log("ë‹¤ìŒ ë§µìœ¼ë¡œ ì´ë™");
 
         _animator.SetBool("IsOpened", true);
 
-        // ¿©±â¿¡ ´ÙÀ½ ¸ÊÀ¸·Î ³Ñ¾î°¡´Â ±â´É ±¸Çö
+        // ì—¬ê¸°ì— ë‹¤ìŒ ë§µìœ¼ë¡œ ë„˜ì–´ê°€ëŠ” ê¸°ëŠ¥ êµ¬í˜„
     }
 }

@@ -1,9 +1,9 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
-public class PZ_LightOut_Reset : UI_Base
+public class PZ_LightOut_Reset : UI_PopUp
 {
-    private RectTransform _rectTransform; // ÃßÈÄ Bind ¹è¿ì°í ¼öÁ¤ ¿¹Á¤
+    private RectTransform _rectTransform; // ì¶”í›„ Bind ë°°ìš°ê³  ìˆ˜ì • ì˜ˆì •
     private Image _image;
 
     private void Start()
@@ -17,7 +17,7 @@ public class PZ_LightOut_Reset : UI_Base
             _image.sprite = getSprite;
         });
 
-        // ¸®¼Â ¹öÆ° ±âº» ¼¼ÆÃ
+        // ë¦¬ì…‹ ë²„íŠ¼ ê¸°ë³¸ ì„¸íŒ…
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         _rectTransform.pivot = new Vector2(0.5f, 0.5f);
@@ -27,7 +27,7 @@ public class PZ_LightOut_Reset : UI_Base
         BindEvent(gameObject, OnButtonClick);
     }
 
-    // ¹öÆ° Å¬¸¯ ÀÌº¥Æ®
+    // ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸
     private void OnButtonClick()
     {
         Debug.LogWarning("Reset!!!");
