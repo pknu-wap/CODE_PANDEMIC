@@ -16,8 +16,8 @@ public class AI_Controller : AI_Base
     public Transform _player;
     private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
-    private AI_Fov _aiFov;
-    public AIPath _aiPath;
+    [SerializeField] private AI_Fov _aiFov;
+    [SerializeField] public AIPath _aiPath;
 
     private AI_IState _currentState;
     public virtual ISkillBehavior Skill { get { return null; } }
@@ -27,7 +27,6 @@ public class AI_Controller : AI_Base
     private bool _isAttacking;
 
     protected virtual void Awake(){}
-    AI_SweepVisualizer _sweepVisualizer;
     protected virtual void Start()
     {
         if (!Init())
@@ -40,44 +39,15 @@ public class AI_Controller : AI_Base
     public override bool Init()
     {
         PlayerController playerComponent = FindObjectOfType<PlayerController>();
-        if (playerComponent == null)
-        {
-            Debug.LogError("Player 없음");
-            return false;
-        }
         _player = playerComponent.transform;
 
         _rb = GetComponent<Rigidbody2D>();
-        if (_rb == null)
-        {
-            Debug.LogError("Rigidbody 없음");
-            return false;
-        }
         _rb.freezeRotation = true;
-
         _renderer = GetComponent<SpriteRenderer>();
-        if (_renderer == null)
-        {
-            Debug.LogError("SpriteRenderer 없음");
-            return false;
-        }
-
-        _aiFov = GetComponentInChildren<AI_Fov>();
-        if (_aiFov == null)
-        {
-            Debug.LogError("AI_Fov 없음");
-            return false;
-        }
-
-        _aiPath = GetComponent<AIPath>();
-        if (_aiPath == null)
-        {
-            Debug.LogError("AIPath 없음");
-            return false;
-        }
  
         ChangeState(new AI_StateIdle(this));
         _state = AI_State.Idle;
+
         return true;
     }
 
