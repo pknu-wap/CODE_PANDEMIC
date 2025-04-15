@@ -7,7 +7,7 @@ using UnityEngine;
 public class AI_Fov : MonoBehaviour
 {
     [Range(0, 360)]
-    public float _fov = 120f;
+    public float _fov = 180f;
     public int _rayCount = 90;
     public float _viewDistance = 7.5f;
     public LayerMask _layerMask;

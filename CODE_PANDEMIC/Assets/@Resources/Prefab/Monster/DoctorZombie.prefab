@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _aiPath: {fileID: 0}
-  SweepRange: 4
+  SweepRange: 2
   SweepAngle: 90
   SweepCount: 5
   SweepInterval: 0.5
@@ -142,6 +142,7 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 0
+  SweepVisualizer: {fileID: 0}
 --- !u!114 &5630132980674981576
 MonoBehaviour:
   m_ObjectHideFlags: 0

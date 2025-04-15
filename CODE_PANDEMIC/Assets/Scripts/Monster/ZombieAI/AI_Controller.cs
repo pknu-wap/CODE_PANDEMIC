@@ -27,7 +27,7 @@ public class AI_Controller : AI_Base
     private bool _isAttacking;
 
     protected virtual void Awake(){}
-
+    AI_SweepVisualizer _sweepVisualizer;
     protected virtual void Start()
     {
         if (!Init())
@@ -76,7 +76,6 @@ public class AI_Controller : AI_Base
             return false;
         }
  
-
         ChangeState(new AI_StateIdle(this));
         _state = AI_State.Idle;
         return true;
@@ -189,7 +188,7 @@ public class AI_Controller : AI_Base
             if (player == null)
                 yield break;
 
-            Debug.Log($"{_aiName}이 {_aiDamage} 데미지 주는 공격 실행 중");
+            Debug.Log($"{_aiName}이 {_aiDamage} 데미지 몸통박치기!");
 
             yield return wait;
         }

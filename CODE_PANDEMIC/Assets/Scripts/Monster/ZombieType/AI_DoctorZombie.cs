@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class AI_DoctorZombie : AI_Controller
 {
-    public float SweepRange = 4f;
+    public float SweepRange = 2f;
     public float SweepAngle = 90f;
     public int SweepCount = 5;
     public float SweepInterval = 0.5f;
     public float SkillCooldown = 15f;
     public float SkillChargeDelay = 2f;
     public LayerMask TargetLayer;
+    public AI_SweepVisualizer SweepVisualizer;
+    public AI_SweepSkill SweepSkill;
+
     public float AiDamage => _aiDamage;
     public string AIName => _aiName;
     public Transform Player => _player;
@@ -36,6 +39,12 @@ public class AI_DoctorZombie : AI_Controller
             enabled = false;
             return;
         }
+        if (SweepVisualizer != null)
+        {
+            SweepVisualizer.Hide();
+            SweepVisualizer._doctor = this;
+        }
+        
         _skill = new AI_SweepSkill();
     }
 }

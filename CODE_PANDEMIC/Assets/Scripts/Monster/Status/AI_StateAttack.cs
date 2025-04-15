@@ -15,7 +15,6 @@ public class AI_StateAttack : AI_IState
     public virtual void OnEnter()
     {
         _controller.StopMoving();
-        Debug.Log($"[StateAttack] 의사 공격 상태 진입");
         _isSkillPlaying = true;
         _controller.StartCoroutine(ChargeAndExecuteSkill());
     }
@@ -32,7 +31,6 @@ public class AI_StateAttack : AI_IState
     {
         if (_controller.Skill != null)
             _controller.Skill.StopSkill();
-        Debug.Log($"[StateAttack] 의사 공격 상태 종료");
         _isSkillPlaying = false;
     }
 

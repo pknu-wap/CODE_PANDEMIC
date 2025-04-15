@@ -1,6 +1,6 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class AI_SweepSkill : ISkillBehavior
 {
@@ -10,10 +10,8 @@ public class AI_SweepSkill : ISkillBehavior
     
     public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
-
         if (!IsReady(controller))
         {
-            Debug.Log($"[SweepSkill] 쿨타임 중, 남은 시간: {_currentDoctor.SkillCooldown - (Time.time - _lastSkillTime):F2}초");
             onSkillComplete?.Invoke();
             return;
         }
@@ -24,6 +22,7 @@ public class AI_SweepSkill : ISkillBehavior
 
     public void StopSkill()
     {
+
     }
 
     private IEnumerator SweepRoutine(AI_DoctorZombie doctor, System.Action onSkillComplete)
@@ -32,17 +31,25 @@ public class AI_SweepSkill : ISkillBehavior
         bool originalCanMove = aiPath.canMove;
         aiPath.canMove = false;
 
+        Vector2 attackDirection = (doctor.Player != null)
+            ? ((Vector2)doctor.Player.position - (Vector2)doctor.transform.position).normalized
+            : doctor.transform.up;
+
+        if (doctor.SweepVisualizer != null)
+        {
+            doctor.SweepVisualizer.transform.position = doctor.transform.position;
+            doctor.SweepVisualizer.Show(doctor.SkillChargeDelay);
+        }
+
         yield return new WaitForSeconds(doctor.SkillChargeDelay);
 
         for (int i = 0; i < doctor.SweepCount; i++)
         {
-            Vector2 attackDirection = (doctor.Player != null)
-                ? ((Vector2)doctor.Player.position - (Vector2)doctor.transform.position).normalized
-                : doctor.transform.up;
             DoSweepAttack(doctor, attackDirection);
             yield return new WaitForSeconds(doctor.SweepInterval);
         }
 
+        doctor.SweepVisualizer?.Hide();
         aiPath.canMove = originalCanMove;
         onSkillComplete?.Invoke();
     }
