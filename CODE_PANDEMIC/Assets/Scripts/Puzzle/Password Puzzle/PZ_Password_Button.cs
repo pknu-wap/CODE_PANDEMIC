@@ -1,13 +1,9 @@
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+ï»¿using TMPro;
 
 public class PZ_Password_Button : UI_Base
 {
-    private Image _image;
-
-    private TextMeshProUGUI _buttonNumberText; // ÇöÀç ¹öÆ° text
-    private int _buttonNumber; // ÇöÀç ¹öÆ° ¹øÈ£
+    private TextMeshProUGUI _buttonNumberText; // í˜„ì¬ ë²„íŠ¼ text
+    private int _buttonNumber; // í˜„ì¬ ë²„íŠ¼ ë²ˆí˜¸
 
     private PZ_Password_Board _passwordBoard;
 
@@ -18,16 +14,9 @@ public class PZ_Password_Button : UI_Base
         set { _buttonNumber = value; }
     }
 
-    // ¹öÆ°ÀÇ °íÀ¯ °ª ¼³Á¤
+    // ë²„íŠ¼ì˜ ê³ ìœ  ê°’ ì„¤ì •
     public void ButtonSetup()
     {
-        _image = GetComponent<Image>();
-
-        Managers.Resource.LoadAsync<Sprite>("PZ_Password_Button_Sprite", (getSprite) =>
-        {
-            _image.sprite = getSprite;
-        });
-
         _passwordBoard = GetComponentInParent<PZ_Password_Board>();
 
         _buttonNumberText = GetComponentInChildren<TextMeshProUGUI>();
@@ -35,10 +24,10 @@ public class PZ_Password_Button : UI_Base
         BindEvent(gameObject, OnButtonClick);
     }
 
-    // ¹öÆ° Å¬¸¯ ÀÌº¥Æ®
+    // ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸
     public void OnButtonClick()
     {
-        // ÇØ´ç ¹öÆ°ÀÇ °ªÀ» ÀÔ·Â
+        // í•´ë‹¹ ë²„íŠ¼ì˜ ê°’ì„ ì…ë ¥
         _passwordBoard.InputPassword(_buttonNumberText.text);
     }
 }
