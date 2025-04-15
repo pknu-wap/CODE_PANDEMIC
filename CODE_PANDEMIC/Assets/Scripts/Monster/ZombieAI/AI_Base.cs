@@ -5,22 +5,23 @@ using UnityEngine;
 public abstract class AI_Base : MonoBehaviour
 {
     // 기본 체력, 데미지, 이동 속도, 감지 범위, 시야각 등 공통 속성
-    protected float _aiHealth;
+    [SerializeField] UI_EnemyStatusBar _statusBar;
+    protected int _aiHealth;
     protected float _aiDamage;
     protected float _aiMoveSpeed;
     protected float _aiDetectionRange;
     protected float _aiDetectionAngle;
-    protected float _aiDamageDelay; 
+    protected float _aiDamageDelay;  
     protected float _aiAttackRange;
     protected string _aiName;
 
     
-
     protected AI_State _state = AI_State.Idle;
     public event System.Action OnDie;
 
     public virtual bool Init()
     {
+        _statusBar.Init(_aiHealth);
         return true;
     }
 
@@ -34,9 +35,10 @@ public abstract class AI_Base : MonoBehaviour
         return _state;
     }
 
-    public virtual void TakeDamage(float amount)
+    public virtual void TakeDamage(int amount)
     {
         _aiHealth -= amount;
+        _statusBar?.UpdateHpBar(Mathf.RoundToInt(_aiHealth));
         Debug.Log("AI 체력: " + _aiHealth);
         if (_aiHealth <= 0f)
         {
