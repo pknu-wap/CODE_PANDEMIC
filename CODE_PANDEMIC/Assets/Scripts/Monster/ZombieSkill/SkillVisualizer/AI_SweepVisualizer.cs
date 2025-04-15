@@ -117,17 +117,7 @@ public class AI_SweepVisualizer : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
-        float elapsed = 0f;
-        Color startColor = _meshRenderer.material.color;
-
-        while (elapsed < fadeDuration)
-        {
-            float t = 1f - (elapsed / fadeDuration);
-            Color color = new Color(startColor.r, startColor.g, startColor.b, t);
-            _meshRenderer.material.color = color;
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
         _meshRenderer.material.color = new Color(1f, 0f, 0f, 0f);
+        yield return null;
     }
 }

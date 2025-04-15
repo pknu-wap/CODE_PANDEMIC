@@ -15,7 +15,5 @@ public class AI_PatientZombie : AI_Controller
         _aiDetectionAngle = 120f;
         _aiAttackRange = 2f;
         _aiDamageDelay = 5f;
-        _aiDetectionAngle = 120f;
-        _aiDetectionRange = 7.5f;
     }
 }

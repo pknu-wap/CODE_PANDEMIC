@@ -249,6 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1672c489b89814d9adc56080da93ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+  _aiPath: {fileID: 0}
 --- !u!1 &5104284981006556213
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f616aa8be86e711419aac769658d7bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fov: 120
+  _fov: 180
   _rayCount: 90
   _viewDistance: 7.5
   _layerMask:

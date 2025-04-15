@@ -50,7 +50,7 @@ public class AI_SweepSkill : ISkillBehavior
         }
 
         doctor.SweepVisualizer?.Hide();
-        aiPath.canMove = originalCanMove;
+        aiPath.canMove = true;
         onSkillComplete?.Invoke();
     }
 

@@ -27,8 +27,6 @@ public class AI_DoctorZombie : AI_Controller
         _aiDetectionAngle = 120f;
         _aiAttackRange = 2f;
         _aiDamageDelay = 5f;
-        _aiDetectionAngle = 120f;
-        _aiDetectionRange = 7.5f;
         TargetLayer = LayerMask.GetMask("Player");
         base.Awake();
     }
@@ -44,6 +42,10 @@ public class AI_DoctorZombie : AI_Controller
             SweepVisualizer.Hide();
             SweepVisualizer._doctor = this;
         }
+        if (SweepVisualizer != null && Player != null)
+    {
+        SweepVisualizer.playerTransform = Player;
+    }
         
         _skill = new AI_SweepSkill();
     }
