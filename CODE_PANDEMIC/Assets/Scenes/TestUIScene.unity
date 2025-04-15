@@ -1715,29 +1715,11 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &1923241101 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6543293507200781945, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-  m_PrefabInstance: {fileID: 1322096057053067651}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1923241102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4569797131210249096, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
   m_PrefabInstance: {fileID: 1322096057053067651}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1923241104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1923241101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddbe8ea687ebae7409790bbb2fc0f0e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _miniMapTexture: {fileID: 8400000, guid: f5ddf3916b011974e933fe777a5089ef, type: 2}
 --- !u!1 &1974383071
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,62 +2011,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: m_Depth
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: orthographic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: m_FOVAxisMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: m_TargetTexture
-      value: 
-      objectReference: {fileID: 8400000, guid: f5ddf3916b011974e933fe777a5089ef, type: 2}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: orthographic size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: m_BackGroundColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.08677464
-      objectReference: {fileID: 0}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.08677464
-      objectReference: {fileID: 0}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.09433961
-      objectReference: {fileID: 0}
-    - target: {fileID: 4941509410670459661, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
     - target: {fileID: 6543293507200781945, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
       propertyPath: m_Name
       value: MiniMapCamera
       objectReference: {fileID: 0}
-    - target: {fileID: 6543293507200781945, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5997707237948741000, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6543293507200781945, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1923241104}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a5636d9b42204447992fc1884050b14, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
