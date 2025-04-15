@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections.Generic;
 
 public class PZ_Piano_Base : PZ_Puzzle_Main
@@ -8,9 +8,9 @@ public class PZ_Piano_Base : PZ_Puzzle_Main
     private List<PZ_Piano_Tile_White> _whiteList = new List<PZ_Piano_Tile_White>();
     private List<PZ_Piano_Tile_Black> _blackList = new List<PZ_Piano_Tile_Black>();
 
-    private List<string> _correctPianoNotes = new List<string>(); // Á¤´ä
+    private List<string> _correctPianoNotes = new List<string>(); // ì •ë‹µ
 
-    private int _maxPianoCount = 7; // ÃÖ´ë ¼±ÅÃµÉ À½ °³¼ö ( == Á¤´ä À½ÀÇ °³¼ö)
+    private int _maxPianoCount = 7; // ìµœëŒ€ ì„ íƒë  ìŒ ê°œìˆ˜ ( == ì •ë‹µ ìŒì˜ ê°œìˆ˜)
     private int _currentIndex = 0;
 
     private void Start()
@@ -34,27 +34,23 @@ public class PZ_Piano_Base : PZ_Puzzle_Main
 
     #region Setting
 
-    // ÇÇ¾Æ³ë Å¸ÀÏ °¡Á®¿À±â
+    // í”¼ì•„ë…¸ íƒ€ì¼ ê°€ì ¸ì˜¤ê¸°
     private void GetSpawnedPianoTiles()
     {
-        // Èò °Ç¹İ °¡Á®¿À±â
+        // í° ê±´ë°˜ ê°€ì ¸ì˜¤ê¸°
+        GetComponentsInChildren(false, _whiteList);
+
         for (int index = 0; index < 7; index++)
         {
-            Transform childTile = transform.GetChild(index);
-            PZ_Piano_Tile_White spawnedTile = childTile.gameObject.GetComponent<PZ_Piano_Tile_White>();
-
-            spawnedTile.TileSetup(index);
-            _whiteList.Add(spawnedTile);
+            _whiteList[index].TileSetup(index);
         }
 
-        // °ËÀº °Ç¹İ °¡Á®¿À±â
+        // ê²€ì€ ê±´ë°˜ ê°€ì ¸ì˜¤ê¸°
+        GetComponentsInChildren(false, _blackList);
+
         for (int index = 0; index < 6; index++)
         {
-            Transform childTile = transform.GetChild(index + 7);
-            PZ_Piano_Tile_Black spawnedTile = childTile.gameObject.GetComponent<PZ_Piano_Tile_Black>();
-
-            spawnedTile.TileSetup(index);
-            _blackList.Add(spawnedTile);
+            _blackList[index].TileSetup(index);
         }
     }
 
@@ -62,7 +58,7 @@ public class PZ_Piano_Base : PZ_Puzzle_Main
 
     #region Clear
 
-    // ÆÛÁñ Å¬¸®¾î ¿©ºÎ Ã¼Å©
+    // í¼ì¦ í´ë¦¬ì–´ ì—¬ë¶€ ì²´í¬
     public void CheckPuzzleClear(string selectedNote)
     {
         if (_correctPianoNotes[_currentIndex] != selectedNote)

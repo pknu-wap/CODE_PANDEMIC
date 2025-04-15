@@ -1,27 +1,26 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
 public class PZ_Piano_Tile_White : UI_Base
 {
-    // Èò °Ç¹İ enum
+    // í° ê±´ë°˜ enum
     private enum PianoNoteWhite
     {
-        Do, // µµ
-        Re, // ·¹
-        Mi, // ¹Ì
-        Fa, // ÆÄ
-        Sol, // ¼Ö
-        La, // ¶ó
-        Ti // ½Ã
+        Do, // ë„
+        Re, // ë ˆ
+        Mi, // ë¯¸
+        Fa, // íŒŒ
+        Sol, // ì†”
+        La, // ë¼
+        Ti // ì‹œ
     }
 
     private RectTransform _rectTransform;
     private Image _image;
-    private Outline _outLine;
     private PZ_Piano_Base _pianoBase;
-    private PianoNoteWhite[] _pianoNoteTypes; // °Ç¹İ À½ Á¾·ù
-    private PianoNoteWhite _pianoTileNote; // ÇöÀç °Ç¹İ À½
+    private PianoNoteWhite[] _pianoNoteTypes; // ê±´ë°˜ ìŒ ì¢…ë¥˜
+    private PianoNoteWhite _pianoTileNote; // í˜„ì¬ ê±´ë°˜ ìŒ
 
     private Material _normalMaterial;
     private Material _pressedMaterial;
@@ -30,7 +29,6 @@ public class PZ_Piano_Tile_White : UI_Base
     {
         _rectTransform = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
-        _outLine = GetComponent<Outline>();
         _pianoBase = GetComponentInParent<PZ_Piano_Base>();
 
         Managers.Resource.LoadAsync<Material>("PZ_Piano_Tile_White_Normal_Material", (getMaterial) =>
@@ -46,21 +44,13 @@ public class PZ_Piano_Tile_White : UI_Base
             _pressedMaterial = getMaterial;
         });
 
-        // ±âº» ¼¼ÆÃ
-        _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        _rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        _rectTransform.sizeDelta = new Vector2(150, 500);
-
-        _outLine.effectDistance = new Vector2(3, 3);
-
-        // enum °ªµéÀ» ¹è¿­·Î °¡Á®¿È
+        // enum ê°’ë“¤ì„ ë°°ì—´ë¡œ ê°€ì ¸ì˜´
         _pianoNoteTypes = (PianoNoteWhite[])System.Enum.GetValues(typeof(PianoNoteWhite));
 
         BindEvent(gameObject, OnButtonClick);
     }
 
-    // °Ç¹İ ±âº» ¼¼ÆÃ
+    // ê±´ë°˜ ê¸°ë³¸ ì„¸íŒ…
     public void TileSetup(int index)
     {
         Setting();
@@ -70,10 +60,10 @@ public class PZ_Piano_Tile_White : UI_Base
         _pianoTileNote = _pianoNoteTypes[index];
     }
 
-    // °Ç¹İ Å¬¸¯ ÀÌº¥Æ®
+    // ê±´ë°˜ í´ë¦­ ì´ë²¤íŠ¸
     public void OnButtonClick()
     {
-        Debug.Log("´©¸¥ Èò °Ç¹İ : " + _pianoTileNote.ToString());
+        Debug.Log("ëˆ„ë¥¸ í° ê±´ë°˜ : " + _pianoTileNote.ToString());
 
         StartCoroutine(ChangeTileColor());
 
