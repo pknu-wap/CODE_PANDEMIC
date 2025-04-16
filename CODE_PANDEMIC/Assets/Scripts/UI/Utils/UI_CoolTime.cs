@@ -35,9 +35,9 @@ public class UI_CoolTime : UI_Base
     {
         _disable.fillAmount = 0f;
         _timer.text = "";
-        StartCoolTime(10.0f);
-
+     
     }
+
     public void StartCoolTime(float maxTime)
     {
         StartCoroutine(CoolTimeRoutine(maxTime));

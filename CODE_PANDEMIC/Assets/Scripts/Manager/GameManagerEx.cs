@@ -29,6 +29,7 @@ public class GameData
     public Resolution SaveResolution;
     public bool IsFullScreen;
 
+    public List<int> ClearPuzzleID=new List<int>();
     public static string FilePath => Application.persistentDataPath + "/SaveData.json";
 }
 #endregion
@@ -40,7 +41,7 @@ public class GameManagerEx
     private bool _isPaused;
     private InventoryData _inventoryData;
     private InventorySaver _inventorySaver;
-
+    HashSet<int> _clearPuzzleID;
     public QuickSlot QuickSlot { get; private set; }
 
     public GameData SaveData
@@ -75,7 +76,15 @@ public class GameManagerEx
         get => _gameData.Stage;
         set => _gameData.Stage = value;
     }
-
+    public HashSet<int> ClearPuzzleID
+    {
+        get => _clearPuzzleID;
+    }
+   
+    public void ClearPuzzle(int id)
+    {
+        _clearPuzzleID.Add(id);
+    }
     public void CompleteStage()
     {
         if (Stage == Define.STAGES_PER_CHAPTER)
@@ -152,6 +161,7 @@ public class GameManagerEx
 
     public void SaveGame()
     {
+        _gameData.ClearPuzzleID = new List<int>(_clearPuzzleID);
         for (int i = 1; i <= 4; i++) // ½½·Ô ÀÎµ¦½º´Â 1,2,3,4
         {
             var slotItem = QuickSlot.GetSlotItem(i);
@@ -191,7 +201,7 @@ public class GameManagerEx
         if (data != null)
         {
             _gameData = data;
-
+            _clearPuzzleID = new HashSet<int>(_gameData.ClearPuzzleID);
             for (int i = 1; i <= 4; i++) // 1~4 ½½·Ô ÀÎµ¦½º
             {
                 var slotData = data.QuickSlotItems[i - 1];
