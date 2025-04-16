@@ -73,9 +73,12 @@ public class PlayerController : MonoBehaviour
 
         if (moveInput.x != 0)
         {
-
-            spriteRenderer.flipX = moveInput.x > 0;
-
+            Vector3 scale = transform.localScale;
+            if (moveInput.x > 0)
+                scale.x = -1;
+            else if (moveInput.x < 0)
+                scale.x = 1;
+            transform.localScale = scale;
 
             if (weaponHolder != null)
             {
