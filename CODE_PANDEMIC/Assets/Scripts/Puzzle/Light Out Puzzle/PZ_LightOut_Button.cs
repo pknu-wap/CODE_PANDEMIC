@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class PZ_LightOut_Button : UI_Base
 {
-    private RectTransform _rectTransform; // ÃßÈÄ Bind ¹è¿ì°í ¼öÁ¤ ¿¹Á¤
-    private Image _image; // ÃßÈÄ Bind ¹è¿ì°í ¼öÁ¤ ¿¹Á¤
+    private RectTransform _rectTransform; // ì¶”í›„ Bind ë°°ìš°ê³  ìˆ˜ì • ì˜ˆì •
+    private Image _image; // ì¶”í›„ Bind ë°°ìš°ê³  ìˆ˜ì • ì˜ˆì •
 
-    private Sprite _correctSprite; // ¸Â¾ÒÀ»¶§ »ö
-    private Sprite _wrongSprite; // Æ²·ÈÀ»¶§ »ö
+    private Sprite _correctSprite; // ë§ì•˜ì„ë•Œ ìƒ‰
+    private Sprite _wrongSprite; // í‹€ë ¸ì„ë•Œ ìƒ‰
 
-    private int _buttonIndex; // ÇöÀç ¹öÆ° Index
-    private bool _isCorrectState = false; // ÇöÀç ¹öÆ°ÀÌ ¿Ã¹Ù¸¥ »óÅÂÀÎÁö Ã¼Å©
+    private int _buttonIndex; // í˜„ì¬ ë²„íŠ¼ Index
+    private bool _isCorrectState = false; // í˜„ì¬ ë²„íŠ¼ì´ ì˜¬ë°”ë¥¸ ìƒíƒœì¸ì§€ ì²´í¬
 
-    public void Init(int buttonIndex)
+    public void Setting(int buttonIndex)
     {
         _rectTransform = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
@@ -20,12 +20,13 @@ public class PZ_LightOut_Button : UI_Base
         Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Correct_Sprite", (getSprite) =>
         {
             _correctSprite = getSprite;
-        });
 
-        Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Wrong_Sprite", (getSprite) =>
-        {
-            _wrongSprite = getSprite;
-            ShuffleButtonState();
+            Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Wrong_Sprite", (getSprite) =>
+            {
+                _wrongSprite = getSprite;
+
+                ShuffleButtonState();
+            });
         });
 
         _buttonIndex = buttonIndex;
@@ -35,7 +36,7 @@ public class PZ_LightOut_Button : UI_Base
         BindEvent(gameObject, OnButtonClick);
     }
 
-    // ¹«ÀÛÀ§ ¹öÆ° »óÅÂ ¼³Á¤
+    // ë¬´ì‘ìœ„ ë²„íŠ¼ ìƒíƒœ ì„¤ì •
     public void ShuffleButtonState()
     {
         int randomState = Random.Range(0, 2);
@@ -52,7 +53,7 @@ public class PZ_LightOut_Button : UI_Base
         }
     }
 
-    // ÇöÀç ¹öÆ°ÀÇ »óÅÂ¿Í ±×¿¡ ¸Â´Â »öÀ¸·Î º¯°æ
+    // í˜„ì¬ ë²„íŠ¼ì˜ ìƒíƒœì™€ ê·¸ì— ë§ëŠ” ìƒ‰ìœ¼ë¡œ ë³€ê²½
     public void ChangeButtonState()
     {
         if (_isCorrectState)
@@ -68,16 +69,16 @@ public class PZ_LightOut_Button : UI_Base
         _isCorrectState = !_isCorrectState;
     }
 
-    // ÇöÀç ¹öÆ°ÀÌ ¿Ã¹Ù¸¥ »öÀ» °¡Á³´ÂÁö¸¦ ¹İÈ¯
+    // í˜„ì¬ ë²„íŠ¼ì´ ì˜¬ë°”ë¥¸ ìƒ‰ì„ ê°€ì¡ŒëŠ”ì§€ë¥¼ ë°˜í™˜
     public bool IsButtonCorrect()
     {
         return _isCorrectState;
     }
 
-    // ¹öÆ° Å¬¸¯ ÀÌº¥Æ®
+    // ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸
     private void OnButtonClick()
     {
-        Debug.Log("Å¬¸¯ÇÑ ¹öÆ° : " + _buttonIndex);
+        Debug.Log("í´ë¦­í•œ ë²„íŠ¼ : " + _buttonIndex);
 
         PZ_LightOut_Board board = GetComponentInParent<PZ_LightOut_Board>();
         board.ChangeButtonsState(_buttonIndex);

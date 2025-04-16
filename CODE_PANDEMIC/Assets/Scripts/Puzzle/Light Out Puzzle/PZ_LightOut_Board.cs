@@ -1,61 +1,19 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class PZ_LightOut_Board : PZ_Puzzle_Main
 {
     #region Base
 
-    private GridLayoutGroup _gridLayoutGroup;
-
     private List<PZ_LightOut_Button> _lightOutButtonList = new List<PZ_LightOut_Button>(); // 소환된 버튼들 관리
-    private PZ_LightOut_Reset _resetButton;
 
     private int _buttonMaxCount = 25; // Light 버튼 개수
 
-    public override bool Init()
+    private void Start()
     {
-        SetComponents();
-
-        _gridLayoutGroup = GetComponent<GridLayoutGroup>();
-
-        Managers.UI.ShowPopupUI<PZ_LightOut_Reset>("PZ_LightOut_Reset_Prefab", null, (resetButton) =>
-        {
-            _resetButton = resetButton.GetComponent<PZ_LightOut_Reset>();
-        });
-
-        // 보드 기본 세팅
-        _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        _rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchoredPosition = new Vector2(0, 0);
-        _rectTransform.sizeDelta = new Vector2(900, 900);
-
-        // 이미지 세팅
-        Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Board_Sprite", (getSprite) =>
-        {
-            _image.sprite = getSprite;
-        });
-
-        // 스폰될 버튼의 위치 세팅
-        _gridLayoutGroup.padding.left = 10;
-        _gridLayoutGroup.padding.right = 10;
-        _gridLayoutGroup.padding.top = 10;
-        _gridLayoutGroup.padding.bottom = 10;
-        _gridLayoutGroup.cellSize = new Vector2(160, 160);
-        _gridLayoutGroup.spacing = new Vector2(10, 10);
+        Managers.UI.SetCanvas(gameObject);
 
         GetSpawnedButtons();
-
-        return true;
-    }
-
-    private void OnDestroy()
-    {
-        if (_resetButton)
-        {
-            Destroy(_resetButton.gameObject);
-        }
     }
 
     #endregion
@@ -65,14 +23,11 @@ public class PZ_LightOut_Board : PZ_Puzzle_Main
     // Light Button 가져오기
     private void GetSpawnedButtons()
     {
+        GetComponentsInChildren(false, _lightOutButtonList);
+
         for (int index = 0; index < _buttonMaxCount; index++)
         {
-            Transform childButton = transform.GetChild(index);
-            PZ_LightOut_Button spawnedButton = childButton.gameObject.GetComponent<PZ_LightOut_Button>();
-
-            spawnedButton.Init(index);
-
-            _lightOutButtonList.Add(spawnedButton);
+            _lightOutButtonList[index].Setting(index);
         }
     }
 

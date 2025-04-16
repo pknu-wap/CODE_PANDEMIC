@@ -1,24 +1,24 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
 public class PZ_Piano_Tile_Black : UI_Base
 {
-    // °ËÀº °Ç¹İ enum
+    // ê²€ì€ ê±´ë°˜ enum
     private enum PianoNoteBlack
     {
-        DoSharp, // µµ˜Ş
-        ReSharp, // ·¹˜Ş
-        FaSharp, // ÆÄ˜Ş
-        SolSharp, // ¼Ö˜Ş
-        LaSharp, // ¶ó˜Ş
+        DoSharp, // ë„ìƒ¾
+        ReSharp, // ë ˆìƒ¾
+        FaSharp, // íŒŒìƒ¾
+        SolSharp, // ì†”ìƒ¾
+        LaSharp, // ë¼ìƒ¾
     }
 
     private RectTransform _rectTransform;
     private Image _image;
     private PZ_Piano_Base _pianoBase;
-    private PianoNoteBlack[] _pianoNoteTypes; // °Ç¹İ À½ Á¾·ù
-    private PianoNoteBlack _pianoTileNote; // ÇöÀç °Ç¹İ À½
+    private PianoNoteBlack[] _pianoNoteTypes; // ê±´ë°˜ ìŒ ì¢…ë¥˜
+    private PianoNoteBlack _pianoTileNote; // í˜„ì¬ ê±´ë°˜ ìŒ
 
     private Material _normalMaterial;
     private Material _pressedMaterial;
@@ -42,24 +42,18 @@ public class PZ_Piano_Tile_Black : UI_Base
             _pressedMaterial = getMaterial;
         });
 
-        // ±âº» ¼¼ÆÃ
-        _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        _rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        _rectTransform.sizeDelta = new Vector2(100, 300);
-
-        // enum °ªµéÀ» ¹è¿­·Î °¡Á®¿È
+        // enum ê°’ë“¤ì„ ë°°ì—´ë¡œ ê°€ì ¸ì˜´
         _pianoNoteTypes = (PianoNoteBlack[])System.Enum.GetValues(typeof(PianoNoteBlack));
 
         BindEvent(gameObject, OnButtonClick);
     }
 
-    // °Ç¹İ ±âº» ¼¼ÆÃ
+    // ê±´ë°˜ ê¸°ë³¸ ì„¸íŒ…
     public void TileSetup(int index)
     {
         Setting();
 
-        // Áß°£ÀÇ ºó °ËÀº Å¸ÀÏ
+        // ì¤‘ê°„ì˜ ë¹ˆ ê²€ì€ íƒ€ì¼
         if (index == 2)
         {
             _image.enabled = false;
@@ -81,10 +75,10 @@ public class PZ_Piano_Tile_Black : UI_Base
         }
     }
 
-    // °Ç¹İ Å¬¸¯ ÀÌº¥Æ®
+    // ê±´ë°˜ í´ë¦­ ì´ë²¤íŠ¸
     public void OnButtonClick()
     {
-        Debug.Log("´©¸¥ °ËÀº °Ç¹İ : " + _pianoTileNote.ToString());
+        Debug.Log("ëˆ„ë¥¸ ê²€ì€ ê±´ë°˜ : " + _pianoTileNote.ToString());
 
         StartCoroutine(ChangeTileColor());
 
