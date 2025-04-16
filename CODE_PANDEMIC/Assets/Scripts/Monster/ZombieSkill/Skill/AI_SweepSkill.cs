@@ -28,7 +28,6 @@ public class AI_SweepSkill : ISkillBehavior
     private IEnumerator SweepRoutine(AI_DoctorZombie doctor, System.Action onSkillComplete)
     {
         var aiPath = doctor._aiPath;
-        bool originalCanMove = aiPath.canMove;
         aiPath.canMove = false;
 
         Vector2 attackDirection = (doctor.Player != null)
@@ -50,7 +49,7 @@ public class AI_SweepSkill : ISkillBehavior
         }
 
         doctor.SweepVisualizer?.Hide();
-        aiPath.canMove = originalCanMove;
+        aiPath.canMove = true;
         onSkillComplete?.Invoke();
     }
 

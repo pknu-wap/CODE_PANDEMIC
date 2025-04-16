@@ -84,10 +84,7 @@ public class AI_Controller : AI_Base
 
     public void ChasePlayer()
     {
-        if (!_isAttacking)
-        {
-            _aiPath.canMove = true;
-        }
+        _aiPath.canMove = true;
     }
 
     public void StopMoving()
