@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73a8773b923fb342bb63d3f126f3d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _handleTransform: {fileID: 3852193494656037448}
 --- !u!61 &-3169542864755979999
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -239,7 +240,7 @@ Animator:
   m_GameObject: {fileID: 3310599544240719692}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 602014cd4e3148c478d46fe576970eec, type: 2}
+  m_Controller: {fileID: 9100000, guid: 15be85a95141a5a4696751fcad406d81, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

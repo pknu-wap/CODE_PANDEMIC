@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
@@ -7,14 +7,14 @@ public class PZ_Sliding_Tile : UI_Base
 {
     #region Base
 
-    private TextMeshProUGUI _tileNumberText; // ÇöÀç Å¸ÀÏ ¹øÈ£ Ãâ·ÂÀ» À§ÇÑ text
-    private int _tileNumber; // ÇöÀç Å¸ÀÏ ¹øÈ£
+    private TextMeshProUGUI _tileNumberText; // í˜„ì¬ íƒ€ì¼ ë²ˆí˜¸ ì¶œë ¥ì„ ìœ„í•œ text
+    private int _tileNumber; // í˜„ì¬ íƒ€ì¼ ë²ˆí˜¸
 
     private PZ_Sliding_Board _slidingBoard;
-    private Vector3 _correctPosition; // ¿Ã¹Ù¸¥ À§Ä¡ÀÇ Position
-    public bool _isCorrect = false; // ÇöÀç Å¸ÀÏÀÇ À§Ä¡°¡ ¿Ã¹Ù¸¥ À§Ä¡ÀÎÁö ÆÇ´Ü
+    private Vector3 _correctPosition; // ì˜¬ë°”ë¥¸ ìœ„ì¹˜ì˜ Position
+    public bool _isCorrect = false; // í˜„ì¬ íƒ€ì¼ì˜ ìœ„ì¹˜ê°€ ì˜¬ë°”ë¥¸ ìœ„ì¹˜ì¸ì§€ íŒë‹¨
 
-    private Image _image; // ÆÛÁñ ÀÌ¹ÌÁö
+    private Image _image; // í¼ì¦ ì´ë¯¸ì§€
 
     public int TileNumber
     {
@@ -31,7 +31,7 @@ public class PZ_Sliding_Tile : UI_Base
 
     #region Tile
 
-    // tileEmptyIndex ¸¶Áö¸· ºó Å¸ÀÏÀÇ index
+    // tileEmptyIndex ë§ˆì§€ë§‰ ë¹ˆ íƒ€ì¼ì˜ index
     public void TileSetup(int tileNumber, int tileEmptyIndex)
     {
         _slidingBoard = GetComponentInParent<PZ_Sliding_Board>();
@@ -40,13 +40,13 @@ public class PZ_Sliding_Tile : UI_Base
 
         TileNumber = tileNumber;
 
-        // ½½¶óÀÌµù ÆÛÁñ Å¸ÀÏ Sprite ºñµ¿±â ·Îµù
+        // ìŠ¬ë¼ì´ë”© í¼ì¦ íƒ€ì¼ Sprite ë¹„ë™ê¸° ë¡œë”©
         string tileSpriteKey = "PZ_Sliding_Tile_" + tileNumber.ToString() + "_Sprite";
         Managers.Resource.LoadAsync<Sprite>(tileSpriteKey, (imageSprite) =>
         {
             _image.sprite = imageSprite;
 
-            // ºó Å¸ÀÏ ºñÈ°¼ºÈ­
+            // ë¹ˆ íƒ€ì¼ ë¹„í™œì„±í™”
             if (TileNumber == tileEmptyIndex)
             {
                 _image.enabled = false;
@@ -62,7 +62,7 @@ public class PZ_Sliding_Tile : UI_Base
         StartCoroutine("TileMove", endPosition);
     }
 
-    // Å¸ÀÏ ÀÚ¿¬½º·´°Ô ¿òÁ÷ÀÌ±â
+    // íƒ€ì¼ ìì—°ìŠ¤ëŸ½ê²Œ ì›€ì§ì´ê¸°
     private IEnumerator TileMove(Vector3 endPosition)
     {
         float currentTime = 0f;
@@ -79,10 +79,10 @@ public class PZ_Sliding_Tile : UI_Base
             yield return null;
         }
 
-        // Å¸ÀÏ À§Ä¡ Ã¼Å©
+        // íƒ€ì¼ ìœ„ì¹˜ ì²´í¬
         _isCorrect = CheckCorrectPosition();
 
-        // ÆÛÁñ Å¬¸®¾î Ã¼Å©
+        // í¼ì¦ í´ë¦¬ì–´ ì²´í¬
         _slidingBoard.CheckPuzzleClear();
     }
 
@@ -90,13 +90,13 @@ public class PZ_Sliding_Tile : UI_Base
 
     #region Check
 
-    // Á¤´ä À§Ä¡ ¼³Á¤
+    // ì •ë‹µ ìœ„ì¹˜ ì„¤ì •
     public void SetCorrectPosition()
     {
         _correctPosition = GetComponent<RectTransform>().localPosition;
     }
 
-    // ÇöÀç Å¸ÀÏ À§Ä¡°¡ ¿Ã¹Ù¸¥ À§Ä¡ÀÎÁö È®ÀÎ
+    // í˜„ì¬ íƒ€ì¼ ìœ„ì¹˜ê°€ ì˜¬ë°”ë¥¸ ìœ„ì¹˜ì¸ì§€ í™•ì¸
     private bool CheckCorrectPosition()
     {
         if (GetComponent<RectTransform>().localPosition == _correctPosition)
@@ -111,11 +111,9 @@ public class PZ_Sliding_Tile : UI_Base
 
     #endregion
 
-    // Å¬¸¯ ÀÌº¥Æ®
+    // í´ë¦­ ì´ë²¤íŠ¸
     public void OnTileClick()
     {
-        Debug.Log("Click" + _tileNumber);
-
         _slidingBoard.MoveTile(this);
     }
 }
