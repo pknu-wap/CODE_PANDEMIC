@@ -1,46 +1,25 @@
-using UnityEngine;
-using UnityEngine.UI;
+ï»¿using UnityEngine;
 using TMPro;
 
-public class PZ_Password_InputUI : UI_Base
+public class PZ_Password_InputUI : UI_PopUp
 {
-    private RectTransform _rectTransform;
     private RectTransform _textRectTransform;
-
-    private Image _image;
 
     private TextMeshProUGUI _textMeshPro;
 
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
-
-        _image = GetComponent<Image>();
-
         _textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
         _textRectTransform = _textMeshPro.gameObject.GetComponent<RectTransform>();
 
-        Managers.Resource.LoadAsync<Sprite>("PZ_Password_InputUI_Sprite", (getSprite) =>
-        {
-            _image.sprite = getSprite;
-        });
-
-        // Å©±â ¼¼ÆÃ
-        _rectTransform.anchorMin = new Vector2(0.5f, 1f);
-        _rectTransform.anchorMax = new Vector2(0.5f, 1f);
-        _rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchoredPosition = new Vector2(0, -140);
-        _rectTransform.sizeDelta = new Vector2(700, 250);
-
-        // ºñ¹Ğ ¹øÈ£ ÅØ½ºÆ® ¼¼ÆÃ
+        // ë¹„ë°€ ë²ˆí˜¸ í…ìŠ¤íŠ¸ ì„¸íŒ…
         _textRectTransform.anchoredPosition = Vector2.zero;
         _textRectTransform.sizeDelta = new Vector2(500, 50);
         _textRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         _textRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        _rectTransform.pivot = new Vector2(0.5f, 0.5f);
     }
 
-    // È­¸é¿¡ Ãâ·ÂÇÒ ÇöÀç ÀÔ·ÂµÈ ¹øÈ£ Ãâ·Â
+    // í™”ë©´ì— ì¶œë ¥í•  í˜„ì¬ ì…ë ¥ëœ ë²ˆí˜¸ ì¶œë ¥
     public void SetPasswordText(string passwordText)
     {
         Debug.Log("Check Password : " + passwordText);

@@ -1,39 +1,16 @@
-using UnityEngine;
-using UnityEngine.UI;
+Ôªøusing UnityEngine;
 
-public class PZ_LightOut_Reset : UI_Base
+public class PZ_LightOut_Reset : UI_PopUp
 {
-    private RectTransform _rectTransform; // √ﬂ»ƒ Bind πËøÏ∞Ì ºˆ¡§ øπ¡§
-    private Image _image;
-
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
-
-        _image = GetComponent<Image>();
-
-        Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Reset_Sprite", (getSprite) =>
-        {
-            _image.sprite = getSprite;
-        });
-
-        // ∏Æº¬ πˆ∆∞ ±‚∫ª ºº∆√
-        _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        _rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchoredPosition = new Vector2(660, 0);
-        _rectTransform.sizeDelta = new Vector2(200, 100);
-
         BindEvent(gameObject, OnButtonClick);
     }
 
-    // πˆ∆∞ ≈¨∏Ø ¿Ã∫•∆Æ
+    // Î≤ÑÌäº ÌÅ¥Î¶≠ Ïù¥Î≤§Ìä∏
     private void OnButtonClick()
     {
-        Debug.LogWarning("Reset!!!");
-
-        Canvas canvas = GetComponentInParent<Canvas>();
-        PZ_LightOut_Board board = canvas.GetComponentInChildren<PZ_LightOut_Board>();
+        PZ_LightOut_Board board = GetComponentInParent<PZ_LightOut_Board>();
         board.ResetButtons();
     }
 }

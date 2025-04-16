@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,37 +7,23 @@ public class PZ_Sliding_Board : PZ_Puzzle_Main
 {
     #region Base
 
-    private List<PZ_Sliding_Tile> _tileList = new List<PZ_Sliding_Tile>(); // »ı¼ºµÈ Å¸ÀÏÀ» ÀúÀå
+    private List<PZ_Sliding_Tile> _tileList = new List<PZ_Sliding_Tile>(); // ìƒì„±ëœ íƒ€ì¼ì„ ì €ì¥
 
-    private int _slidingPuzzleSize = 9; // ÆÛÁñ »çÀÌÁî
-    private float _needMoveDistance = 235f; // Å¸ÀÏÀÌ ÀÌµ¿ÇØ¾ß ÇÏ´Â °Å¸®
+    private int _slidingPuzzleSize = 9; // í¼ì¦ ì‚¬ì´ì¦ˆ
+    private float _needMoveDistance = 235f; // íƒ€ì¼ì´ ì´ë™í•´ì•¼ í•˜ëŠ” ê±°ë¦¬
 
-    public Vector3 EmptyTilePosition { get; set; } // ºó Å¸ÀÏÀÇ À§Ä¡
+    public Vector3 EmptyTilePosition { get; set; } // ë¹ˆ íƒ€ì¼ì˜ ìœ„ì¹˜
 
     private IEnumerator Start()
     {
-        SetComponents();
-
-        Managers.Resource.LoadAsync<Sprite>("PZ_Sliding_Board_Sprite", (imageSprite) =>
-        {
-            _image.sprite = imageSprite;
-        });
-
-        // º¸µå ±âº» ¼³Á¤
-        _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        _rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchoredPosition = Vector2.zero;
-        _rectTransform.sizeDelta = new Vector2(900, 900);
-
         GetSpawnedTiles();
 
-        // À§Ä¡ Á¤º¸ °­Á¦ µ¿±âÈ­
+        // ìœ„ì¹˜ ì •ë³´ ê°•ì œ ë™ê¸°í™”
         LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
 
         yield return new WaitForEndOfFrame();
 
-        // ÇöÀç À§Ä¡¸¦ Á¤´ä À§Ä¡·Î °£ÁÖ
+        // í˜„ì¬ ìœ„ì¹˜ë¥¼ ì •ë‹µ ìœ„ì¹˜ë¡œ ê°„ì£¼
         _tileList.ForEach(tile => tile.SetCorrectPosition());
 
         StartCoroutine("ShuffleTiles");
@@ -49,13 +35,11 @@ public class PZ_Sliding_Board : PZ_Puzzle_Main
 
     private void GetSpawnedTiles()
     {
+        GetComponentsInChildren(false, _tileList);
+
         for (int index = 0; index < _slidingPuzzleSize; index++)
         {
-            Transform childTile = transform.GetChild(index);
-            PZ_Sliding_Tile spawnedTile = childTile.gameObject.GetComponent<PZ_Sliding_Tile>();
-
-            spawnedTile.TileSetup(index + 1, 3); // 3¹ø ±×¸²ÀÌ ºó ±×¸²ÀÓ
-            _tileList.Add(spawnedTile);
+            _tileList[index].TileSetup(index + 1, 3); // 3ë²ˆ ê·¸ë¦¼ì´ ë¹ˆ ê·¸ë¦¼ì„
         }
     }
 
@@ -72,25 +56,25 @@ public class PZ_Sliding_Board : PZ_Puzzle_Main
         {
             int tileIndex = Random.Range(0, _slidingPuzzleSize);
 
-            // ·£´ı Å¸ÀÏÀ» ¸Ç µÚ·Î º¸³»¼­ ¼ø¼­¸¦ ¼¯´Â ¹æ½Ä
+            // ëœë¤ íƒ€ì¼ì„ ë§¨ ë’¤ë¡œ ë³´ë‚´ì„œ ìˆœì„œë¥¼ ì„ëŠ” ë°©ì‹
             _tileList[tileIndex].transform.SetAsLastSibling();
             shuffleCount--;
             yield return new WaitForSeconds(shuffleDuration);
         }
 
-        // ¼ÅÇÃÀÌ ³¡³­ ÈÄ ºó Å¸ÀÏÀÇ ÇöÀç À§Ä¡¸¦ ÀúÀå (3¹ø)
+        // ì…”í”Œì´ ëë‚œ í›„ ë¹ˆ íƒ€ì¼ì˜ í˜„ì¬ ìœ„ì¹˜ë¥¼ ì €ì¥ (3ë²ˆ)
         EmptyTilePosition = _tileList[2].GetComponent<RectTransform>().localPosition;
     }
 
     public void MoveTile(PZ_Sliding_Tile tile)
     {
-        // Å¬¸¯ÇÑ Å¸ÀÏÀÌ ºó Å¸ÀÏ°ú ºÙ¾î ÀÖÁö ¾ÊÀ¸¸é µÑ »çÀÌÀÇ °Å¸®°¡ _needMoveDistance¿Í ÀÏÄ¡ÇÏÁö ¾ÊÀ½
+        // í´ë¦­í•œ íƒ€ì¼ì´ ë¹ˆ íƒ€ì¼ê³¼ ë¶™ì–´ ìˆì§€ ì•Šìœ¼ë©´ ë‘˜ ì‚¬ì´ì˜ ê±°ë¦¬ê°€ _needMoveDistanceì™€ ì¼ì¹˜í•˜ì§€ ì•ŠìŒ
         if (Vector3.Distance(EmptyTilePosition, tile.GetComponent<RectTransform>().localPosition) != _needMoveDistance)
         {
             return;
         }
 
-        // ºó Å¸ÀÏ À§Ä¡¿Í ¹Ù²Ù·Á´Â Å¸ÀÏ À§Ä¡ Á¤º¸ ±³È¯
+        // ë¹ˆ íƒ€ì¼ ìœ„ì¹˜ì™€ ë°”ê¾¸ë ¤ëŠ” íƒ€ì¼ ìœ„ì¹˜ ì •ë³´ êµí™˜
         Vector3 endPosition = EmptyTilePosition;
         EmptyTilePosition = tile.GetComponent<RectTransform>().localPosition;
         tile.TileMoveto(endPosition);

@@ -1,78 +1,33 @@
-using UnityEngine;
-using UnityEngine.UI;
+ï»¿using UnityEngine;
 using System.Collections.Generic;
 
 public class PZ_LightOut_Board : PZ_Puzzle_Main
 {
     #region Base
 
-    private GridLayoutGroup _gridLayoutGroup;
+    private List<PZ_LightOut_Button> _lightOutButtonList = new List<PZ_LightOut_Button>(); // ì†Œí™˜ëœ ë²„íŠ¼ë“¤ ê´€ë¦¬
 
-    private List<PZ_LightOut_Button> _lightOutButtonList = new List<PZ_LightOut_Button>(); // ¼ÒÈ¯µÈ ¹öÆ°µé °ü¸®
-    private PZ_LightOut_Reset _resetButton;
+    private int _buttonMaxCount = 25; // Light ë²„íŠ¼ ê°œìˆ˜
 
-    private int _buttonMaxCount = 25; // Light ¹öÆ° °³¼ö
-
-    public override bool Init()
+    private void Start()
     {
-        SetComponents();
-
-        _gridLayoutGroup = GetComponent<GridLayoutGroup>();
-
-        Managers.Resource.Instantiate("PZ_LightOut_Reset_Prefab", GetComponentInParent<Canvas>().transform, (resetButton) =>
-        {
-            _resetButton = resetButton.GetComponent<PZ_LightOut_Reset>();
-        });
-
-        // º¸µå ±âº» ¼¼ÆÃ
-        _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        _rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        _rectTransform.anchoredPosition = new Vector2(0, 0);
-        _rectTransform.sizeDelta = new Vector2(900, 900);
-
-        // ÀÌ¹ÌÁö ¼¼ÆÃ
-        Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Board_Sprite", (getSprite) =>
-        {
-            _image.sprite = getSprite;
-        });
-
-        // ½ºÆùµÉ ¹öÆ°ÀÇ À§Ä¡ ¼¼ÆÃ
-        _gridLayoutGroup.padding.left = 10;
-        _gridLayoutGroup.padding.right = 10;
-        _gridLayoutGroup.padding.top = 10;
-        _gridLayoutGroup.padding.bottom = 10;
-        _gridLayoutGroup.cellSize = new Vector2(160, 160);
-        _gridLayoutGroup.spacing = new Vector2(10, 10);
+        Managers.UI.SetCanvas(gameObject);
 
         GetSpawnedButtons();
-
-        return true;
-    }
-
-    private void OnDestroy()
-    {
-        if (_resetButton)
-        {
-            Destroy(_resetButton.gameObject);
-        }
     }
 
     #endregion
 
     #region Setting
 
-    // Light Button °¡Á®¿À±â
+    // Light Button ê°€ì ¸ì˜¤ê¸°
     private void GetSpawnedButtons()
     {
+        GetComponentsInChildren(false, _lightOutButtonList);
+
         for (int index = 0; index < _buttonMaxCount; index++)
         {
-            Transform childButton = transform.GetChild(index);
-            PZ_LightOut_Button spawnedButton = childButton.gameObject.GetComponent<PZ_LightOut_Button>();
-
-            spawnedButton.Init(index);
-
-            _lightOutButtonList.Add(spawnedButton);
+            _lightOutButtonList[index].Setting(index);
         }
     }
 
@@ -80,7 +35,7 @@ public class PZ_LightOut_Board : PZ_Puzzle_Main
 
     #region Click
 
-    // ¸®¼Â
+    // ë¦¬ì…‹
     public void ResetButtons()
     {
         for (int index = 0; index < _buttonMaxCount; index++)
@@ -89,31 +44,31 @@ public class PZ_LightOut_Board : PZ_Puzzle_Main
         }
     }
 
-    // Å¬¸¯ÇÑ ¹öÆ°°ú »óÇÏÁÂ¿ìÀÇ ¹öÆ°µéÀÇ »óÅÂ¸¦ º¯°æ½ÃÅ°´Â ÇÔ¼ö
+    // í´ë¦­í•œ ë²„íŠ¼ê³¼ ìƒí•˜ì¢Œìš°ì˜ ë²„íŠ¼ë“¤ì˜ ìƒíƒœë¥¼ ë³€ê²½ì‹œí‚¤ëŠ” í•¨ìˆ˜
     public void ChangeButtonsState(int currentIndex)
     {
-        // ÇöÀç ¹öÆ° À§Ä¡ »óÅÂ º¯°æ
+        // í˜„ì¬ ë²„íŠ¼ ìœ„ì¹˜ ìƒíƒœ ë³€ê²½
         _lightOutButtonList[currentIndex].ChangeButtonState();
 
-        // »ó ¹æÇâ À¯È¿ Ã¼Å©
+        // ìƒ ë°©í–¥ ìœ íš¨ ì²´í¬
         if (currentIndex - 5 >= 0)
         {
             _lightOutButtonList[currentIndex - 5].ChangeButtonState();
         }
 
-        // ÇÏ ¹æÇâ À¯È¿ Ã¼Å©
+        // í•˜ ë°©í–¥ ìœ íš¨ ì²´í¬
         if (currentIndex + 5 <= _buttonMaxCount - 1)
         {
             _lightOutButtonList[currentIndex + 5].ChangeButtonState();
         }
 
-        // ÁÂ ¹æÇâ À¯È¿ Ã¼Å©
+        // ì¢Œ ë°©í–¥ ìœ íš¨ ì²´í¬
         if (currentIndex != 0 && currentIndex != 5 && currentIndex != 10 && currentIndex != 15 && currentIndex != 20)
         {
             _lightOutButtonList[currentIndex - 1].ChangeButtonState();
         }
 
-        // ¿ì ¹æÇâ À¯È¿ Ã¼Å©
+        // ìš° ë°©í–¥ ìœ íš¨ ì²´í¬
         if (currentIndex != 4 && currentIndex != 9 && currentIndex != 14 && currentIndex != 19 && currentIndex != 24)
         {
             _lightOutButtonList[currentIndex + 1].ChangeButtonState();
@@ -124,7 +79,7 @@ public class PZ_LightOut_Board : PZ_Puzzle_Main
 
     #region Clear
 
-    // ¹öÆ°µéÀÌ ÀüºÎ ¿Ã¹Ù¸¥ »óÅÂÀÎÁö Ã¼Å©
+    // ë²„íŠ¼ë“¤ì´ ì „ë¶€ ì˜¬ë°”ë¥¸ ìƒíƒœì¸ì§€ ì²´í¬
     public void CheckButtonsCorrect()
     {
         if (_lightOutButtonList.FindAll(button => button.IsButtonCorrect() == true).Count == _buttonMaxCount)
@@ -133,7 +88,7 @@ public class PZ_LightOut_Board : PZ_Puzzle_Main
         }
     }
 
-    // ÆÛÁñ Å¬¸®¾î
+    // í¼ì¦ í´ë¦¬ì–´
     protected override void PuzzleClear()
     {
         Debug.LogWarning("Light Out Puzzle Clear!!!");

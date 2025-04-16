@@ -1,19 +1,19 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class PZ_Interact_Bed : MonoBehaviour, IInteractable
 {
-    private RectTransform _rectTransform;
+    private Transform _transform;
 
     private bool _isInteracted = false;
 
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        _transform = GetComponent<Transform>();
 
-        _rectTransform.sizeDelta = new Vector3(2, 2, 1);
+        _transform.localScale = new Vector3(2, 2, 1);
     }
 
-    // Ä§´ë »óÈ£ ÀÛ¿ë
+    // ì¹¨ëŒ€ ìƒí˜¸ ì‘ìš©
     public void Interact()
     {
         if (_isInteracted)
@@ -21,9 +21,9 @@ public class PZ_Interact_Bed : MonoBehaviour, IInteractable
             return;
         }
 
-        Debug.Log("¼û°ÜÁø ¾ÆÀÌÅÛ È¹µæ");
+        Debug.Log("ìˆ¨ê²¨ì§„ ì•„ì´í…œ íšë“");
 
-        // ¿©±â¿¡ ¾ÆÀÌÅÛ È¹µæ ±â´É ±¸Çö
+        // ì—¬ê¸°ì— ì•„ì´í…œ íšë“ ê¸°ëŠ¥ êµ¬í˜„
 
         _isInteracted = true;
     }
