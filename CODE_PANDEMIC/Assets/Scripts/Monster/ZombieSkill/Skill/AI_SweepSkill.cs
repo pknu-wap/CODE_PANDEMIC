@@ -37,7 +37,7 @@ public class AI_SweepSkill : ISkillBehavior
         if (doctor.SweepVisualizer != null)
         {
             doctor.SweepVisualizer.transform.position = doctor.transform.position;
-            doctor.SweepVisualizer.Show(attackDirection, doctor.SweepAngle, doctor.SweepRange * 3, doctor.SkillChargeDelay);
+            doctor.SweepVisualizer.Show(attackDirection, doctor.SweepAngle, doctor.SweepRange, doctor.SkillChargeDelay);
         }
 
         yield return new WaitForSeconds(doctor.SkillChargeDelay);
