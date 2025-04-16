@@ -5,15 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]
 public class AI_SweepVisualizer : MonoBehaviour
 {
-    public AI_DoctorZombie _doctor;
-    public Transform playerTransform;
-
-    public float fadeDuration = 0.5f;
+    public int segmentCount = 30;
+    public Material material;
+    public float fadeDuration = 0.5f;  
 
     private MeshRenderer _meshRenderer;
     private MeshFilter _meshFilter;
     private Mesh _mesh;
-    private Coroutine _fadeCoroutine;
+    private Coroutine _fillCoroutine;
 
     private void Awake()
     {
@@ -22,62 +21,68 @@ public class AI_SweepVisualizer : MonoBehaviour
         _mesh = new Mesh();
         _meshFilter.mesh = _mesh;
 
-        Material material = new Material(Shader.Find("Sprites/Default"));
-        material.color = new Color(1f, 0f, 0f, 0f);
-        _meshRenderer.material = material;
-    }
-    public void Show(float chargeTime)
+        Material mat = new Material(Shader.Find("Sprites/Default"));
+        mat.color = new Color(1f, 0f, 0f, 0f);
+        _meshRenderer.material = mat;
+        
+        _meshRenderer.enabled = false;
+    }    
+    public void Show(Vector2 forward, float fullAngle, float fullRadius, float chargeTime)
     {
-        Vector2 diff = playerTransform.position - transform.position;
-        Vector2 cardinalDir;
+        Vector2 snapped = SnapDirection(forward);
+        transform.rotation = Quaternion.FromToRotation(Vector2.up, snapped);
 
-        if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
-        {
-            cardinalDir = (diff.x > 0) ? Vector2.right : Vector2.left;
-        }
-        else
-        {
-            cardinalDir = (diff.y > 0) ? Vector2.up : Vector2.down;
-        }
-
-        transform.rotation = Quaternion.FromToRotation(Vector2.up, cardinalDir);
-
-        float angle = 90f;  
-        float radius = _doctor.SweepRange * 3f; // 시각적 효과 고려
-        GenerateMesh(angle, radius);
-
-        if (_fadeCoroutine != null)
-            StopCoroutine(_fadeCoroutine);
-        _fadeCoroutine = StartCoroutine(FadeIn(chargeTime));
+        if (_fillCoroutine != null)
+            StopCoroutine(_fillCoroutine);
+        _fillCoroutine = StartCoroutine(AnimateFill(chargeTime, fullAngle, fullRadius));
+        _meshRenderer.enabled = true;
     }
 
     public void Hide()
     {
-        if (_fadeCoroutine != null)
-            StopCoroutine(_fadeCoroutine);
-        _fadeCoroutine = StartCoroutine(FadeOut());
+        if (_fillCoroutine != null)
+        {
+            StopCoroutine(_fillCoroutine);
+            _fillCoroutine = null;
+        }
+        _meshRenderer.enabled = false;
+        _meshRenderer.material.color = new Color(1f, 0f, 0f, 0f);
     }
 
-   
-    private void GenerateMesh(float angle, float radius)
+
+    private IEnumerator AnimateFill(float duration, float fullAngle, float fullRadius)
     {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float fillFactor = elapsed / duration;  
+            Mesh mesh = GenerateMesh(fullAngle, fullRadius * fillFactor);
+            _meshFilter.mesh = mesh;
+            _meshRenderer.material.color = new Color(1f, 0f, 0f, fillFactor);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        Mesh finalMesh = GenerateMesh(fullAngle, fullRadius);
+        _meshFilter.mesh = finalMesh;
+        _meshRenderer.material.color = new Color(1f, 0f, 0f, 1f);
+    }
 
-        int sweepCount = _doctor.SweepCount;
-        float deltaAngle = angle / sweepCount;
-        float startAngle = -angle * 0.5f;
-
-        List<Vector3> vertices = new List<Vector3>();
+    public Mesh GenerateMesh(float angle, float radius)
+    {
+        Mesh mesh = new Mesh();
+        List<Vector3> vertices = new List<Vector3> { Vector3.zero };
         List<int> triangles = new List<int>();
 
+        if (segmentCount <= 0)
+            segmentCount = 30;
+        float deltaAngle = angle / segmentCount;
+        float startAngle = -angle * 0.5f;
 
-        vertices.Add(Vector3.zero);
-
-        for (int i = 0; i <= sweepCount; i++)
+        for (int i = 0; i <= segmentCount; i++)
         {
             float currentAngle = startAngle + deltaAngle * i;
             float rad = currentAngle * Mathf.Deg2Rad;
-            Vector3 point = new Vector3(Mathf.Sin(rad), Mathf.Cos(rad), 0f) * radius;
-            vertices.Add(point);
+            vertices.Add(new Vector3(Mathf.Sin(rad) * radius, Mathf.Cos(rad) * radius, 0));
         }
 
         for (int i = 1; i < vertices.Count - 1; i++)
@@ -87,37 +92,26 @@ public class AI_SweepVisualizer : MonoBehaviour
             triangles.Add(i + 1);
         }
 
-        _mesh.Clear();
-        _mesh.vertices = vertices.ToArray();
-        _mesh.triangles = triangles.ToArray();
-
-        Vector2[] uvs = new Vector2[vertices.Count];
-        for (int i = 0; i < vertices.Count; i++)
-        {
-            Vector3 v = vertices[i];
-            uvs[i] = new Vector2(v.x / radius * 0.5f + 0.5f, v.y / radius * 0.5f + 0.5f);
-        }
-        _mesh.uv = uvs;
-        _mesh.RecalculateNormals();
+        mesh.SetVertices(vertices);
+        mesh.SetTriangles(triangles, 0);
+        mesh.RecalculateNormals();
+        return mesh;
     }
 
-    private IEnumerator FadeIn(float duration)
+    private Vector2 SnapDirection(Vector2 dir)
     {
-        float elapsed = 0f;
-        while (elapsed < duration)
+        Vector2[] candidates = { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
+        float maxDot = -Mathf.Infinity;
+        Vector2 best = Vector2.up;
+        foreach (var candidate in candidates)
         {
-            float t = elapsed / duration;
-            Color color = new Color(1f, 0f, 0f, t);
-            _meshRenderer.material.color = color;
-            elapsed += Time.deltaTime;
-            yield return null;
+            float dot = Vector2.Dot(dir.normalized, candidate);
+            if (dot > maxDot)
+            {
+                maxDot = dot;
+                best = candidate;
+            }
         }
-        _meshRenderer.material.color = new Color(1f, 0f, 0f, 1f);
-    }
-
-    private IEnumerator FadeOut()
-    {
-        _meshRenderer.material.color = new Color(1f, 0f, 0f, 0f);
-        yield return null;
+        return best;
     }
 }

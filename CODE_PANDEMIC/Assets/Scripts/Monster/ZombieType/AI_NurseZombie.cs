@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AI_DoctorZombie : AI_Controller
+public class AI_NurseZombie : AI_Controller
 {
     public float SweepRange = 2f;
     public float SweepAngle = 90f;
@@ -9,8 +9,8 @@ public class AI_DoctorZombie : AI_Controller
     public float SkillCooldown = 15f;
     public float SkillChargeDelay = 2f;
     public LayerMask TargetLayer;
-    public AI_SweepVisualizer SweepVisualizer;
-    public AI_SweepSkill SweepSkill;
+    public AI_ThrowVisualizer ThrowVisualizer;
+    public AI_ThrowSkill ThrowSkill;
 
     public float AiDamage => _aiDamage;
     public string AIName => _aiName;
@@ -19,7 +19,7 @@ public class AI_DoctorZombie : AI_Controller
     public override ISkillBehavior Skill { get { return _skill; } }
     protected override void Awake()
     {
-        _aiName = "DoctorZombie";
+        _aiName = "NurseZombie";
         _aiHealth = 100f;
         _aiDamage = 10f;
         _aiMoveSpeed = 100f;
@@ -37,11 +37,6 @@ public class AI_DoctorZombie : AI_Controller
             enabled = false;
             return;
         }
-        if (SweepVisualizer != null)
-        {
-            SweepVisualizer.Hide();
-
-        }
-        _skill = new AI_SweepSkill();
+        _skill = new AI_ThrowSkill();
     }
 }

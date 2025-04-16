@@ -97,6 +97,11 @@ public class AI_Controller : AI_Base
 
     public void ChangeState(AI_IState newState)
     {
+    if (_currentState != null && _currentState.GetType() == newState.GetType()) //중복 전환 무시
+        {
+        return;
+        }
+
         _currentState?.OnExit();
         _currentState = newState;
         _currentState.OnEnter();
@@ -135,7 +140,7 @@ public class AI_Controller : AI_Base
     private void OnTriggerEnter2D(Collider2D other)
     {
         PlayerController player = other.GetComponent<PlayerController>();
-        if (player != null)
+        if (player != null && !(_currentState is AI_StateAttack))
         {
             StartAttack();
         }

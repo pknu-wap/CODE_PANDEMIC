@@ -135,13 +135,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatientZombie
       objectReference: {fileID: 0}
+    - target: {fileID: 4136871137211684998, guid: ee845df2a2602ed4aafc2aff8ce77068, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5104284981006556213, guid: ee845df2a2602ed4aafc2aff8ce77068, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7814017203867534459, guid: ee845df2a2602ed4aafc2aff8ce77068, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.52
+      value: -7.73
       objectReference: {fileID: 0}
     - target: {fileID: 7814017203867534459, guid: ee845df2a2602ed4aafc2aff8ce77068, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.76
+      value: -3.95
       objectReference: {fileID: 0}
     - target: {fileID: 7814017203867534459, guid: ee845df2a2602ed4aafc2aff8ce77068, type: 3}
       propertyPath: m_LocalPosition.z
@@ -180,6 +188,79 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee845df2a2602ed4aafc2aff8ce77068, type: 3}
+--- !u!1001 &494410998
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 162031939158952602, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3267815233195618843, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 1741329085}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088364062426241150, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479492846404679379, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541690956068830504, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_Name
+      value: NurseZombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541690956068830504, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4d9cca445a16b854bb1160e6e2e1c1b9, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +477,7 @@ Transform:
   m_GameObject: {fileID: 522302191}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.04, y: -1.04, z: 0}
+  m_LocalPosition: {x: -0.56, y: -0.33, z: 0}
   m_LocalScale: {x: 0.9324808, y: 9.022279, z: 0.98674}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -554,6 +635,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1320279467376965735, guid: de65fe906d3cc1540b3f1a7bc66f6563, type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 9e7c6bed0090d0a4d927e2b7d23a6609, type: 2}
+    - target: {fileID: 1320279467376965735, guid: de65fe906d3cc1540b3f1a7bc66f6563, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 1741329085}
+    - target: {fileID: 3348530883177877029, guid: de65fe906d3cc1540b3f1a7bc66f6563, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5945203051210951310, guid: de65fe906d3cc1540b3f1a7bc66f6563, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.51
@@ -597,6 +690,18 @@ PrefabInstance:
     - target: {fileID: 6227555313005888720, guid: de65fe906d3cc1540b3f1a7bc66f6563, type: 3}
       propertyPath: m_Name
       value: DoctorZombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 6227555313005888720, guid: de65fe906d3cc1540b3f1a7bc66f6563, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8370371753849579776, guid: de65fe906d3cc1540b3f1a7bc66f6563, type: 3}
+      propertyPath: canMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9114040169566957328, guid: de65fe906d3cc1540b3f1a7bc66f6563, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -781,3 +886,4 @@ SceneRoots:
   - {fileID: 522302194}
   - {fileID: 216843717}
   - {fileID: 1034392774}
+  - {fileID: 494410998}
