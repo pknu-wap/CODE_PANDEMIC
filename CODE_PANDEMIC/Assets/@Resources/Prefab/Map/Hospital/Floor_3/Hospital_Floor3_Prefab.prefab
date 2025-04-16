@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2975730486440997026}
   m_Layer: 0
-  m_Name: PuzzleParent
+  m_Name: PuzzlesParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnerParent: {fileID: 4458872951994222297}
-  _PuzzlesParent: {fileID: 2975730486440997026}
+  _puzzlesParent: {fileID: 2975730486440997026}
   _ItemsParent: {fileID: 3212666320480830319}
 --- !u!1 &7729236991277351791
 GameObject:

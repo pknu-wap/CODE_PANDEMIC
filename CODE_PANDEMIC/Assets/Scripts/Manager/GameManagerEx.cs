@@ -28,8 +28,6 @@ public class GameData
 
     public Resolution SaveResolution;
     public bool IsFullScreen;
-
-    public List<int> ClearPuzzleID=new List<int>();
     public static string FilePath => Application.persistentDataPath + "/SaveData.json";
 }
 #endregion
@@ -41,78 +39,58 @@ public class GameManagerEx
     private bool _isPaused;
     private InventoryData _inventoryData;
     private InventorySaver _inventorySaver;
-    HashSet<int> _clearPuzzleID;
-    public QuickSlot QuickSlot { get; private set; }
+    private QuickSlot _quickSlot;
+
+    private StageProgressData _stageProgressData;
+    private StageProgressSaver _stageProgressSaver;
+
+    private HashSet<int> _clearPuzzleID;
+    private HashSet<int> _obtainedItemIDs;
+    public HashSet<int> ClearPuzzleID => _clearPuzzleID;
+    public HashSet<int> ObtainedItemIDs => _obtainedItemIDs;
+
+    private int _prevStage;
+    private int _prevChapter;
+
 
     public GameData SaveData
     {
         get => _gameData;
         set => _gameData = value;
     }
-    
-    public InventoryData Inventory
+
+    public InventoryData Inventory => _inventoryData;
+    public QuickSlot QuickSlot => _quickSlot;
+
+    public int LatestChapter
     {
-        get => _inventoryData;
-        private set => _inventoryData = value;
+        get => _prevChapter;
+        set => _prevChapter = value;
+    }
+    public int LatestStage
+    {
+        get => _prevStage;
+        set => _prevStage = value;
     }
     public int HighestChapter
     {
         get => _gameData.HighestChapter;
-        set=>_gameData.HighestChapter = value;
+        set => _gameData.HighestChapter = value;
     }
     public int HighestStage
     {
         get => _gameData.HighestStage;
-        set=> _gameData.HighestStage = value;   
+        set => _gameData.HighestStage = value;
     }
     public int Chapter
     {
         get => _gameData.Chapter;
         set => _gameData.Chapter = value;
     }
-
     public int Stage
     {
         get => _gameData.Stage;
         set => _gameData.Stage = value;
-    }
-    public HashSet<int> ClearPuzzleID
-    {
-        get => _clearPuzzleID;
-    }
-   
-    public void ClearPuzzle(int id)
-    {
-        _clearPuzzleID.Add(id);
-    }
-    public void CompleteStage()
-    {
-        if (Stage == Define.STAGES_PER_CHAPTER)
-        {
-            Chapter++;
-            Stage = 1;
-        }
-        else
-        {
-            Stage++;
-        }
-        if(Chapter>HighestChapter||Stage>HighestStage)
-        {
-            HighestChapter = Chapter;
-            HighestStage = Stage;
-        }
-
-       SaveGame();
-    }
-    public void PrevStage()
-    {
-        if (Chapter == 1 && Stage == 1) return;
-        Stage--;
-        if(Stage==0)
-        {
-            Chapter--;
-            Stage = Define.STAGES_PER_CHAPTER;
-        }
     }
 
     public void Init()
@@ -120,23 +98,30 @@ public class GameManagerEx
         _isPaused = false;
         _inventoryData = new InventoryData();
         _inventorySaver = new InventorySaver(_inventoryData);
-        QuickSlot = new QuickSlot();
+        _quickSlot = new QuickSlot();
         _inventorySaver.LoadInventory();
+        _stageProgressSaver = new StageProgressSaver();
+        _stageProgressData = _stageProgressSaver.Load();
+        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
+        _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
+
+        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
+
         LoadGame();
     }
 
-    public void SetResolutionScreen(Resolution res)
+    public void SetResolutionMode(Resolution res)
     {
         Screen.SetResolution(res.width, res.height, SaveData.IsFullScreen);
         SaveData.SaveResolution = res;
-        Debug.Log($"Resolution set: {res.width}x{res.height}");
+       
     }
 
-    public void SetFullScreenMode(bool value)
+    public void SetScreenMode(bool value)
     {
         Screen.fullScreen = value;
         SaveData.IsFullScreen = value;
-        Debug.Log($"Fullscreen mode: {value}");
+       
     }
 
     public void PauseGame()
@@ -159,10 +144,61 @@ public class GameManagerEx
         }
     }
 
+    public void ClearPuzzle(int id)
+    {
+        if (_clearPuzzleID.Add(id))
+        {
+            _stageProgressData.ClearedPuzzleIDs.Add(id);
+            _stageProgressSaver.Save(_stageProgressData);
+        }
+    }
+
+    public void ObtainItem(int mapItemId)
+    {
+        if (_obtainedItemIDs.Add(mapItemId))
+        {
+            _stageProgressData.ObtainedItemIDs = new List<int>(_obtainedItemIDs);
+            _stageProgressSaver.Save(_stageProgressData);
+        }
+    }
+
+    public void CompleteStage()
+    {
+        if (Stage == Define.STAGES_PER_CHAPTER)
+        {
+            Chapter++;
+            Stage = 1;
+        }
+        else
+        {
+            Stage++;
+        }
+
+        if (Chapter > HighestChapter || (Chapter == HighestChapter && Stage > HighestStage))
+        {
+            HighestChapter = Chapter;
+            HighestStage = Stage;
+        }
+
+        SaveGame();
+    }
+
+    public void PrevStage()
+    {
+        if (Chapter == 1 && Stage == 1) return;
+
+        Stage--;
+        if (Stage == 0)
+        {
+            Chapter--;
+            Stage = Define.STAGES_PER_CHAPTER;
+        }
+    }
+
     public void SaveGame()
     {
-        _gameData.ClearPuzzleID = new List<int>(_clearPuzzleID);
-        for (int i = 1; i <= 4; i++) // ½½·Ô ÀÎµ¦½º´Â 1,2,3,4
+        // QuickSlot ÀúÀå
+        for (int i = 1; i <= 4; i++)
         {
             var slotItem = QuickSlot.GetSlotItem(i);
             if (slotItem != null)
@@ -187,10 +223,10 @@ public class GameManagerEx
         File.WriteAllText(GameData.FilePath, jsonStr);
 
         _inventorySaver.SaveInventory();
+        _stageProgressSaver.Save(_stageProgressData);
 
         Debug.Log("Game saved.");
     }
-
 
     public bool LoadGame()
     {
@@ -201,8 +237,8 @@ public class GameManagerEx
         if (data != null)
         {
             _gameData = data;
-            _clearPuzzleID = new HashSet<int>(_gameData.ClearPuzzleID);
-            for (int i = 1; i <= 4; i++) // 1~4 ½½·Ô ÀÎµ¦½º
+
+            for (int i = 1; i <= 4; i++)
             {
                 var slotData = data.QuickSlotItems[i - 1];
                 if (slotData != null && slotData.ItemID != -1)
@@ -229,6 +265,7 @@ public class GameManagerEx
         Debug.Log("Game Quit.");
     }
 }
+
 #endregion
 
 
@@ -298,3 +335,30 @@ public class InventorySaver
     }
 }
 #endregion
+[Serializable]
+public class StageProgressData
+{
+    public List<int> ObtainedItemIDs = new();
+    public List<int> ClearedPuzzleIDs = new();
+}
+
+public class StageProgressSaver
+{
+    private static string SavePath => Application.persistentDataPath + "/stageProgress.json";
+    private StageProgressData _data = new();
+
+    public void Save(StageProgressData data)
+    {
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(SavePath, json);
+    }
+
+    public StageProgressData Load()
+    {
+        if (!File.Exists(SavePath)) return new StageProgressData();
+
+        string json = File.ReadAllText(SavePath);
+     
+        return JsonUtility.FromJson<StageProgressData>(json);
+    }
+}

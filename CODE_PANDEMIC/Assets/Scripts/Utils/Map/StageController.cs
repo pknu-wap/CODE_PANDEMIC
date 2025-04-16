@@ -7,7 +7,7 @@ public class StageController : MonoBehaviour
     StageData _stageData;
     [Header("ParentObject")]
     public Transform _spawnerParent;
-    public Transform _PuzzlesParent;
+    public Transform _puzzlesParent;
     public Transform _ItemsParent;
     public void SetInfo(StageData stageData)
     {
@@ -23,13 +23,12 @@ public class StageController : MonoBehaviour
         for (int i = 0; i < spawners.Count; i++)
         {
             SpawnerInfoData spawnerData = spawners[i];
-            Managers.Resource.Instantiate(spawnerData.Name, null, (obj) =>
+            Managers.Resource.Instantiate(spawnerData.Name, _spawnerParent, (obj) =>
             {
                 obj.transform.position = new Vector3(spawnerData.Pos.x, spawnerData.Pos.y, 0);
                 AI_Spawner monsterSpawner = obj.GetComponent<AI_Spawner>();
                 if (monsterSpawner != null)
-                {
-
+                { 
                     monsterSpawner.SetInfo(spawnerData.ID);
                     monsterSpawner.SpawnObjects();
                 }
@@ -52,7 +51,7 @@ public class StageController : MonoBehaviour
                 continue;
             }
             if (Managers.Game.ClearPuzzleID.Contains(puzzles[i])) continue;
-            Managers.Resource.Instantiate(data.Prefab, null, (obj) =>
+            Managers.Resource.Instantiate(data.Prefab, _puzzlesParent, (obj) =>
             {
                 obj.transform.position = data.Pos;
                 PZ_Puzzle_Item item = obj.GetComponent<PZ_Puzzle_Item>();

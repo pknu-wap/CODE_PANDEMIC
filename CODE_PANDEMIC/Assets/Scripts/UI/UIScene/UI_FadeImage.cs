@@ -11,7 +11,7 @@ public class UI_FadeImage : UI_Base
         FadeImage,
     }
 
-    [SerializeField] private float _fadeDuration = 1.0f;
+    [SerializeField] private float _fadeDuration = 0.8f;
     [SerializeField]
     private Image _fadeImage;
     private bool _isFading = false;

@@ -14,7 +14,7 @@ public class ObjectManager : MonoBehaviour
     public bool Loaded { get; private set; }
     public GameObject MapObject;
     public PlayerStatus Player { get; set; }
-   
+     
     public IEnumerator CoLoadStageData(StageData stageData)
     {
         Loaded = false;
@@ -25,6 +25,7 @@ public class ObjectManager : MonoBehaviour
         Managers.Resource.Instantiate(stageData.MapAddress, null, (obj) =>
         {
             MapObject = obj;
+            obj.GetComponent<StageController>().SetInfo(stageData);
             mapLoaded = true;
         });
         while (!mapLoaded) yield return null;
@@ -83,6 +84,4 @@ public class ObjectManager : MonoBehaviour
     {
        
     }
-
-
 }

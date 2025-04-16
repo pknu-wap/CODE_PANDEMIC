@@ -6,6 +6,8 @@ public class GameScene : BaseScene
 {
     UI_GameScene _gameSceneUI;
     StageData _stageData;
+    private int _prevStage;
+    private int _prevChapter;
     protected override bool Init()
     {
         if (base.Init() == false) return false;
@@ -44,16 +46,23 @@ public class GameScene : BaseScene
         Managers.Object.ResetStage();
         PrepareStage();
     }
-
+    private void UpdateLatestStage()
+    {
+        Managers.Game.LatestChapter= Managers.Game.Chapter;
+        Managers.Game.LatestStage= Managers.Game.Stage;
+    }
     public void NextStage()
     {
+        UpdateLatestStage();
         Managers.Game.CompleteStage();
         ChangeStage();
     }
-  
+   
     public void PrevStage()
     {
+        UpdateLatestStage();
         Managers.Game.PrevStage();
         ChangeStage();
     }
+   
 }
