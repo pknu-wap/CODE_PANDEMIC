@@ -22,6 +22,11 @@ public class CloseRangeWeaponBase : WeaponBase
         }
     }
 
+    public override void Reload()
+    {
+
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null) return;
