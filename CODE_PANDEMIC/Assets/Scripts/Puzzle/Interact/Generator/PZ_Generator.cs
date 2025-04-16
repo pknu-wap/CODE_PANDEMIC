@@ -1,20 +1,21 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class PZ_Generator : PZ_Puzzle_Base, IInteractable
 {
-    private Transform _handleTransform;
+    [SerializeField] private Transform _handleTransform;
     private Animator _animator;
 
     private bool _isInteracted = false;
 
+    private int _rememberCount = 5;
+
     private void Start()
     {
-        _handleTransform = transform.Find("PZ_Generator_Handle");
         _animator = GetComponentInChildren<Animator>();
     }
 
-    // ¹ßÀü±â ÆÛÁñ ¶ç¿ì±â
+    // ë°œì „ê¸° í¼ì¦ ë„ìš°ê¸°
     public void Interact()
     {
         if (_isInteracted)
@@ -22,9 +23,12 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
             return;
         }
 
-        Debug.Log("¹ßÀü±â »óÈ£ ÀÛ¿ë");
+        _isInteracted = true;
 
-        // ¿©±â¿¡ ¹ßÀü±â ÆÛÁñ ¶ç¿ì´Â ·ÎÁ÷ ±¸Çö ¿¹Á¤
+        Managers.UI.ShowPopupUI<PZ_Remember_Board>("PZ_Remember_Board_Prefab", null, (popupPuzzle) =>
+        {
+            popupPuzzle.Setting(this, _rememberCount);
+        });
     }
 
     private IEnumerator SettingLeverPosition()
@@ -38,14 +42,17 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
         _handleTransform.localPosition = new Vector3(-0.242f, 0.88f, 0);
     }
 
+    public void StartPuzzleClear()
+    {
+        PuzzleClear();
+    }
+
     protected override void PuzzleClear()
     {
         StartCoroutine(SettingLeverPosition());
 
         _animator.SetBool("IsInteracted", true);
 
-        _isInteracted = true;
-
-        // ¿©±â¿¡ ¸ÊÀÇ ±×¸²ÀÚ¸¦ °È¾î³»´Â ·ÎÁ÷ ±¸Çö ¿¹Á¤
+        // ì—¬ê¸°ì— ë§µì˜ ê·¸ë¦¼ìë¥¼ ê±·ì–´ë‚´ëŠ” ë¡œì§ êµ¬í˜„ ì˜ˆì •
     }
 }

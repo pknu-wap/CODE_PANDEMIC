@@ -17,19 +17,21 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     private string _puzzleAddressable; // 화면에 출력할 퍼즐 어드레서블
     private bool _isMainPuzzle = true; // 메인 퍼즐인지 서브 퍼즐인지 체크
 
+    private bool _isInteracted = false;
+
     public void SetInfo(PuzzleData data)
     {
         _puzzleAddressable = data.UIPath;
         _isMainPuzzle = data.IsMain;
     }
 
-    public  void SettingPuzzle()
+    public void SettingPuzzle()
     {
         _boxCollider = Utils.GetOrAddComponent<BoxCollider2D>(gameObject);
 
         _boxCollider.isTrigger = true;
         _boxCollider.offset = Vector2.zero;
-     
+
         Managers.Object.RegisterPuzzles();
 
         _original = transform.position;
@@ -53,7 +55,14 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     // 퍼즐 띄우기
     public void Interact()
     {
+        if (_isInteracted)
+        {
+            return;
+        }
+
         Debug.Log("퍼즐 상호 작용");
+
+        _isInteracted = true;
 
         Managers.UI.ShowPopupUI<PZ_Puzzle_Base>(_puzzleAddressable, null, (popupPuzzle) =>
         {
@@ -61,10 +70,12 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
             _popupPuzzle.SetPuzzleOwnerItem(this);
         });
     }
-    
+
     // 퍼즐 닫기, ESC를 눌렀을 때 이 함수를 호출해야 함
     public void ClosePuzzle()
     {
+        _isInteracted = false;
+
         Managers.UI.ClosePopupUI(_popupPuzzle);
     }
 
@@ -123,7 +134,7 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
         Managers.Object.UnRegisterPuzzles();
 
         // 서브 퍼즐 클리어 시
-        if(!_isMainPuzzle)
+        if (!_isMainPuzzle)
         {
             // 아이템 혹은 보상을 주는 로직 구현 예정
         }
