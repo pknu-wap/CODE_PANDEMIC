@@ -41,6 +41,7 @@ public class AI_SweepVisualizer : MonoBehaviour
     Material outlineMat = new Material(Shader.Find("Sprites/Default"));
     outlineMat.color = new Color(1f, 0f, 0f, 0.2f);
     _outlineRenderer.material = outlineMat;
+    
 }
 
     public void Show(Vector2 forward, float fullAngle, float fullRadius, float chargeTime)
@@ -55,6 +56,8 @@ public class AI_SweepVisualizer : MonoBehaviour
             StopCoroutine(_fillCoroutine);
         _fillCoroutine = StartCoroutine(AnimateFill(chargeTime, fullAngle, fullRadius));
         _meshRenderer.enabled = true;
+        _outlineRenderer.enabled = true;
+        
     }
 
     public void Hide()
@@ -66,6 +69,7 @@ public class AI_SweepVisualizer : MonoBehaviour
         }
         _meshRenderer.enabled = false;
         _meshRenderer.material.color = new Color(1f, 0f, 0f, 0f);
+        _outlineRenderer.enabled = false;
     }
 
     private IEnumerator AnimateFill(float duration, float fullAngle, float fullRadius)
@@ -80,13 +84,10 @@ public class AI_SweepVisualizer : MonoBehaviour
         elapsed += Time.deltaTime;
         yield return null;
     }
-    // 최종 fill 메쉬 생성
     Mesh finalMesh = GenerateMesh(fullAngle, fullRadius);
     _meshFilter.mesh = finalMesh;
     _meshRenderer.material.color = new Color(1f, 0f, 0f, 0.5f);
     
-    // outline 메쉬도 최종 메쉬로 업데이트하여 두 메쉬가 동일하게 보이도록 함
-    _outlineFilter.mesh = finalMesh;
 }
 
     public Mesh GenerateMesh(float angle, float radius)
