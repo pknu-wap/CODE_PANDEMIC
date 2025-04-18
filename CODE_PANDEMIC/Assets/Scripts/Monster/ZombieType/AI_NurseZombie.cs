@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class AI_NurseZombie : AI_Controller
 {
-    public float SweepRange = 2f;
-    public float SweepAngle = 90f;
-    public int SweepCount = 5;
-    public float SweepInterval = 0.5f;
-    public float SkillCooldown = 15f;
-    public float SkillChargeDelay = 2f;
+    public GameObject _syringePrefab;
+    public float SkillCooldown = 8f;
+    public float SkillChargeDelay = 1f;    
+    public float SyringeSpeed = 10f;  
+    public float SyringeRange = 10f;
+
     public LayerMask TargetLayer;
     public AI_ThrowVisualizer ThrowVisualizer;
     public AI_ThrowSkill ThrowSkill;

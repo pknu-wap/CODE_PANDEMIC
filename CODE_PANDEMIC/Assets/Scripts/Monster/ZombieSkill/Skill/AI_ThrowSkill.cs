@@ -1,13 +1,12 @@
 using System.Collections;
 using UnityEngine;
-using Unity.VisualScripting;
 
 public class AI_ThrowSkill : ISkillBehavior
 {
     private Coroutine _skillCoroutine;
     private float _lastSkillTime = -Mathf.Infinity;
     private AI_NurseZombie _currentNurse;
-    
+
     public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
         if (!IsReady(controller))
@@ -17,63 +16,51 @@ public class AI_ThrowSkill : ISkillBehavior
         }
 
         _lastSkillTime = Time.time;
-        _skillCoroutine = controller.StartCoroutine(SweepRoutine(controller as AI_NurseZombie, onSkillComplete));
+        _skillCoroutine = controller.StartCoroutine(ThrowRoutine(controller as AI_NurseZombie, onSkillComplete));
     }
 
     public void StopSkill()
     {
-
+        // 필요 시 StopCoroutine 추가 가능
     }
 
-    private IEnumerator SweepRoutine(AI_NurseZombie nurse, System.Action onSkillComplete)
+    private IEnumerator ThrowRoutine(AI_NurseZombie nurse, System.Action onSkillComplete)
     {
         var aiPath = nurse._aiPath;
-        bool originalCanMove = aiPath.canMove;
         aiPath.canMove = false;
 
-        Vector2 attackDirection = (nurse.Player != null)
+        Vector2 throwDirection = (nurse.Player != null)
             ? ((Vector2)nurse.Player.position - (Vector2)nurse.transform.position).normalized
             : nurse.transform.up;
 
-        if (nurse.ThrowVisualizer != null)
-        {
-            nurse.ThrowVisualizer.transform.position = nurse.transform.position;
-            nurse.ThrowVisualizer.Show(nurse.SkillChargeDelay);
-        }
 
         yield return new WaitForSeconds(nurse.SkillChargeDelay);
+        ThrowSyringe(nurse, throwDirection);
 
-        for (int i = 0; i < nurse.SweepCount; i++)
-        {
-            DoSweepAttack(nurse, attackDirection);
-            yield return new WaitForSeconds(nurse.SweepInterval);
-        }
-
-        nurse.ThrowVisualizer?.Hide();
         aiPath.canMove = true;
         onSkillComplete?.Invoke();
     }
 
-    private void DoSweepAttack(AI_NurseZombie nurse, Vector2 forward)
+    private void ThrowSyringe(AI_NurseZombie nurse, Vector2 direction)
     {
-        Vector2 origin = nurse.transform.position;
-        Collider2D[] hits = Physics2D.OverlapCircleAll(origin, nurse.SweepRange, nurse.TargetLayer);
+        Vector2 spawnPos = nurse.transform.position;
+        GameObject projectile = Object.Instantiate(nurse._syringePrefab, spawnPos, Quaternion.identity);
 
-        foreach (var hit in hits)
-        {
-            Vector2 toTarget = ((Vector2)hit.transform.position - origin).normalized;
-            if (Vector2.Angle(forward, toTarget) <= nurse.SweepAngle * 0.5f)
-            {
-                float damage = nurse.AiDamage * 0.5f;
-                Debug.Log($"[SweepSkill] {nurse.AIName} 타격: {hit.name}에게 {damage} 데미지");
-            }
-        }
+        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+        if (rb != null)
+            rb.velocity = direction * nurse.SyringeSpeed;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        projectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        Debug.Log($"[ThrowSkill] {nurse.AIName} 주사기 투척");
     }
 
     public bool IsReady(AI_Controller controller)
     {
         if (_currentNurse == null)
             _currentNurse = controller as AI_NurseZombie;
+
         if (_currentNurse != null)
             return Time.time >= _lastSkillTime + _currentNurse.SkillCooldown;
 

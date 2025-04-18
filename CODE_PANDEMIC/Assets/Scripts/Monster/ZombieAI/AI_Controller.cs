@@ -16,6 +16,7 @@ public class AI_Controller : AI_Base
     public Transform _player;
     private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
+    public Animator _animator;
     [SerializeField] private AI_Fov _aiFov;
     [SerializeField] public AIPath _aiPath;
 
@@ -44,7 +45,7 @@ public class AI_Controller : AI_Base
         _rb = GetComponent<Rigidbody2D>();
         _rb.freezeRotation = true;
         _renderer = GetComponent<SpriteRenderer>();
- 
+        _animator = GetComponent<Animator>();
         ChangeState(new AI_StateIdle(this));
         _state = AI_State.Idle;
 
@@ -61,6 +62,7 @@ public class AI_Controller : AI_Base
         if (_currentState is AI_StateWalk && IsPlayerInSkillRange() && Skill != null && Skill.IsReady(this))
         {
             ChangeState(new AI_StateAttack(this));
+            _animator.SetTrigger("Attack");
         }
     }
 
@@ -69,7 +71,7 @@ public class AI_Controller : AI_Base
         if (_player == null)
             return;
 
-        _renderer.flipX = _player.position.x < transform.position.x;
+        _renderer.flipX = _player.position.x > transform.position.x;
         _currentState?.OnFixedUpdate();
     }
 
@@ -77,7 +79,7 @@ public class AI_Controller : AI_Base
     {
         if (_aiFov != null)
         {
-            float angle = _renderer.flipX ? 180f : 0f;
+            float angle = _renderer.flipX ? 0f : 180f;
             _aiFov.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
         }
     }
@@ -125,6 +127,10 @@ public class AI_Controller : AI_Base
         if (this is AI_DoctorZombie doctor)
         {
             return distance <= doctor.SweepRange * 0.5f;
+        }
+        if (this is AI_NurseZombie nurse)
+        {
+            return distance <= nurse.SyringeRange * 0.5f;
         }
         return false;
     }

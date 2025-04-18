@@ -19,6 +19,7 @@ public class AI_StateWalk : AI_IState
         if (!_controller.IsPlayerDetected())
         {
             _controller.ChangeState(new AI_StateIdle(_controller));
+            _controller._animator.SetTrigger("Idle");
         }
     }
 

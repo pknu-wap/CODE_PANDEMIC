@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class AI_AstarControl : MonoBehaviour
 {
-    private float _radius = 1.75f;
+    private float _radius = 0.41f;
     private float _height = 0.01f;
-    private float _speed = 3.0f;
+    private float _speed = 1.0f;
     private float _pickNextWaypointDist = 1.2f;
     private Vector3 _gravity = new(0, 0, 0);
 

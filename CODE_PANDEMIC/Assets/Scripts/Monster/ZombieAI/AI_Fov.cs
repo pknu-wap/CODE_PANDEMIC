@@ -9,7 +9,7 @@ public class AI_Fov : MonoBehaviour
     [Range(0, 360)]
     public float _fov = 180f;
     public int _rayCount = 90;
-    public float _viewDistance = 7.5f;
+    public float _viewDistance = 4f;
     public LayerMask _layerMask;
     private Mesh _mesh;
     private List<GameObject> _detectedObjects = new List<GameObject>();
@@ -33,7 +33,7 @@ public class AI_Fov : MonoBehaviour
     {
         _detectedObjects.Clear();
 
-        float baseAngle = transform.localEulerAngles.z;
+        float baseAngle = transform.eulerAngles.z;
         float angle = baseAngle + _fov * 0.5f;
         float angleIncrease = _fov / _rayCount;
 
@@ -46,37 +46,29 @@ public class AI_Fov : MonoBehaviour
 
         for (int i = 0; i <= _rayCount; i++)
         {
-            Vector3 vertex;
             Vector3 direction = GetVectorFromAngle(angle);
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, _viewDistance, _layerMask);
+            Vector3 vertex = direction * (hit.collider == null ? _viewDistance : hit.distance);
 
-            if (hit.collider == null)
+            if (hit.collider != null && !_detectedObjects.Contains(hit.collider.gameObject))
             {
-                vertex = direction * _viewDistance;
-            }
-            else
-            {
-                vertex = direction * hit.distance;
-                if (!_detectedObjects.Contains(hit.collider.gameObject))
-                {
-                    _detectedObjects.Add(hit.collider.gameObject);
-                }
+                _detectedObjects.Add(hit.collider.gameObject);
             }
 
-            vertices[vertexIndex] = vertex;
+            vertices[vertexIndex] = transform.InverseTransformPoint(transform.position + vertex);
 
             if (i > 0)
             {
-                triangles[triangleIndex] = 0;
-                triangles[triangleIndex + 1] = vertexIndex - 1;
-                triangles[triangleIndex + 2] = vertexIndex;
-                triangleIndex += 3;
+                triangles[triangleIndex++] = 0;
+                triangles[triangleIndex++] = vertexIndex - 1;
+                triangles[triangleIndex++] = vertexIndex;
             }
 
             vertexIndex++;
             angle -= angleIncrease;
         }
 
+        _mesh.Clear();
         _mesh.vertices = vertices;
         _mesh.triangles = triangles;
     }
