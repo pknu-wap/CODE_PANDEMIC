@@ -16,8 +16,7 @@ public class PlayerSpawner : SpawnBase
            
         });
 
-           
     }
-
+   
 }
    

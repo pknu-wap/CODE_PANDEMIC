@@ -35,22 +35,27 @@ public class GameData
 #region GameManagerEx
 public class GameManagerEx
 {
-    private GameData _gameData = new GameData();
+    private QuickSlot _quickSlot;
     private bool _isPaused;
+    
+    private GameData _gameData = new GameData();
+    private GameSaver _gameSaver;
+    
     private InventoryData _inventoryData;
     private InventorySaver _inventorySaver;
-    private QuickSlot _quickSlot;
-
+    
     private StageProgressData _stageProgressData;
     private StageProgressSaver _stageProgressSaver;
 
     private HashSet<int> _clearPuzzleID;
     private HashSet<int> _obtainedItemIDs;
-    public HashSet<int> ClearPuzzleID => _clearPuzzleID;
-    public HashSet<int> ObtainedItemIDs => _obtainedItemIDs;
 
     private int _prevStage;
     private int _prevChapter;
+
+    public HashSet<int> ObtainedItemIDs => _obtainedItemIDs;
+    public HashSet<int> ClearPuzzleID => _clearPuzzleID;
+
 
 
     public GameData SaveData
@@ -106,9 +111,10 @@ public class GameManagerEx
         _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
 
         _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
-
+        _gameSaver = new GameSaver(_quickSlot);
         LoadGame();
     }
+
 
     public void SetResolutionMode(Resolution res)
     {
@@ -197,64 +203,17 @@ public class GameManagerEx
 
     public void SaveGame()
     {
-        // QuickSlot ¿˙¿Â
-        for (int i = 1; i <= 4; i++)
-        {
-            var slotItem = QuickSlot.GetSlotItem(i);
-            if (slotItem != null)
-            {
-                _gameData.QuickSlotItems[i - 1] = new QuickSlotItemData
-                {
-                    ItemID = slotItem.ItemData.TemplateID,
-                    Quantity = slotItem.Quantity
-                };
-            }
-            else
-            {
-                _gameData.QuickSlotItems[i - 1] = new QuickSlotItemData
-                {
-                    ItemID = -1,
-                    Quantity = 0
-                };
-            }
-        }
-
-        string jsonStr = JsonUtility.ToJson(_gameData);
-        File.WriteAllText(GameData.FilePath, jsonStr);
-
+        _gameSaver.SaveGame(_gameData);
         _inventorySaver.SaveInventory();
         _stageProgressSaver.Save(_stageProgressData);
-
         Debug.Log("Game saved.");
     }
 
     public bool LoadGame()
     {
-        if (!File.Exists(GameData.FilePath)) return false;
-
-        string fileStr = File.ReadAllText(GameData.FilePath);
-        GameData data = JsonUtility.FromJson<GameData>(fileStr);
-        if (data != null)
-        {
-            _gameData = data;
-
-            for (int i = 1; i <= 4; i++)
-            {
-                var slotData = data.QuickSlotItems[i - 1];
-                if (slotData != null && slotData.ItemID != -1)
-                {
-                    if (Managers.Data.Items.TryGetValue(slotData.ItemID, out var itemData))
-                    {
-                        QuickSlot.RegisterQuickSlot(itemData, slotData.Quantity);
-                    }
-                }
-            }
-        }
-
-        Debug.Log("Game loaded.");
+        _gameSaver.LoadGame(ref _gameData);
         return true;
     }
-
     public void QuitGame()
     {
 #if UNITY_EDITOR
@@ -264,101 +223,18 @@ public class GameManagerEx
 #endif
         Debug.Log("Game Quit.");
     }
+
+    public bool HasFile()
+    {
+        return File.Exists(GameData.FilePath);
+    }
+
+    public void DeleteSaveData()
+    {
+        _gameSaver.DeleteSaveData();
+        _gameData = new GameData();
+        Init();
+    }
 }
 
 #endregion
-
-
-#region InventorySaver
-public class InventorySaver
-{
-    private InventoryData _inventoryData;
-    private static string SavePath => Application.persistentDataPath + "/inventory.json";
-
-    public InventorySaver(InventoryData inventoryData)
-    {
-        _inventoryData = inventoryData;
-    }
-
-    public void SaveInventory()
-    {
-        var saveData = new InventorySaveData { InventoryItems = new List<InventoryItemData>() };
-
-        foreach (var item in _inventoryData.GetCurrentInventoryState())
-        {
-            saveData.InventoryItems.Add(new InventoryItemData
-            {
-                ItemID = item.Value._item.TemplateID,
-                Quantity = item.Value._quantity,
-                ItemState = item.Value._itemState
-            });
-        }
-
-        string json = JsonUtility.ToJson(saveData);
-        File.WriteAllText(SavePath, json);
-        Debug.Log("Inventory saved.");
-    }
-
-    public void LoadInventory()
-    {
-        if (!File.Exists(SavePath))
-        {
-            _inventoryData.Init();
-            return;
-        }
-
-        string json = File.ReadAllText(SavePath);
-        var saveData = JsonUtility.FromJson<InventorySaveData>(json);
-
-        if (saveData?.InventoryItems != null)
-        {
-            var loadedItems = new Dictionary<int, InventoryItem>();
-            foreach (var itemData in saveData.InventoryItems)
-            {
-                if (Managers.Data.Items.TryGetValue(itemData.ItemID, out var item))
-                {
-                    loadedItems.Add(loadedItems.Count, new InventoryItem(item, itemData.Quantity, itemData.ItemState));
-                    Debug.Log($"Loaded item: {item.Name}, Quantity: {itemData.Quantity}");
-                }
-                else
-                {
-                    Debug.LogError($"Item with ID {itemData.ItemID} not found.");
-                }
-            }
-            _inventoryData.LoadInventoryFromData(loadedItems);
-            Debug.Log("Inventory loaded.");
-        }
-        else
-        {
-            _inventoryData.Init();
-        }
-    }
-}
-#endregion
-[Serializable]
-public class StageProgressData
-{
-    public List<int> ObtainedItemIDs = new();
-    public List<int> ClearedPuzzleIDs = new();
-}
-
-public class StageProgressSaver
-{
-    private static string SavePath => Application.persistentDataPath + "/stageProgress.json";
-    private StageProgressData _data = new();
-
-    public void Save(StageProgressData data)
-    {
-        string json = JsonUtility.ToJson(data);
-        File.WriteAllText(SavePath, json);
-    }
-
-    public StageProgressData Load()
-    {
-        if (!File.Exists(SavePath)) return new StageProgressData();
-
-        string json = File.ReadAllText(SavePath);
-     
-        return JsonUtility.FromJson<StageProgressData>(json);
-    }
-}

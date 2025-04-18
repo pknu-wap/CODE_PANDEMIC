@@ -30,7 +30,7 @@ public class UI_PlayerStatusBar : UI_Base
 
     public void UpdateHp(float realRatio, float effectRatio)
     {
-        Debug.Log($"HP 변경 (비율): Real={realRatio}, Effect={effectRatio}");
+     
 
         if (_realHpBar != null)
         {

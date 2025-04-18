@@ -104,9 +104,9 @@ public class QuickSlot
 
     public void InitializeAllSlots()
     {
-        foreach (var kvp in _slotItems)
+        foreach (var item in _slotItems)
         {
-            NotifySlotUpdate(kvp.Key, kvp.Value);
+            NotifySlotUpdate(item.Key, item.Value);
         }
     }
 

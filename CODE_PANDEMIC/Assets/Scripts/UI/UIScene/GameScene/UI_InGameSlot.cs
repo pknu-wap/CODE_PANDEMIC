@@ -25,6 +25,7 @@ public class UI_InGameSlot : UI_Base
         BindText(typeof(Texts));
        
         Managers.Event.Subscribe("OnQuickSlotUpdated", OnQuickSlotUpdated);
+        Managers.Game.QuickSlot.InitializeAllSlots();
         return true;
     }
     

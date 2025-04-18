@@ -23,17 +23,37 @@ public class PlayerStatus : MonoBehaviour
 
         if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StatusBar != null)
         {
+         
             SetHpEffectDelegate(gameSceneUI.StatusBar.UpdateHp);
         }
+        else       
+        StartCoroutine(WaitForUI());
 
         _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
     }
+        
+    IEnumerator WaitForUI()
+    {
+        while (!(Managers.UI.SceneUI is UI_GameScene ui) || ui.StatusBar == null)
+            yield return null;
 
+        SetHpEffectDelegate(Managers.UI.SceneUI.GetComponent<UI_GameScene>().StatusBar.UpdateHp);
+    }
+    private void OnDisable()
+    {
+        if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StatusBar != null)
+        {
+            DisableDelegate(gameSceneUI.StatusBar.UpdateHp);
+        }
+    }
     public void SetHpEffectDelegate(HpEffectUpdateDelegate updateMethod)
     {
-        _onHpEffectUpdated = updateMethod;
+        _onHpEffectUpdated += updateMethod;
     }
-
+    public void DisableDelegate(HpEffectUpdateDelegate updateMethod)
+    {
+        _onHpEffectUpdated -= updateMethod;
+    }
     public void OnDamaged(float damageValue)
     {
         _currentHp = Mathf.Clamp(_currentHp - damageValue, 0, _maxHp);
@@ -44,7 +64,7 @@ public class PlayerStatus : MonoBehaviour
             return;
         }
 
-        if (_damageEffectCoroutine != null)
+        if (_damageEffectCoroutine != null) 
             StopCoroutine(_damageEffectCoroutine);
 
         _damageEffectCoroutine = StartCoroutine(OnDamagedEffect());

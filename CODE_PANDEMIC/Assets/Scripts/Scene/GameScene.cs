@@ -8,16 +8,19 @@ public class GameScene : BaseScene
     StageData _stageData;
     private int _prevStage;
     private int _prevChapter;
+    private bool _uiLoad;
     protected override bool Init()
     {
         if (base.Init() == false) return false;
         SceneType = Define.SceneType.GameScene;
         Managers.UI.FadeAtOnce();
+        
         PrepareStage();
         return true;
     }
     public void PrepareStage()
     {
+        _uiLoad = false;
         StartCoroutine(CowaitLoad());
     }
 
@@ -32,12 +35,12 @@ public class GameScene : BaseScene
         Managers.UI.ShowSceneUI<UI_GameScene>(callback: (UI) =>
         {
             _gameSceneUI = UI;
-
+            _uiLoad = true;
         });
-
+        while (!_uiLoad)yield return null;
         StartCoroutine(Managers.Object.CoLoadStageData(stageData));
         while (Managers.Object.Loaded == false) yield return null;
-       
+        
         Managers.UI.FadeIn();
     }
     private void ChangeStage()

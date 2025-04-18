@@ -108,9 +108,11 @@ public class UIManager : MonoBehaviour
             Managers.Resource.Instantiate("UI_Inventory", parent, (obj) =>
             {
                 InventoryUI = Utils.GetOrAddComponent<UI_Inventory>(obj);
+                InventoryUI.Init(); 
                 SetCanvas(obj, false);
                 callback?.Invoke(InventoryUI);
-                InventoryUI.Show();
+              
+                
             });
         }
         else
@@ -216,7 +218,7 @@ public class UIManager : MonoBehaviour
             SceneUI = null;
         }
 
-     
-        _popupStack.Clear();
+
+        CloseAllPopUI();
     }
 }

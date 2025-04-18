@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Android;
@@ -82,6 +83,10 @@ public class ObjectManager : MonoBehaviour
     }
     public void ResetStage()
     {
-       
+        _spawnList.Clear();
+        Destroy(Player.gameObject);
+        Player = null; 
+        Destroy(MapObject);
+        MapObject = null;
     }
 }
