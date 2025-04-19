@@ -10,6 +10,11 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
 
     private int _rememberCount = 5;
 
+    // 하이라이트 기능
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Material _defaultMaterial;
+    [SerializeField] private Material _highlightMaterial;
+
     private void Start()
     {
         _animator = GetComponentInChildren<Animator>();
@@ -54,5 +59,20 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
         _animator.SetBool("IsInteracted", true);
 
         // 여기에 맵의 그림자를 걷어내는 로직 구현 예정
+    }
+
+    public void OnHighLight()
+    {
+        _spriteRenderer.material = _highlightMaterial;
+    }
+
+    public void OffHighLight()
+    {
+        _spriteRenderer.material = _defaultMaterial;
+    }
+
+    public bool IsInteractable()
+    {
+        return _isInteracted;
     }
 }

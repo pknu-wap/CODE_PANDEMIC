@@ -19,6 +19,11 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 
     private bool _isInteracted = false;
 
+    // 하이라이트 기능
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Material _defaultMaterial;
+    [SerializeField] private Material _highlightMaterial;
+
     public void SetInfo(PuzzleData data)
     {
         _puzzleAddressable = data.UIPath;
@@ -69,6 +74,21 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
             _popupPuzzle = popupPuzzle;
             _popupPuzzle.SetPuzzleOwnerItem(this);
         });
+    }
+
+    public void OnHighLight()
+    {
+        _spriteRenderer.material = _highlightMaterial;
+    }
+
+    public void OffHighLight()
+    {
+        _spriteRenderer.material = _defaultMaterial;
+    }
+
+    public bool IsInteractable()
+    {
+        return _isInteracted;
     }
 
     // 퍼즐 닫기, ESC를 눌렀을 때 이 함수를 호출해야 함
