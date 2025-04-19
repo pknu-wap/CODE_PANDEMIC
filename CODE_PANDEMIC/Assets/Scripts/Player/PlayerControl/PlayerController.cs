@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private InputAction runAction;
     private InputAction dashAction;
 
-    private Vector2 moveInput;
+    public Vector2 moveInput;
     private WeaponBase equippedWeapon;
 
     private Rigidbody2D rb;
