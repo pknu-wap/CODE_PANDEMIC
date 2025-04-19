@@ -53,7 +53,6 @@ public class AI_ThrowSkill : ISkillBehavior
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         projectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        Debug.Log($"[ThrowSkill] {nurse.AIName} 주사기 투척");
     }
 
     public bool IsReady(AI_Controller controller)
