@@ -1,27 +1,56 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    private PlayerController _playerController;
     private float interactionRange = 3f;
     [SerializeField] private LayerMask interactableLayer;
+    private RaycastHit2D _prevHit;
 
-    void Update()
+    private void Start()
     {
+        _playerController = GetComponent<PlayerController>();
+    }
+
+    private void Update()
+    {
+        ObjectHighLight();
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             Interact();
         }
     }
 
-    void Interact()
+    private void Interact()
     {
-        Vector2 direction = transform.right;
+        Vector2 direction = _playerController.moveInput;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactionRange, interactableLayer);
 
-        if (hit.collider != null)
+        if (hit.collider)
         {
             Debug.Log("interact: " + hit.collider.name);
+            _prevHit = hit;
             hit.collider.GetComponent<IInteractable>()?.Interact();
+        }
+    }
+
+    private void ObjectHighLight()
+    {
+        Vector2 direction = _playerController.moveInput;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactionRange, interactableLayer);
+
+        if (hit.collider && !hit.collider.GetComponent<IInteractable>().IsInteractable())
+        {
+            _prevHit = hit;
+            hit.collider.GetComponent<IInteractable>()?.OnHighLight();
+        }
+        else
+        {
+            if (_prevHit)
+            {
+                _prevHit.collider.GetComponent<IInteractable>()?.OffHighLight();
+            }
         }
     }
 

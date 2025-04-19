@@ -100,6 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _handleTransform: {fileID: 3852193494656037448}
+  _spriteRenderer: {fileID: 6081163617198317993}
+  _defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  _highlightMaterial: {fileID: 2100000, guid: 140df50fe3295084f972bbe5cca505f6, type: 2}
 --- !u!61 &-3169542864755979999
 BoxCollider2D:
   m_ObjectHideFlags: 0
