@@ -474,9 +474,9 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0.03, z: 0.45, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.49, y: 1.03}
+    oldSize: {x: 1.3, y: 1.3}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -499,7 +499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1665627137581589404, guid: ee489a5a35d70994b9c4bd7db5d53fee, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 71.7709
+      value: 72.15
       objectReference: {fileID: 0}
     - target: {fileID: 1665627137581589404, guid: ee489a5a35d70994b9c4bd7db5d53fee, type: 3}
       propertyPath: m_LocalPosition.z
