@@ -6,6 +6,11 @@ public class PZ_Interact_Bed : MonoBehaviour, IInteractable
 
     private bool _isInteracted = false;
 
+    // 하이라이트 기능
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Material _defaultMaterial;
+    [SerializeField] private Material _highlightMaterial;
+
     private void Start()
     {
         _transform = GetComponent<Transform>();
@@ -26,5 +31,20 @@ public class PZ_Interact_Bed : MonoBehaviour, IInteractable
         // 여기에 아이템 획득 기능 구현
 
         _isInteracted = true;
+    }
+
+    public void OnHighLight()
+    {
+        _spriteRenderer.material = _highlightMaterial;
+    }
+
+    public void OffHighLight()
+    {
+        _spriteRenderer.material = _defaultMaterial;
+    }
+
+    public bool IsInteractable()
+    {
+        return _isInteracted;
     }
 }
