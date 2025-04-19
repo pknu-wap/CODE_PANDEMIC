@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField]
-    private int itemID=0;
+    private bool _completeInfo;
+    private int _itemId=0;
 
-    private int mapItemID=0;
+    private int _mapItemID=0;
 
     public ItemData InventoryItem { get; private set; }
     public int Quantity { get; set; } = 1;
@@ -17,12 +17,16 @@ public class Item : MonoBehaviour
     [SerializeField] private float floatAmplitude = 0.1f; 
     [SerializeField] private float floatFrequency = 2f;  
     private Vector3 _startPos;
-    private void Start()
+    
+    public void SetInfo(FieldItemData FieldData)
     {
-        _spriteRenderer = gameObject.GetOrAddComponent<SpriteRenderer>();   
+        
+        _mapItemID = FieldData.ID;
+        _itemId = FieldData.ItemID;
+        _spriteRenderer = gameObject.GetOrAddComponent<SpriteRenderer>();
         _startPos = transform.position;
 
-        if (Managers.Data.Items.TryGetValue(itemID, out ItemData itemData))
+        if (Managers.Data.Items.TryGetValue(_itemId, out ItemData itemData))
         {
             InventoryItem = itemData;
             Managers.Resource.LoadAsync<Sprite>(InventoryItem.Sprite, callback: (obj) =>
@@ -32,21 +36,22 @@ public class Item : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"ItemData with ID {itemID} not found.");
+            Debug.LogError($"ItemData with ID {_itemId} not found.");
             Destroy(gameObject);
         }
     }
-
+    
     private void Update()
     {
+        
         float yOffset = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
         transform.position = _startPos + new Vector3(0, yOffset, 0);
     }
 
     public void DestroyItem()
     {
-        if(mapItemID!=0)
-        Managers.Game.ObtainItem(mapItemID);
+        if(_mapItemID!=0)
+        Managers.Game.ObtainItem(_mapItemID);
 
         GetComponent<Collider2D>().enabled = false;
         StartCoroutine(AnimateItempPickUp());

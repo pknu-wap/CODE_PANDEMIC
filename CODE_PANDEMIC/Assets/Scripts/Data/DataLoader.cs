@@ -86,6 +86,7 @@ public class StageData
     public string MapName;
     public List<SpawnerInfoData> Spawners;
     public List<int> Puzzles;
+    public List<int> FieldItems;
 }
 [Serializable]
 public class StageDataLoader : ILoader<int, StageData>
@@ -235,6 +236,15 @@ public class RewardData
     public int Quantity;
 }
 [Serializable]
+public class BlockData
+{
+    public Vector3 Pos;
+    public Vector2 Offset;
+    public Vector2 Size;
+    public string Prefab; 
+}
+
+[Serializable]
 public class PuzzleData
 {
     public int ID;
@@ -243,8 +253,8 @@ public class PuzzleData
     public RewardData RewardItem;
     public Vector3 Pos;
     public bool IsMain;
-    public bool IsClear;
-}
+    public BlockData LinkedBlock;   
+}    
 
 [Serializable]
 public class PuzzleDataLoader : ILoader<int, PuzzleData>
@@ -271,12 +281,27 @@ public class PlayerData
     public int Speed;
     public int SpeedMultiplier;
 }
-
 [Serializable]
-public class BlockData
+public class FieldItemData
 {
     public int ID;
-    public Vector3 Position;
-    public Vector2Int Offset;
-    public Vector2Int Size;
+    public int ItemID;
+    public Vector3 Pos;
 }
+[Serializable]
+public class FieldItemDataLoader : ILoader<int, FieldItemData>
+{
+    public List<FieldItemData> fieldItems = new List<FieldItemData>();
+    public Dictionary<int, FieldItemData> MakeDic()
+    {
+        Dictionary<int, FieldItemData> dic = new Dictionary<int, FieldItemData>();
+        foreach (FieldItemData fieldItem in fieldItems)
+            dic.Add(fieldItem.ID, fieldItem);
+        return dic;
+    }
+    public bool Validate()
+    {
+        return true;
+    }
+}
+

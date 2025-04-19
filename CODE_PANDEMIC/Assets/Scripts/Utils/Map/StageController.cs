@@ -4,18 +4,30 @@ using UnityEngine;
 
 public class StageController : MonoBehaviour
 {
+    Dictionary<int, PZ_Main_Block> LinkedBlocks;
     StageData _stageData;
     [Header("ParentObject")]
     public Transform _spawnerParent;
     public Transform _puzzlesParent;
     public Transform _ItemsParent;
+    public Transform _blockParent;
+
     public void SetInfo(StageData stageData)
     {
+        LinkedBlocks = new Dictionary<int, PZ_Main_Block>();
         _stageData = stageData;
 
         CreateSpawners();
         CreatePuzzles();
         CreateItems();
+    }
+    public void OnEnable()
+    {
+        Managers.Event.Subscribe("MainPuzzleClear",OnPuzzleCleared);
+    }
+    public void OnDisable()
+    {
+        Managers.Event.Unsubscribe("MainPuzzleClear", OnPuzzleCleared);
     }
     public void CreateSpawners()
     {
@@ -50,21 +62,67 @@ public class StageController : MonoBehaviour
                 Debug.LogError($"Puzzle ID {puzzles[i]} not found in data.");
                 continue;
             }
-            if (Managers.Game.ClearPuzzleID.Contains(puzzles[i])) continue;
+            if (Managers.Game.ClearPuzzleID.Contains(puzzles[i])) continue; //clear puzzle ignore
             Managers.Resource.Instantiate(data.Prefab, _puzzlesParent, (obj) =>
             {
                 obj.transform.position = data.Pos;
-                PZ_Puzzle_Item item = obj.GetComponent<PZ_Puzzle_Item>();
-                if (item != null)
+                PZ_Puzzle_Item puzzleItem = obj.GetComponent<PZ_Puzzle_Item>();
+                if (data.IsMain)
                 {
-                    item.SetInfo(data);
-                    item.SettingPuzzle();
+                    CreateBlock(data.ID,data.LinkedBlock);
+                }
+                if (puzzleItem != null)
+                {
+                    puzzleItem.SetInfo(data);
+                    puzzleItem.SettingPuzzle();
                 }
 
             });
         }
     }
-    private void CreateItems()
-    { 
+    private void CreateBlock(int id, BlockData blockData)
+    {
+        Managers.Resource.Instantiate(blockData.Prefab, _blockParent.transform, (obj) =>
+        {
+            PZ_Main_Block linkedBlock =obj.GetComponent<PZ_Main_Block>();
+            linkedBlock.SetInfo(blockData);
+            LinkedBlocks.Add(id, linkedBlock);
+        });
     }
+    private void DestroyLinkedBlock(int id)
+    {
+        if(LinkedBlocks.ContainsKey(id))
+        {
+            Destroy(LinkedBlocks[id].gameObject);
+            LinkedBlocks.Remove(id);
+        }
+    }
+    private void CreateItems()
+    {
+        
+       List <int> FieldItems = _stageData.FieldItems;
+        Debug.Log(FieldItems.Count);
+        for (int i = 0; i < FieldItems.Count; i++)
+        {   
+            int dataId = FieldItems[i];
+            if (Managers.Game.ObtainedItemIDs.Contains(dataId)) continue;
+            if (Managers.Data.FieldItems.TryGetValue(dataId, out FieldItemData data) == false) continue;    
+            Managers.Resource.Instantiate("Item", _ItemsParent, (obj) =>
+            {
+                Item item=obj.GetComponent<Item>();
+                obj.transform.position = data.Pos;
+                item.SetInfo(data);
+            });
+        }
+    }
+    private void OnPuzzleCleared(object obj)
+    {
+        var puzzle = obj as PZ_Puzzle_Item;
+
+        if (puzzle != null)
+        {
+           DestroyLinkedBlock(puzzle.ID);
+        }
+    }
+        
 }
