@@ -3,6 +3,7 @@ using Inventory.Model.Inventory.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 #region GameData 구조체 정의
@@ -101,21 +102,18 @@ public class GameManagerEx
     public void Init()
     {
         _isPaused = false;
+        
+        _quickSlot = new QuickSlot();
         _inventoryData = new InventoryData();
         _inventorySaver = new InventorySaver(_inventoryData);
-        _quickSlot = new QuickSlot();
-        _inventorySaver.LoadInventory();
         _stageProgressSaver = new StageProgressSaver();
-        _stageProgressData = _stageProgressSaver.Load();
-        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
-        _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
-
-        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
+      
         _gameSaver = new GameSaver(_quickSlot);
-        LoadGame();
+
     }
-
-
+       
+    
+    
     public void SetResolutionMode(Resolution res)
     {
         Screen.SetResolution(res.width, res.height, SaveData.IsFullScreen);
@@ -206,12 +204,18 @@ public class GameManagerEx
         _gameSaver.SaveGame(_gameData);
         _inventorySaver.SaveInventory();
         _stageProgressSaver.Save(_stageProgressData);
-        Debug.Log("Game saved.");
+    
     }
 
     public bool LoadGame()
     {
         _gameSaver.LoadGame(ref _gameData);
+        _inventorySaver.LoadInventory();
+        _stageProgressData = _stageProgressSaver.Load();
+        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
+        _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
+
+        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
         return true;
     }
     public void QuitGame()
@@ -231,10 +235,14 @@ public class GameManagerEx
 
     public void DeleteSaveData()
     {
-        _gameSaver.DeleteSaveData();
+        _gameSaver.DeleteData();
+        _inventorySaver.DeleteData();
+        _stageProgressSaver.DeleteData();
         _gameData = new GameData();
         Init();
     }
+    
+    
 }
 
 #endregion

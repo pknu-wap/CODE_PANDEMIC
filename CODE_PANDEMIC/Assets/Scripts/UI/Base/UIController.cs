@@ -25,15 +25,15 @@ public class UIController : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_inputActions != null)
-        {
+       // if (_inputActions != null)
+       // {
             _inputActions.UI.Inventory.performed -= OnInventory;
             _inputActions.UI.Pause.performed -= OnClickEscape;
 
             _inputActions.Disable();
-            _inputActions.Dispose(); 
-            _inputActions = null;
-        }
+           // _inputActions.Dispose(); 
+           // _inputActions = null;
+      //  }
     }
 
     private void OnInventory(InputAction.CallbackContext ctx)

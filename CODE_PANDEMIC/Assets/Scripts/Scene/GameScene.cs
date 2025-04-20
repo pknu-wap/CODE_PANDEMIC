@@ -1,5 +1,6 @@
+using System;
 using System.Collections;
-
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameScene : BaseScene
@@ -23,7 +24,15 @@ public class GameScene : BaseScene
         _uiLoad = false;
         StartCoroutine(CowaitLoad());
     }
-
+    private  void OnEnable()
+    {
+        Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
+    }
+    private void OnDisable()
+    {
+        Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
+    }
+   
 
     IEnumerator CowaitLoad()
     {
@@ -67,5 +76,10 @@ public class GameScene : BaseScene
         Managers.Game.PrevStage();
         ChangeStage();
     }
-   
+    private void OnPlayerDead(object obj)
+    {
+        //TODO : YOU DIED UI
+        ChangeStage();
+    }
+        
 }

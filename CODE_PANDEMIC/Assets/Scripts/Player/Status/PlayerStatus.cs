@@ -80,7 +80,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (_currentHp <= 0)
         {
-            _playerController.Die(); // 사망
+            OnPlayerDead();
             return;
         }
 
@@ -93,11 +93,6 @@ public class PlayerStatus : MonoBehaviour
     // 체력 회복
     public void OnHealed(float healValue)
     {
-        if (_playerController._currentState == PlayerState.Dead)
-        {
-            return;
-        }
-
         _currentHp = Mathf.Clamp(_currentHp + healValue, 0, _maxHp);
         _effectHp = Mathf.Max(_effectHp, _currentHp);
 
@@ -124,5 +119,9 @@ public class PlayerStatus : MonoBehaviour
 
         _effectHp = _currentHp;
         _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
+    }
+    private void OnPlayerDead()
+    {
+        Managers.Event.InvokeEvent("OnPlayerDead");
     }
 }

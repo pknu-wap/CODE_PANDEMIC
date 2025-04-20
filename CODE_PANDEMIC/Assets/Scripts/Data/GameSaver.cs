@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Collections;
 
 #region GameSaver
 public class GameSaver
@@ -18,8 +19,8 @@ public class GameSaver
 
     public void SaveGame(GameData data)
     {
-        // QuickSlot 저장 로직을 GameSaver로 이동
-        for (int i = 1; i <= 4; i++)
+        
+          for (int i = 1; i <= 4; i++)
         {
             var slotItem = _quickSlot.GetSlotItem(i);
             if (slotItem != null)
@@ -76,7 +77,7 @@ public class GameSaver
         return File.Exists(SavePath);
     }
 
-    public void DeleteSaveData()
+    public void DeleteData()
     {
         if (File.Exists(SavePath))
         {
@@ -92,7 +93,7 @@ public class GameSaver
 #endregion
 
 #region InventorySaver
-public class InventorySaver
+public class InventorySaver:MonoBehaviour
 {
     private InventoryData _inventoryData;
     private static string SavePath => Application.persistentDataPath + "/inventory.json";
@@ -137,6 +138,7 @@ public class InventorySaver
             var loadedItems = new Dictionary<int, InventoryItem>();
             foreach (var itemData in saveData.InventoryItems)
             {
+               
                 if (Managers.Data.Items.TryGetValue(itemData.ItemID, out var item))
                 {
                     loadedItems.Add(loadedItems.Count, new InventoryItem(item, itemData.Quantity, itemData.ItemState));
@@ -153,6 +155,18 @@ public class InventorySaver
         else
         {
             _inventoryData.Init();
+        }
+    }
+    public void DeleteData()
+    {
+        if (File.Exists(SavePath))
+        {
+            File.Delete(SavePath);
+            Debug.Log("Save data deleted.");
+        }
+        else
+        {
+            Debug.Log("No save data to delete.");
         }
     }
 }
@@ -182,5 +196,17 @@ public class StageProgressSaver
         string json = File.ReadAllText(SavePath);
 
         return JsonUtility.FromJson<StageProgressData>(json);
+    }
+    public void DeleteData()
+    {
+        if (File.Exists(SavePath))
+        {
+            File.Delete(SavePath);
+            Debug.Log("Save data deleted.");
+        }
+        else
+        {
+            Debug.Log("No save data to delete.");
+        }
     }
 }

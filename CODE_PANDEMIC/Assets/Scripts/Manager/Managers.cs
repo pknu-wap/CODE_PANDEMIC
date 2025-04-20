@@ -48,6 +48,10 @@ public class Managers : MonoBehaviour
            
         return true;
     }
+    private void OnApplicationQuit()
+    {
+        _game.SaveGame();
+    }
 
-   
+
 }

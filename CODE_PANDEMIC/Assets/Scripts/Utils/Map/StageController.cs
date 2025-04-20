@@ -105,7 +105,11 @@ public class StageController : MonoBehaviour
         for (int i = 0; i < FieldItems.Count; i++)
         {   
             int dataId = FieldItems[i];
-            if (Managers.Game.ObtainedItemIDs.Contains(dataId)) continue;
+            if (Managers.Game.ObtainedItemIDs.Contains(dataId))
+            {
+                Debug.Log(FieldItems[i]);
+                continue;
+            }
             if (Managers.Data.FieldItems.TryGetValue(dataId, out FieldItemData data) == false) continue;    
             Managers.Resource.Instantiate("Item", _ItemsParent, (obj) =>
             {

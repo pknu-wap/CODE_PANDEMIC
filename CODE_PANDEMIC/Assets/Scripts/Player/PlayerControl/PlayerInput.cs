@@ -277,7 +277,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Equip4"",
                     ""type"": ""Button"",
-                    ""id"": ""3b1fb2d9-ded5-4188-a404-6ff38fc995e7"",
+                    ""id"": ""8a00a24d-63bd-4b0f-bd09-10b7b6ca1b1f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -320,7 +320,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4dfbfc96-e338-4fb8-a51b-ef1bb93e10d5"",
+                    ""id"": ""19187cb0-2433-44dd-853b-ca675fef5342"",
                     ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",

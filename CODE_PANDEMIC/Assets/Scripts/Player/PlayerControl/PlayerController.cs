@@ -1,49 +1,46 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // 컴포넌트 관리
-    private PlayerMovement _playerMovement; // 플레이어 무브먼트
-    private PlayerStatus _playerStatus; // 플레이어 상태
-    private PlayerInteraction _playerInteraction; // 플레이어 상호 작용
-    private PlayerWeaponController _playerWeaponController; // 무기 컨트롤러
+    [SerializeField]
+    private EquipWeapon _equipWeapon;
 
-    public PlayerState _currentState = PlayerState.Idle; // 플레이어 상태
+    private PlayerMovement _playerMovement; 
+    private PlayerStatus _playerStatus; 
+    private PlayerInteraction _playerInteraction;
 
-    public Vector2 _forwardVector; // 현재 플레이어가 바라보는 방향
+    public PlayerState _currentState = PlayerState.Idle; 
+
+    public Vector2 _forwardVector;
 
     [SerializeField] public Transform _weaponHolder;
-    public WeaponBase _equippedWeapon; // 장착 무기
 
+    
     #region Base
 
     private void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
-
         _playerStatus = GetComponent<PlayerStatus>();
-
         _playerInteraction = GetComponent<PlayerInteraction>();
+        _equipWeapon = GetComponent<EquipWeapon>();  
 
-        _playerWeaponController = GetComponent<PlayerWeaponController>();
     }
 
+    private void OnEnable()
+    {
+        Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
+    }
+
+   
     private void OnDisable()
     {
-        _playerMovement.enabled = false;
-        _playerStatus.enabled = false;
-        _playerInteraction.enabled = false;
-        _playerWeaponController.enabled = false;
+     
+        Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
     }
 
-    #endregion
-
-    #region Weapon
-
-    public void EquipWeapon(WeaponBase newWeapon)
-    {
-        _playerWeaponController.EquipWeapon(newWeapon);
-    }
+   
 
     #endregion
 
@@ -65,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     #region Die
 
-    public void Die()
+    private void OnPlayerDead(object obj)
     {
         if (_currentState == PlayerState.Dead) return;
 

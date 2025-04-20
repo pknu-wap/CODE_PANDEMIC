@@ -43,6 +43,8 @@ public class UI_GameStartPopUp : UI_PopUp
 
     private void GameStart()
     {
+        Managers.Game.LoadGame();
+        Managers.Game.SaveGame();
         Managers.UI.FadeOut(() =>
         {
             Managers.Scene.ChangeScene(Define.SceneType.GameScene);
@@ -64,7 +66,6 @@ public class UI_GameStartPopUp : UI_PopUp
 
     private void OnClickStartButton()
     {
-        Managers.Game.SaveGame();
         GameStart();
     }
     private void OnClickExitButton()
