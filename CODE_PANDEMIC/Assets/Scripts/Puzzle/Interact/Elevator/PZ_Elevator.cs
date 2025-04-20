@@ -30,7 +30,7 @@ public class PZ_Elevator : MonoBehaviour, IInteractable
     }
 
     // 엘레베이터 상호 작용
-    public void Interact()
+    public void Interact(GameObject player)
     {
         if (_isInteracted)
         {

@@ -11,7 +11,7 @@ public class PZ_HealPack : MonoBehaviour, IInteractable
     [SerializeField] private Material _highlightMaterial;
 
     // 벽 힐팩 상호 작용
-    public void Interact()
+    public void Interact(GameObject player)
     {
         if (_isInteracted)
         {

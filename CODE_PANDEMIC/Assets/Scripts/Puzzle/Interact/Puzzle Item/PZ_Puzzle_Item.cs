@@ -58,7 +58,7 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     #region Interact
 
     // 퍼즐 띄우기
-    public void Interact()
+    public void Interact(GameObject player)
     {
         if (_isInteracted)
         {

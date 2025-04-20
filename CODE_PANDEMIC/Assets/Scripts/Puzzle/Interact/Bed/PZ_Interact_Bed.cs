@@ -19,7 +19,7 @@ public class PZ_Interact_Bed : MonoBehaviour, IInteractable
     }
 
     // 침대 상호 작용
-    public void Interact()
+    public void Interact(GameObject player)
     {
         if (_isInteracted)
         {

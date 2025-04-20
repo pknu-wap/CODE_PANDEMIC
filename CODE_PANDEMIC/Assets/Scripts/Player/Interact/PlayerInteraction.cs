@@ -33,7 +33,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             Debug.Log("interact: " + hit.collider.name);
             _prevHit = hit;
-            hit.collider.GetComponent<IInteractable>()?.Interact();
+            hit.collider.GetComponent<IInteractable>()?.Interact(gameObject);
         }
     }
 
