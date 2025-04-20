@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +28,7 @@ public class TempDamage : MonoBehaviour
     private void Damaged(InputAction.CallbackContext context)
     {
     
-        _status.OnDamaged(10.0f);
+        _status.OnDamaged(null, 10.0f);
     }
 
     // Update is called once per frame
