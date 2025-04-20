@@ -1,12 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum PlayerState
+{
+    Idle,
+    Move,
+    Invincible,
+    Dead
+}
+
 public class PlayerStatus : MonoBehaviour
 {
+    private PlayerController _playerController;
+
+    // 체력 정보
     private int _maxHp = 100;
-    [SerializeField] private float _currentHp;
+    private float _currentHp;
     private float _effectHp;
 
+    // 데미지 효과
     public delegate void HpEffectUpdateDelegate(float realRatio, float effectRatio);
     private HpEffectUpdateDelegate _onHpEffectUpdated;
 
@@ -16,6 +28,7 @@ public class PlayerStatus : MonoBehaviour
     public float RealHp => _currentHp;
     public float EffectHp => _effectHp;
 
+    // 초기화
     public void SetInfo()
     {
         _currentHp = _maxHp;
@@ -34,13 +47,19 @@ public class PlayerStatus : MonoBehaviour
         _onHpEffectUpdated = updateMethod;
     }
 
-    public void OnDamaged(float damageValue)
+    // 데미지
+    public void OnDamaged(GameObject attacker, float damageValue)
     {
+        if (_playerController._currentState == PlayerState.Dead || _playerController._currentState == PlayerState.Invincible)
+        {
+            return;
+        }
+
         _currentHp = Mathf.Clamp(_currentHp - damageValue, 0, _maxHp);
 
         if (_currentHp <= 0)
         {
-            // 사망 처리
+            _playerController.Die(); // 사망
             return;
         }
 
@@ -50,14 +69,21 @@ public class PlayerStatus : MonoBehaviour
         _damageEffectCoroutine = StartCoroutine(OnDamagedEffect());
     }
 
+    // 체력 회복
     public void OnHealed(float healValue)
     {
+        if (_playerController._currentState == PlayerState.Dead)
+        {
+            return;
+        }
+
         _currentHp = Mathf.Clamp(_currentHp + healValue, 0, _maxHp);
         _effectHp = Mathf.Max(_effectHp, _currentHp);
 
         _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
     }
 
+    // 데미지 효과
     private IEnumerator OnDamagedEffect()
     {
         float duration = 0.5f;
@@ -69,7 +95,7 @@ public class PlayerStatus : MonoBehaviour
         {
             timer += Time.deltaTime;
             float t = timer / duration;
-            _effectHp = Mathf.SmoothStep(startHp, targetHp, t);  
+            _effectHp = Mathf.SmoothStep(startHp, targetHp, t);
 
             _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
             yield return null;
