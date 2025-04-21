@@ -10,14 +10,14 @@ public class PlayerSpawner : SpawnBase
         Managers.Object.RegisterSpawners(this);
         Managers.Resource.Instantiate("Player", null, (obj) =>
         {
+            obj.transform.position=transform.position;   
             obj.GetOrAddComponent<PlayerStatus>().SetInfo(); 
             Managers.Object.RegisterPlayer(obj.GetComponent<PlayerStatus>());
             obj.GetOrAddComponent<TempDamage>();
            
         });
 
-           
     }
-
+   
 }
    

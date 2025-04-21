@@ -17,6 +17,7 @@ public class AI_Controller : AI_Base
     private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
     private AI_Fov _aiFov;
+    
     public AIPath _aiPath;
 
     private AI_IState _currentState;
@@ -129,7 +130,7 @@ public class AI_Controller : AI_Base
         _currentState.OnEnter();
     }
 
-    public override void TakeDamage(float amount)
+    public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
         if (_aiHealth <= 0f && _currentState is not AI_StateDie)
@@ -188,8 +189,8 @@ public class AI_Controller : AI_Base
 
     private IEnumerator ZombieColliderAttack(PlayerController player)
     {
-        WaitForSeconds wait = new WaitForSeconds(_aiDamageDelay);
-        // _isAttacking 플래그는 Attack 상태에서 관리됨
+        WaitForSeconds wait =CoroutineHelper.WaitForSeconds(_aiDamageDelay);
+        
         while (_isAttacking)
         {
             if (player == null)

@@ -41,7 +41,9 @@ namespace Inventory.UI
             _mouseFollower?.Init();
             _description?.Init();
             _actionPanel?.Init();
+           
             Hide();
+
             return true;
         }
 
@@ -195,6 +197,7 @@ namespace Inventory.UI
 
         public void ResetAllItems()
         {
+            _listOfUiItems.RemoveAll(item => item == null);
             foreach (var item in _listOfUiItems)
             {
                 item.ResetData();

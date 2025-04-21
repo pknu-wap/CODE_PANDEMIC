@@ -12,10 +12,10 @@
         "y": 85.21,
         "z": 0
       },
-      "IsMain": false,
-      "IsClear": false
+      "IsMain": false
     },
     {
+
       "ID": 2,
       "Prefab": "PZ_Puzzle_Item_Prefab",
       "UIPath": "PZ_Sliding_Board_Prefab",
@@ -29,24 +29,38 @@
         "z": 0
       },
       "IsMain": true,
-      "IsClear": false
-    },
-    {
-      "ID": 3,
-      "Prefab": "PZ_Generator_Prefab",
-      "UIPath": "PZ_Piano_Base_Prefab",
-      "RewardItem": {
-        "ID": -1,
-        "Quantity": 0
+      "LinkedBlock": {
+        "Pos": {
+          "x": 977.03,
+          "y": 91.76
+        },
+        "Offset": {
+          "x": 0,
+          "y": 0
+        },
+        "Size": {
+          "x": 6,
+          "y": 1.5
+        },
+        "Prefab": "PZ_Main_Block_3_Prefab"
+      }
       },
-      "Pos": {
-        "x": 363.71,
-        "y": 87.68,
-        "z": 0
+      {
+        "ID": 3,
+        "Prefab": "PZ_Generator_Prefab",
+        "UIPath": "PZ_Piano_Base_Prefab",
+        "RewardItem": {
+          "ID": -1,
+          "Quantity": 0
+        },
+        "Pos": {
+          "x": 363.71,
+          "y": 87.68,
+          "z": 0
+        },
+        "IsMain": false,
+        "IsClear": false
       },
-      "IsMain": false,
-      "IsClear": false
-    },
     {
       "ID": 4,
       "Prefab": "PZ_Puzzle_Item_Prefab",
@@ -61,7 +75,22 @@
         "z": 0
       },
       "IsMain": true,
-      "IsClear": false
+      "LinkedBlock": {
+        "Pos": {
+          "x": 356.02,
+          "y": 84.51
+        },
+        "Offset": {
+          "x": 0,
+          "y": 0
+        },
+        "Size": {
+          "x": 8,
+          "y": 5
+        },
+        "Prefab": "PZ_Main_Block_2_1_Prefab"
+      }
+
     },
     {
       "ID": 5,
@@ -77,23 +106,38 @@
         "z": 0
       },
       "IsMain": true,
-      "IsClear": false
+      "LinkedBlock": {
+        "Pos": {
+          "x": 353.06,
+          "y": 123.98
+        },
+        "Offset": {
+          "x": 0,
+          "y": 0
+        },
+        "Size": {
+          "x": 1.8,
+          "y": 4
+        },
+        "Prefab": "PZ_Main_Block_2_2_Prefab"
+      }
+
     },
-    {
-      "ID": 6,
-      "Prefab": "PZ_Generator_Prefab",
-      "RewardItem": {
-        "ID": -1,
-        "Quantity": 0
+      {
+        "ID": 6,
+        "Prefab": "PZ_Generator_Prefab",
+        "RewardItem": {
+          "ID": -1,
+          "Quantity": 0
+        },
+        "Pos": {
+          "x": 428.1,
+          "y": 119.95,
+          "z": 0
+        },
+        "IsMain": false,
+        "IsClear": false
       },
-      "Pos": {
-        "x": 428.1,
-        "y": 119.95,
-        "z": 0
-      },
-      "IsMain": false,
-      "IsClear": false
-    },
     {
       "ID": 7,
       "Prefab": "PZ_Puzzle_Item_Prefab",
@@ -108,7 +152,22 @@
         "z": 0
       },
       "IsMain": true,
-      "IsClear": false
+      "LinkedBlock": {
+        "Pos": {
+          "x": 423.02,
+          "y": 66.74
+        },
+        "Offset": {
+          "x": 0,
+          "y": 0
+        },
+        "Size": {
+          "x": 8,
+          "y": 1.5
+        },
+        "Prefab": "PZ_Main_Block_1_Prefab"
+      }
+
     }
 
   ]

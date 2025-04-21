@@ -43,6 +43,7 @@ namespace Inventory
             {
                 Managers.UI.ShowInventoryUI((inventoryUI) =>
                 {
+                
                     _inventoryUI = inventoryUI;
                     PrepareInventoryUI();
                     PrepareInventoryData();
