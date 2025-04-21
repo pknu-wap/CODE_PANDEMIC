@@ -6,6 +6,6 @@ public class PZ_FireExtinguisher_Effect : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<AI_Controller>()?.TakeDamage(_damage);
+        other.GetComponent<AI_Controller>()?.TakeDamage((int)_damage);
     }
 }

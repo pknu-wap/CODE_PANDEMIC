@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,7 +14,6 @@ public class PlayerController : MonoBehaviour
     public Vector2 _forwardVector;
 
     [SerializeField] public Transform _weaponHolder;
-
     
     #region Base
 
@@ -25,7 +23,6 @@ public class PlayerController : MonoBehaviour
         _playerStatus = GetComponent<PlayerStatus>();
         _playerInteraction = GetComponent<PlayerInteraction>();
         _equipWeapon = GetComponent<EquipWeapon>();  
-
     }
 
     private void OnEnable()
@@ -33,14 +30,11 @@ public class PlayerController : MonoBehaviour
         Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
     }
 
-   
     private void OnDisable()
     {
      
         Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
     }
-
-   
 
     #endregion
 

@@ -4,7 +4,7 @@ public class PZ_FireExtinguisher : MonoBehaviour, IInteractable
 {
     [SerializeField] private Rigidbody2D _rigidbody;
     private float _speed = 20f; // 던지는 속도
-    private float _distance = 2f; // 들고 있는 거리
+    private float _distance = 1.5f; // 들고 있는 거리
 
     private bool _isInteracted = false;
     private bool _isThrowing = false;
@@ -72,7 +72,7 @@ public class PZ_FireExtinguisher : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_isThrowing) // 던져서 터트리기
+        if (_isInteracted && _isThrowing) // 던져서 터트리기
         {
             Instantiate(_explosionEffect, transform.position, transform.rotation);
 

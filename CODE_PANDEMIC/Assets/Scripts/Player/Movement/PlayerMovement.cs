@@ -108,6 +108,8 @@ public class PlayerMovement : MonoBehaviour
         _isDashing = true;
         _lastDashTime = Time.time;
 
+        _playerController._currentState = PlayerState.Invincible;
+
         Vector2 dashDirection = _moveInput.normalized;
         float dashTime = 0f;
 
@@ -123,6 +125,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _isDashing = false;
+
+        _playerController._currentState = PlayerState.Idle;
 
         yield return new WaitForSeconds(0.3f);
     }
