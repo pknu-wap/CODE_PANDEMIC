@@ -107,7 +107,7 @@ public class UI_VideoPopUp : UI_PopUp
     {
        
         Resolution res = _resolutions[_resolutionIndex];
-        Managers.Game.SetResolutionScreen(res);
+        Managers.Game.SetResolutionMode(res);
 
     }
     #region EventHandler
@@ -125,7 +125,7 @@ public class UI_VideoPopUp : UI_PopUp
   
     private void OnClickScreenButton(bool isFullScreen)
     {
-        Managers.Game.SetFullScreenMode(isFullScreen);
+        Managers.Game.SetScreenMode(isFullScreen);
         UpdateScreenModeButton(isFullScreen);
     }
 

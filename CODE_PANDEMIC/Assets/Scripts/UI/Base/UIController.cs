@@ -16,13 +16,32 @@ public class UIController : MonoBehaviour
     }
     private void OnEnable()
     {
+        _inputActions = new PlayerInput();
         _inputActions.UI.Enable();
 
-        _inputActions.UI.Inventory.performed -= _inventory.ShowHide;
-        _inputActions.UI.Pause.performed -= OnClickEscape;
-        _inputActions.UI.Inventory.performed += _inventory.ShowHide;
+        _inputActions.UI.Inventory.performed += OnInventory;
         _inputActions.UI.Pause.performed += OnClickEscape;
+    }
 
+    private void OnDisable()
+    {
+       // if (_inputActions != null)
+       // {
+            _inputActions.UI.Inventory.performed -= OnInventory;
+            _inputActions.UI.Pause.performed -= OnClickEscape;
+
+            _inputActions.Disable();
+           // _inputActions.Dispose(); 
+           // _inputActions = null;
+      //  }
+    }
+
+    private void OnInventory(InputAction.CallbackContext ctx)
+    {
+        if (_inventory != null)
+        {
+            _inventory.ShowHide(ctx);
+        }
     }
 
 

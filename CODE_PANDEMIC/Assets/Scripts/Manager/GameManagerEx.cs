@@ -3,6 +3,7 @@ using Inventory.Model.Inventory.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 #region GameData ±¸Á¶Ã¼ Á¤ÀÇ
@@ -28,7 +29,6 @@ public class GameData
 
     public Resolution SaveResolution;
     public bool IsFullScreen;
-
     public static string FilePath => Application.persistentDataPath + "/SaveData.json";
 }
 #endregion
@@ -36,98 +36,96 @@ public class GameData
 #region GameManagerEx
 public class GameManagerEx
 {
-    private GameData _gameData = new GameData();
+    private QuickSlot _quickSlot;
     private bool _isPaused;
+    
+    private GameData _gameData = new GameData();
+    private GameSaver _gameSaver;
+    
     private InventoryData _inventoryData;
     private InventorySaver _inventorySaver;
+    
+    private StageProgressData _stageProgressData;
+    private StageProgressSaver _stageProgressSaver;
 
-    public QuickSlot QuickSlot { get; private set; }
+    private HashSet<int> _clearPuzzleID;
+    private HashSet<int> _obtainedItemIDs;
+
+    private int _prevStage;
+    private int _prevChapter;
+
+    public HashSet<int> ObtainedItemIDs => _obtainedItemIDs;
+    public HashSet<int> ClearPuzzleID => _clearPuzzleID;
+
+
 
     public GameData SaveData
     {
         get => _gameData;
         set => _gameData = value;
     }
-    
-    public InventoryData Inventory
+
+    public InventoryData Inventory => _inventoryData;
+    public QuickSlot QuickSlot => _quickSlot;
+
+    public int LatestChapter
     {
-        get => _inventoryData;
-        private set => _inventoryData = value;
+        get => _prevChapter;
+        set => _prevChapter = value;
+    }
+    public int LatestStage
+    {
+        get => _prevStage;
+        set => _prevStage = value;
     }
     public int HighestChapter
     {
         get => _gameData.HighestChapter;
-        set=>_gameData.HighestChapter = value;
+        set => _gameData.HighestChapter = value;
     }
     public int HighestStage
     {
         get => _gameData.HighestStage;
-        set=> _gameData.HighestStage = value;   
+        set => _gameData.HighestStage = value;
     }
     public int Chapter
     {
         get => _gameData.Chapter;
         set => _gameData.Chapter = value;
     }
-
     public int Stage
     {
         get => _gameData.Stage;
         set => _gameData.Stage = value;
     }
 
-    public void CompleteStage()
-    {
-        if (Stage == Define.STAGES_PER_CHAPTER)
-        {
-            Chapter++;
-            Stage = 1;
-        }
-        else
-        {
-            Stage++;
-        }
-        if(Chapter>HighestChapter||Stage>HighestStage)
-        {
-            HighestChapter = Chapter;
-            HighestStage = Stage;
-        }
-
-       SaveGame();
-    }
-    public void PrevStage()
-    {
-        if (Chapter == 1 && Stage == 1) return;
-        Stage--;
-        if(Stage==0)
-        {
-            Chapter--;
-            Stage = Define.STAGES_PER_CHAPTER;
-        }
-    }
-
     public void Init()
     {
         _isPaused = false;
+        
+        _quickSlot = new QuickSlot();
         _inventoryData = new InventoryData();
         _inventorySaver = new InventorySaver(_inventoryData);
-        QuickSlot = new QuickSlot();
-        _inventorySaver.LoadInventory();
-        LoadGame();
-    }
+        _stageProgressSaver = new StageProgressSaver();
+      
+        _gameSaver = new GameSaver(_quickSlot);
 
-    public void SetResolutionScreen(Resolution res)
+    }
+       
+    
+    
+    public void SetResolutionMode(Resolution res)
     {
         Screen.SetResolution(res.width, res.height, SaveData.IsFullScreen);
         SaveData.SaveResolution = res;
-        Debug.Log($"Resolution set: {res.width}x{res.height}");
+       
     }
 
-    public void SetFullScreenMode(bool value)
+    public void SetScreenMode(bool value)
     {
         Screen.fullScreen = value;
         SaveData.IsFullScreen = value;
-        Debug.Log($"Fullscreen mode: {value}");
+       
     }
 
     public void PauseGame()
@@ -150,65 +148,76 @@ public class GameManagerEx
         }
     }
 
-    public void SaveGame()
+    public void ClearPuzzle(int id)
     {
-        for (int i = 1; i <= 4; i++) // ½½·Ô ÀÎµ¦½º´Â 1,2,3,4
+        if (_clearPuzzleID.Add(id))
         {
-            var slotItem = QuickSlot.GetSlotItem(i);
-            if (slotItem != null)
-            {
-                _gameData.QuickSlotItems[i - 1] = new QuickSlotItemData
-                {
-                    ItemID = slotItem.ItemData.TemplateID,
-                    Quantity = slotItem.Quantity
-                };
-            }
-            else
-            {
-                _gameData.QuickSlotItems[i - 1] = new QuickSlotItemData
-                {
-                    ItemID = -1,
-                    Quantity = 0
-                };
-            }
+            _stageProgressData.ClearedPuzzleIDs.Add(id);
+            _stageProgressSaver.Save(_stageProgressData);
         }
-
-        string jsonStr = JsonUtility.ToJson(_gameData);
-        File.WriteAllText(GameData.FilePath, jsonStr);
-
-        _inventorySaver.SaveInventory();
-
-        Debug.Log("Game saved.");
     }
 
+    public void ObtainItem(int mapItemId)
+    {
+        if (_obtainedItemIDs.Add(mapItemId))
+        {
+            _stageProgressData.ObtainedItemIDs = new List<int>(_obtainedItemIDs);
+            _stageProgressSaver.Save(_stageProgressData);
+        }
+    }
+
+    public void CompleteStage()
+    {
+        if (Stage == Define.STAGES_PER_CHAPTER)
+        {
+            Chapter++;
+            Stage = 1;
+        }
+        else
+        {
+            Stage++;
+        }
+
+        if (Chapter > HighestChapter || (Chapter == HighestChapter && Stage > HighestStage))
+        {
+            HighestChapter = Chapter;
+            HighestStage = Stage;
+        }
+
+        SaveGame();
+    }
+
+    public void PrevStage()
+    {
+        if (Chapter == 1 && Stage == 1) return;
+
+        Stage--;
+        if (Stage == 0)
+        {
+            Chapter--;
+            Stage = Define.STAGES_PER_CHAPTER;
+        }
+    }
+
+    public void SaveGame()
+    {
+        _gameSaver.SaveGame(_gameData);
+        _inventorySaver.SaveInventory();
+        _stageProgressSaver.Save(_stageProgressData);
+    
+    }
 
     public bool LoadGame()
     {
-        if (!File.Exists(GameData.FilePath)) return false;
+        _gameSaver.LoadGame(ref _gameData);
+        _inventorySaver.LoadInventory();
+        _stageProgressData = _stageProgressSaver.Load();
+        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
+        _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
 
-        string fileStr = File.ReadAllText(GameData.FilePath);
-        GameData data = JsonUtility.FromJson<GameData>(fileStr);
-        if (data != null)
-        {
-            _gameData = data;
-
-            for (int i = 1; i <= 4; i++) // 1~4 ½½·Ô ÀÎµ¦½º
-            {
-                var slotData = data.QuickSlotItems[i - 1];
-                if (slotData != null && slotData.ItemID != -1)
-                {
-                    if (Managers.Data.Items.TryGetValue(slotData.ItemID, out var itemData))
-                    {
-                        QuickSlot.RegisterQuickSlot(itemData, slotData.Quantity);
-                    }
-                }
-            }
-        }
-
-        Debug.Log("Game loaded.");
+        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
         return true;
     }
-
     public void QuitGame()
     {
 #if UNITY_EDITOR
@@ -218,73 +227,22 @@ public class GameManagerEx
 #endif
         Debug.Log("Game Quit.");
     }
+
+    public bool HasFile()
+    {
+        return File.Exists(GameData.FilePath);
+    }
+
+    public void DeleteSaveData()
+    {
+        _gameSaver.DeleteData();
+        _inventorySaver.DeleteData();
+        _stageProgressSaver.DeleteData();
+        _gameData = new GameData();
+        Init();
+    }
+    
+    
 }
-#endregion
 
-
-#region InventorySaver
-public class InventorySaver
-{
-    private InventoryData _inventoryData;
-    private static string SavePath => Application.persistentDataPath + "/inventory.json";
-
-    public InventorySaver(InventoryData inventoryData)
-    {
-        _inventoryData = inventoryData;
-    }
-
-    public void SaveInventory()
-    {
-        var saveData = new InventorySaveData { InventoryItems = new List<InventoryItemData>() };
-
-        foreach (var item in _inventoryData.GetCurrentInventoryState())
-        {
-            saveData.InventoryItems.Add(new InventoryItemData
-            {
-                ItemID = item.Value._item.TemplateID,
-                Quantity = item.Value._quantity,
-                ItemState = item.Value._itemState
-            });
-        }
-
-        string json = JsonUtility.ToJson(saveData);
-        File.WriteAllText(SavePath, json);
-        Debug.Log("Inventory saved.");
-    }
-
-    public void LoadInventory()
-    {
-        if (!File.Exists(SavePath))
-        {
-            _inventoryData.Init();
-            return;
-        }
-
-        string json = File.ReadAllText(SavePath);
-        var saveData = JsonUtility.FromJson<InventorySaveData>(json);
-
-        if (saveData?.InventoryItems != null)
-        {
-            var loadedItems = new Dictionary<int, InventoryItem>();
-            foreach (var itemData in saveData.InventoryItems)
-            {
-                if (Managers.Data.Items.TryGetValue(itemData.ItemID, out var item))
-                {
-                    loadedItems.Add(loadedItems.Count, new InventoryItem(item, itemData.Quantity, itemData.ItemState));
-                    Debug.Log($"Loaded item: {item.Name}, Quantity: {itemData.Quantity}");
-                }
-                else
-                {
-                    Debug.LogError($"Item with ID {itemData.ItemID} not found.");
-                }
-            }
-            _inventoryData.LoadInventoryFromData(loadedItems);
-            Debug.Log("Inventory loaded.");
-        }
-        else
-        {
-            _inventoryData.Init();
-        }
-    }
-}
 #endregion

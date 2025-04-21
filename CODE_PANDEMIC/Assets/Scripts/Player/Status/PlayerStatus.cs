@@ -36,15 +36,36 @@ public class PlayerStatus : MonoBehaviour
 
         if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StatusBar != null)
         {
+         
             SetHpEffectDelegate(gameSceneUI.StatusBar.UpdateHp);
         }
+        else       
+        StartCoroutine(WaitForUI());
 
         _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
     }
+        
+    IEnumerator WaitForUI()
+    {
+        while (!(Managers.UI.SceneUI is UI_GameScene ui) || ui.StatusBar == null)
+            yield return null;
 
+        SetHpEffectDelegate(Managers.UI.SceneUI.GetComponent<UI_GameScene>().StatusBar.UpdateHp);
+    }
+    private void OnDisable()
+    {
+        if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StatusBar != null)
+        {
+            DisableDelegate(gameSceneUI.StatusBar.UpdateHp);
+        }
+    }
     public void SetHpEffectDelegate(HpEffectUpdateDelegate updateMethod)
     {
-        _onHpEffectUpdated = updateMethod;
+        _onHpEffectUpdated += updateMethod;
+    }
+    public void DisableDelegate(HpEffectUpdateDelegate updateMethod)
+    {
+        _onHpEffectUpdated -= updateMethod;
     }
 
     // 데미지
@@ -59,11 +80,11 @@ public class PlayerStatus : MonoBehaviour
 
         if (_currentHp <= 0)
         {
-            _playerController.Die(); // 사망
+            OnPlayerDead();
             return;
         }
 
-        if (_damageEffectCoroutine != null)
+        if (_damageEffectCoroutine != null) 
             StopCoroutine(_damageEffectCoroutine);
 
         _damageEffectCoroutine = StartCoroutine(OnDamagedEffect());
@@ -72,11 +93,6 @@ public class PlayerStatus : MonoBehaviour
     // 체력 회복
     public void OnHealed(float healValue)
     {
-        if (_playerController._currentState == PlayerState.Dead)
-        {
-            return;
-        }
-
         _currentHp = Mathf.Clamp(_currentHp + healValue, 0, _maxHp);
         _effectHp = Mathf.Max(_effectHp, _currentHp);
 
@@ -103,5 +119,9 @@ public class PlayerStatus : MonoBehaviour
 
         _effectHp = _currentHp;
         _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
+    }
+    private void OnPlayerDead()
+    {
+        Managers.Event.InvokeEvent("OnPlayerDead");
     }
 }

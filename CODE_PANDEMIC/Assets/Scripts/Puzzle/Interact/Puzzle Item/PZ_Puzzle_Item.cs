@@ -4,6 +4,7 @@ using System.Collections;
 public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 {
     #region Base
+    public int ID { get;private set; }  
 
     private BoxCollider2D _boxCollider;
 
@@ -25,7 +26,8 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     [SerializeField] private Material _highlightMaterial;
 
     public void SetInfo(PuzzleData data)
-    {
+    {   
+         ID= data.ID;
         _puzzleAddressable = data.UIPath;
         _isMainPuzzle = data.IsMain;
     }
@@ -43,12 +45,6 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
         _dongdong = _original;
         _dongdong.y += 0.2f;
 
-        Managers.Resource.Instantiate("PZ_Main_Block_Prefab", null, (mainBlockObject) =>
-        {
-            _mainBlock = mainBlockObject.GetComponent<PZ_Main_Block>();
-
-            // 여기에 데이터 넣어주삼
-        });
 
         StartCoroutine(MoveUp());
     }
@@ -150,18 +146,18 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     public void ClearPuzzle()
     {
         ClosePuzzle();
-
         Managers.Object.UnRegisterPuzzles();
-
-        // 서브 퍼즐 클리어 시
-        if (!_isMainPuzzle)
+        if (_isMainPuzzle)
+            Managers.Event.InvokeEvent("MainPuzzleClear", this);
+        else
         {
             // 아이템 혹은 보상을 주는 로직 구현 예정
         }
 
-        Destroy(_mainBlock.gameObject);
+       // Destroy(_mainBlock.gameObject);
         Destroy(gameObject);
     }
+
 
     #endregion
 }

@@ -19,7 +19,7 @@ public class AI_DoctorZombie : AI_Controller
     protected override void Awake()
     {
         _aiName = "DoctorZombie";
-        _aiHealth = 100f;
+        _aiHealth = 100;
         _aiDamage = 10f;
         _aiMoveSpeed = 100f;
         _aiDetectionRange = 7.5f;
