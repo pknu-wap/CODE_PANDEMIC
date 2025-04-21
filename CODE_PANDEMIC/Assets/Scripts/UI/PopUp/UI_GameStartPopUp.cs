@@ -67,6 +67,7 @@ public class UI_GameStartPopUp : UI_PopUp
     private void OnClickStartButton()
     {
         GameStart();
+        Managers.UI.ClosePopupUI(this);
     }
     private void OnClickExitButton()
     {

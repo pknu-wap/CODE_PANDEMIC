@@ -6,10 +6,9 @@ using UnityEngine;
 
 namespace Inventory.Model
 {
-
-    public class EquippableItem : ItemData, IDestroyableItem,IItemAction
+    public class WeaponItem : ItemData, IDestroyableItem, IItemAction
     {
-        public string ActionName => "Equip";
+        public Define.ActionType ActionType => Define.ActionType.QuickSlot;
 
         public bool PerformAction(GameObject obj, List<ItemParameter> itemState)
         { 

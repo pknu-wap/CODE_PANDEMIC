@@ -35,7 +35,27 @@ public class EquippableItemFactory : IItemFactory
     {
         if (data == null) throw new ArgumentNullException(nameof(data));
 
-        return new EquippableItem
+        return new WeaponItem
+        {
+            TemplateID = data.TemplateID,
+            Name = data.Name,
+            Description = data.Description,
+            IsStackable = data.IsStackable,
+            MaxStackSize = data.MaxStackSize,
+            Sprite = data.Sprite,
+            Type = ItemType.Equippable,
+            Weapon = data.Weapon,
+            Parameters = data.Parameters
+        };
+    }
+}
+public class InteractableItemFactory:IItemFactory
+{
+    public ItemData CreateItem(ItemData data)
+    {
+        if (data == null) throw new ArgumentNullException(nameof(data));
+
+        return new InteractItem
         {
             TemplateID = data.TemplateID,
             Name = data.Name,
@@ -54,7 +74,8 @@ public class ItemFactoryManager
     private static readonly Dictionary<ItemType, IItemFactory> FactoryMap = new Dictionary<ItemType, IItemFactory>
     {
         { ItemType.Edible, new EdibleItemFactory() },
-        { ItemType.Equippable, new EquippableItemFactory() }
+        { ItemType.Equippable, new EquippableItemFactory() },
+        {ItemType.Interact,new InteractableItemFactory()  }
     };
 
     public static ItemData CreateItem(ItemType type, ItemData data)

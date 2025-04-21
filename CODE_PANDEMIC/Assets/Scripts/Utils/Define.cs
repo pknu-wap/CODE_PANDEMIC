@@ -30,9 +30,18 @@ public class Define
     public enum ItemType
     {
         Edible,
-        Equippable
+        Equippable,
+        Interact
     }
-  
+    public enum ActionType
+    { 
+        None,
+        Equip,
+        QuickSlot,
+        Buff,
+    }
+
+
     public const int STAGES_PER_CHAPTER = 4; //3 normal 1 boss
 }
 public static class QuickSlotIndex

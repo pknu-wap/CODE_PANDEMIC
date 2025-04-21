@@ -54,10 +54,8 @@ public class EquipWeapon : MonoBehaviour
     {
        _quickSlot = Managers.Game.QuickSlot;
     }
-    public void SetWeapon(EquippableItem weaponItem, List<ItemParameter>itemState)
-    {
- 
-        
+    public void SetWeapon(WeaponItem weaponItem, List<ItemParameter>itemState)
+    {       
         if(Managers.Data.Weapons==null)
         {
             //TODO MAKE WEAPON DATA
@@ -66,7 +64,7 @@ public class EquipWeapon : MonoBehaviour
         Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
         if(data==null)
         {
-            Debug.Log("WEAPON"); 
+            Debug.Log("None Data"); 
         }
         else
         {
