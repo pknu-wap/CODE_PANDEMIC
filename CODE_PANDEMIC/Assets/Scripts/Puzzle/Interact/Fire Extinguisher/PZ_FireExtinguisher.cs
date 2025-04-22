@@ -1,21 +1,15 @@
 ﻿using UnityEngine;
 
-public class PZ_FireExtinguisher : MonoBehaviour, IInteractable
+public class PZ_FireExtinguisher : PZ_Interact_Base
 {
     [SerializeField] private Rigidbody2D _rigidbody;
     private float _speed = 20f; // 던지는 속도
     private float _distance = 1.5f; // 들고 있는 거리
 
-    private bool _isInteracted = false;
     private bool _isThrowing = false;
     [SerializeField] private GameObject _explosionEffect;
 
     private PlayerController _playerController;
-
-    // 하이라이트 기능
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Material _defaultMaterial;
-    [SerializeField] private Material _highlightMaterial;
 
     private void Update()
     {
@@ -43,31 +37,16 @@ public class PZ_FireExtinguisher : MonoBehaviour, IInteractable
         }
     }
 
-    public void Interact(GameObject player)
+    public override void Interact(GameObject player)
     {
         if (_isInteracted)
         {
             return;
         }
 
-        _isInteracted = true;
+        base.Interact(player);
 
         _playerController = player.GetComponent<PlayerController>();
-    }
-
-    public bool IsInteractable()
-    {
-        return _isInteracted;
-    }
-
-    public void OnHighLight()
-    {
-        _spriteRenderer.material = _highlightMaterial;
-    }
-
-    public void OffHighLight()
-    {
-        _spriteRenderer.material = _defaultMaterial;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

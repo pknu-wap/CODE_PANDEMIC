@@ -1,18 +1,14 @@
 ﻿using UnityEngine;
 
-public class PZ_Safe : MonoBehaviour, IInteractable
+public class PZ_Safe : PZ_Interact_Base
 {
-    private bool _isInteracted = false;
-
     public bool _hasKey = false; // 열쇠로 열기
 
     // 하이라이트 기능
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Material _defaultMaterial;
     [SerializeField] private Material _lockMaterial;
     [SerializeField] private Material _unLockMaterial;
 
-    public void Interact(GameObject player)
+    public override void Interact(GameObject player)
     {
         if (_isInteracted || !_hasKey)
         {
@@ -20,10 +16,14 @@ public class PZ_Safe : MonoBehaviour, IInteractable
             return;
         }
 
-        _isInteracted = true;
+        base.Interact(player);
+
+        // 금고 해제 및 무기 획득
+
+        Destroy(gameObject);
     }
 
-    public void OnHighLight()
+    public override void OnHighLight()
     {
         if (_hasKey)
         {
@@ -33,15 +33,5 @@ public class PZ_Safe : MonoBehaviour, IInteractable
         {
             _spriteRenderer.material = _lockMaterial;
         }
-    }
-
-    public void OffHighLight()
-    {
-        _spriteRenderer.material = _defaultMaterial;
-    }
-
-    public bool IsInteractable()
-    {
-        return _isInteracted;
     }
 }

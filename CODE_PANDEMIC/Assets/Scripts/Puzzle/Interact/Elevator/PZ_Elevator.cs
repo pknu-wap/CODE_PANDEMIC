@@ -7,37 +7,26 @@ public enum ElevatingMap
     Hospital1
 }
 
-public class PZ_Elevator : MonoBehaviour, IInteractable
+public class PZ_Elevator : PZ_Interact_Base
 {
     [SerializeField] private ElevatingMap _currentMap; // 현재 맵
     [SerializeField] private ElevatingMap _elevatingMap; // 해당 엘레베이터로 이동할 맵
-    private Transform _transform;
     private Animator _animator;
-
-    private bool _isInteracted = false;
-
-    // 하이라이트 기능
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Material _defaultMaterial;
-    [SerializeField] private Material _highlightMaterial;
 
     private void Start()
     {
-        _transform = GetComponent<Transform>();
         _animator = GetComponent<Animator>();
-
-        _transform.localScale = new Vector3(1.5f, 1.5f, 1);
     }
 
     // 엘레베이터 상호 작용
-    public void Interact(GameObject player)
+    public override void Interact(GameObject player)
     {
         if (_isInteracted)
         {
             return;
         }
 
-        _isInteracted = true;
+        base.Interact(player);
 
         _animator.SetBool("IsOpened", true);
 
@@ -56,20 +45,5 @@ public class PZ_Elevator : MonoBehaviour, IInteractable
                 Debug.Log("1층 이동");
                 break;
         }
-    }
-
-    public void OnHighLight()
-    {
-        _spriteRenderer.material = _highlightMaterial;
-    }
-
-    public void OffHighLight()
-    {
-        _spriteRenderer.material = _defaultMaterial;
-    }
-
-    public bool IsInteractable()
-    {
-        return _isInteracted;
     }
 }

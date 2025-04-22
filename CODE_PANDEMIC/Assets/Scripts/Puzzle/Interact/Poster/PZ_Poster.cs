@@ -1,40 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PZ_Poster : MonoBehaviour, IInteractable
+public class PZ_Poster : PZ_Interact_Base
 {
-    private bool _isInteracted = false;
-
-    // 하이라이트 기능
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Material _defaultMaterial;
-    [SerializeField] private Material _highlightMaterial;
-
-    public void Interact(GameObject player)
+    public override void Interact(GameObject player)
     {
         if (_isInteracted)
         {
             return;
         }
 
-        _isInteracted = true;
+        base.Interact(player);
 
         StartCoroutine(MoveDown());
-    }
-
-    public void OnHighLight()
-    {
-        _spriteRenderer.material = _highlightMaterial;
-    }
-
-    public void OffHighLight()
-    {
-        _spriteRenderer.material = _defaultMaterial;
-    }
-
-    public bool IsInteractable()
-    {
-        return _isInteracted;
     }
 
     private IEnumerator MoveDown()
