@@ -1,161 +1,81 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
-
-public enum PlayerState
-{
-    Idle,
-    Move,
-    Dead
-}
+﻿using System;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
-    [SerializeField] private float walkSpeed = 5f;
-    [SerializeField] private float runSpeed = 8f;
-    [SerializeField] private float dashSpeed = 10f;
-    [SerializeField] private float dashDuration = 0.1f;
-    [SerializeField] private float dashCooldown = 0.5f;
+    [SerializeField]
+    private EquipWeapon _equipWeapon;
 
-    [Header("Weapon Holder")]
-    [SerializeField] private Transform weaponHolder;
-    [SerializeField] private Vector3 weaponLocalPosition = new Vector3(-0.5f, 0f, 0f);
+    private PlayerMovement _playerMovement; 
+    private PlayerStatus _playerStatus; 
+    private PlayerInteraction _playerInteraction;
 
-    [Header("Sprite")]
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    public PlayerState _currentState = PlayerState.Idle; 
 
-    private PlayerInput action;
-    private InputAction moveAction;
-    private InputAction runAction;
-    private InputAction dashAction;
+    public Vector2 _forwardVector;
 
-    public Vector2 moveInput;
-    private WeaponBase equippedWeapon;
+    [SerializeField] public Transform _weaponHolder;
 
-    private Rigidbody2D rb;
-    private bool isDashing = false;
-    private float lastDashTime = -999f;
-
-    private PlayerState currentState = PlayerState.Idle;
+    
+    #region Base
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        action = new PlayerInput();
+        _playerMovement = GetComponent<PlayerMovement>();
+        _playerStatus = GetComponent<PlayerStatus>();
+        _playerInteraction = GetComponent<PlayerInteraction>();
+        _equipWeapon = GetComponent<EquipWeapon>();  
 
-        moveAction = action.Player.Move;
-        runAction = action.Player.Run;
-        dashAction = action.Player.Dash;
     }
 
     private void OnEnable()
     {
-        moveAction.Enable();
-        runAction.Enable();
-        dashAction.Enable();
+        Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
     }
 
+   
     private void OnDisable()
     {
-        moveAction.Disable();
-        runAction.Disable();
-        dashAction.Disable();
+     
+        Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
     }
 
-    private void FixedUpdate()
+   
+
+    #endregion
+
+    #region Status
+
+    // 데미지 받는 함수
+    public void TakeDamage(GameObject attacker, float damageValue)
     {
-        if (currentState == PlayerState.Dead || isDashing) return;
-
-        moveInput = moveAction.ReadValue<Vector2>();
-        float speed = runAction.IsPressed() ? runSpeed : walkSpeed;
-
-        rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
-
-        if (moveInput.x != 0)
-        {
-            Vector3 scale = transform.localScale;
-            if (moveInput.x > 0)
-                scale.x = -1;
-            else if (moveInput.x < 0)
-                scale.x = 1;
-            transform.localScale = scale;
-
-            if (weaponHolder != null)
-            {
-                Vector3 adjustedPosition = weaponLocalPosition;
-                adjustedPosition.x *= spriteRenderer.flipX ? -1 : 1;
-                weaponHolder.localPosition = adjustedPosition;
-            }
-        }
-
-        currentState = moveInput != Vector2.zero ? PlayerState.Move : PlayerState.Idle;
+        _playerStatus.OnDamaged(attacker, damageValue);
     }
 
-    private void Update()
+    // 힐 받는 함수
+    public void TakeHeal(float healValue)
     {
-        if (currentState == PlayerState.Dead) return;
-
-        if (equippedWeapon != null && Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            equippedWeapon.Attack();
-        }
-
-        if (dashAction.triggered && !isDashing && Time.time >= lastDashTime + dashCooldown)
-        {
-            StartCoroutine(DashCoroutine());
-        }
+        _playerStatus.OnHealed(healValue);
     }
 
-    private System.Collections.IEnumerator DashCoroutine()
+    #endregion
+
+    #region Die
+
+    private void OnPlayerDead(object obj)
     {
-        isDashing = true;
-        lastDashTime = Time.time;
+        if (_currentState == PlayerState.Dead) return;
 
-        gameObject.tag = "Invincible";
+        _currentState = PlayerState.Dead;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
-        Vector2 dashDirection = moveInput.normalized;
-        float dashTime = 0f;
-
-        while (dashTime < dashDuration)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(rb.position, dashDirection, dashSpeed * Time.fixedDeltaTime, LayerMask.GetMask("Wall"));
-            if (hit.collider != null)
-                break;
-
-            rb.MovePosition(rb.position + dashDirection * dashSpeed * Time.fixedDeltaTime);
-            dashTime += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
-        }
-
-        isDashing = false;
-
-        yield return new WaitForSeconds(0.3f);
-        gameObject.tag = "Player";
-    }
-
-    public void EquipWeapon(WeaponBase newWeapon)
-    {
-        if (equippedWeapon != null)
-        {
-            Destroy(equippedWeapon.gameObject);
-        }
-
-        equippedWeapon = newWeapon;
-        equippedWeapon.transform.SetParent(weaponHolder);
-        equippedWeapon.transform.localPosition = Vector3.zero;
-        equippedWeapon.transform.localRotation = Quaternion.identity;
-    }
-
-    public void Die()
-    {
-        if (currentState == PlayerState.Dead) return;
-
-        currentState = PlayerState.Dead;
-        rb.velocity = Vector2.zero;
+        enabled = false;
     }
 
     public bool IsDead()
     {
-        return currentState == PlayerState.Dead;
+        return _currentState == PlayerState.Dead;
     }
+
+    #endregion
 }

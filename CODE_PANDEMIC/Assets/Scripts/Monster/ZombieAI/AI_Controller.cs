@@ -106,7 +106,7 @@ public class AI_Controller : AI_Base
         _currentState.OnEnter();
     }
 
-    public override void TakeDamage(float amount)
+    public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
         if (_aiHealth <= 0f && _currentState is not AI_StateDie)
@@ -161,6 +161,7 @@ public class AI_Controller : AI_Base
     private IEnumerator ZombieColliderAttack(PlayerController player)
     {
         WaitForSeconds wait = new WaitForSeconds(_aiDamageDelay);
+        // _isAttacking 플래그는 Attack 상태에서 관리됨
         while (_isAttacking)
         {
             if (player == null)

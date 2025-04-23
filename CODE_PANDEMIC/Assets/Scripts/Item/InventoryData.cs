@@ -165,7 +165,8 @@ namespace Inventory.Model
             }
             #region Load(Inventory)
             public void LoadInventoryFromData(Dictionary<int, InventoryItem> loadedItems)
-            {
+            {   
+                _inventoryItems=new List<InventoryItem>();
                 _inventoryItems.Clear();
                 for (int i = 0; i < Size; i++)
                 {

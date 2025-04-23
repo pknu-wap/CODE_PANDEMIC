@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 14609464894489480}
   - component: {fileID: 3760705985124770504}
   - component: {fileID: 223231978388139749}
+  - component: {fileID: 8322681984163988252}
   m_Layer: 0
   m_Name: PZ_Main_Block_1_Prefab
   m_TagString: Untagged
@@ -386,6 +387,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 8, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &8322681984163988252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6552282558861119091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da8b123943eefae4b901d624e71276f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8769601051687306671
 GameObject:
   m_ObjectHideFlags: 0

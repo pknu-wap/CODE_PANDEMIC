@@ -9,11 +9,11 @@ using UnityEngine.SearchService;
 public class EquipWeapon : MonoBehaviour
 {
    
-    private EquippableItem _weapon;
+    [SerializeField]
+    private WeaponBase _weapon;
+
     private QuickSlot _quickSlot;
-   
     PlayerInput _weaponInput;
-    public GameObject _weaponPrefab;
 
     //[SerializeField]
     // private List<ItemParameter> _parametersToModify, _itemCurrentState;
@@ -27,8 +27,8 @@ public class EquipWeapon : MonoBehaviour
         _weaponInput.QuickSlot.Equip2.performed += Equip2;
         _weaponInput.QuickSlot.Equip3.performed += Equip3;
         _weaponInput.QuickSlot.Equip4.performed += Equip4;
-
         _weaponInput.Enable();
+
     }
 
     private void OnDisable()
@@ -45,7 +45,7 @@ public class EquipWeapon : MonoBehaviour
     {
         if(!_quickSlot.CheckSlot(v))
         return false;
-
+        Debug.Log("abc");
         _quickSlot.UseQuickSlot(v,gameObject);
         return true;
     }
@@ -56,8 +56,8 @@ public class EquipWeapon : MonoBehaviour
     }
     public void SetWeapon(EquippableItem weaponItem, List<ItemParameter>itemState)
     {
-      
-        _weapon = weaponItem;
+ 
+        
         if(Managers.Data.Weapons==null)
         {
             //TODO MAKE WEAPON DATA
@@ -72,18 +72,22 @@ public class EquipWeapon : MonoBehaviour
         {
             Managers.Resource.Instantiate(data.WeaponPrefab, gameObject.transform ,(obj) =>
             {
-                _weaponPrefab = obj;
+                _weapon = obj.GetComponent<WeaponBase>();
             });
         }
         
     }
+    public void CallAttack()
+    {
+        _weapon.Attack();
+    }
 
     #region InputSystem
 
-    private void Equip1(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(1);
-    private void Equip2(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(2);
-    private void Equip3(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(3);
-    private void Equip4(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(4);
+   private void Equip1(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(1);
+   private void Equip2(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(2);
+   private void Equip3(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(3);
+   private void Equip4(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(4);
 
     #endregion
   
