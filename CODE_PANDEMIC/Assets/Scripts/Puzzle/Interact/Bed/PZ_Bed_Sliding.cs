@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PZ_Poster : PZ_Interact_Base
+public class PZ_Bed_Sliding : PZ_Interact_Base
 {
     public override void Interact(GameObject player)
     {
@@ -12,16 +12,16 @@ public class PZ_Poster : PZ_Interact_Base
 
         base.Interact(player);
 
-        StartCoroutine(MoveDown());
+        StartCoroutine(MoveBed());
     }
 
-    private IEnumerator MoveDown()
+    private IEnumerator MoveBed()
     {
+        float targetPosX = transform.position.x - 3;
+
         float currentTime = 0f;
         float currentPercent = 0f;
-        float moveDuration = 1f;
-
-        float targetPosY = transform.position.y - 1;
+        float moveDuration = 20f;
 
         while (currentPercent < 1)
         {
@@ -29,7 +29,7 @@ public class PZ_Poster : PZ_Interact_Base
             currentPercent = currentTime / moveDuration;
 
             Vector3 tempPos = transform.position;
-            tempPos.y = Mathf.Lerp(transform.position.y, targetPosY, currentTime);
+            tempPos.x = Mathf.Lerp(transform.position.x, targetPosX, currentPercent);
 
             transform.position = tempPos;
 

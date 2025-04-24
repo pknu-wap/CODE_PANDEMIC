@@ -72,9 +72,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 scale = transform.localScale;
             if (_moveInput.x > 0)
-                scale.x = -1;
+                scale.x = -0.3f;
             else if (_moveInput.x < 0)
-                scale.x = 1;
+                scale.x = 0.3f;
             transform.localScale = scale;
 
             if (_playerController._weaponHolder != null)

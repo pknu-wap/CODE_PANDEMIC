@@ -58,7 +58,7 @@ public class PZ_FireExtinguisher : PZ_Interact_Base
             Destroy(gameObject);
         }
 
-        if (!_isInteracted && collision.GetComponent<Bullet>()) // 총알로 터트리기
+        if (!_isInteracted && collision.gameObject.GetComponent<Bullet>()) // 총알로 터트리기
         {
             Instantiate(_explosionEffect, transform.position, transform.rotation);
 
