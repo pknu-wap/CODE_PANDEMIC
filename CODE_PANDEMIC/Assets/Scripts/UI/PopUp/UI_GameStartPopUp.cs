@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_GameStartPopUp : UI_PopUp
 {
@@ -19,6 +20,7 @@ public class UI_GameStartPopUp : UI_PopUp
     {
         Content
     }
+    
     GameObject _startButton;
     GameObject _exitButton;
     GameObject _newGameButton;
@@ -36,6 +38,7 @@ public class UI_GameStartPopUp : UI_PopUp
         BindEvent(_startButton, OnClickStartButton);
         BindEvent(_exitButton, OnClickExitButton);
         BindEvent(_newGameButton, OnClickNewGameButton);
+
         SetUpPopup(Managers.Game.HasFile());
 
         return true;

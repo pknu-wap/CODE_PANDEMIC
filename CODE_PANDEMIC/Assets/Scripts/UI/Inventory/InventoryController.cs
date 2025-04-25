@@ -229,15 +229,15 @@ namespace Inventory
             StringBuilder sb = new StringBuilder();
             sb.Append(item._item.Description);
             sb.AppendLine();
-            for (int i = 0; i < item._item.Parameters.Count; i++)
-            {
-                string parameterInfo = item._item.GetParameterInfo(i);
-                if (!string.IsNullOrEmpty(parameterInfo))
-                {
-                    sb.Append(parameterInfo);
-                    sb.AppendLine();
-                }
-            }
+            //for (int i = 0; i < item._item.Parameters.Count; i++)
+            //{
+            //    string parameterInfo = item._item.GetParameterInfo(i);
+            //    if (!string.IsNullOrEmpty(parameterInfo))
+            //    {
+            //        sb.Append(parameterInfo);
+            //        sb.AppendLine();
+            //    }
+            //}
             return sb.ToString();
         }
 

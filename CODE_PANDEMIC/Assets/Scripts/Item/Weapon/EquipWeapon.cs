@@ -15,8 +15,7 @@ public class EquipWeapon : MonoBehaviour
     private QuickSlot _quickSlot;
     PlayerInput _weaponInput;
 
-    //[SerializeField]
-    // private List<ItemParameter> _parametersToModify, _itemCurrentState;
+   
     private void Awake()
     {
         _weaponInput=new PlayerInput();  
@@ -45,7 +44,7 @@ public class EquipWeapon : MonoBehaviour
     {
         if(!_quickSlot.CheckSlot(v))
         return false;
-        Debug.Log("abc");
+     
         _quickSlot.UseQuickSlot(v,gameObject);
         return true;
     }

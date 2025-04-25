@@ -64,9 +64,10 @@ public class QuickSlot
     public void UseQuickSlot(int slotIndex, GameObject user)
     {
         if (!_slotItems.TryGetValue(slotIndex, out var quickSlotItem)) return;
-
+       
         if (quickSlotItem.ItemData is IItemAction actionItem)
         {
+           
             bool success = actionItem.PerformAction(user, quickSlotItem.ItemData.Parameters);
 
             if (!success)
@@ -94,7 +95,7 @@ public class QuickSlot
     }
 
     public void ClearSlot(int slotIndex)
-    {
+    {   
         if (_slotItems.ContainsKey(slotIndex))
         {
             _slotItems.Remove(slotIndex);
@@ -105,7 +106,7 @@ public class QuickSlot
     public void InitializeAllSlots()
     {
         foreach (var item in _slotItems)
-        {
+        { 
             NotifySlotUpdate(item.Key, item.Value);
         }
     }
