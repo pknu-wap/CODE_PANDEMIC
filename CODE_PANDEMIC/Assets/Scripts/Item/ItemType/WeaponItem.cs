@@ -12,13 +12,12 @@ namespace Inventory.Model
 
         public bool PerformAction(GameObject obj, List<ItemParameter> itemState)
         { 
-           
             EquipWeapon weaponSystem =obj.GetComponent<EquipWeapon>();
             if(weaponSystem!=null)
             {
-               
                 weaponSystem.SetWeapon(this, itemState == null ? Parameters : itemState);
                 return true;
+               
             }
             return false;
         }

@@ -11,6 +11,8 @@ public class EquipWeapon : MonoBehaviour
    
     [SerializeField]
     private WeaponBase _weapon;
+    [SerializeField]
+    private GameObject _socket;
 
     private QuickSlot _quickSlot;
     PlayerInput _weaponInput;
@@ -19,6 +21,10 @@ public class EquipWeapon : MonoBehaviour
     private void Awake()
     {
         _weaponInput=new PlayerInput();  
+    }
+    private void Start()
+    {
+       _quickSlot = Managers.Game.QuickSlot;
     }
     private void OnEnable()
     {
@@ -49,12 +55,9 @@ public class EquipWeapon : MonoBehaviour
         return true;
     }
 
-    private void Start()
-    {
-       _quickSlot = Managers.Game.QuickSlot;
-    }
     public void SetWeapon(WeaponItem weaponItem, List<ItemParameter>itemState)
-    {       
+    {
+          
         if(Managers.Data.Weapons==null)
         {
             //TODO MAKE WEAPON DATA
@@ -67,14 +70,18 @@ public class EquipWeapon : MonoBehaviour
         }
         else
         {
-            Managers.Resource.Instantiate(data.WeaponPrefab, gameObject.transform ,(obj) =>
+            Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform ,(obj) =>
             {
                 _weapon = obj.GetComponent<WeaponBase>();
             });
         }
         
     }
-    public void CallAttack()
+    public void SwapWeapon(WeaponItem weaponItem,List<ItemParameter>itemState)
+    {
+
+    }
+    public void Attack()
     {
         _weapon.Attack();
     }

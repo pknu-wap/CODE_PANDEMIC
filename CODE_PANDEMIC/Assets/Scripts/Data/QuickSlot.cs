@@ -90,6 +90,7 @@ public class QuickSlot
                     Debug.Log($"[QuickSlot] {quickSlotItem.ItemData.Name} ÀåÂø ¿Ï·á");
                     break;
                   
+                  
             }
         }
     }
