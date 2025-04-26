@@ -30,6 +30,10 @@ public class ObjectManager : MonoBehaviour
         });
         while (!mapLoaded) yield return null;
         while(Player==null) yield return null;
+        Managers.Resource.Instantiate("PlayerCamera", Player.gameObject.transform, (obj) =>
+        {
+            obj.GetComponent<PlayerCamera>().Setup(Player.gameObject.transform);
+        }); 
         while (_leftSpawners < stageData.Spawners.Count) yield return null;
         Loaded = true;
     }
