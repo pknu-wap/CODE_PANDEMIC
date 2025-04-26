@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -30,14 +31,22 @@ public class ObjectManager : MonoBehaviour
         });
         while (!mapLoaded) yield return null;
         while(Player==null) yield return null;
-        Managers.Resource.Instantiate("PlayerCamera", Player.gameObject.transform, (obj) =>
+        Managers.Resource.Instantiate("PlayerCamera", null, (obj) =>
         {
-            obj.GetComponent<PlayerCamera>().Setup(Player.gameObject.transform);
+            var playerCam = obj.GetComponent<PlayerCamera>();
+            playerCam.Setup(Player.transform, MapObject.CameraLimit);
+
+          
+            var vcam = obj.GetComponent<CinemachineVirtualCamera>();
+            if (vcam != null)
+            {
+                vcam.Priority = 100; 
+            }
         }); 
         while (_leftSpawners < stageData.Spawners.Count) yield return null;
         Loaded = true;
     }
-
+    
     public void ResetStage()
     {
         _leftPuzzles = 0;
