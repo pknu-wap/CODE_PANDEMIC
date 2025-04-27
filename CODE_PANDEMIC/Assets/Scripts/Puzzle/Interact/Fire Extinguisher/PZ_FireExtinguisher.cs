@@ -51,6 +51,11 @@ public class PZ_FireExtinguisher : PZ_Interact_Base
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.GetComponent<PolygonCollider2D>())
+        {
+            return;
+        }
+
         if (_isInteracted && _isThrowing) // 던져서 터트리기
         {
             Instantiate(_explosionEffect, transform.position, transform.rotation);
