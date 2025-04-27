@@ -92,11 +92,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_playerController._currentState == PlayerState.Dead) return;
 
-        //if (_playerController._equippedWeapon != null && Mouse.current.leftButton.wasPressedThisFrame)
-        //{
-        //    _playerController._equippedWeapon.Attack();
-        //}
-
         if (_dashAction.triggered && !_isDashing && Time.time >= _lastDashTime + _dashCooldown)
         {
             StartCoroutine(DashCoroutine());
