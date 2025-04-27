@@ -1,41 +1,18 @@
 {
   "weapons": [
     {
-      "TemplateID": 1,
-      "NameID": "환자좀비",
-      "Prefab": "M_001",
-      "Hp": 100,
-      "AttackDamage": 10,
-      "AttackDelay": 5.0,
-      "DetectionRange": 7.5,
-      "DetectionAngle": 120,
-      "MoveSpeed": 100.0,
-      "AttackRange": 2
-    },
-    {
-      "TemplateID": 2,
-      "NameID": "간호사 좀비",
-      "Prefab": "M_002",
-      "Hp": 100,
-      "AttackDamage": 10,
-      "AttackDelay": 5.0,
-      "DetectionRange": 7.5,
-      "DetectionAngle": 120,
-      "MoveSpeed": 2,
-      "AttackRange": 2
-    },
-    {
-      "TemplateID": 3,
-      "NameID": "의사 좀비",
-      "Prefab": "M_003",
-      "Hp": 100,
-      "AttackDamage": 10,
-      "AttackDelay": 5.0,
-      "DetectionRange": 7.5,
-      "DetectionAngle": 120,
-      "MoveSpeed": 2,
-      "AttackRange": 2
+      "TemplateID": 101,
+      "Damage": 20,
+      "FireRate": 0.5,
+      "BulletSpeed": 15,
+      "Range": 10,
+      "ReloadTime": 0.5,
+      "SpreadAngle": 0,
+      "WeaponPrefab": "P_001",
+      "BulletID": 1,
+      "BulletCount": 6
     }
   ]
+    
 }
      

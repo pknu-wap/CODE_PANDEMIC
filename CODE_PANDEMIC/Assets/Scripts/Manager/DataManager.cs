@@ -35,14 +35,16 @@ public class DataManager
         LoadJson<PuzzleDataLoader, int, PuzzleData>("PuzzleData", (loader) => { Puzzles = loader.MakeDic(); });
        LoadJson<FieldItemDataLoader, int, FieldItemData>("FieldItemData", (loader) => { FieldItems = loader.MakeDic(); });
         LoadJson<MonsterDataLoader, int,MonsterData>("MonsterData", (loader) => { Monsters = loader.MakeDic(); });
+        LoadJson<WeaponDataLoader, int, WeaponData>("WeaponData", (loader) => { Weapons = loader.MakeDic(); });
+
         onComplete?.Invoke();
     }
     public bool Loaded()
     {
         if (Monsters == null)
             return false;
-        //if (Weapons == null)
-          // return false;
+        if (Weapons == null)
+          return false;
         //if (Bosses == null)
         //    return false;
         if (Stages == null)
