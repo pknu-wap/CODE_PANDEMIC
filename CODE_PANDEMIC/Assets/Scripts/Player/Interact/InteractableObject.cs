@@ -2,7 +2,7 @@
 
 public class InteractableObject : MonoBehaviour, IInteractable
 {
-    public void Interact()
+    public void Interact(GameObject player)
     {
         Debug.Log("Get revolver");
     }
