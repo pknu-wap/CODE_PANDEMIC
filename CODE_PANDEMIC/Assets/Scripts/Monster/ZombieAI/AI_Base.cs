@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,22 +7,31 @@ public abstract class AI_Base : MonoBehaviour
 {
     // 기본 체력, 데미지, 이동 속도, 감지 범위, 시야각 등 공통 속성
     [SerializeField] UI_EnemyStatusBar _statusBar;
-    protected int _aiHealth;
-    protected float _aiDamage;
-    protected float _aiMoveSpeed;
-    protected float _aiDetectionRange;
-    protected float _aiDetectionAngle;
-    protected float _aiDamageDelay;  
-    protected float _aiAttackRange;
-    protected string _aiName;
-
-    
+    protected MonsterData _monsterData;
+ 
     protected AI_State _state = AI_State.Idle;
-    public event System.Action OnDie;
+    public event Action OnDie;
+   
 
+    public void SetInfo(MonsterData monsterData)
+    {
+        _monsterData = monsterData;
+      
+        _statusBar.Init(_monsterData.Hp);
+    }
     public virtual bool Init()
     {
-        _statusBar.Init(_aiHealth);
+        if (_monsterData == null)
+        {
+            _monsterData.NameID = "TestZombie";
+            _monsterData.Hp = 100;
+            _monsterData.AttackDelay = 5.0f;
+            _monsterData.DetectionRange = 7.5f;
+            _monsterData.DetectionAngle = 120;
+            _monsterData.MoveSpeed = 100.0f;
+            _monsterData.AttackRange = 2;
+
+        }
         return true;
     }
 
@@ -37,10 +47,10 @@ public abstract class AI_Base : MonoBehaviour
 
     public virtual void TakeDamage(int amount)
     {
-        _aiHealth -= amount;
-        _statusBar?.UpdateHpBar(Mathf.RoundToInt(_aiHealth));
-        Debug.Log("AI 체력: " + _aiHealth);
-        if (_aiHealth <= 0f)
+        _monsterData.Hp -= amount;
+        _statusBar?.UpdateHpBar(Mathf.RoundToInt(_monsterData.Hp));
+        
+        if (_monsterData.Hp <= 0f)
         {
             Die();
         }
@@ -52,9 +62,9 @@ public abstract class AI_Base : MonoBehaviour
         OnDie?.Invoke(); 
         gameObject.SetActive(false);
     }
-    public float MoveSpeed { get { return _aiMoveSpeed; } }
-    public float DetectionRange { get { return _aiDetectionRange; } }
-    public float DetectionAngle { get { return _aiDetectionAngle; } }
-    public float Damage { get { return _aiDamage; } }
-    public float Health { get { return _aiHealth; } }
+    public float MoveSpeed { get { return _monsterData.MoveSpeed; } }
+    public float DetectionRange { get { return _monsterData.DetectionRange; } }
+    public float DetectionAngle { get { return _monsterData.DetectionAngle; } }
+    public float Damage { get { return _monsterData.AttackDamage; } }
+    public float Health { get { return _monsterData.Hp; } }
 }

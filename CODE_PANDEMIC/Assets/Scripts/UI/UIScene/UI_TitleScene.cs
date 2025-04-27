@@ -9,7 +9,6 @@ public class UI_TitleScene : UI_Scene
 {   
     enum Texts
     {
-        TitleText,
         StartText,
         OptionText,
         ExitText
