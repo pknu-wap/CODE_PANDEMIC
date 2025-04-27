@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Collections;
+using static UnityEditor.Progress;
 
 #region GameSaver
 public class GameSaver
@@ -64,7 +65,8 @@ public class GameSaver
                 {
                     if (Managers.Data.Items.TryGetValue(slotData.ItemID, out var itemData))
                     {
-                        _quickSlot.RegisterQuickSlot(itemData, slotData.Quantity);
+                        ItemData newItem = ItemFactoryManager.CreateItem(itemData.Type, itemData);
+                        _quickSlot.RegisterQuickSlot(newItem, slotData.Quantity);
                     }
                 }
             }
