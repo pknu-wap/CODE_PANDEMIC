@@ -12,10 +12,14 @@ public class PZ_Elevator : PZ_Interact_Base
     [SerializeField] private ElevatingMap _currentMap; // 현재 맵
     [SerializeField] private ElevatingMap _elevatingMap; // 해당 엘레베이터로 이동할 맵
     private Animator _animator;
+    private PZ_Elevator_Screen _elevatorScreen; // 층수 화면
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _elevatorScreen = GetComponentInChildren<PZ_Elevator_Screen>();
+
+        _elevatorScreen.Setting(_currentMap);
     }
 
     // 엘레베이터 상호 작용
@@ -45,5 +49,7 @@ public class PZ_Elevator : PZ_Interact_Base
                 Debug.Log("1층 이동");
                 break;
         }
+
+        _elevatorScreen.Setting(_elevatingMap);
     }
 }

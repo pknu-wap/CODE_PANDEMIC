@@ -1,12 +1,12 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class PZ_Puzzle_Base : UI_PopUp
 {
-    protected PZ_Puzzle_Item _puzzleOwner; // ÆÛÁñ ¿À³Ê
+    protected PZ_Puzzle_Item _puzzleOwner; // í¼ì¦ ì˜¤ë„ˆ
 
-    protected RectTransform _rectTransform; // ÃßÈÄ Bind ¹è¿ì°í ¼öÁ¤ ¿¹Á¤
-    protected Image _image; // ÃßÈÄ Bind ¹è¿ì°í ¼öÁ¤ ¿¹Á¤
+    protected RectTransform _rectTransform;
+    protected Image _image;
 
     protected void SetComponents()
     {
@@ -14,12 +14,12 @@ public abstract class PZ_Puzzle_Base : UI_PopUp
         _image = GetComponent<Image>();
     }
 
-    // ÆÛÁñ ¿À³Ê ¼¼ÆÃ
+    // í¼ì¦ ì˜¤ë„ˆ ì„¸íŒ…
     public void SetPuzzleOwnerItem(PZ_Puzzle_Item owner)
     {
         _puzzleOwner = owner;
     }
 
-    // ÆÛÁñ Å¬¸®¾î
+    // í¼ì¦ í´ë¦¬ì–´
     protected abstract void PuzzleClear();
 }
