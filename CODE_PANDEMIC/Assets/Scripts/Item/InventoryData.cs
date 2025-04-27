@@ -158,7 +158,20 @@ namespace Inventory.Model
                     InformAboutChange();
                 }
             }
+            public int HasItem(int id)
+            { 
+                var index = _inventoryItems
+                    .FindIndex(item => !item.IsEmpty && item._item.TemplateID == id);
 
+                if (index >= 0)
+                {
+                  
+                    return index;
+                }
+
+                return -1;
+            }
+            
             private void InformAboutChange()
             {
                 OnInventoryChanged?.Invoke(GetCurrentInventoryState());

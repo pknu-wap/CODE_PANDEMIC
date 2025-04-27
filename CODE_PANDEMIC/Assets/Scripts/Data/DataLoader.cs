@@ -148,6 +148,7 @@ namespace Inventory.Model
         public ItemType Type;
         public WeaponType Weapon;
         public List<ItemParameter> Parameters;
+        
         public string GetParameterInfo(int index)
         {
             if (index >= 0 && index < Parameters.Count)
