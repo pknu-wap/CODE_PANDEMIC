@@ -48,6 +48,8 @@ public abstract class AI_Base : MonoBehaviour
     public virtual void TakeDamage(int amount)
     {
         _monsterData.Hp -= amount;
+        if(_statusBar.gameObject.activeSelf==false)
+            _statusBar.gameObject.SetActive(true);
         _statusBar?.UpdateHpBar(Mathf.RoundToInt(_monsterData.Hp));
         
         if (_monsterData.Hp <= 0f)

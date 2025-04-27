@@ -12,6 +12,7 @@ public class UI_EnemyStatusBar : MonoBehaviour
         _maxHp = maxHp;
         _originalScaleX = _hpBarTransform.localScale.x;
         UpdateHpBar(maxHp);
+        gameObject.SetActive(false);
     }
 
     public void UpdateHpBar(int currentHp)
