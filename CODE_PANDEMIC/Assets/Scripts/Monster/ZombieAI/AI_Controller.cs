@@ -16,16 +16,19 @@ public class AI_Controller : AI_Base
     public Transform _player;
     private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
+
+    private AI_Fov _aiFov;
+    public AIPath _aiPath;
     public Animator _animator;
-    [SerializeField] private AI_Fov _aiFov;
-    [SerializeField] public AIPath _aiPath;
 
     private AI_IState _currentState;
     public virtual ISkillBehavior Skill { get { return null; } }
 
     private Coroutine _aiDamageCoroutine;
-
+    
     private bool _isAttacking;
+
+
 
     protected virtual void Awake(){}
     protected virtual void Start()
@@ -109,7 +112,7 @@ public class AI_Controller : AI_Base
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        if (_aiHealth <= 0f && _currentState is not AI_StateDie)
+        if (_monsterData.Hp <= 0f && _currentState is not AI_StateDie)
         {
             ChangeState(new AI_StateDie(this));
         }
@@ -124,15 +127,7 @@ public class AI_Controller : AI_Base
     {
         if (_player == null) return false;
         float distance = Vector2.Distance(transform.position, _player.position);
-        if (this is AI_DoctorZombie doctor)
-        {
-            return distance <= doctor.SweepRange * 0.5f;
-        }
-        if (this is AI_NurseZombie nurse)
-        {
-            return distance <= nurse.SyringeRange * 0.5f;
-        }
-        return false;
+        return distance <= _aiAttackRange;
     }
 
     public bool IsAttacking()
@@ -160,14 +155,14 @@ public class AI_Controller : AI_Base
 
     private IEnumerator ZombieColliderAttack(PlayerController player)
     {
-        WaitForSeconds wait = new WaitForSeconds(_aiDamageDelay);
-        // _isAttacking 플래그는 Attack 상태에서 관리됨
+        WaitForSeconds wait =CoroutineHelper.WaitForSeconds(_aiDamageDelay);
+        
         while (_isAttacking)
         {
             if (player == null)
                 yield break;
 
-            Debug.Log($"{_aiName}이 {_aiDamage} 데미지 몸통박치기!");
+            Debug.Log($"{_aiName}이 {_aiDamage} 데미지 주는 공격 실행 중");
 
             yield return wait;
         }

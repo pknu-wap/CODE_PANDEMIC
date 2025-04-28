@@ -6,12 +6,14 @@ public class StageController : MonoBehaviour
 {
     Dictionary<int, PZ_Main_Block> LinkedBlocks;
     StageData _stageData;
+    [SerializeField]
+    private  PolygonCollider2D _cameraLimit;
     [Header("ParentObject")]
     public Transform _spawnerParent;
     public Transform _puzzlesParent;
     public Transform _ItemsParent;
     public Transform _blockParent;
-
+    public PolygonCollider2D CameraLimit { get { return _cameraLimit; } private set { _cameraLimit = value; } }
     public void SetInfo(StageData stageData)
     {
         LinkedBlocks = new Dictionary<int, PZ_Main_Block>();
@@ -101,7 +103,7 @@ public class StageController : MonoBehaviour
     {
         
        List <int> FieldItems = _stageData.FieldItems;
-        Debug.Log(FieldItems.Count);
+       
         for (int i = 0; i < FieldItems.Count; i++)
         {   
             int dataId = FieldItems[i];

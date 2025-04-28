@@ -11,15 +11,20 @@ public class EquipWeapon : MonoBehaviour
    
     [SerializeField]
     private WeaponBase _weapon;
+    [SerializeField]
+    private GameObject _socket;
 
     private QuickSlot _quickSlot;
     PlayerInput _weaponInput;
 
-    //[SerializeField]
-    // private List<ItemParameter> _parametersToModify, _itemCurrentState;
+   
     private void Awake()
     {
         _weaponInput=new PlayerInput();  
+    }
+    private void Start()
+    {
+       _quickSlot = Managers.Game.QuickSlot;
     }
     private void OnEnable()
     {
@@ -45,39 +50,34 @@ public class EquipWeapon : MonoBehaviour
     {
         if(!_quickSlot.CheckSlot(v))
         return false;
-        Debug.Log("abc");
+     
         _quickSlot.UseQuickSlot(v,gameObject);
         return true;
     }
 
-    private void Start()
+    public void SetWeapon(WeaponItem weaponItem, List<ItemParameter>itemState)
     {
-       _quickSlot = Managers.Game.QuickSlot;
-    }
-    public void SetWeapon(EquippableItem weaponItem, List<ItemParameter>itemState)
-    {
- 
-        
-        if(Managers.Data.Weapons==null)
-        {
-            //TODO MAKE WEAPON DATA
-            return;
-        }
+          
         Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
+        
         if(data==null)
         {
-            Debug.Log("WEAPON"); 
+            Debug.Log("None Data"); 
         }
         else
         {
-            Managers.Resource.Instantiate(data.WeaponPrefab, gameObject.transform ,(obj) =>
+            Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform ,(obj) =>
             {
                 _weapon = obj.GetComponent<WeaponBase>();
             });
         }
         
     }
-    public void CallAttack()
+    public void SwapWeapon(WeaponItem weaponItem,List<ItemParameter>itemState)
+    {
+
+    }
+    public void Attack()
     {
         _weapon.Attack();
     }

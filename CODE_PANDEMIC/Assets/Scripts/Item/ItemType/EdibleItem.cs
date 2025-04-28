@@ -1,3 +1,4 @@
+using Inventory.UI;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
@@ -7,14 +8,14 @@ using UnityEngine;
 
 namespace Inventory.Model
 {
-    public class EdibleItem : ItemData,IDestroyableItem, IItemAction
+    public class EdibleItem : ItemData, IDestroyableItem, IItemAction
     {
-        public List<ItemParameter> parameters = new(); // JSON에서 직접 로드
-        public string ActionName => "Consume";
+        public Define.ActionType ActionType => Define.ActionType.QuickSlot;
 
+   
         public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
         {
-            var parametersToUse = itemState ?? parameters;
+            var parametersToUse = itemState;
 
             foreach (ItemParameter param in parametersToUse)
             {
@@ -35,19 +36,14 @@ namespace Inventory.Model
 
     public interface  IDestroyableItem
     {
-
+        //CanDestroy
     }
     public interface  IItemAction
     {
-        public string ActionName { get; }
-        //public AudioClip actionSFX{get;}
+        Define.ActionType ActionType { get; }
         bool PerformAction(GameObject character, List<ItemParameter> itemState );
-        
     }
-    [Serializable]
-    public class  ModifierData
-    {
-        public CharacterStatModifier _statModifier;
-        public float _value;
-    }
+    
+
 }
+

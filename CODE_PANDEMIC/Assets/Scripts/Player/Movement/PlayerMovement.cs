@@ -72,9 +72,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 scale = transform.localScale;
             if (_moveInput.x > 0)
-                scale.x = -1;
+                scale.x = -0.3f;
             else if (_moveInput.x < 0)
-                scale.x = 1;
+                scale.x = 0.3f;
             transform.localScale = scale;
 
             if (_playerController._weaponHolder != null)
@@ -92,11 +92,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_playerController._currentState == PlayerState.Dead) return;
 
-        //if (_playerController._equippedWeapon != null && Mouse.current.leftButton.wasPressedThisFrame)
-        //{
-        //    _playerController._equippedWeapon.Attack();
-        //}
-
         if (_dashAction.triggered && !_isDashing && Time.time >= _lastDashTime + _dashCooldown)
         {
             StartCoroutine(DashCoroutine());
@@ -107,6 +102,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _isDashing = true;
         _lastDashTime = Time.time;
+
+        _playerController._currentState = PlayerState.Invincible;
 
         Vector2 dashDirection = _moveInput.normalized;
         float dashTime = 0f;
@@ -123,6 +120,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _isDashing = false;
+
+        _playerController._currentState = PlayerState.Idle;
 
         yield return new WaitForSeconds(0.3f);
     }

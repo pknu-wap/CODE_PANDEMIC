@@ -3,7 +3,7 @@
     {
       "TemplateID": 1,
       "Name": "<color=#ff0000><sprite=0></color>붕대",
-      "Description": "응급처치할 때 사용하는 붕대이다. 체력을 소량 회복한다.",
+      "Description": "응급처치할 때 사용하는 붕대이다.\n체력을 <color=#33fc2f>20</color> 회복한다.",
       "IsStackable": true,
       "MaxStackSize": 50,
       "Sprite": "Portion_1",
@@ -18,8 +18,8 @@
     },
     {
       "TemplateID": 101,
-      "Name": "일반 권총",
-      "Description": "기본적인 반자동 권총이다.",
+      "Name": "R1895",
+      "Description": "기본적인 권총이다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Pistol_1",

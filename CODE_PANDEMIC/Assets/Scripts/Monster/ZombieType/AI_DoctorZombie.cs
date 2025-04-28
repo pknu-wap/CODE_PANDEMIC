@@ -9,27 +9,12 @@ public class AI_DoctorZombie : AI_Controller
     public float SkillCooldown = 15f;
     public float SkillChargeDelay = 2f;
     public LayerMask TargetLayer;
-    public AI_SweepVisualizer SweepVisualizer;
-    public AI_SweepSkill SweepSkill;
-
-    public float AiDamage => _aiDamage;
-    public string AIName => _aiName;
+    public float AiDamage => _monsterData.AttackDamage;
+    public string AIName => _monsterData.NameID;
     public Transform Player => _player;
     private ISkillBehavior _skill;
-    public override ISkillBehavior Skill { get { return _skill; } }
-    protected override void Awake()
-    {
-        _aiName = "DoctorZombie";
-        _aiHealth = 100;
-        _aiDamage = 10f;
-        _aiMoveSpeed = 100f;
-        _aiDetectionRange = 7.5f;
-        _aiDetectionAngle = 120f;
-        _aiAttackRange = 2f;
-        _aiDamageDelay = 5f;
-        TargetLayer = LayerMask.GetMask("Player");
-        base.Awake();
-    }
+    public ISkillBehavior Skill { get; private set; }
+    
     protected override void Start()
     {
         if (!Init())
