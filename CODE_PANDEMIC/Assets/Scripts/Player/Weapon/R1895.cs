@@ -10,6 +10,7 @@ public class R1895 : PistolWeaponBase
     public int bulletID = 1;
 
     private Animator animator;
+    private bool isPickedUp = false;
 
     void Start()
     {
@@ -19,6 +20,18 @@ public class R1895 : PistolWeaponBase
         range = 10f;
 
         animator = GetComponent<Animator>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isPickedUp) return;
+
+        EquipWeapon equipWeapon = collision.GetComponent<EquipWeapon>();
+        if (equipWeapon != null)
+        {
+            equipWeapon.Equip(this);
+            isPickedUp = true;
+        }
     }
 
     public override void Attack()
