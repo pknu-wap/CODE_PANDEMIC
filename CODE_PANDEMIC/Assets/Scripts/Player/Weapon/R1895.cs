@@ -3,6 +3,11 @@ using UnityEngine;
 public class R1895 : PistolWeaponBase
 {
     public float bulletSpeed = 15f;
+    public float reloadTime = 2f;
+    public float spreadAngle = 0f;
+    public int bulletCount = 6;
+    public string weaponPrefab = "R1895_0";
+    public int bulletID = 1;
 
     private Animator animator;
 

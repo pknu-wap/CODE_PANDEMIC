@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c41673a0e03828b4680ad41c2186b10c
+guid: 0406f5bfab3121e46bb45adb2b87ceff
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerDie_0
+      name: PlayerWalkFront_0
       rect:
         serializedVersion: 2
-        x: 287
-        y: 67
-        width: 277
-        height: 466
+        x: 209
+        y: 108
+        width: 223
+        height: 484
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e52a30557a5ade3449a3bfb4defbb592
-      internalID: -869326904
+      spriteID: 52c2e5267f60f934d80640849fbe73c1
+      internalID: 2019859342
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerDie_1
+      name: PlayerWalkFront_1
       rect:
         serializedVersion: 2
-        x: 997
-        y: 67
-        width: 366
-        height: 375
+        x: 848
+        y: 118
+        width: 224
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fcce527284d8a0c43891b35d0226da3b
-      internalID: -581535876
+      spriteID: 06dae96a0772d45418e309bf1c26844a
+      internalID: -983317028
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerDie_2
+      name: PlayerWalkFront_2
       rect:
         serializedVersion: 2
-        x: 1698
-        y: 67
-        width: 504
-        height: 166
+        x: 1488
+        y: 129
+        width: 214
+        height: 433
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e00b78f15b332a4ba2aa31a3ba0d27d
-      internalID: 705987272
+      spriteID: ddec00fae16c2d7478253291bff4cb45
+      internalID: -1343368777
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerDie_3
+      name: PlayerWalkFront_3
       rect:
         serializedVersion: 2
-        x: 2516
-        y: 67
-        width: 487
-        height: 166
+        x: 2128
+        y: 118
+        width: 224
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72e138181c39d314484427cd4de49462
-      internalID: 753855658
+      spriteID: c9cb29ef1813e6647b7191670e4f04d7
+      internalID: -190421946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerDie_4
+      name: PlayerWalkFront_4
       rect:
         serializedVersion: 2
-        x: 3336
-        y: 67
-        width: 467
-        height: 166
+        x: 2778
+        y: 129
+        width: 213
+        height: 433
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,29 +195,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfa448e469c5b9a43922e7e58c33d649
-      internalID: 1868134725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerDie_5
-      rect:
-        serializedVersion: 2
-        x: 4138
-        y: 67
-        width: 464
-        height: 166
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9b88f69acd6b3994c9f2c8b14192a3fd
-      internalID: 1183585329
+      spriteID: e4517cbc5dac3df4ea3bd17ef9b99ccf
+      internalID: -252894006
       vertices: []
       indices: 
       edges: []
@@ -233,12 +212,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerDie_0: -869326904
-      PlayerDie_1: -581535876
-      PlayerDie_2: 705987272
-      PlayerDie_3: 753855658
-      PlayerDie_4: 1868134725
-      PlayerDie_5: 1183585329
+      PlayerWalkFront_0: 2019859342
+      PlayerWalkFront_1: -983317028
+      PlayerWalkFront_2: -1343368777
+      PlayerWalkFront_3: -190421946
+      PlayerWalkFront_4: -252894006
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

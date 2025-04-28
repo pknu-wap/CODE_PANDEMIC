@@ -1,13 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum PlayerState
-{
-    Idle,
-    Move,
-    Dead
-}
-
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
@@ -31,12 +24,12 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 moveInput;
     private WeaponBase equippedWeapon;
-
     private Rigidbody2D rb;
     private bool isDashing = false;
     private float lastDashTime = -999f;
-
     private PlayerState currentState = PlayerState.Idle;
+
+    private Animator animator;
 
     private void Awake()
     {
@@ -46,6 +39,8 @@ public class PlayerController : MonoBehaviour
         moveAction = action.Player.Move;
         runAction = action.Player.Run;
         dashAction = action.Player.Dash;
+
+        animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -89,6 +84,9 @@ public class PlayerController : MonoBehaviour
         }
 
         currentState = moveInput != Vector2.zero ? PlayerState.Move : PlayerState.Idle;
+ 
+        animator.SetBool("isWalking", moveInput != Vector2.zero && !runAction.IsPressed());
+        animator.SetBool("isRunning", moveInput != Vector2.zero && runAction.IsPressed());
     }
 
     private void Update()
@@ -112,6 +110,7 @@ public class PlayerController : MonoBehaviour
         lastDashTime = Time.time;
 
         gameObject.tag = "Invincible";
+        animator.SetBool("isDashing", true);
 
         Vector2 dashDirection = moveInput.normalized;
         float dashTime = 0f;
@@ -128,6 +127,7 @@ public class PlayerController : MonoBehaviour
         }
 
         isDashing = false;
+        animator.SetBool("isDashing", false);
 
         yield return new WaitForSeconds(0.3f);
         gameObject.tag = "Player";
@@ -152,6 +152,8 @@ public class PlayerController : MonoBehaviour
 
         currentState = PlayerState.Dead;
         rb.velocity = Vector2.zero;
+
+        animator.SetBool("isDead", true);
     }
 
     public bool IsDead()

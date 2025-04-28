@@ -40,6 +40,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (_currentHp <= 0)
         {
+            GetComponent<PlayerController>().Die();
             // 사망 처리
             return;
         }
