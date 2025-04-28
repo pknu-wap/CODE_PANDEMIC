@@ -9,24 +9,48 @@ public class AI_DoctorZombie : AI_Controller
     public float SkillCooldown = 15f;
     public float SkillChargeDelay = 2f;
     public LayerMask TargetLayer;
+
     public float AiDamage => _monsterData.AttackDamage;
     public string AIName => _monsterData.NameID;
-    public Transform Player => _player;
-    private ISkillBehavior _skill;
-    public ISkillBehavior Skill { get; private set; }
-    
-    protected override void Start()
-    {
-        if (!Init())
-        {
-            enabled = false;
-            return;
-        }
-        if (SweepVisualizer != null)
-        {
-            SweepVisualizer.Hide();
+    public Transform Player => _player.transform;
 
-        }
-        _skill = new AI_SweepSkill();
+    [SerializeField] public AI_SweepVisualizer _sweepVisualizer;
+
+    private ISkillBehavior _skill;
+    public override ISkillBehavior Skill => _skill;
+
+    protected override void Awake()
+    {
+        TargetLayer = LayerMask.GetMask("Player");
+        base.Awake();
     }
+    protected override void Start()
+{
+
+    if (_monsterData == null)
+    {
+        _monsterData = new MonsterData();
+        _monsterData.NameID = "DoctorZombie";
+        _monsterData.Hp = 110;
+        _monsterData.AttackDelay = 5.0f;
+        _monsterData.DetectionRange = 7.5f;
+        _monsterData.DetectionAngle = 180;
+        _monsterData.MoveSpeed = 100.0f;
+        _monsterData.AttackRange = 2f;
+        _monsterData.AttackDamage = 10;
+    }
+    base.Start();
+    if (!Init()){
+        enabled = false;
+        return;
+    }
+
+    if (_sweepVisualizer != null)
+    {
+        _sweepVisualizer.Hide();
+    }
+
+    _skill = new AI_SweepSkill();
+}
+
 }

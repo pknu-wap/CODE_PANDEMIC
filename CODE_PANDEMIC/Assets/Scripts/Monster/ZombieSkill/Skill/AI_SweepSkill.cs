@@ -7,6 +7,7 @@ public class AI_SweepSkill : ISkillBehavior
     private Coroutine _skillCoroutine;
     private float _lastSkillTime = -Mathf.Infinity;
     private AI_DoctorZombie _currentDoctor;
+    private AI_SweepVisualizer SweepVisualizer;
     
     public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
@@ -15,15 +16,13 @@ public class AI_SweepSkill : ISkillBehavior
             onSkillComplete?.Invoke();
             return;
         }
-
+        _currentDoctor = controller as AI_DoctorZombie;
+        SweepVisualizer = _currentDoctor._sweepVisualizer;
         _lastSkillTime = Time.time;
         _skillCoroutine = controller.StartCoroutine(SweepRoutine(controller as AI_DoctorZombie, onSkillComplete));
     }
 
-    public void StopSkill()
-    {
-
-    }
+    public void StopSkill(){}
 
     private IEnumerator SweepRoutine(AI_DoctorZombie doctor, System.Action onSkillComplete)
     {
@@ -34,10 +33,10 @@ public class AI_SweepSkill : ISkillBehavior
             ? ((Vector2)doctor.Player.position - (Vector2)doctor.transform.position).normalized
             : doctor.transform.up;
 
-        if (doctor.SweepVisualizer != null)
+        if (SweepVisualizer != null)
         {
-            doctor.SweepVisualizer.transform.position = doctor.transform.position;
-            doctor.SweepVisualizer.Show(attackDirection, doctor.SweepAngle, doctor.SweepRange, doctor.SkillChargeDelay);
+            SweepVisualizer.transform.position = doctor.transform.position;
+            SweepVisualizer.Show(attackDirection, doctor.SweepAngle, doctor.SweepRange, doctor.SkillChargeDelay);
         }
 
         yield return new WaitForSeconds(doctor.SkillChargeDelay);
@@ -48,7 +47,7 @@ public class AI_SweepSkill : ISkillBehavior
             yield return new WaitForSeconds(doctor.SweepInterval);
         }
 
-        doctor.SweepVisualizer?.Hide();
+        SweepVisualizer?.Hide();
         aiPath.canMove = true;
         onSkillComplete?.Invoke();
     }

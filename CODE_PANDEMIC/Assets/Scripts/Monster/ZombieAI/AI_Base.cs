@@ -29,7 +29,8 @@ public abstract class AI_Base : MonoBehaviour
             _monsterData.DetectionRange = 7.5f;
             _monsterData.DetectionAngle = 120;
             _monsterData.MoveSpeed = 100.0f;
-            _monsterData.AttackRange = 2;
+            _monsterData.AttackRange = 2f;
+            _monsterData.AttackDamage = 10;
 
         }
         return true;
@@ -68,5 +69,7 @@ public abstract class AI_Base : MonoBehaviour
     public float DetectionRange { get { return _monsterData.DetectionRange; } }
     public float DetectionAngle { get { return _monsterData.DetectionAngle; } }
     public float Damage { get { return _monsterData.AttackDamage; } }
-    public float Health { get { return _monsterData.Hp; } }
+    public int Health { get { return _monsterData.Hp; } }
+    public float AttackRange { get { return _monsterData.AttackRange; } }
+    public float AttackDelay { get { return _monsterData.AttackDelay; } }
 }

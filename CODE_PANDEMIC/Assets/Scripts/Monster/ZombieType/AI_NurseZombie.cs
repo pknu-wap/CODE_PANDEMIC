@@ -12,26 +12,31 @@ public class AI_NurseZombie : AI_Controller
     public AI_ThrowVisualizer ThrowVisualizer;
     public AI_ThrowSkill ThrowSkill;
 
-    public float AiDamage => _aiDamage;
-    public string AIName => _aiName;
-    public Transform Player => _player;
+    public float AiDamage => _monsterData.AttackDamage;
+    public string AIName => _monsterData.NameID;
+    public Transform Player => _player.transform;
     private ISkillBehavior _skill;
     public override ISkillBehavior Skill { get { return _skill; } }
     protected override void Awake()
     {
-        _aiName = "NurseZombie";
-        _aiHealth = 100f;
-        _aiDamage = 10f;
-        _aiMoveSpeed = 100f;
-        _aiDetectionRange = 7.5f;
-        _aiDetectionAngle = 120f;
-        _aiAttackRange = 2f;
-        _aiDamageDelay = 5f;
         TargetLayer = LayerMask.GetMask("Player");
         base.Awake();
     }
     protected override void Start()
     {
+        if (_monsterData == null)
+    {
+        _monsterData = new MonsterData();
+        _monsterData.NameID = "NurseZombie";
+        _monsterData.Hp = 90;
+        _monsterData.AttackDelay = 5.0f;
+        _monsterData.DetectionRange = 7.5f;
+        _monsterData.DetectionAngle = 180;
+        _monsterData.MoveSpeed = 100.0f;
+        _monsterData.AttackRange = 2f;
+        _monsterData.AttackDamage = 10;
+    }
+        base.Start();
         if (!Init())
         {
             enabled = false;
