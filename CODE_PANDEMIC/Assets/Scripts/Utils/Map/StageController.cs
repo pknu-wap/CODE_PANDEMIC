@@ -103,7 +103,7 @@ public class StageController : MonoBehaviour
     {
         
        List <int> FieldItems = _stageData.FieldItems;
-        Debug.Log(FieldItems.Count);
+       
         for (int i = 0; i < FieldItems.Count; i++)
         {   
             int dataId = FieldItems[i];

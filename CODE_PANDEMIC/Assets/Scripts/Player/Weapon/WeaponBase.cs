@@ -23,7 +23,7 @@ public abstract class WeaponBase : MonoBehaviour
         Debug.Log(weaponName + " is reloading...");
     }
 
-    protected bool CanFire()
+    protected bool CanFire() 
     {
         return Time.time >= nextFireTime;
     }

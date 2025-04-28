@@ -1,9 +1,6 @@
 ﻿using Inventory.Model;
-using JetBrains.Annotations;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using static Define;
 
@@ -216,12 +213,12 @@ public class WeaponData
 }
 public class WeaponDataLoader : ILoader<int, WeaponData>
 {
-    public List<WeaponData> items = new List<WeaponData>();
+    public List<WeaponData> weapons = new List<WeaponData>();
     public Dictionary<int, WeaponData> MakeDic()
     {
         Dictionary<int, WeaponData> dic = new Dictionary<int, WeaponData>();
-        foreach (WeaponData stage in items)
-            dic.Add(stage.TemplateID, stage);
+        foreach (WeaponData weapon in weapons)
+            dic.Add(weapon.TemplateID, weapon);
         return dic;
     }
     public bool Validate()
