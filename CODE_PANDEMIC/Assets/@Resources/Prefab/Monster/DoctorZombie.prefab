@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 3352684330242121491}
   - component: {fileID: 2517992492321618751}
   - component: {fileID: 2664899322306526555}
-  - component: {fileID: 6033188608780787608}
   - component: {fileID: 7616369266072606646}
   m_Layer: 5
   m_Name: Visualizer
@@ -186,21 +185,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6033188608780787608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983894834280629680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b06cc323ec899244a907b78698c4566c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  segmentCount: 30
-  material: {fileID: 2100000, guid: 9e7c6bed0090d0a4d927e2b7d23a6609, type: 2}
-  fadeDuration: 0.5
 --- !u!114 &7616369266072606646
 MonoBehaviour:
   m_ObjectHideFlags: 0
