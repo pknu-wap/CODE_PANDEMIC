@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
+public class PZ_Puzzle_Item : PZ_Interact_Base
 {
     #region Base
+
     public int ID { get;private set; }  
 
     private BoxCollider2D _boxCollider;
@@ -13,17 +14,8 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
 
     private PZ_Puzzle_Base _popupPuzzle; // 퍼즐
 
-    private PZ_Main_Block _mainBlock; // 길 막는 오브젝트
-
     private string _puzzleAddressable; // 화면에 출력할 퍼즐 어드레서블
     private bool _isMainPuzzle = true; // 메인 퍼즐인지 서브 퍼즐인지 체크
-
-    private bool _isInteracted = false;
-
-    // 하이라이트 기능
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Material _defaultMaterial;
-    [SerializeField] private Material _highlightMaterial;
 
     public void SetInfo(PuzzleData data)
     {   
@@ -54,37 +46,22 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
     #region Interact
 
     // 퍼즐 띄우기
-    public void Interact()
+    public override void Interact(GameObject player)
     {
         if (_isInteracted)
         {
             return;
         }
 
-        Debug.Log("퍼즐 상호 작용");
+        base.Interact(player);
 
-        _isInteracted = true;
+        Debug.Log("퍼즐 상호 작용");
 
         Managers.UI.ShowPopupUI<PZ_Puzzle_Base>(_puzzleAddressable, null, (popupPuzzle) =>
         {
             _popupPuzzle = popupPuzzle;
             _popupPuzzle.SetPuzzleOwnerItem(this);
         });
-    }
-
-    public void OnHighLight()
-    {
-        _spriteRenderer.material = _highlightMaterial;
-    }
-
-    public void OffHighLight()
-    {
-        _spriteRenderer.material = _defaultMaterial;
-    }
-
-    public bool IsInteractable()
-    {
-        return _isInteracted;
     }
 
     // 퍼즐 닫기, ESC를 눌렀을 때 이 함수를 호출해야 함
@@ -154,10 +131,8 @@ public class PZ_Puzzle_Item : MonoBehaviour, IInteractable
             // 아이템 혹은 보상을 주는 로직 구현 예정
         }
 
-       // Destroy(_mainBlock.gameObject);
         Destroy(gameObject);
     }
-
 
     #endregion
 }

@@ -1,6 +1,8 @@
-﻿public interface IInteractable
+﻿using UnityEngine;
+
+public interface IInteractable
 {
-    void Interact();
+    void Interact(GameObject player);
 
     void OnHighLight();
 

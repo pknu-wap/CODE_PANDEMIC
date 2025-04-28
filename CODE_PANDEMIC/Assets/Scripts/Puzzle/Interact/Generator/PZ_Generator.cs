@@ -21,7 +21,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     }
 
     // 발전기 퍼즐 띄우기
-    public void Interact()
+    public void Interact(GameObject player)
     {
         if (_isInteracted)
         {
