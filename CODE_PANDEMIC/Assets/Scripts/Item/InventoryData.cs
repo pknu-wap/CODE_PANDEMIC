@@ -158,14 +158,28 @@ namespace Inventory.Model
                     InformAboutChange();
                 }
             }
+            public int HasItem(int id)
+            { 
+                var index = _inventoryItems
+                    .FindIndex(item => !item.IsEmpty && item._item.TemplateID == id);
 
+                if (index >= 0)
+                {
+                  
+                    return index;
+                }
+
+                return -1;
+            }
+            
             private void InformAboutChange()
             {
                 OnInventoryChanged?.Invoke(GetCurrentInventoryState());
             }
             #region Load(Inventory)
             public void LoadInventoryFromData(Dictionary<int, InventoryItem> loadedItems)
-            {
+            {   
+                _inventoryItems=new List<InventoryItem>();
                 _inventoryItems.Clear();
                 for (int i = 0; i < Size; i++)
                 {

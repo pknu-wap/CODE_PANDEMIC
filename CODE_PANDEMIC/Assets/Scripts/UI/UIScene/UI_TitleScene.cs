@@ -9,7 +9,6 @@ public class UI_TitleScene : UI_Scene
 {   
     enum Texts
     {
-        TitleText,
         StartText,
         OptionText,
         ExitText
@@ -54,11 +53,9 @@ public class UI_TitleScene : UI_Scene
     }
     private void OnClickStartButton()
     {
-        Managers.UI.FadeOut(() =>
-        {
-            Managers.Scene.ChangeScene(Define.SceneType.GameScene);
-        });
+        Managers.UI.ShowPopupUI<UI_GameStartPopUp>();
     }
+        
         
      
     #endregion

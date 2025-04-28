@@ -10,7 +10,7 @@ public class PZ_Main_Block : MonoBehaviour
         _mainBlockTransform = GetComponent<Transform>();
         _mainBlockCollider = GetComponent<BoxCollider2D>();
 
-        _mainBlockTransform.position = data.Position;
+        _mainBlockTransform.position = data.Pos;
 
         _mainBlockCollider.offset = data.Offset;
         _mainBlockCollider.size = data.Size;

@@ -43,6 +43,7 @@ namespace Inventory
             {
                 Managers.UI.ShowInventoryUI((inventoryUI) =>
                 {
+                
                     _inventoryUI = inventoryUI;
                     PrepareInventoryUI();
                     PrepareInventoryData();
@@ -108,12 +109,21 @@ namespace Inventory
 
             UIInventory.ShowItemAction(index);
 
-            if (inventoryItem._item is ItemData itemData)
+            if (inventoryItem._item is IItemAction actionItem)
             {
-                if (itemData.Type == Define.ItemType.Equippable || itemData.Type == Define.ItemType.Edible)
-                {
-                    UIInventory.AddAction("Slot", () => SlotItem(index, inventoryItem._quantity));
+                switch(actionItem.ActionType)
+                {   
+                    case Define.ActionType.QuickSlot: UIInventory.AddAction("Slot", () => SlotItem(index, inventoryItem._quantity));
+                        break;
+                    case Define.ActionType.Buff:BuffItem(index, inventoryItem._quantity);
+                        break;
+                    case Define.ActionType.Equip:
+                        EquipItem(index, inventoryItem._quantity);
+                        break;
+                    case Define.ActionType.None:
+                        break;
                 }
+               
             }
             // Drop
             IDestroyableItem destroyableItem = inventoryItem._item as IDestroyableItem;
@@ -123,6 +133,14 @@ namespace Inventory
             }
 
             // Slot
+        }
+        private void BuffItem(int index, int quantity)
+        {
+
+        }
+        private void EquipItem(int index ,int quantity)
+        {
+
         }
         private void SlotItem(int index, int quantity)
         {
@@ -211,15 +229,15 @@ namespace Inventory
             StringBuilder sb = new StringBuilder();
             sb.Append(item._item.Description);
             sb.AppendLine();
-            for (int i = 0; i < item._item.Parameters.Count; i++)
-            {
-                string parameterInfo = item._item.GetParameterInfo(i);
-                if (!string.IsNullOrEmpty(parameterInfo))
-                {
-                    sb.Append(parameterInfo);
-                    sb.AppendLine();
-                }
-            }
+            //for (int i = 0; i < item._item.Parameters.Count; i++)
+            //{
+            //    string parameterInfo = item._item.GetParameterInfo(i);
+            //    if (!string.IsNullOrEmpty(parameterInfo))
+            //    {
+            //        sb.Append(parameterInfo);
+            //        sb.AppendLine();
+            //    }
+            //}
             return sb.ToString();
         }
 

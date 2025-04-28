@@ -3,8 +3,10 @@
 public class PlayerInteraction : MonoBehaviour
 {
     private PlayerController _playerController;
-    private float interactionRange = 3f;
-    [SerializeField] private LayerMask interactableLayer;
+
+    private float _interactionRange = 1.5f;
+    [SerializeField] private LayerMask _interactableLayer;
+
     private RaycastHit2D _prevHit;
 
     private void Start()
@@ -24,21 +26,21 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Interact()
     {
-        Vector2 direction = _playerController.moveInput;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactionRange, interactableLayer);
+        Vector2 direction = _playerController._forwardVector;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, _interactionRange, _interactableLayer);
 
         if (hit.collider)
         {
             Debug.Log("interact: " + hit.collider.name);
             _prevHit = hit;
-            hit.collider.GetComponent<IInteractable>()?.Interact();
+            hit.collider.GetComponent<IInteractable>()?.Interact(gameObject);
         }
     }
 
     private void ObjectHighLight()
     {
-        Vector2 direction = _playerController.moveInput;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactionRange, interactableLayer);
+        Vector2 direction = _playerController._forwardVector;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, _interactionRange, _interactableLayer);
 
         if (hit.collider && !hit.collider.GetComponent<IInteractable>().IsInteractable())
         {
@@ -52,11 +54,5 @@ public class PlayerInteraction : MonoBehaviour
                 _prevHit.collider.GetComponent<IInteractable>()?.OffHighLight();
             }
         }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + transform.right * interactionRange);
     }
 }

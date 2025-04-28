@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class AI_Spawner : SpawnBase
 {
-  
-
+ 
     private SpawnerData _spawnerData;
     private List<GameObject> _monsters = new List<GameObject>();
     private int _spawnCount = 0;
@@ -18,7 +17,23 @@ public class AI_Spawner : SpawnBase
 
     public override void SpawnObjects()
     {
-        Debug.Log($"id :{_spawnerData.TemplateID}");
+        List<MonsterPosData> list = _spawnerData.Monsters;
+        for (int i = 0; i < list.Count; i++)
+        {
+            
+            MonsterPosData monster = list[i];
+            Managers.Data.Monsters.TryGetValue(monster.ID, out MonsterData data);
+            if(data!=null)
+            {
+                Managers.Resource.Instantiate(data.Prefab, transform, (obj) =>
+                {
+                    obj.transform.localPosition = monster.Pos;
+                    obj.GetComponent<AI_Base>().SetInfo(data);
+                });
+
+            }
+
+        }
     }
 
     public void UnRegisterMonster(GameObject monster)

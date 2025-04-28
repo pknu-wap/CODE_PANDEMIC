@@ -16,15 +16,17 @@ public class AI_Controller : AI_Base
     public Transform _player;
     private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
+
     private AI_Fov _aiFov;
     public AIPath _aiPath;
-
     private AI_IState _currentState;
     
 
     private Coroutine _aiDamageCoroutine;
-
+    
     private bool _isAttacking;
+
+
 
     protected virtual void Awake(){}
 
@@ -129,10 +131,10 @@ public class AI_Controller : AI_Base
         _currentState.OnEnter();
     }
 
-    public override void TakeDamage(float amount)
+    public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        if (_aiHealth <= 0f && _currentState is not AI_StateDie)
+        if (_monsterData.Hp <= 0f && _currentState is not AI_StateDie)
         {
             ChangeState(new AI_StateDie(this));
         }
@@ -148,7 +150,7 @@ public class AI_Controller : AI_Base
         if (_player == null) return false;
 
         float distance = Vector2.Distance(transform.position, _player.position);
-        return distance <= _aiAttackRange;
+        return distance <= _monsterData.AttackRange;
     }
 
     public bool IsAttacking()
@@ -188,14 +190,14 @@ public class AI_Controller : AI_Base
 
     private IEnumerator ZombieColliderAttack(PlayerController player)
     {
-        WaitForSeconds wait = new WaitForSeconds(_aiDamageDelay);
-        // _isAttacking 플래그는 Attack 상태에서 관리됨
+        WaitForSeconds wait =CoroutineHelper.WaitForSeconds(_monsterData.AttackDelay);
+        
         while (_isAttacking)
         {
             if (player == null)
                 yield break;
 
-            Debug.Log($"{_aiName}이 {_aiDamage} 데미지 주는 공격 실행 중");
+           
 
             yield return wait;
         }

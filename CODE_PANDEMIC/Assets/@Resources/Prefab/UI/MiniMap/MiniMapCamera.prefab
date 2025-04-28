@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4569797131210249096}
   - component: {fileID: 4941509410670459661}
-  - component: {fileID: 5997707237948741000}
+  - component: {fileID: 7822916691300862041}
   m_Layer: 0
   m_Name: MiniMapCamera
   m_TagString: Untagged
@@ -43,10 +43,10 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.09433961, g: 0.08677464, b: 0.08677464, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
@@ -68,13 +68,13 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
-  m_Depth: 1
+  orthographic size: 10
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: f5ddf3916b011974e933fe777a5089ef, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 0
   m_HDR: 1
@@ -84,11 +84,16 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5997707237948741000
-AudioListener:
+--- !u!114 &7822916691300862041
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6543293507200781945}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbe8ea687ebae7409790bbb2fc0f0e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _miniMapTexture: {fileID: 8400000, guid: f5ddf3916b011974e933fe777a5089ef, type: 2}

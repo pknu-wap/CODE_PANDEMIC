@@ -1,24 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UI_EnemyStatusBar : MonoBehaviour
 {
-    [SerializeField] private RectTransform _hpBar;
+    [SerializeField] private Transform _hpBarTransform;
 
-    private float _originalWidth;
+    private float _originalScaleX;
     private int _maxHp;
-
+    
     public void Init(int maxHp)
     {
         _maxHp = maxHp;
-        _originalWidth = _hpBar.sizeDelta.x;
+        _originalScaleX = _hpBarTransform.localScale.x;
         UpdateHpBar(maxHp);
+        gameObject.SetActive(false);
     }
 
     public void UpdateHpBar(int currentHp)
     {
+        if (currentHp == 0) gameObject.SetActive(false);
         float ratio = Mathf.Clamp01(currentHp / (float)_maxHp);
-        _hpBar.sizeDelta = new Vector2(_originalWidth * ratio, _hpBar.sizeDelta.y);
+        Vector3 scale = _hpBarTransform.localScale;
+        scale.x = _originalScaleX * ratio;
+        _hpBarTransform.localScale = scale;
     }
 }

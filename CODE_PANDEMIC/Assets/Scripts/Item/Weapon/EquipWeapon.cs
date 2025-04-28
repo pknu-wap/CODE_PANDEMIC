@@ -9,17 +9,22 @@ using UnityEngine.SearchService;
 public class EquipWeapon : MonoBehaviour
 {
    
-    private EquippableItem _weapon;
-    private QuickSlot _quickSlot;
-   
-    PlayerInput _weaponInput;
-    public GameObject _weaponPrefab;
+    [SerializeField]
+    private WeaponBase _weapon;
+    [SerializeField]
+    private GameObject _socket;
 
-    //[SerializeField]
-    // private List<ItemParameter> _parametersToModify, _itemCurrentState;
+    private QuickSlot _quickSlot;
+    PlayerInput _weaponInput;
+
+   
     private void Awake()
     {
         _weaponInput=new PlayerInput();  
+    }
+    private void Start()
+    {
+       _quickSlot = Managers.Game.QuickSlot;
     }
     private void OnEnable()
     {
@@ -27,8 +32,8 @@ public class EquipWeapon : MonoBehaviour
         _weaponInput.QuickSlot.Equip2.performed += Equip2;
         _weaponInput.QuickSlot.Equip3.performed += Equip3;
         _weaponInput.QuickSlot.Equip4.performed += Equip4;
-
         _weaponInput.Enable();
+
     }
 
     private void OnDisable()
@@ -45,45 +50,44 @@ public class EquipWeapon : MonoBehaviour
     {
         if(!_quickSlot.CheckSlot(v))
         return false;
-
+     
         _quickSlot.UseQuickSlot(v,gameObject);
         return true;
     }
 
-    private void Start()
+    public void SetWeapon(WeaponItem weaponItem, List<ItemParameter>itemState)
     {
-       _quickSlot = Managers.Game.QuickSlot;
-    }
-    public void SetWeapon(EquippableItem weaponItem, List<ItemParameter>itemState)
-    {
-      
-        _weapon = weaponItem;
-        if(Managers.Data.Weapons==null)
-        {
-            //TODO MAKE WEAPON DATA
-            return;
-        }
+          
         Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
+        
         if(data==null)
         {
-            Debug.Log("WEAPON"); 
+            Debug.Log("None Data"); 
         }
         else
         {
-            Managers.Resource.Instantiate(data.WeaponPrefab, gameObject.transform ,(obj) =>
+            Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform ,(obj) =>
             {
-                _weaponPrefab = obj;
+                _weapon = obj.GetComponent<WeaponBase>();
             });
         }
         
     }
+    public void SwapWeapon(WeaponItem weaponItem,List<ItemParameter>itemState)
+    {
+
+    }
+    public void Attack()
+    {
+        _weapon.Attack();
+    }
 
     #region InputSystem
 
-    private void Equip1(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(1);
-    private void Equip2(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(2);
-    private void Equip3(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(3);
-    private void Equip4(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(4);
+   private void Equip1(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(1);
+   private void Equip2(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(2);
+   private void Equip3(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(3);
+   private void Equip4(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(4);
 
     #endregion
   
