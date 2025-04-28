@@ -58,12 +58,8 @@ public class EquipWeapon : MonoBehaviour
     public void SetWeapon(WeaponItem weaponItem, List<ItemParameter>itemState)
     {
           
-        if(Managers.Data.Weapons==null)
-        {
-            //TODO MAKE WEAPON DATA
-            return;
-        }
         Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
+        
         if(data==null)
         {
             Debug.Log("None Data"); 

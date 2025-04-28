@@ -64,7 +64,7 @@ public class AI_BossController : AI_Base
         if (_target == null) return;
 
         Vector2 direction = (_target.position - transform.position).normalized;
-        transform.position += (Vector3)(_aiMoveSpeed * Time.deltaTime * direction);
+        transform.position += (Vector3)(_monsterData.MoveSpeed * Time.deltaTime * direction);
     }
 
     public override void Die()

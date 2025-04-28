@@ -24,6 +24,8 @@ public class DataManager
     public Dictionary<int, SpawnerData> Spawners { get; private set; }
     public Dictionary<int, PuzzleData> Puzzles { get; private set; }    
     public Dictionary<int, FieldItemData> FieldItems { get; private set; }
+    public Dictionary<int,MonsterData> Monsters { get; private set; }
+
 
     public void Init(Action onComplete)
     {
@@ -32,15 +34,17 @@ public class DataManager
         LoadJson<SpawnerDataLoader,int,SpawnerData>("SpawnData",(loader) => { Spawners = loader.MakeDic(); });
         LoadJson<PuzzleDataLoader, int, PuzzleData>("PuzzleData", (loader) => { Puzzles = loader.MakeDic(); });
        LoadJson<FieldItemDataLoader, int, FieldItemData>("FieldItemData", (loader) => { FieldItems = loader.MakeDic(); });
+        LoadJson<MonsterDataLoader, int,MonsterData>("MonsterData", (loader) => { Monsters = loader.MakeDic(); });
+        LoadJson<WeaponDataLoader, int, WeaponData>("WeaponData", (loader) => { Weapons = loader.MakeDic(); });
 
         onComplete?.Invoke();
     }
     public bool Loaded()
     {
-        //if (Monsters == null)
-        //    return false;
-        //if (Weapons == null)
-        //    return false;
+        if (Monsters == null)
+            return false;
+        if (Weapons == null)
+          return false;
         //if (Bosses == null)
         //    return false;
         if (Stages == null)
