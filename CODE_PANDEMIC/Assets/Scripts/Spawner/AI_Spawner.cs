@@ -12,6 +12,7 @@ public class AI_Spawner : SpawnBase
     public void SetInfo(int id)
     {
         _spawnerData = Managers.Data.Spawners[id];
+        Debug.Log(id);
         Register();
     }
 
@@ -28,7 +29,9 @@ public class AI_Spawner : SpawnBase
                 Managers.Resource.Instantiate(data.Prefab, transform, (obj) =>
                 {
                     obj.transform.localPosition = monster.Pos;
-                    obj.GetComponent<AI_Base>().SetInfo(data);
+                   AI_Base ai = obj.GetComponent<AI_Base>();
+                    if (ai != null) ai.SetInfo(data);
+                    else Debug.Log("yes");
                 });
 
             }

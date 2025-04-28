@@ -176,7 +176,8 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            _fadeImage.GetOrAddComponent<UI_FadeImage>().FadeIn(onComplete);
+            _fadeImage.SetActive(true);
+            _fadeImage.GetComponent<UI_FadeImage>().FadeIn(onComplete);
         }
     }
 

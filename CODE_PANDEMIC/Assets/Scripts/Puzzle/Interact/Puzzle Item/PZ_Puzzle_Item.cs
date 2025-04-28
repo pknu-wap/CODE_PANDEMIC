@@ -123,7 +123,7 @@ public class PZ_Puzzle_Item : PZ_Interact_Base
     public void ClearPuzzle()
     {
         ClosePuzzle();
-        Managers.Object.UnRegisterPuzzles();
+        Managers.Object.UnregisterPuzzles();
         if (_isMainPuzzle)
             Managers.Event.InvokeEvent("MainPuzzleClear", this);
         else

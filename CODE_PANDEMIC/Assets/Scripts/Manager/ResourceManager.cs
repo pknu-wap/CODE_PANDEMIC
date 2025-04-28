@@ -22,7 +22,8 @@ public class ResourceManager : MonoBehaviour
         }
         if (_handles.ContainsKey(key))
         {
-            _handles[key].Completed += (op) => {
+            _handles[key].Completed += (op) =>
+            {
                 callback?.Invoke(op.Result as T);
             };
             return;
@@ -69,12 +70,12 @@ public class ResourceManager : MonoBehaviour
         });
     }
 
-    
+
     public void Destroy(GameObject obj, float seconds = 0.0f)
     {
         Object.Destroy(obj, seconds);
+       
 
     }
-
-
 }
+
