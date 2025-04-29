@@ -143,9 +143,8 @@ namespace Inventory.Model
         public int MaxStackSize;
         public string Sprite;
         public ItemType Type;
-        public WeaponType Weapon;
         public List<ItemParameter> Parameters;
-        
+        public WeaponType Weapon;
         public string GetParameterInfo(int index)
         {
             if (index >= 0 && index < Parameters.Count)
@@ -209,7 +208,7 @@ public class WeaponData
     public string WeaponPrefab;
     public int BulletID;
     public int BulletCount;
-    public WeaponType Weapon;
+    public WeaponType Type;
 }
 public class WeaponDataLoader : ILoader<int, WeaponData>
 {
