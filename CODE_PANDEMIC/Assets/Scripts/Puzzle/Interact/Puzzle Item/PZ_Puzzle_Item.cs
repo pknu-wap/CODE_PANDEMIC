@@ -48,28 +48,11 @@ public class PZ_Puzzle_Item : PZ_Interact_Base
     // 퍼즐 띄우기
     public override void Interact(GameObject player)
     {
-        if (_isInteracted)
-        {
-            return;
-        }
-
-        base.Interact(player);
-
-        Debug.Log("퍼즐 상호 작용");
-
         Managers.UI.ShowPopupUI<PZ_Puzzle_Base>(_puzzleAddressable, null, (popupPuzzle) =>
         {
             _popupPuzzle = popupPuzzle;
             _popupPuzzle.SetPuzzleOwnerItem(this);
         });
-    }
-
-    // 퍼즐 닫기, ESC를 눌렀을 때 이 함수를 호출해야 함
-    public void ClosePuzzle()
-    {
-        _isInteracted = false;
-
-        Managers.UI.ClosePopupUI(_popupPuzzle);
     }
 
     #endregion
@@ -122,10 +105,13 @@ public class PZ_Puzzle_Item : PZ_Interact_Base
 
     public void ClearPuzzle()
     {
-        ClosePuzzle();
         Managers.Object.UnRegisterPuzzles();
+
         if (_isMainPuzzle)
+        {
             Managers.Event.InvokeEvent("MainPuzzleClear", this);
+        }
+
         else
         {
             // 아이템 혹은 보상을 주는 로직 구현 예정
