@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c41673a0e03828b4680ad41c2186b10c
+guid: 01971cebf73e1a746a68ca402120da93
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerDie_0
+      name: PlayerDash_0
       rect:
         serializedVersion: 2
-        x: 287
-        y: 67
-        width: 277
-        height: 466
+        x: 218
+        y: 69
+        width: 244
+        height: 493
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e52a30557a5ade3449a3bfb4defbb592
-      internalID: -869326904
+      spriteID: 85599bcdb80b824469e3e15bd1558cac
+      internalID: 1389768400
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerDie_1
+      name: PlayerDash_1
       rect:
         serializedVersion: 2
-        x: 997
-        y: 67
-        width: 366
-        height: 375
+        x: 777
+        y: 69
+        width: 345
+        height: 443
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fcce527284d8a0c43891b35d0226da3b
-      internalID: -581535876
+      spriteID: f126dd9a74e6f5b4894112b8d25d2a14
+      internalID: -232318463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerDie_2
+      name: PlayerDash_3
       rect:
         serializedVersion: 2
-        x: 1698
-        y: 67
-        width: 504
-        height: 166
+        x: 1291
+        y: 69
+        width: 471
+        height: 403
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e00b78f15b332a4ba2aa31a3ba0d27d
-      internalID: 705987272
+      spriteID: 6a03b5119a290ec41add35d252b90c58
+      internalID: 370515159
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerDie_3
+      name: PlayerDash_4
       rect:
         serializedVersion: 2
-        x: 2516
-        y: 67
-        width: 487
-        height: 166
+        x: 1928
+        y: 69
+        width: 475
+        height: 384
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72e138181c39d314484427cd4de49462
-      internalID: 753855658
+      spriteID: b4c368d59f491764ab5ef4755e1f3aee
+      internalID: 1618803281
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerDie_4
+      name: PlayerDash_7
       rect:
         serializedVersion: 2
-        x: 3336
-        y: 67
-        width: 467
-        height: 166
+        x: 2574
+        y: 69
+        width: 468
+        height: 403
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,29 +195,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfa448e469c5b9a43922e7e58c33d649
-      internalID: 1868134725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerDie_5
-      rect:
-        serializedVersion: 2
-        x: 4138
-        y: 67
-        width: 464
-        height: 166
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9b88f69acd6b3994c9f2c8b14192a3fd
-      internalID: 1183585329
+      spriteID: e90f78d28de751b48b812263a1b2551e
+      internalID: 1260619772
       vertices: []
       indices: 
       edges: []
@@ -233,12 +212,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerDie_0: -869326904
-      PlayerDie_1: -581535876
-      PlayerDie_2: 705987272
-      PlayerDie_3: 753855658
-      PlayerDie_4: 1868134725
-      PlayerDie_5: 1183585329
+      PlayerDash_0: 1389768400
+      PlayerDash_1: -232318463
+      PlayerDash_2: -273243594
+      PlayerDash_3: 370515159
+      PlayerDash_4: 1618803281
+      PlayerDash_5: -163531698
+      PlayerDash_6: -1364662629
+      PlayerDash_7: 1260619772
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
