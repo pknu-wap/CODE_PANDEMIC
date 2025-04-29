@@ -84,6 +84,7 @@ public class StageData
     public List<SpawnerInfoData> Spawners;
     public List<int> Puzzles;
     public List<int> FieldItems;
+    public List<int> InteractableObjects;
 }
 [Serializable]
 public class StageDataLoader : ILoader<int, StageData>
@@ -294,6 +295,31 @@ public class FieldItemDataLoader : ILoader<int, FieldItemData>
         Dictionary<int, FieldItemData> dic = new Dictionary<int, FieldItemData>();
         foreach (FieldItemData fieldItem in fieldItems)
             dic.Add(fieldItem.ID, fieldItem);
+        return dic;
+    }
+    public bool Validate()
+    {
+        return true;
+    }
+}
+[Serializable]
+public class InteractObjectData
+{
+    public int ID;
+    public Vector3 Pos;
+    public string Prefab;
+    public int KeyID;
+    public List<RewardData> rewards;
+}
+[Serializable]
+public class InteractObjectDataLoader : ILoader<int, InteractObjectData>
+{
+    public List<InteractObjectData> objects = new List<InteractObjectData>();
+    public Dictionary<int, InteractObjectData> MakeDic()
+    {
+        Dictionary<int, InteractObjectData> dic = new Dictionary<int, InteractObjectData>();
+        foreach (InteractObjectData obj in objects)
+            dic.Add(obj.ID, obj);
         return dic;
     }
     public bool Validate()

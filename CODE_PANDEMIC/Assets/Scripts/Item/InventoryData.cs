@@ -93,17 +93,17 @@ namespace Inventory.Model
                 for (int i = 0; i < _inventoryItems.Count; i++)
                 {
                     if (_inventoryItems[i].IsEmpty) continue;
-                    if (_inventoryItems[i]._item.TemplateID == item.TemplateID)
+                    if (_inventoryItems[i].Item.TemplateID == item.TemplateID)
                     {
-                        int amountPossibleToTake = _inventoryItems[i]._item.MaxStackSize - _inventoryItems[i]._quantity;
+                        int amountPossibleToTake = _inventoryItems[i].Item.MaxStackSize - _inventoryItems[i].Quantity;
                         if (quantity > amountPossibleToTake)
                         {
-                            _inventoryItems[i] = _inventoryItems[i].ChangeQuantity(_inventoryItems[i]._item.MaxStackSize);
+                            _inventoryItems[i] = _inventoryItems[i].ChangeQuantity(_inventoryItems[i].Item.MaxStackSize);
                             quantity -= amountPossibleToTake;
                         }
                         else
                         {
-                            _inventoryItems[i] = _inventoryItems[i].ChangeQuantity(_inventoryItems[i]._quantity + quantity);
+                            _inventoryItems[i] = _inventoryItems[i].ChangeQuantity(_inventoryItems[i].Quantity + quantity);
                             InformAboutChange();
                             return 0;
                         }
@@ -120,7 +120,7 @@ namespace Inventory.Model
 
             public void AddItem(InventoryItem item)
             {
-                AddItem(item._item, item._quantity);
+                AddItem(item.Item, item.Quantity);
             }
 
             public Dictionary<int, InventoryItem> GetCurrentInventoryState()
@@ -152,7 +152,7 @@ namespace Inventory.Model
                 if (_inventoryItems.Count > itemIndex)
                 {
                     if (_inventoryItems[itemIndex].IsEmpty) return;
-                    int reminder = _inventoryItems[itemIndex]._quantity - amount;
+                    int reminder = _inventoryItems[itemIndex].Quantity - amount;
                     if (reminder <= 0) _inventoryItems[itemIndex] = InventoryItem.GetEmptyItem();
                     else _inventoryItems[itemIndex] = _inventoryItems[itemIndex].ChangeQuantity(reminder);
                     InformAboutChange();
@@ -161,7 +161,7 @@ namespace Inventory.Model
             public int HasItem(int id)
             { 
                 var index = _inventoryItems
-                    .FindIndex(item => !item.IsEmpty && item._item.TemplateID == id);
+                    .FindIndex(item => !item.IsEmpty && item.Item.TemplateID == id);
 
                 if (index >= 0)
                 {
@@ -202,32 +202,32 @@ namespace Inventory.Model
     //heap 이 아닌 stack에 할당을 위함 
     public struct InventoryItem
     {
-        public int _quantity;
-        public ItemData _item;
-        public List<ItemParameter> _itemState;
+        public int Quantity;
+        public ItemData Item;
+        public List<ItemParameter> ItemState;
         public InventoryItem(ItemData item, int quantity, List<ItemParameter> itemState = null) : this()
         {
-            _quantity = quantity;
-            _item = item;
-            _itemState = itemState ?? new List<ItemParameter>();
+            Quantity = quantity;
+            Item = item;
+            ItemState = itemState ?? new List<ItemParameter>();
         }
 
-        public bool IsEmpty => _item == null;
+        public bool IsEmpty => Item == null;
         public InventoryItem ChangeQuantity(int quantity)
         {
            
             return new InventoryItem(
-                _item, 
+                Item, 
                 quantity,
-                _itemState
+                ItemState
                 );
         
         }
         public static InventoryItem GetEmptyItem() => new InventoryItem
         {
-            _item = null,
-            _quantity = 0,
-            _itemState = new List<ItemParameter>()
+            Item = null,
+            Quantity = 0,
+            ItemState = new List<ItemParameter>()
         };
 
 

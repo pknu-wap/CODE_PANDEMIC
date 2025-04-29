@@ -75,7 +75,8 @@
 
       ],
       "Puzzles": [ 1, 2 ],
-      "FieldItems": [ 1, 2, 3, 4, 5, 6 ]
+      "FieldItems": [ 1, 2, 3, 4, 5, 6, 1001 ],
+      "InteractableObjects":[1,2]
     },
 
     {
@@ -193,7 +194,8 @@
 
       ],
       "Puzzles": [ 3, 4, 5 ],
-      "FieldItems": [ 7, 8, 9, 10, 11 ]
+      "FieldItems": [ 7, 8, 9, 10, 11, 1002 ],
+      "InteractableObjects": [ 3,4 ]
     },
     {
       "TemplateID": 3,
@@ -292,8 +294,10 @@
           }
         }
       ],
-      "Puzzles": [ 6, 7 ],
-      "FieldItems": [ 12, 13, 14, 15, 16 ]
+      "Puzzles": [ 5,6, 7 ],
+      "FieldItems": [ 12, 13, 14, 15, 16, 1003 ],
+      "InteractableObjects": [ 6,7]
+
     },
     {
       "TemplateID": 4,
