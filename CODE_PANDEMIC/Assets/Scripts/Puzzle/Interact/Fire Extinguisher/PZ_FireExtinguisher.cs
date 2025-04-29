@@ -3,6 +3,7 @@
 public class PZ_FireExtinguisher : PZ_Interact_Base
 {
     [SerializeField] private Rigidbody2D _rigidbody;
+
     private float _speed = 20f; // 던지는 속도
     private float _distance = 1.5f; // 들고 있는 거리
 
