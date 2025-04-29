@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Collections;
-using static UnityEditor.Progress;
 
 #region GameSaver
 public class GameSaver

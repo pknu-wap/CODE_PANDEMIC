@@ -67,7 +67,7 @@ public class UI_InGameSlot : UI_Base
         if (itemData == null)
         {
             targetImage.sprite = null;
-            targetImage.color = new Color(1, 1, 1, 0); // ≈ı∏Ì
+            targetImage.color = Color.black;
             return;
         }
 
@@ -99,7 +99,7 @@ public class UI_InGameSlot : UI_Base
             if (img != null)
             {
                 img.sprite = null;
-                img.color = new Color(1, 1, 1, 0);
+                img.color = Color.black;
             }
         }
         UpdatePortionCount(0);

@@ -7,7 +7,7 @@ public class PlayerSpawner : SpawnBase
 { 
     public override void SpawnObjects()
     {
-        Managers.Object.RegisterSpawners(this);
+        Managers.Object.RegisterSpawners();
         Managers.Resource.Instantiate("Player", null, (obj) =>
         {
             obj.transform.position=transform.position;   
