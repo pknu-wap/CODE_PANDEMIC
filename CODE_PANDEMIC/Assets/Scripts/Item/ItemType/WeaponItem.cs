@@ -15,7 +15,6 @@ namespace Inventory.Model
             EquipWeapon weaponSystem =obj.GetComponent<EquipWeapon>();
             if(weaponSystem!=null)
             {
-                weaponSystem.SetWeapon(this, itemState == null ? Parameters : itemState);
                 return true;
                
             }
