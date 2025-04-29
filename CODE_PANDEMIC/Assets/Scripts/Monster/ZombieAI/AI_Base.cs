@@ -62,7 +62,11 @@ public abstract class AI_Base : MonoBehaviour
     public virtual void Die()
     {
         _state = AI_State.Dead;
-        OnDie?.Invoke(); 
+
+        Action callback = OnDie;
+        if (callback != null)
+            callback();
+
         gameObject.SetActive(false);
     }
     public float MoveSpeed { get { return _monsterData.MoveSpeed; } }

@@ -12,6 +12,7 @@ public class AI_StateWalk : AI_IState
     public void OnEnter()
     {
         _controller.ChasePlayer();
+        _controller._animator.SetTrigger("Walk");
     }
 
     public void OnUpdate()

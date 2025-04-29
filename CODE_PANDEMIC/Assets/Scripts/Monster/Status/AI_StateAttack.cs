@@ -14,6 +14,7 @@ public class AI_StateAttack : AI_IState
 
     public virtual void OnEnter()
     {
+        _controller._animator.SetTrigger("Attack");
         _controller.StopMoving();
         _isSkillPlaying = true;
         _controller.StartCoroutine(ChargeAndExecuteSkill());

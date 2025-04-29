@@ -61,7 +61,6 @@ public class AI_Controller : AI_Base
         if (_currentState is AI_StateWalk && IsPlayerInSkillRange() && Skill != null && Skill.IsReady(this))
         {
             ChangeState(new AI_StateAttack(this));
-            _animator.SetTrigger("Attack");
         }
     }
 
@@ -145,6 +144,8 @@ public class AI_Controller : AI_Base
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+        _aiPath.canMove = false;
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null && !(_currentState is AI_StateAttack))
         {
@@ -154,10 +155,8 @@ public class AI_Controller : AI_Base
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (_aiDamageCoroutine != null)
-        {
-            StopAttack();
-        }
+        _aiPath.canMove = true;
+        StopAttack();
     }
     
 
@@ -168,7 +167,7 @@ public class AI_Controller : AI_Base
         {
             if (player == null)
                 yield break;
-
+            Debug.Log($"[ZombieColliderAttack] {gameObject.name} 공격: {player.name}에게 {Damage} 데미지");
             yield return wait;
         }
         _aiDamageCoroutine = null;
@@ -178,6 +177,7 @@ public class AI_Controller : AI_Base
     {
         if (_isAttacking) return;
         _isAttacking = true;
+        ChangeState(new AI_StateAttack(this));
         PlayerController player = _player?.GetComponent<PlayerController>();
         if (player != null && _aiDamageCoroutine == null)
         {
@@ -187,6 +187,7 @@ public class AI_Controller : AI_Base
 
     public void StopAttack()
     {
+        ChangeState(new AI_StateIdle(this));
         _isAttacking = false;
         if (_aiDamageCoroutine != null)
         {

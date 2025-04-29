@@ -4,18 +4,17 @@ public class AI_NurseZombie : AI_Controller
 {
     public GameObject _syringePrefab;
     public float SkillCooldown = 8f;
-    public float SkillChargeDelay = 1f;    
+    public float SkillChargeDelay = 0.5f;    
     public float SyringeSpeed = 10f;  
     public float SyringeRange = 10f;
 
     public LayerMask TargetLayer;
-    public AI_ThrowVisualizer ThrowVisualizer;
-    public AI_ThrowSkill ThrowSkill;
 
     public float AiDamage => _monsterData.AttackDamage;
     public string AIName => _monsterData.NameID;
     public Transform Player => _player.transform;
     private ISkillBehavior _skill;
+    [SerializeField] public AI_ThrowVisualizer _throwVisualizer;
     public override ISkillBehavior Skill { get { return _skill; } }
     protected override void Awake()
     {

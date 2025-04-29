@@ -34,18 +34,17 @@ public class Projectile : MonoBehaviour
     {
         if (_hasTriggered) return;
 
-        if (collision.CompareTag("Player") || collision.CompareTag("Obstacle"))
+        if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0 || 
+            ((1 << collision.gameObject.layer) & LayerMask.GetMask("Obstacle")) != 0)
         {
             Vector2 spawnPos;
 
-            if (collision.CompareTag("Player"))
+            if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0)
             {
-                // 플레이어의 현재 위치
                 spawnPos = collision.transform.position;
             }
             else
             {
-                // 장애물에 부딪혔을 때는 발사체 위치
                 spawnPos = transform.position;
             }
 

@@ -10,6 +10,7 @@ public class AI_StateIdle : AI_IState
 
     public void OnEnter()
     {
+        _controller._animator.SetTrigger("Idle");
         _controller.StopMoving();
     }
 

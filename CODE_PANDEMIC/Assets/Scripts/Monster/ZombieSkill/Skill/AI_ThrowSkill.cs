@@ -6,15 +6,20 @@ public class AI_ThrowSkill : ISkillBehavior
     private Coroutine _skillCoroutine;
     private float _lastSkillTime = -Mathf.Infinity;
     private AI_NurseZombie _currentNurse;
+    private Transform _player;
+    public AI_ThrowVisualizer _throwVisualizer;
 
     public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
         if (!IsReady(controller))
         {
-            onSkillComplete?.Invoke();
+            var callback = onSkillComplete;
+            if (callback != null)
+                callback();
             return;
         }
-
+        _currentNurse = controller as AI_NurseZombie;
+        _throwVisualizer = _currentNurse._throwVisualizer;
         _lastSkillTime = Time.time;
         _skillCoroutine = controller.StartCoroutine(ThrowRoutine(controller as AI_NurseZombie, onSkillComplete));
     }
@@ -25,20 +30,31 @@ public class AI_ThrowSkill : ISkillBehavior
     }
 
     private IEnumerator ThrowRoutine(AI_NurseZombie nurse, System.Action onSkillComplete)
+{
+    var aiPath = nurse._aiPath;
+    aiPath.canMove = false;
+
+    Vector2 attackDirection = (nurse.Player != null)
+        ? ((Vector2)nurse.Player.position - (Vector2)nurse.transform.position).normalized
+        : nurse.transform.right;
+    if (_throwVisualizer != null)
     {
-        var aiPath = nurse._aiPath;
-        aiPath.canMove = false;
+        _throwVisualizer.transform.position = nurse.transform.position;
+        _throwVisualizer.Show(nurse.Player.position, nurse.SkillChargeDelay);
+    }
+    yield return new WaitForSeconds(nurse.SkillChargeDelay);
 
-        Vector2 throwDirection = (nurse.Player != null)
-            ? ((Vector2)nurse.Player.position - (Vector2)nurse.transform.position).normalized
-            : nurse.transform.up;
+    ThrowSyringe(nurse, attackDirection);
+
+    if (_throwVisualizer != null)
+        _throwVisualizer.Hide();
+
+    aiPath.canMove = true;
 
 
-        yield return new WaitForSeconds(nurse.SkillChargeDelay);
-        ThrowSyringe(nurse, throwDirection);
-
-        aiPath.canMove = true;
-        onSkillComplete?.Invoke();
+        var callback = onSkillComplete;
+        if (callback != null)
+            callback();
     }
 
     private void ThrowSyringe(AI_NurseZombie nurse, Vector2 direction)

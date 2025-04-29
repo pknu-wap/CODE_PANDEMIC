@@ -13,7 +13,9 @@ public class AI_SweepSkill : ISkillBehavior
     {
         if (!IsReady(controller))
         {
-            onSkillComplete?.Invoke();
+            var callback = onSkillComplete;
+            if (callback != null)
+                callback();
             return;
         }
         _currentDoctor = controller as AI_DoctorZombie;
@@ -49,7 +51,10 @@ public class AI_SweepSkill : ISkillBehavior
 
         SweepVisualizer?.Hide();
         aiPath.canMove = true;
-        onSkillComplete?.Invoke();
+
+        var callback = onSkillComplete;
+        if (callback != null)
+            callback();
     }
 
     private void DoSweepAttack(AI_DoctorZombie doctor, Vector2 forward)
