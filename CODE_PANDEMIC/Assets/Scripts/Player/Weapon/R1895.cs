@@ -12,6 +12,8 @@ public class R1895 : PistolWeaponBase
     private Animator animator;
     private bool isPickedUp = false;
 
+
+
     void Start()
     {
         weaponName = "R1895";
@@ -36,6 +38,8 @@ public class R1895 : PistolWeaponBase
 
     public override void Attack()
     {
+        Debug.Log("R1895 Attack() called");  // 이 줄 추가
+
         if (!CanFire()) return;
         SetNextFireTime();
 
@@ -44,14 +48,18 @@ public class R1895 : PistolWeaponBase
             animator.SetTrigger("Fire");
         }
 
-        if (bulletPrefab == null || firePoint == null) return;
+        if (firePoint == null) return;
 
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        GameObject bulletObject = BulletPool.Instance.GetBullet();
+        bulletObject.transform.position = firePoint.position;
+        bulletObject.transform.rotation = firePoint.rotation;
 
-        if (rb != null)
+        Bullet bullet = bulletObject.GetComponent<Bullet>();
+        if (bullet != null)
         {
-            rb.velocity = firePoint.up * bulletSpeed;
+            bullet.Fire(firePoint.right);
         }
+
     }
-}
+
+} 
