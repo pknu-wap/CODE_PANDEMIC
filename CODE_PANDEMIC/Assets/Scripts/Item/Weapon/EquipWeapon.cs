@@ -1,18 +1,25 @@
 using UnityEngine;
 using Inventory.Model;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class EquipWeapon : MonoBehaviour
 {
     [SerializeField]
     private WeaponBase _weapon;
+
     [SerializeField]
     private GameObject _socket;
-
+   
     private QuickSlot _quickSlot;
     private PlayerInput _weaponInput;
+  
+   
 
-
+    private void Awake()
+    {
+        _weaponInput = new PlayerInput();
+    }
 
     private void Start()
     {
@@ -37,17 +44,48 @@ public class EquipWeapon : MonoBehaviour
         _weaponInput.Disable();
     }
 
+    public void SetWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
+    {
+       
+        Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
+        if (data == null)
+        {
+            Debug.Log("None Data");
+            return;
+        }
+        switch (data.Type)
+        {
+            case Define.WeaponType.ShortWeapon:
+                break;
+            case Define.WeaponType.PistolWeapon:
+                Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
+                {
+                    _weapon = obj.GetComponent<WeaponBase>();
+                });
+                break;
+            case Define.WeaponType.RangeWeapon:
+                break;
+            default:
+                break;
+        }
+
+
+
+
+    }
+    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
+    {
+
+
+    }
     public void Attack()
     {
-        if (_weapon != null)
-        {
-            _weapon.Attack();
-        }
+        _weapon?.Attack();
     }
-
 
     private bool EquipQuickSlot(int v)
     {
+        Debug.Log(v);
         if (!_quickSlot.CheckSlot(v))
             return false;
 
