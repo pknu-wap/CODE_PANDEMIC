@@ -40,13 +40,20 @@ public class Item : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
     private void Update()
     {
-        
-        float yOffset = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
-        transform.position = _startPos + new Vector3(0, yOffset, 0);
+        ApplyFloatEffect();
     }
+
+ 
+    private void ApplyFloatEffect()
+    {
+        float newY = _startPos.y + Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+    }
+
+    
 
     public void DestroyItem()
     {

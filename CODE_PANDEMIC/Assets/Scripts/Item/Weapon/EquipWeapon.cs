@@ -1,16 +1,20 @@
 using UnityEngine;
 using Inventory.Model;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class EquipWeapon : MonoBehaviour
 {
     [SerializeField]
     private WeaponBase _weapon;
+
     [SerializeField]
     private GameObject _socket;
-
+   
     private QuickSlot _quickSlot;
     private PlayerInput _weaponInput;
+  
+   
 
     private void Awake()
     {
@@ -40,25 +44,40 @@ public class EquipWeapon : MonoBehaviour
         _weaponInput.Disable();
     }
 
-    public void Equip(WeaponBase newWeapon)
+    public void SetWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
     {
-        if (_weapon != null)
+       
+        Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
+        if (data == null)
         {
-            Destroy(_weapon.gameObject);
+            Debug.Log("None Data");
+            return;
+        }
+        switch (data.Type)
+        {
+            case Define.WeaponType.ShortWeapon:
+                break;
+            case Define.WeaponType.PistolWeapon:
+                Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
+                {
+                    _weapon = obj.GetComponent<WeaponBase>();
+                });
+                break;
+            case Define.WeaponType.RangeWeapon:
+                break;
+            default:
+                break;
         }
 
-        _weapon = newWeapon;
-        _weapon.transform.SetParent(_socket.transform);
-        _weapon.transform.localPosition = Vector3.zero;
-        _weapon.transform.localRotation = Quaternion.identity;
 
-        Rigidbody2D rb = _weapon.GetComponent<Rigidbody2D>();
-        if (rb != null) Destroy(rb);
-        Collider2D collider = _weapon.GetComponent<Collider2D>();
-        if (collider != null) Destroy(collider);
+
+
     }
+    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
+    {
 
 
+    }
     public void Attack()
     {
         _weapon?.Attack();
@@ -66,6 +85,7 @@ public class EquipWeapon : MonoBehaviour
 
     private bool EquipQuickSlot(int v)
     {
+        Debug.Log(v);
         if (!_quickSlot.CheckSlot(v))
             return false;
 

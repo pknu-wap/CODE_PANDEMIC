@@ -15,24 +15,30 @@ public class GameScene : BaseScene
         if (base.Init() == false) return false;
         SceneType = Define.SceneType.GameScene;
         Managers.UI.FadeAtOnce();
-        
+        _uiLoad = false;
         PrepareStage();
         return true;
     }
     public void PrepareStage()
     {
-        _uiLoad = false;
+       
         StartCoroutine(CowaitLoad());
     }
     private  void OnEnable()
     {
         Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
+        Managers.Event.Subscribe("NextStage", NextStage);
+        Managers.Event.Subscribe("PrevStage", PrevStage);
     }
     private void OnDisable()
     {
         Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
+        Managers.Event.Unsubscribe("NextStage", NextStage);
+        Managers.Event.Unsubscribe("PrevStage", PrevStage);
+
+
     }
-   
+
 
     IEnumerator CowaitLoad()
     {
@@ -41,21 +47,30 @@ public class GameScene : BaseScene
         if (Managers.Data.Stages.TryGetValue(templateID, out StageData stageData) == false) yield break;
         
         _stageData = stageData;
-        Managers.UI.ShowSceneUI<UI_GameScene>(callback: (UI) =>
+        if (_gameSceneUI == null)
         {
-            _gameSceneUI = UI;
-            _uiLoad = true;
-        });
+            Managers.UI.ShowSceneUI<UI_GameScene>(callback: (UI) =>
+            {
+                _gameSceneUI = UI;
+                _uiLoad = true;
+            });
+        }
         while (!_uiLoad)yield return null;
-        StartCoroutine(Managers.Object.CoLoadStageData(stageData));
+        StartCoroutine(Managers.Object.CoLoadStage(stageData));
         while (Managers.Object.Loaded == false) yield return null;
         
         Managers.UI.FadeIn();
     }
     private void ChangeStage()
     {
-        Managers.UI.FadeOut();
+        Managers.UI.FadeOut(() => StartCoroutine(CoChangeStage()));
+      
+    }
+
+    private IEnumerator CoChangeStage()
+    {
         Managers.Object.ResetStage();
+        yield return null; // Destroy 완료될 때까지 1프레임 대기
         PrepareStage();
     }
     private void UpdateLatestStage()
@@ -63,14 +78,14 @@ public class GameScene : BaseScene
         Managers.Game.LatestChapter= Managers.Game.Chapter;
         Managers.Game.LatestStage= Managers.Game.Stage;
     }
-    public void NextStage()
+    public void NextStage(object  obj)
     {
         UpdateLatestStage();
         Managers.Game.CompleteStage();
         ChangeStage();
     }
    
-    public void PrevStage()
+    public void PrevStage(object obj)
     {
         UpdateLatestStage();
         Managers.Game.PrevStage();
@@ -78,7 +93,7 @@ public class GameScene : BaseScene
     }
     private void OnPlayerDead(object obj)
     {
-        //TODO : YOU DIED UI
+        
         ChangeStage();
     }
         

@@ -64,10 +64,10 @@ public class QuickSlot
     public void UseQuickSlot(int slotIndex, GameObject user)
     {
         if (!_slotItems.TryGetValue(slotIndex, out var quickSlotItem)) return;
-       
+        Debug.Log("use");
         if (quickSlotItem.ItemData is IItemAction actionItem)
         {
-           
+            Debug.Log("use1");
             bool success = actionItem.PerformAction(user, quickSlotItem.ItemData.Parameters);
 
             if (!success)

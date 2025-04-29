@@ -10,10 +10,10 @@ public abstract class SpawnBase : MonoBehaviour
     public abstract void SpawnObjects();
     protected void Register()
     {
-        Managers.Object.RegisterSpawners(this);
+        Managers.Object.RegisterSpawners();
     }
     protected  void UnRegister()
     {
-        Managers.Object.UnRegisterSpawners(this);
+        Managers.Object.UnregisterSpawners();
     }
 }
