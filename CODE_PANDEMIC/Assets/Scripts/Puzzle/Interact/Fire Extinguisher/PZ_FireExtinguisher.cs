@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PZ_FireExtinguisher : PZ_Interact_Base
+public class PZ_FireExtinguisher : PZ_Interact_NonSpawn
 {
     [SerializeField] private Rigidbody2D _rigidbody;
 

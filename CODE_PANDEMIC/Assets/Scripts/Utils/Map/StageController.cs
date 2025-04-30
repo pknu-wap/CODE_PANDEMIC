@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -69,6 +69,7 @@ public class StageController : MonoBehaviour
             {
                 obj.transform.position = data.Pos;
                 PZ_Puzzle_Item puzzleItem = obj.GetComponent<PZ_Puzzle_Item>();
+                PZ_Generator generatorItem = obj.GetComponent<PZ_Generator>();
                 if (data.IsMain)
                 {
                     CreateBlock(data.ID,data.LinkedBlock);
@@ -77,6 +78,10 @@ public class StageController : MonoBehaviour
                 {
                     puzzleItem.SetInfo(data);
                     puzzleItem.SettingPuzzle();
+                }
+                else if (generatorItem != null)
+                {
+                    generatorItem.SetInfo(data);
                 }
 
             });

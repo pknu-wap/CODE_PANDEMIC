@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PZ_Key : PZ_Interact_Base
+public class PZ_Key : PZ_Interact_Spawn
 {
     public override void Interact(GameObject player)
     {

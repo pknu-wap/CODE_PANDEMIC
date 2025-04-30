@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PZ_Puzzle_Item : PZ_Interact_Base
+public class PZ_Puzzle_Item : PZ_Interact_Spawn
 {
     #region Base
 
@@ -105,8 +105,10 @@ public class PZ_Puzzle_Item : PZ_Interact_Base
 
     public void ClearPuzzle()
     {
-       
         Managers.Object.UnregisterPuzzles();
+
+        Managers.UI.ClosePopupUI();
+
         if (_isMainPuzzle)
         {
             Managers.Event.InvokeEvent("MainPuzzleClear", this);

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PZ_HealPack : PZ_Interact_Base
+public class PZ_HealPack : PZ_Interact_Spawn
 {
     [SerializeField] private Sprite _interactedSprite;
 
