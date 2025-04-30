@@ -7,8 +7,7 @@ public class ObjectManager : MonoBehaviour
     private int _leftSpawners;
     private int _leftPuzzles;
     public bool Loaded { get; private set; }
-    private bool _puzzleClear=true;
-    private bool _spawnerClear=true;
+  
     
     private PlayerCamera _playerCamera;
     public StageController MapObject { get; private set; }
@@ -20,8 +19,8 @@ public class ObjectManager : MonoBehaviour
        
         _leftSpawners = 0;
         _leftPuzzles = 0;
-      
 
+        
         // ¸Ê »ý¼º
         bool mapLoaded = false;
         Managers.Resource.Instantiate(stageData.MapAddress, null, (obj) =>
@@ -40,7 +39,6 @@ public class ObjectManager : MonoBehaviour
         bool cameraLoaded = false;
         Managers.Resource.Instantiate("PlayerCamera", null, (obj) =>
         {
-            
             var playerCam = obj.GetComponent<PlayerCamera>();
             _playerCamera = playerCam;
             playerCam.Setup(Player.transform, MapObject.CameraLimit);

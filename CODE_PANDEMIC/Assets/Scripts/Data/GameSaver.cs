@@ -121,7 +121,7 @@ public class InventorySaver:MonoBehaviour
 
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(SavePath, json);
-        Debug.Log(File.ReadAllText(SavePath));
+      
         Debug.Log("Inventory saved.");
     }
 
