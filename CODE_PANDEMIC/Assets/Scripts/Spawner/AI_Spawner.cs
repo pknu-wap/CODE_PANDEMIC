@@ -31,7 +31,7 @@ public class AI_Spawner : SpawnBase
                     obj.transform.localPosition = monster.Pos;
                    AI_Base ai = obj.GetComponent<AI_Base>();
                     if (ai != null) ai.SetInfo(data);
-                    else Debug.Log("yes");
+                    
                 });
 
             }

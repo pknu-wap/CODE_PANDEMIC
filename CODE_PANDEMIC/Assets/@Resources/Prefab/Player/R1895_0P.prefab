@@ -117,21 +117,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1206747611793718374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aa78a3ce81eb9a4d98ab2cc28b4c3c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fe2bf768cd13264e9cfee50b5845d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: 
-  damage: 10
-  fireRate: 100
-  range: 0
   weaponSpriteRenderer: {fileID: 0}
   bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
   firePoint: {fileID: 5789591542077271838}
-  bulletSpeed: 15
-  reloadTime: 2
-  spreadAngle: 1
-  bulletCount: 8
-  bulletID: 1
 --- !u!1001 &3338736581714285292
 PrefabInstance:
   m_ObjectHideFlags: 0
