@@ -105,8 +105,10 @@ public class PZ_Puzzle_Item : PZ_Interact_Spawn
 
     public void ClearPuzzle()
     {
-       
         Managers.Object.UnregisterPuzzles();
+
+        Managers.UI.ClosePopupUI();
+
         if (_isMainPuzzle)
         {
             Managers.Event.InvokeEvent("MainPuzzleClear", this);
