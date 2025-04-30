@@ -16,12 +16,16 @@ public class Bullet : MonoBehaviour
     {
         CancelInvoke();
         Invoke("ReturnToPool", lifeTime);
+        Debug.Log($"ÃÑ¾Ë »ý¼ºµÊ at {transform.position}");
     }
 
     public void Fire(Vector2 direction)
     {
+        Debug.Log("ÃÑ¾Ë ¹ß»çµÊ ¹æÇâ: " + direction);
         rb.velocity = direction.normalized * speed;
     }
+
+
 
     private void ReturnToPool()
     {
@@ -30,6 +34,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Player")) return; // ÇÊ¿ä ½Ã Á¶°Ç Ãß°¡
         ReturnToPool();
     }
 }

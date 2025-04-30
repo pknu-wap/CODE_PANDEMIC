@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Inventory.Model;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -18,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 _forwardVector;
 
     [SerializeField] public Transform _weaponHolder;
-
+    
     #region Base
 
     private void Awake()
@@ -100,7 +102,6 @@ public class PlayerController : MonoBehaviour
 
         HandleWeaponHolder();
 
-        // 추가된 부분: 마우스 왼쪽 클릭 공격
         if (UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
         {
             _equipWeapon?.Attack();
