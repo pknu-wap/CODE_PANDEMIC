@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Inventory.Model;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -18,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 _forwardVector;
 
     [SerializeField] public Transform _weaponHolder;
-
+    
     #region Base
 
     private void Awake()
@@ -98,8 +100,33 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isRunning", isMoving && isRunning);
         _animator.SetBool("isDashing", isDashing);
 
+        HandleWeaponHolder();
+
+        if (UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            _equipWeapon?.Attack();
+        }
     }
 
 
-    #endregion
+    private void HandleWeaponHolder()
+    {
+        if (_weaponHolder == null)
+            return;
+
+        Vector3 playerScale = transform.localScale;
+
+        if (playerScale.x > 0)
+        {
+            _weaponHolder.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else if (playerScale.x < 0)
+        {
+            _weaponHolder.localScale = new Vector3(1f, -1f, 1f);
+        }
+    }
+
 }
+
+#endregion
+

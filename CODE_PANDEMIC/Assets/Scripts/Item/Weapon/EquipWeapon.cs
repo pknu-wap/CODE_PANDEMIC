@@ -10,11 +10,11 @@ public class EquipWeapon : MonoBehaviour
 
     [SerializeField]
     private GameObject _socket;
-   
+
     private QuickSlot _quickSlot;
     private PlayerInput _weaponInput;
-  
-   
+
+
 
     private void Awake()
     {
@@ -46,7 +46,7 @@ public class EquipWeapon : MonoBehaviour
 
     public void SetWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
     {
-       
+
         Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
         if (data == null)
         {
