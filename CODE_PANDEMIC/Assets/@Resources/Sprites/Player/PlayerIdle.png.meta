@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 43966c0e6604f524491910c80dfedf39
+guid: 6fa00db2d7234984abc06800971ab4c5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,97 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Playerdash_0
+      name: Playeridle_0
       rect:
         serializedVersion: 2
-        x: 798
-        y: 69
-        width: 469
-        height: 403
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3fc53e9a1cb87854cb931de5209882af
-      internalID: 2079460920
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Playerdash_2
-      rect:
-        serializedVersion: 2
-        x: 1437
-        y: 69
-        width: 475
-        height: 384
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b71c93b5fa884c45b4f1faf5b8eabaf
-      internalID: 540088967
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Playerdash_3
-      rect:
-        serializedVersion: 2
-        x: 2078
-        y: 69
-        width: 492
-        height: 403
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 38ac5895e94da744ebb0afc5a363b0d8
-      internalID: 1674715941
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Playerdash_5
-      rect:
-        serializedVersion: 2
-        x: 2718
-        y: 69
-        width: 345
-        height: 443
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 38d8283e46abaf741bd1f6efd48e31aa
-      internalID: 2065739027
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Playerdash_6
-      rect:
-        serializedVersion: 2
-        x: 3378
-        y: 69
+        x: 218
+        y: 68
         width: 244
-        height: 493
+        height: 494
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,8 +111,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b02f073294dd5ca4683336106e2f1341
-      internalID: 898823054
+      spriteID: 0d02a026b73ce5e4c9f493caae1fee91
+      internalID: 1977526077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Playeridle_1
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 68
+        width: 254
+        height: 484
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8caa02cdbfec3894982de25a17679f82
+      internalID: 118589399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Playeridle_2
+      rect:
+        serializedVersion: 2
+        x: 1478
+        y: 68
+        width: 264
+        height: 474
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 893268b9df547964789cc2a837ad803f
+      internalID: 1393580221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Playeridle_3
+      rect:
+        serializedVersion: 2
+        x: 2128
+        y: 68
+        width: 254
+        height: 464
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f59ea163d7b44d742bd00daf011af7e9
+      internalID: 558475652
       vertices: []
       indices: 
       edges: []
@@ -212,13 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Playerdash_0: 2079460920
-      Playerdash_1: 2091620775
-      Playerdash_2: 540088967
-      Playerdash_3: 1674715941
-      Playerdash_4: -1151461594
-      Playerdash_5: 2065739027
-      Playerdash_6: 898823054
+      Playeridle_0: 1977526077
+      Playeridle_1: 118589399
+      Playeridle_2: 1393580221
+      Playeridle_3: 558475652
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

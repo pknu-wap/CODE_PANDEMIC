@@ -3,16 +3,29 @@ using UnityEngine;
 
 public class BulletPool : MonoBehaviour
 {
+    public static BulletPool Instance;
+
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private int poolSize = 20;
 
     private Queue<GameObject> bulletPool = new Queue<GameObject>();
 
-    public static BulletPool Instance;
-
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        if (bulletPrefab == null)
+        {
+            Debug.LogError("Bullet Prefab 할당되지 않음");
+            return;
+        }
 
         for (int i = 0; i < poolSize; i++)
         {

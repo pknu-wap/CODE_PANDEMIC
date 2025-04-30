@@ -8,6 +8,9 @@ public abstract class WeaponBase : MonoBehaviour
     public float range;
     private float nextFireTime;
 
+    private bool isFacingRight = true;
+    [SerializeField] private SpriteRenderer weaponSpriteRenderer;
+
     void Update()
     {
         if (transform.root.CompareTag("Player"))
@@ -23,7 +26,7 @@ public abstract class WeaponBase : MonoBehaviour
         Debug.Log(weaponName + " is reloading...");
     }
 
-    protected bool CanFire() 
+    protected bool CanFire()
     {
         return Time.time >= nextFireTime;
     }
@@ -33,11 +36,19 @@ public abstract class WeaponBase : MonoBehaviour
         nextFireTime = Time.time + fireRate;
     }
 
-    void RotateToMouse()
+    public void SetFacingDirection(bool facingRight)
+    {
+        isFacingRight = facingRight;
+    }
+
+    private void RotateToMouse()
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mouseWorldPosition - transform.position);
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
+        Vector2 direction = (mouseWorldPosition - transform.position).normalized;
+        transform.right = direction;
+
+        Vector3 parentScale = transform.root.lossyScale;
+        Vector3 inverseScale = new Vector3(1f / parentScale.x, 1f / parentScale.y, 1f / parentScale.z);
+        transform.localScale = inverseScale;
     }
 }
