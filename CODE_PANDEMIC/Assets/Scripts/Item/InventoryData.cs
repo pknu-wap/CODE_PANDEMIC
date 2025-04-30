@@ -165,7 +165,6 @@ namespace Inventory.Model
 
                 if (index >= 0)
                 {
-                  
                     return index;
                 }
 

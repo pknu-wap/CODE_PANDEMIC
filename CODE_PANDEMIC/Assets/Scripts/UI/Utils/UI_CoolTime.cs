@@ -15,8 +15,7 @@ public class UI_CoolTime : UI_Base
     {
         Disable
     }
-    float _coolTime;
- 
+  
     Image _disable;
     TextMeshProUGUI _timer;
 
@@ -35,7 +34,6 @@ public class UI_CoolTime : UI_Base
     {
         _disable.fillAmount = 0f;
         _timer.text = "";
-     
     }
 
     public void StartCoolTime(float maxTime)

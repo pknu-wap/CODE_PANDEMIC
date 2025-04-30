@@ -4,16 +4,15 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem; // Input System »ç¿ë
 
 public class MouseFollower : MonoBehaviour, IDragHandler
-
 {
     [SerializeField] private Canvas _canvas;
     [SerializeField] private UI_InventoryItem _inventoryItem;
 
-    private bool _isFollowing = false;
+    private bool _isFollowing;
 
     public void Init()
     {
-        
+        _isFollowing = false;
         Transform uiRoot = GameObject.Find("UI_Root")?.transform;
         if (uiRoot != null)
         {

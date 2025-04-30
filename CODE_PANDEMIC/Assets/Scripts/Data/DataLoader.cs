@@ -310,7 +310,7 @@ public class InteractObjectData
     public Vector3 Pos;
     public string Prefab;
     public int KeyID;
-    public List<RewardData> rewards;
+    public List<RewardData> Rewards;
 }
 [Serializable]
 public class InteractObjectDataLoader : ILoader<int, InteractObjectData>

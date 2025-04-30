@@ -96,8 +96,6 @@ public class ObjectManager : MonoBehaviour
     public void RegisterPuzzles()
     {
         _leftPuzzles++;
-       
-
     }
 
     public void UnregisterPuzzles()

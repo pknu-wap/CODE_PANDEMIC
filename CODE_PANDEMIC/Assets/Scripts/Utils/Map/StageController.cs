@@ -103,7 +103,7 @@ public class StageController : MonoBehaviour
             Managers.Resource.Instantiate(data.Prefab, _puzzlesParent, (obj) =>
             {
                 obj.transform.position = data.Pos;
-                //TODO SETINFO
+                obj.GetComponent<PZ_Interact_Spawn>()?.SetInfo(data);
             });
         }
     }
