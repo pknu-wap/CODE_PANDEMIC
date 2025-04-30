@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UI_TitleOptionPopUp : UI_PopUp
 {   
-    enum GameObejcts
+    enum GameObjects
     {
         OptionPanel
     }
@@ -26,7 +26,7 @@ public class UI_TitleOptionPopUp : UI_PopUp
     public override bool Init()
     {
         if (base.Init() == false) return false;
-        BindObject(typeof(GameObejcts));
+        BindObject(typeof(GameObjects));
         BindButton(typeof(Buttons));
         
         _videoButton = GetButton((int)Buttons.VideoButton).gameObject;
