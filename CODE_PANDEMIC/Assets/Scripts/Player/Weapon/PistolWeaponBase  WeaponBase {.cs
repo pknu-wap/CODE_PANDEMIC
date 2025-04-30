@@ -3,7 +3,7 @@ using UnityEngine;
 public class PistolWeaponBase : WeaponBase
 {
     public GameObject bulletPrefab;
-    public Transform firePoint;
+    public GameObject firePoint;
 
     public override void Attack()
     {
@@ -12,9 +12,9 @@ public class PistolWeaponBase : WeaponBase
         Debug.Log(weaponName + " fired a pistol shot!");
         SetNextFireTime();
 
-        if (bulletPrefab != null && firePoint != null)
-        {
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        }
+        //if (bulletPrefab != null && firePoint != null)
+        //{
+        //    Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        //}
     }
 }

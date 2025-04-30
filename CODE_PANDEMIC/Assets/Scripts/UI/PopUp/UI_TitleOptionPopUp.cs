@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class UI_TitleOptionPopUp : UI_PopUp
 {   
-    enum GameObejcts
+    enum GameObjects
     {
         OptionPanel
     }
+    
     enum Buttons
     {
         VideoButton,
@@ -26,13 +27,13 @@ public class UI_TitleOptionPopUp : UI_PopUp
     public override bool Init()
     {
         if (base.Init() == false) return false;
-        BindObject(typeof(GameObejcts));
+        BindObject(typeof(GameObjects));
         BindButton(typeof(Buttons));
         
         _videoButton = GetButton((int)Buttons.VideoButton).gameObject;
         _soundButton=GetButton((int)Buttons.SoundButton).gameObject;
         _exitButton = GetButton((int)(Buttons.ExitButton)).gameObject;
-
+       
         BindEvent(_videoButton,OnClickVideoButton);
         BindEvent(_soundButton, OnClickSoundButton);
         BindEvent(_exitButton, OnClickExitButton);
