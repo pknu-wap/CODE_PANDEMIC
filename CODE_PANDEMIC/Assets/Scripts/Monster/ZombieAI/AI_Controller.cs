@@ -23,9 +23,8 @@ public class AI_Controller : AI_Base
 
     private AI_IState _currentState;
     public virtual ISkillBehavior Skill { get { return null; } }
-
     private Coroutine _aiDamageCoroutine;
-
+    
     private bool _isAttacking;
 
     private float _radius = 0.41f;
@@ -54,7 +53,6 @@ public class AI_Controller : AI_Base
 
         _aiPath = GetComponent<AIPath>();
         _destinationSetter = GetComponent<AIDestinationSetter>();
-
         ConfigureAllAIPaths();
         AssignDestinations();
 
@@ -73,7 +71,7 @@ public class AI_Controller : AI_Base
         bool inRange = IsPlayerInSkillRange();
         bool skillReady = Skill.IsReady(this);
 
-        if (!_isAttacking && inRange && skillReady)
+        if (!_isAttacking && inRange)
         {
             StartAttack();
         }
@@ -107,12 +105,15 @@ public class AI_Controller : AI_Base
     {
     foreach (var obj in _aiFov.GetDetectedObjects())
     {
-        PlayerStatus status = obj.GetComponent<PlayerStatus>();
-        if (status != null)
+        if (obj.TryGetComponent<PlayerStatus>(out var status))
         {
             _player = obj.transform;
             _destinationSetter.target = _player;
             break;
+        }
+        else
+        {
+            _destinationSetter.target = null;
         }
     }
     }
@@ -158,6 +159,7 @@ public class AI_Controller : AI_Base
 
     public bool IsPlayerDetected()
     {
+        _animator.SetTrigger("Walk");
         return _aiFov != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject);
     }
 
@@ -209,7 +211,6 @@ public class AI_Controller : AI_Base
         while (_isAttacking)
         {
             if (player == null) break;
-
             PerformAttack();
             yield return wait;
         }
@@ -273,6 +274,6 @@ public class AI_Controller : AI_Base
     }
     private void AssignDestinations()
     {
-            _destinationSetter.target = null;
-        }
+        _destinationSetter.target = null;
+    }
     }

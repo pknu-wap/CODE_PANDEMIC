@@ -615,6 +615,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2078187581933804764, guid: 4850166bfbf02c74eb693597dad14ea1, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2078187581933804764, guid: 4850166bfbf02c74eb693597dad14ea1, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2507789819644136541, guid: 4850166bfbf02c74eb693597dad14ea1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -653,6 +661,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2507789819644136541, guid: 4850166bfbf02c74eb693597dad14ea1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369804200782718159, guid: 4850166bfbf02c74eb693597dad14ea1, type: 3}
+      propertyPath: m_UsedByComposite
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

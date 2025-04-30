@@ -7,10 +7,12 @@ public class Projectile : MonoBehaviour
     private Vector2 _startPos;
     private Rigidbody2D _rb;
     private bool _hasTriggered = false;
+    private PlayerStatus player;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        player = FindObjectOfType<PlayerStatus>();
     }
 
     private void OnEnable()
@@ -41,6 +43,7 @@ public class Projectile : MonoBehaviour
 
             if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0)
             {
+                player.OnDamaged(gameObject, 10);
                 spawnPos = collision.transform.position;
             }
             else
