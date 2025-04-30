@@ -2,7 +2,9 @@
 
 public class PZ_Safe : PZ_Interact_Spawn
 {
-    public bool _hasKey = false; // 열쇠로 열기
+    [SerializeField] private Animator _animator;
+
+    public bool _hasKey = true; // 열쇠로 열기
 
     // 하이라이트 기능
     [SerializeField] private Material _lockMaterial;
@@ -22,6 +24,9 @@ public class PZ_Safe : PZ_Interact_Spawn
         RewardItem(key); 
       
         Destroy(gameObject);
+        _animator.SetBool("IsOpened", true);
+
+        // 금고 해제 및 무기 획득
     }
  
     public override void OnHighLight()
