@@ -3,7 +3,7 @@ public interface AI_IState
     void OnEnter();
     void OnUpdate();
     void OnExit();
-    void OnFixedUpdate() { }
+    void OnFixedUpdate() {}
 }
 public abstract class AI_StateBase : AI_IState
 {
