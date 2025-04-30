@@ -16,20 +16,24 @@ public class AI_Controller : AI_Base
     public Transform _player;
     private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
+    public Animator _animator;
+    [SerializeField] private AI_Fov _aiFov;
+    [SerializeField] public AIPath _aiPath;
+    [SerializeField] public AIDestinationSetter _destinationSetter;
 
-    private AI_Fov _aiFov;
-    public AIPath _aiPath;
     private AI_IState _currentState;
-    
+    public virtual ISkillBehavior Skill { get { return null; } }
 
     private Coroutine _aiDamageCoroutine;
-    
+
     private bool _isAttacking;
 
-
+    private float _radius = 0.41f;
+    private float _height = 0.01f;
+    private float _pickNextWaypointDist = 1.2f;
+    private Vector3 _gravity = new(0, 0, 0);
 
     protected virtual void Awake(){}
-
     protected virtual void Start()
     {
         if (!Init())
@@ -42,45 +46,21 @@ public class AI_Controller : AI_Base
     public override bool Init()
     {
         PlayerController playerComponent = FindObjectOfType<PlayerController>();
-        if (playerComponent == null)
-        {
-            Debug.LogError("Player 없음");
-            return false;
-        }
         _player = playerComponent.transform;
 
         _rb = GetComponent<Rigidbody2D>();
-        if (_rb == null)
-        {
-            Debug.LogError("Rigidbody 없음");
-            return false;
-        }
         _rb.freezeRotation = true;
-
         _renderer = GetComponent<SpriteRenderer>();
-        if (_renderer == null)
-        {
-            Debug.LogError("SpriteRenderer 없음");
-            return false;
-        }
-
-        _aiFov = GetComponentInChildren<AI_Fov>();
-        if (_aiFov == null)
-        {
-            Debug.LogError("AI_Fov 없음");
-            return false;
-        }
-
-        _aiPath = GetComponent<AIPath>();
-        if (_aiPath == null)
-        {
-            Debug.LogError("AIPath 없음");
-            return false;
-        }
- 
-
+        _animator = GetComponent<Animator>();
         ChangeState(new AI_StateIdle(this));
         _state = AI_State.Idle;
+
+        _aiPath = GetComponent<AIPath>();
+        _destinationSetter = GetComponent<AIDestinationSetter>();
+
+        ConfigureAllAIPaths();
+        AssignDestinations();
+
         return true;
     }
 
@@ -88,35 +68,47 @@ public class AI_Controller : AI_Base
     {
         if (_player == null)
             return;
-
         UpdateFovDirection();
         _currentState?.OnUpdate();
+        if (_currentState is AI_StateWalk && IsPlayerInSkillRange() && Skill != null && Skill.IsReady(this))
+        {
+            ChangeState(new AI_StateAttack(this));
+        }
     }
 
     private void FixedUpdate()
     {
         if (_player == null)
             return;
-
-        _renderer.flipX = _player.position.x < transform.position.x;
-        _currentState?.OnFixedUpdate();
+        if (_currentState is not AI_StateAttack)
+        {
+            Vector3 scale = transform.localScale;
+            if (_player.position.x > transform.position.x)
+            {
+                scale.x = -Mathf.Abs(scale.x);
+            }
+            else
+            {
+                scale.x = Mathf.Abs(scale.x);
+            }
+            transform.localScale = scale;
+        }
+    
+        _currentState?.OnFixedUpdate();    
     }
 
     public void UpdateFovDirection()
     {
         if (_aiFov != null)
         {
-            float angle = _renderer.flipX ? 180f : 0f;
+            float angle = transform.localScale.x < 0 ? 0f : 180f;
             _aiFov.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
         }
     }
 
     public void ChasePlayer()
     {
-        if (!_isAttacking)
-        {
-            _aiPath.canMove = true;
-        }
+        _aiPath.canMove = true;
     }
 
     public void StopMoving()
@@ -126,15 +118,20 @@ public class AI_Controller : AI_Base
 
     public void ChangeState(AI_IState newState)
     {
+    if (_currentState != null && _currentState.GetType() == newState.GetType()) //중복 전환 무시
+        {
+        return;
+        }
+
         _currentState?.OnExit();
         _currentState = newState;
-        _currentState.OnEnter();
+        _currentState?.OnEnter();
     }
 
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        if (_monsterData.Hp <= 0f && _currentState is not AI_StateDie)
+        if (Health <= 0f && _currentState is not AI_StateDie)
         {
             ChangeState(new AI_StateDie(this));
         }
@@ -145,12 +142,23 @@ public class AI_Controller : AI_Base
         return _aiFov != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject);
     }
 
-    public bool IsPlayerInAttackRange()
+    public bool IsPlayerInSkillRange()
     {
         if (_player == null) return false;
-
         float distance = Vector2.Distance(transform.position, _player.position);
-        return distance <= _monsterData.AttackRange;
+        if (this is AI_DoctorZombie doctor)
+        {
+            return distance <= doctor.SweepRange*0.7f;
+        }
+        if (this is AI_NurseZombie nurse)
+        {
+            return distance <= nurse.SyringeRange * 0.8f;
+        }
+        if (this is AI_PatientZombie)
+        {
+            return distance <= 7.5f;
+        }
+        return false;
     }
 
     public bool IsAttacking()
@@ -160,45 +168,29 @@ public class AI_Controller : AI_Base
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+        _aiPath.canMove = false;
         PlayerController player = other.GetComponent<PlayerController>();
-        if (player != null)
+        if (player != null && !(_currentState is AI_StateAttack))
         {
-            if (_currentState is AI_StateWalk)
-            {
-                ChangeState(new AI_StateAttack(this));
-            }
+            StartAttack();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        PlayerController player = other.GetComponent<PlayerController>();
-        if (player != null)
-        {
-            // 여기서는 공격 상태인 경우에는 상태 전환을 발생시키지 않음
-            if (!(_currentState is AI_StateAttack))
-            {
-                if (_aiDamageCoroutine != null)
-                {
-                    StopCoroutine(_aiDamageCoroutine);
-                    _aiDamageCoroutine = null;
-                }
-                // 만약 기본 공격 상태라면 추가 처리 가능
-            }
-        }
+        StopAttack();
     }
+    
 
     private IEnumerator ZombieColliderAttack(PlayerController player)
     {
-        WaitForSeconds wait =CoroutineHelper.WaitForSeconds(_monsterData.AttackDelay);
-        
+        WaitForSeconds wait = new WaitForSeconds(AttackDelay);
         while (_isAttacking)
         {
             if (player == null)
                 yield break;
-
-           
-
+            Debug.Log($"[ZombieColliderAttack] {gameObject.name} 공격: {player.name}에게 {Damage} 데미지");
             yield return wait;
         }
         _aiDamageCoroutine = null;
@@ -208,6 +200,7 @@ public class AI_Controller : AI_Base
     {
         if (_isAttacking) return;
         _isAttacking = true;
+        ChangeState(new AI_StateAttack(this));
         PlayerController player = _player?.GetComponent<PlayerController>();
         if (player != null && _aiDamageCoroutine == null)
         {
@@ -218,10 +211,26 @@ public class AI_Controller : AI_Base
     public void StopAttack()
     {
         _isAttacking = false;
-        if (_aiDamageCoroutine != null)
+        if (_aiDamageCoroutine != null && !IsAttacking())
         {
             StopCoroutine(_aiDamageCoroutine);
             _aiDamageCoroutine = null;
+            ChangeState(new AI_StateIdle(this));
         }
     }
-}
+
+        private void ConfigureAllAIPaths()
+    {
+            _aiPath.radius = _radius;
+            _aiPath.height = _height;
+            _aiPath.maxSpeed = MoveSpeed;
+            _aiPath.pickNextWaypointDist = _pickNextWaypointDist;
+            _aiPath.orientation = OrientationMode.YAxisForward; // 2D 모드
+            _aiPath.enableRotation = false;
+            _aiPath.gravity = _gravity;
+    }
+    private void AssignDestinations()
+    {
+            _destinationSetter.target = _player;
+        }
+    }

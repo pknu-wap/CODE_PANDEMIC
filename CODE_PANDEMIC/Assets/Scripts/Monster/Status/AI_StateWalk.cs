@@ -11,16 +11,16 @@ public class AI_StateWalk : AI_IState
 
     public void OnEnter()
     {
-        Debug.WriteLine("AI_StateWalk OnEnter() called");
         _controller.ChasePlayer();
+        _controller._animator.SetTrigger("Walk");
     }
 
     public void OnUpdate()
     {
-        // 아무것도 안 해도 됨 — 충돌로 상태 바뀜
         if (!_controller.IsPlayerDetected())
         {
             _controller.ChangeState(new AI_StateIdle(_controller));
+            _controller._animator.SetTrigger("Idle");
         }
     }
 
