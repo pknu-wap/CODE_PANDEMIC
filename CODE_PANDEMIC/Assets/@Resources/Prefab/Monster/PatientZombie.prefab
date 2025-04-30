@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1672c489b89814d9adc56080da93ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statusBar: {fileID: 6376654001232412570, guid: 419cbdeae069b7c4c942ecb94e6a2b9a, type: 3}
+  _statusBar: {fileID: 4980010757272740408}
   _player: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
   _animator: {fileID: -3182065775556293199}
   _aiFov: {fileID: 6679038620727708155}
@@ -377,7 +377,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0061160326, y: -0.03975427}
@@ -449,6 +449,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4455892645072532837, guid: 419cbdeae069b7c4c942ecb94e6a2b9a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5956874867005877003, guid: 419cbdeae069b7c4c942ecb94e6a2b9a, type: 3}
       propertyPath: m_Name
       value: StatusBar
@@ -467,3 +471,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4184071028647945424, guid: 419cbdeae069b7c4c942ecb94e6a2b9a, type: 3}
   m_PrefabInstance: {fileID: 2117501483977694626}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4980010757272740408 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6376654001232412570, guid: 419cbdeae069b7c4c942ecb94e6a2b9a, type: 3}
+  m_PrefabInstance: {fileID: 2117501483977694626}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059c38d1efb240349a216b6c9728dce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

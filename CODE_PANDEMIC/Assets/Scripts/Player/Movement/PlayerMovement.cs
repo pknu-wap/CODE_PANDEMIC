@@ -70,12 +70,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (_moveInput.x != 0)
         {
-            Vector3 scale = transform.localScale;
-            if (_moveInput.x > 0)
-                scale.x = -0.3f;
-            else if (_moveInput.x < 0)
-                scale.x = 0.3f;
-            transform.localScale = scale;
+            float scaleX = transform.localScale.x;
+            if (_moveInput.x > 0 && scaleX > 0)
+            {
+                scaleX *= -1;
+                transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+            }
+            else if (_moveInput.x < 0 && scaleX < 0)
+            {
+                scaleX *= -1;
+                transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+             
+            }
+            
 
             if (_playerController._weaponHolder != null)
             {

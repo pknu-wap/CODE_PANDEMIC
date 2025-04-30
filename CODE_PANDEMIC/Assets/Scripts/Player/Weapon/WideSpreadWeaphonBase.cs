@@ -9,7 +9,7 @@ public class WideSpreadWeaphonBase : WeaponBase
     {
         if (!CanFire()) return;
 
-        Debug.Log(weaponName + " fired a ranged shot!");
+       
         SetNextFireTime();
 
         if (bulletPrefab != null && firePoint != null)

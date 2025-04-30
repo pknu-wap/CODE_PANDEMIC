@@ -8,7 +8,7 @@ public class Mes : WideSpreadWeaphonBase
     {
         if (!CanFire()) return;
 
-        Debug.Log(weaponName + " fired a mes!");
+        
         SetNextFireTime();
 
         if (bulletPrefab != null && firePoint != null)

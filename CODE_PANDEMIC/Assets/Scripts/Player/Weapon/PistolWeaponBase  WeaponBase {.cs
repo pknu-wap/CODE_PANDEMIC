@@ -2,19 +2,47 @@ using UnityEngine;
 
 public class PistolWeaponBase : WeaponBase
 {
-    public GameObject bulletPrefab;
-    public GameObject firePoint;
+    [SerializeField]
+     GameObject bulletPrefab;
+    [SerializeField]
+    private GameObject firePoint;
+
+    private Animator _animator;
+    private bool isPickedUp = false;
+
+
+    void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isPickedUp) return;
+
+    }
 
     public override void Attack()
     {
         if (!CanFire()) return;
-
-        Debug.Log(weaponName + " fired a pistol shot!");
         SetNextFireTime();
 
-        //if (bulletPrefab != null && firePoint != null)
-        //{
-        //    Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        //}
+        if (bulletPrefab != null && firePoint != null)
+        {
+            GameObject bulletObject = BulletPool.Instance.GetBullet();
+            bulletObject.transform.position = firePoint.transform.position;
+            bulletObject.transform.rotation = firePoint.transform.rotation;
+
+            Bullet bullet = bulletObject.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                bullet.SetInfo(_weaponData.Damage);
+                bullet.Fire(firePoint.transform.right);
+            }
+
+
+            Debug.Log($"ÃÑ¾Ë ¹ß»çµÊ ¹æÇâ: {firePoint.transform.right}");
+        }
+
     }
 }
