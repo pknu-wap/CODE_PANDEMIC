@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PZ_Poster : PZ_Interact_Base
+public class PZ_Poster : PZ_Interact_NonSpawn
 {
     public override void Interact(GameObject player)
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PZ_BloodPack_Hanger : PZ_Interact_Base
+public class PZ_BloodPack_Hanger : PZ_Interact_NonSpawn
 {
     [SerializeField] private Sprite _interactedSprite;
 
