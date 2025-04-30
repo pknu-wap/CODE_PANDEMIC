@@ -47,6 +47,21 @@ public class PZ_Safe : PZ_Interact_Spawn
     {
         yield return new WaitForSeconds(0.5f);
 
+        float currentTime = 0f;
+
+        while (currentTime < 1)
+        {
+            currentTime += Time.fixedDeltaTime;
+
+            Color color = _spriteRenderer.color;
+            color.a -= 0.02f;
+            _spriteRenderer.color = color;
+
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
         Destroy(gameObject);
     }
 
