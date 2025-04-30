@@ -21,9 +21,9 @@ public class AI_ContaminatedArea : MonoBehaviour
             Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, _radius, LayerMask.GetMask("Player"));
             foreach (var target in targets)
             {
-                if (target.TryGetComponent<PlayerController>(out var player) && !player.IsDead())
+                if (target.TryGetComponent<PlayerStatus>(out var player))
                 {
-                    // player.TakeDamage(_damagePerSecond);
+                    player.OnDamaged(gameObject,_damagePerSecond);
                     Debug.Log($"{_damagePerSecond} 데미지");
                 }
             }
