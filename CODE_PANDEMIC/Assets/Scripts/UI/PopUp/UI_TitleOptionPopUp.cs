@@ -8,6 +8,7 @@ public class UI_TitleOptionPopUp : UI_PopUp
     {
         OptionPanel
     }
+    
     enum Buttons
     {
         VideoButton,
@@ -32,7 +33,7 @@ public class UI_TitleOptionPopUp : UI_PopUp
         _videoButton = GetButton((int)Buttons.VideoButton).gameObject;
         _soundButton=GetButton((int)Buttons.SoundButton).gameObject;
         _exitButton = GetButton((int)(Buttons.ExitButton)).gameObject;
-
+       
         BindEvent(_videoButton,OnClickVideoButton);
         BindEvent(_soundButton, OnClickSoundButton);
         BindEvent(_exitButton, OnClickExitButton);
