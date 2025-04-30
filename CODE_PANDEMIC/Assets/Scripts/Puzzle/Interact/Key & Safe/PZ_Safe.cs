@@ -1,19 +1,34 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PZ_Safe : PZ_Interact_Spawn
 {
     [SerializeField] private Animator _animator;
 
-    public bool _hasKey = true; // 열쇠로 열기
+    public bool _hasKey = false; // 열쇠로 열기
+    private int _key;
 
     // 하이라이트 기능
     [SerializeField] private Material _lockMaterial;
     [SerializeField] private Material _unLockMaterial;
 
+    private void Update()
+    {
+        _key = HasKey();
+
+        if (_key == -1)
+        {
+            _hasKey = false;
+        }
+        else
+        {
+            _hasKey = true;
+        }
+    }
+
     public override void Interact(GameObject player)
     {
-        int key = HasKey();
-        if (_isInteracted ||key==-1)
+        if (_isInteracted || _key == -1)
         {
             Debug.Log("열쇠가 없음");
             return;
@@ -21,14 +36,35 @@ public class PZ_Safe : PZ_Interact_Spawn
 
         base.Interact(player);
 
-        RewardItem(key); 
-      
-        Destroy(gameObject);
+        RewardItem(_key);
+
         _animator.SetBool("IsOpened", true);
 
-        // 금고 해제 및 무기 획득
+        StartCoroutine(DestroyThisObject());
     }
- 
+
+    private IEnumerator DestroyThisObject()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        float currentTime = 0f;
+
+        while (currentTime < 1)
+        {
+            currentTime += Time.fixedDeltaTime;
+
+            Color color = _spriteRenderer.color;
+            color.a -= 0.02f;
+            _spriteRenderer.color = color;
+
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        Destroy(gameObject);
+    }
+
     public override void OnHighLight()
     {
         if (_hasKey)
