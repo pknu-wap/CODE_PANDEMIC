@@ -3,13 +3,12 @@ using UnityEngine;
 public class PistolWeaponBase : WeaponBase
 {
     [SerializeField]
-     GameObject bulletPrefab;
+    private GameObject bulletPrefab;
     [SerializeField]
     private GameObject firePoint;
 
     private Animator _animator;
     private bool isPickedUp = false;
-
 
     void Start()
     {
@@ -19,13 +18,18 @@ public class PistolWeaponBase : WeaponBase
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isPickedUp) return;
-
     }
 
     public override void Attack()
     {
         if (!CanFire()) return;
         SetNextFireTime();
+
+
+        if (_animator != null)
+        {
+            _animator.SetBool("Fire", true);
+        }
 
         if (bulletPrefab != null && firePoint != null)
         {
@@ -40,9 +44,18 @@ public class PistolWeaponBase : WeaponBase
                 bullet.Fire(firePoint.transform.right);
             }
 
-
             Debug.Log($"ÃÑ¾Ë ¹ß»çµÊ ¹æÇâ: {firePoint.transform.right}");
         }
 
+        StartCoroutine(ResetFireBool());
+    }
+
+    private System.Collections.IEnumerator ResetFireBool()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (_animator != null)
+        {
+            _animator.SetBool("Fire", false);
+        }
     }
 }
