@@ -7,7 +7,7 @@ public enum ElevatingMap
     Hospital1
 }
 
-public class PZ_Elevator : PZ_Interact_Base
+public class PZ_Elevator : PZ_Interact_NonSpawn
 {
     [SerializeField] private ElevatingMap _currentMap; // 현재 맵
     [SerializeField] private ElevatingMap _elevatingMap; // 해당 엘레베이터로 이동할 맵
@@ -33,25 +33,12 @@ public class PZ_Elevator : PZ_Interact_Base
         base.Interact(player);
 
         _animator.SetBool("IsOpened", true);
-
-        // 여기에 다음 맵으로 넘어가는 기능 구현
-        //switch (_elevatingMap)
-        //{
-        //    case ElevatingMap.Hospital3:
-        //        Debug.Log("3층 이동");
-        //        break;
-
-        //    case ElevatingMap.Hospital2:
-        //        Debug.Log("2층 이동");
-        //        break;
-
-        //    case ElevatingMap.Hospital1:
-        //        Debug.Log("1층 이동");
-        //        break;
-        //}
+        
         Managers.Event.InvokeEvent("NextStage");
+
         _elevatorScreen.Setting(_elevatingMap);
     }
+
     private void UpdateStage()
     {
 

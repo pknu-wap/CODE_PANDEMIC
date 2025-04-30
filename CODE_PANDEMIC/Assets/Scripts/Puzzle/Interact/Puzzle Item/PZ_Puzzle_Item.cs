@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PZ_Puzzle_Item : PZ_Interact_Base
+public class PZ_Puzzle_Item : PZ_Interact_Spawn
 {
     #region Base
 
