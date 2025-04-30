@@ -11,9 +11,9 @@ public class CloseRangeWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
 
-        Debug.Log(weaponName + " performed a short-range attack!");
+        Debug.Log( " performed a short-range attack!");
         SetNextFireTime();
-
+        
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayer);
 
         foreach (Collider2D enemy in hitEnemies)
