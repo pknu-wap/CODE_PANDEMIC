@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3228061643019321484}
   - component: {fileID: 8171041483725701179}
   - component: {fileID: -7046164756397432051}
+  - component: {fileID: 5913334799477030815}
   m_Layer: 8
   m_Name: PZ_Safe_Prefab
   m_TagString: Untagged
@@ -143,8 +144,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6470def04065164da48160af7424ab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isUnLocked: 0
   _spriteRenderer: {fileID: 3228061643019321484}
   _defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  _highlightMaterial: {fileID: 0}
+  _animator: {fileID: 5913334799477030815}
+  _hasKey: 0
   _lockMaterial: {fileID: 2100000, guid: 247ddc1541fe39a4ba1854244f4d0c68, type: 2}
   _unLockMaterial: {fileID: 2100000, guid: 50ad3ea30eeaabc4a812eb7fa900bb52, type: 2}
+--- !u!95 &5913334799477030815
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7014409803153577940}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 17fdb6e372befc64db5ca6ea5d26823b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
