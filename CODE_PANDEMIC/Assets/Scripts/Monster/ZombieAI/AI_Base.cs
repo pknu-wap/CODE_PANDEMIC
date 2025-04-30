@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public abstract class AI_Base : MonoBehaviour
 {
@@ -11,8 +12,6 @@ public abstract class AI_Base : MonoBehaviour
  
     protected AI_State _state = AI_State.Idle;
     public event Action OnDie;
-   
-
     public void SetInfo(MonsterData monsterData)
     {
         _monsterData = monsterData;
@@ -28,7 +27,7 @@ public abstract class AI_Base : MonoBehaviour
             _monsterData.AttackDelay = 5.0f;
             _monsterData.DetectionRange = 7.5f;
             _monsterData.DetectionAngle = 120;
-            _monsterData.MoveSpeed = 100.0f;
+            _monsterData.MoveSpeed = 1.0f;
             _monsterData.AttackRange = 2f;
             _monsterData.AttackDamage = 10;
 

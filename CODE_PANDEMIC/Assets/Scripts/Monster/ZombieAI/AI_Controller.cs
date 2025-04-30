@@ -19,6 +19,7 @@ public class AI_Controller : AI_Base
     public Animator _animator;
     [SerializeField] private AI_Fov _aiFov;
     [SerializeField] public AIPath _aiPath;
+    [SerializeField] public AIDestinationSetter _destinationSetter;
 
     private AI_IState _currentState;
     public virtual ISkillBehavior Skill { get { return null; } }
@@ -26,6 +27,11 @@ public class AI_Controller : AI_Base
     private Coroutine _aiDamageCoroutine;
 
     private bool _isAttacking;
+
+    private float _radius = 0.41f;
+    private float _height = 0.01f;
+    private float _pickNextWaypointDist = 1.2f;
+    private Vector3 _gravity = new(0, 0, 0);
 
     protected virtual void Awake(){}
     protected virtual void Start()
@@ -48,6 +54,12 @@ public class AI_Controller : AI_Base
         _animator = GetComponent<Animator>();
         ChangeState(new AI_StateIdle(this));
         _state = AI_State.Idle;
+
+        _aiPath = GetComponent<AIPath>();
+        _destinationSetter = GetComponent<AIDestinationSetter>();
+
+        ConfigureAllAIPaths();
+        AssignDestinations();
 
         return true;
     }
@@ -206,4 +218,19 @@ public class AI_Controller : AI_Base
             ChangeState(new AI_StateIdle(this));
         }
     }
-}
+
+        private void ConfigureAllAIPaths()
+    {
+            _aiPath.radius = _radius;
+            _aiPath.height = _height;
+            _aiPath.maxSpeed = MoveSpeed;
+            _aiPath.pickNextWaypointDist = _pickNextWaypointDist;
+            _aiPath.orientation = OrientationMode.YAxisForward; // 2D 모드
+            _aiPath.enableRotation = false;
+            _aiPath.gravity = _gravity;
+    }
+    private void AssignDestinations()
+    {
+            _destinationSetter.target = _player;
+        }
+    }

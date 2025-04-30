@@ -282,7 +282,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 459735487
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 15
   m_Sprite: {fileID: 1061766669, guid: 82fd57ccc8268cc4882464119a8a36ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -307,10 +307,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _statusBar: {fileID: 0}
-  _player: {fileID: 0}
+  _player: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
   _animator: {fileID: 2685046210241798148}
   _aiFov: {fileID: 2987637229773369397}
   _aiPath: {fileID: 4554331342485175776}
+  _destinationSetter: {fileID: 0}
   _syringePrefab: {fileID: 4688839435082273960, guid: 2d431244ffcb9844aa8d3231bbc23504, type: 3}
   SkillCooldown: 8
   SkillChargeDelay: 1
@@ -364,7 +365,7 @@ MonoBehaviour:
   radius: 0.41
   height: 0.01
   canMove: 0
-  maxSpeed: 3
+  maxSpeed: 1
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -403,7 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  target: {fileID: 0}
+  target: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
 --- !u!58 &8916278012219877302
 CircleCollider2D:
   m_ObjectHideFlags: 0

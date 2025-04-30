@@ -182,7 +182,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 459735487
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -1267920226, guid: 8e69408dc23081447854cbf3ced1e23a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -357,6 +357,7 @@ MonoBehaviour:
   _animator: {fileID: -3182065775556293199}
   _aiFov: {fileID: 6679038620727708155}
   _aiPath: {fileID: 4393325965198675154}
+  _destinationSetter: {fileID: 0}
   TargetLayer:
     serializedVersion: 2
     m_Bits: 0
