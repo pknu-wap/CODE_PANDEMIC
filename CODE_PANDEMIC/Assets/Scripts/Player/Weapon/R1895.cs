@@ -6,7 +6,6 @@ public class R1895 : PistolWeaponBase
     public float reloadTime = 2f;
     public float spreadAngle = 0f;
     public int bulletCount = 6;
-    public string weaponPrefab = "R1895_0P";
     public int bulletID = 1;
 
     private Animator animator;
@@ -26,7 +25,6 @@ public class R1895 : PistolWeaponBase
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isPickedUp) return;
-
     }
 
     public override void Attack()
@@ -51,5 +49,5 @@ public class R1895 : PistolWeaponBase
         }
     }
 
-
+    
 }
