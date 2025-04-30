@@ -110,16 +110,18 @@ public class InventorySaver:MonoBehaviour
 
         foreach (var item in _inventoryData.GetCurrentInventoryState())
         {
+            Debug.Log(item);
             saveData.InventoryItems.Add(new InventoryItemData
             {
-                ItemID = item.Value._item.TemplateID,
-                Quantity = item.Value._quantity,
-                ItemState = item.Value._itemState
+                ItemID = item.Value.Item.TemplateID,
+                Quantity = item.Value.Quantity,
+                ItemState = item.Value.ItemState
             });
         }
 
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(SavePath, json);
+      
         Debug.Log("Inventory saved.");
     }
 
@@ -130,7 +132,7 @@ public class InventorySaver:MonoBehaviour
             _inventoryData.Init();
             return;
         }
-
+        Debug.Log(File.ReadAllText(SavePath));
         string json = File.ReadAllText(SavePath);
         var saveData = JsonUtility.FromJson<InventorySaveData>(json);
 
@@ -140,8 +142,9 @@ public class InventorySaver:MonoBehaviour
             foreach (var itemData in saveData.InventoryItems)
             {
                
-                if (Managers.Data.Items.TryGetValue(itemData.ItemID, out var item))
+                if (Managers.Data.Items.TryGetValue(itemData.ItemID, out ItemData item))
                 {
+                    item = ItemFactoryManager.CreateItem(item.Type,item);
                     loadedItems.Add(loadedItems.Count, new InventoryItem(item, itemData.Quantity, itemData.ItemState));
                     Debug.Log($"Loaded item: {item.Name}, Quantity: {itemData.Quantity}");
                 }

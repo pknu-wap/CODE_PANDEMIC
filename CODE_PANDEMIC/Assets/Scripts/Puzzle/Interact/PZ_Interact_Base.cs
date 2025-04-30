@@ -9,6 +9,7 @@ public class PZ_Interact_Base : MonoBehaviour, IInteractable
     [SerializeField] protected Material _defaultMaterial;
     [SerializeField] protected Material _highlightMaterial;
 
+
     public virtual void Interact(GameObject player)
     {
         _isInteracted = true;

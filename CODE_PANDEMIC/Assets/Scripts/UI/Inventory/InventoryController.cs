@@ -78,12 +78,12 @@ namespace Inventory
             foreach (var item in inventoryState)
             {
                 // Addressable을 사용하여 이미지 로드
-                string address = item.Value._item.Sprite;
+                string address = item.Value.Item.Sprite;
                 Managers.Resource.LoadAsync<Sprite>(address, (loadedSprite) =>
                 {
                     if (loadedSprite != null)
                     {
-                        UIInventory.UpdateData(item.Key, loadedSprite, item.Value._quantity);
+                        UIInventory.UpdateData(item.Key, loadedSprite, item.Value.Quantity);
                     }
                     else
                     {
@@ -109,16 +109,16 @@ namespace Inventory
 
             UIInventory.ShowItemAction(index);
 
-            if (inventoryItem._item is IItemAction actionItem)
+            if (inventoryItem.Item is IItemAction actionItem)
             {
                 switch(actionItem.ActionType)
                 {   
-                    case Define.ActionType.QuickSlot: UIInventory.AddAction("Slot", () => SlotItem(index, inventoryItem._quantity));
+                    case Define.ActionType.QuickSlot: UIInventory.AddAction("Slot", () => SlotItem(index, inventoryItem.Quantity));
                         break;
-                    case Define.ActionType.Buff:BuffItem(index, inventoryItem._quantity);
+                    case Define.ActionType.Buff:BuffItem(index, inventoryItem.Quantity);
                         break;
                     case Define.ActionType.Equip:
-                        EquipItem(index, inventoryItem._quantity);
+                        EquipItem(index, inventoryItem.Quantity);
                         break;
                     case Define.ActionType.None:
                         break;
@@ -126,10 +126,10 @@ namespace Inventory
                
             }
             // Drop
-            IDestroyableItem destroyableItem = inventoryItem._item as IDestroyableItem;
+            IDestroyableItem destroyableItem = inventoryItem.Item as IDestroyableItem;
             if (destroyableItem != null)
             {
-                UIInventory.AddAction("Drop", () => DropItem(index, inventoryItem._quantity));
+                UIInventory.AddAction("Drop", () => DropItem(index, inventoryItem.Quantity));
             }
 
             // Slot
@@ -147,7 +147,7 @@ namespace Inventory
             InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
             if (inventoryItem.IsEmpty) return;
 
-            ItemData itemData = inventoryItem._item;
+            ItemData itemData = inventoryItem.Item;
             Debug.Log("SlotItem");
             Managers.Game.QuickSlot.RegisterQuickSlot(itemData, quantity);
             _inventoryData.RemoveItem(index, quantity);
@@ -164,15 +164,15 @@ namespace Inventory
         {
             InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
             if (inventoryItem.IsEmpty) return;
-            IDestroyableItem destroyableItem = inventoryItem._item as IDestroyableItem;
+            IDestroyableItem destroyableItem = inventoryItem.Item as IDestroyableItem;
             if (destroyableItem != null)
             {
                 _inventoryData.RemoveItem(index, 1);
             }
-            IItemAction itemAction = inventoryItem._item as IItemAction;
+            IItemAction itemAction = inventoryItem.Item as IItemAction;
             if (itemAction != null)
             {
-                itemAction.PerformAction(gameObject, inventoryItem._itemState);
+                itemAction.PerformAction(gameObject, inventoryItem.ItemState);
                 if (_inventoryData.GetItemAt(index).IsEmpty) UIInventory.ResetSelection();
             }
         }
@@ -181,12 +181,12 @@ namespace Inventory
         {
             InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
             if (inventoryItem.IsEmpty) return;
-            string address = inventoryItem._item.Sprite;
+            string address = inventoryItem.Item.Sprite;
             Managers.Resource.LoadAsync<Sprite>(address, (loadedSprite) =>
             {
                 if (loadedSprite != null)
                 {
-                    UIInventory.CreateDraggedItem(loadedSprite, inventoryItem._quantity);
+                    UIInventory.CreateDraggedItem(loadedSprite, inventoryItem.Quantity);
                 }
                 else
                 {
@@ -209,7 +209,7 @@ namespace Inventory
                 return;
             }
             string description = PrepareDescription(inventoryItem);
-            ItemData item = inventoryItem._item;
+            ItemData item = inventoryItem.Item;
             string address = item.Sprite;
             Managers.Resource.LoadAsync<Sprite>(address, (loadedSprite) =>
             {
@@ -227,7 +227,7 @@ namespace Inventory
         private string PrepareDescription(InventoryItem item)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(item._item.Description);
+            sb.Append(item.Item.Description);
             sb.AppendLine();
             //for (int i = 0; i < item._item.Parameters.Count; i++)
             //{
@@ -248,12 +248,12 @@ namespace Inventory
                 UIInventory.Show();
                 foreach (var item in _inventoryData.GetCurrentInventoryState())
                 {
-                    string address = item.Value._item.Sprite;
+                    string address = item.Value.Item.Sprite;
                     Managers.Resource.LoadAsync<Sprite>(address, (loadedSprite) =>
                     {
                         if (loadedSprite != null)
                         {
-                            UIInventory.UpdateData(item.Key, loadedSprite, item.Value._quantity);
+                            UIInventory.UpdateData(item.Key, loadedSprite, item.Value.Quantity);
                         }
                         else
                         {

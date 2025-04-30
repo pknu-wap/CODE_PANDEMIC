@@ -26,6 +26,8 @@ public class DataManager
     public Dictionary<int, FieldItemData> FieldItems { get; private set; }
     public Dictionary<int,MonsterData> Monsters { get; private set; }
 
+    public Dictionary<int, InteractObjectData> Interacts { get; private set; }  
+
 
     public void Init(Action onComplete)
     {
@@ -36,30 +38,34 @@ public class DataManager
        LoadJson<FieldItemDataLoader, int, FieldItemData>("FieldItemData", (loader) => { FieldItems = loader.MakeDic(); });
         LoadJson<MonsterDataLoader, int,MonsterData>("MonsterData", (loader) => { Monsters = loader.MakeDic(); });
         LoadJson<WeaponDataLoader, int, WeaponData>("WeaponData", (loader) => { Weapons = loader.MakeDic(); });
+        LoadJson<InteractObjectDataLoader, int, InteractObjectData>("InteractData", (loader) => { Interacts = loader.MakeDic(); });
+
 
         onComplete?.Invoke();
     }
     public bool Loaded()
     {
-        if (Monsters == null)
-            return false;
-        if (Weapons == null)
-          return false;
+        if (Monsters == null) return false;
+        if (Weapons == null) return false;
+        if (Interacts == null) return false;
+        if (Stages == null) return false;
+        if (Items == null) return false;
+        if (Spawners == null) return false;
+        if (Spawners == null) return false;
+        if (Puzzles==null) return false;
+        if (FieldItems == null) return false;
+
+        return true;
+
         //if (Bosses == null)
         //    return false;
-        if (Stages == null)
-            return false;
-        if (Items == null)
-            return false;
-        if (Spawners == null) 
-            return false;
-        if(Puzzles==null) 
-            return false;
-        if (FieldItems == null)
-            return false;
         
-        return true;
     }
+        
+
+       
+       
+        
     void LoadSingleJson<Value>(string key,Action<Value> callback)
     {
         Managers.Resource.LoadAsync<TextAsset>(key, (textAsset) =>
