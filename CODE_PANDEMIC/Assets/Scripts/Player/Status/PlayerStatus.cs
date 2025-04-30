@@ -33,6 +33,7 @@ public class PlayerStatus : MonoBehaviour
     {
         _currentHp = _maxHp;
         _effectHp = _maxHp;
+        _playerController = GetComponent<PlayerController>();
 
         if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StatusBar != null)
         {

@@ -23,9 +23,8 @@ public class AI_Controller : AI_Base
 
     private AI_IState _currentState;
     public virtual ISkillBehavior Skill { get { return null; } }
-
     private Coroutine _aiDamageCoroutine;
-
+    
     private bool _isAttacking;
 
     private float _radius = 0.41f;
@@ -54,7 +53,6 @@ public class AI_Controller : AI_Base
 
         _aiPath = GetComponent<AIPath>();
         _destinationSetter = GetComponent<AIDestinationSetter>();
-
         ConfigureAllAIPaths();
         AssignDestinations();
 
@@ -73,7 +71,7 @@ public class AI_Controller : AI_Base
         bool inRange = IsPlayerInSkillRange();
         bool skillReady = Skill.IsReady(this);
 
-        if (!_isAttacking && inRange && skillReady)
+        if (!_isAttacking && inRange)
         {
             StartAttack();
         }
@@ -213,7 +211,6 @@ public class AI_Controller : AI_Base
         while (_isAttacking)
         {
             if (player == null) break;
-
             PerformAttack();
             yield return wait;
         }
