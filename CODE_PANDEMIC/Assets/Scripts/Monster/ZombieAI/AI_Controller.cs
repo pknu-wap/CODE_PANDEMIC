@@ -18,8 +18,8 @@ public class AI_Controller : AI_Base
     private SpriteRenderer _renderer;
     public Animator _animator;
     [SerializeField] private AI_Fov _aiFov;
-    [SerializeField] public AIPath _aiPath;
-    [SerializeField] public AIDestinationSetter _destinationSetter;
+    public AIPath _aiPath;
+    public AIDestinationSetter _destinationSetter;
 
     private AI_IState _currentState;
     public virtual ISkillBehavior Skill { get { return null; } }
@@ -63,14 +63,23 @@ public class AI_Controller : AI_Base
 
     private void Update()
     {
-        if (_player == null)
-            return;
         TryDetectPlayer();
         UpdateFovDirection();
         _currentState?.OnUpdate();
-        if (_currentState is AI_StateWalk && IsPlayerInSkillRange() && Skill != null && Skill.IsReady(this))
+
+        if (_player == null || Skill == null) return;
+
+        float distance = Vector2.Distance(transform.position, _player.position);
+        bool inRange = IsPlayerInSkillRange();
+        bool skillReady = Skill.IsReady(this);
+
+        if (!_isAttacking && inRange && skillReady)
         {
-            ChangeState(new AI_StateAttack(this));
+            StartAttack();
+        }
+        else if (_isAttacking && (!inRange || !skillReady))
+        {
+            StopAttack();
         }
     }
 
@@ -180,59 +189,83 @@ public class AI_Controller : AI_Base
         return _isAttacking;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
-        _aiPath.canMove = false;
-        if (!(_currentState is AI_StateAttack))
-        {
-            StartAttack();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+    //    _aiPath.canMove = false;
+    //    PlayerStatus player = other.GetComponent<PlayerStatus>();
+    //    _player = player.transform;
+    //    if (player != null && !(_currentState is AI_StateAttack))
+    //    {
+    //        StartAttack();
+    //    }
+    //}
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        StopAttack();
-    }
-    
+    //private void OnTriggerExit2D(Collider2D other)
+    //{
+    //    StopAttack();
+    //}
 
-    private IEnumerator ZombieColliderAttack(PlayerController player)
+
+    private IEnumerator ZombieAttackCoroutine(PlayerStatus player)
     {
-        WaitForSeconds wait = new WaitForSeconds(AttackDelay);
+        WaitForSeconds wait = new(AttackDelay);
         while (_isAttacking)
         {
-            if (player == null)
-                yield break;
-            Debug.Log($"[ZombieColliderAttack] {gameObject.name} 공격: {player.name}에게 {Damage} 데미지");
+            if (player == null) break;
+
+            PerformAttack();
             yield return wait;
         }
+
         _aiDamageCoroutine = null;
     }
-
     public void StartAttack()
     {
-        if (_isAttacking) return;
+        if (_isAttacking || _player == null) return;
+
         _isAttacking = true;
+        StopMoving();
         ChangeState(new AI_StateAttack(this));
-        PlayerController player = _player?.GetComponent<PlayerController>();
-        if (player != null && _aiDamageCoroutine == null)
+
+        if (_aiDamageCoroutine == null && _player.TryGetComponent(out PlayerStatus player))
         {
-            _aiDamageCoroutine = StartCoroutine(ZombieColliderAttack(player));
+            _aiDamageCoroutine = StartCoroutine(ZombieAttackCoroutine(player));
         }
     }
 
     public void StopAttack()
     {
+        if (!_isAttacking) return;
+
         _isAttacking = false;
-        if (_aiDamageCoroutine != null && !IsAttacking())
+        _aiPath.canMove = true;
+        ChangeState(new AI_StateIdle(this));
+
+        if (_aiDamageCoroutine != null)
         {
             StopCoroutine(_aiDamageCoroutine);
             _aiDamageCoroutine = null;
-            ChangeState(new AI_StateIdle(this));
+        }
+    }
+    public void PerformAttack()
+    {
+        Vector2 attackCenter = (Vector2)transform.position + new Vector2(transform.localScale.x * 0.5f, 0f);
+        float attackRadius = 0.7f;
+        LayerMask playerMask = LayerMask.GetMask("Player");
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackCenter, attackRadius, playerMask);
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.TryGetComponent<PlayerStatus>(out var player))
+            {
+                player.OnDamaged(gameObject, Damage);
+            }
         }
     }
 
-        private void ConfigureAllAIPaths()
+    private void ConfigureAllAIPaths()
     {
             _aiPath.radius = _radius;
             _aiPath.height = _height;
