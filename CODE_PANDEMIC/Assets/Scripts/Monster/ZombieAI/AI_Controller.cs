@@ -45,9 +45,6 @@ public class AI_Controller : AI_Base
 
     public override bool Init()
     {
-        PlayerController playerComponent = FindObjectOfType<PlayerController>();
-        _player = playerComponent.transform;
-
         _rb = GetComponent<Rigidbody2D>();
         _rb.freezeRotation = true;
         _renderer = GetComponent<SpriteRenderer>();
@@ -68,6 +65,7 @@ public class AI_Controller : AI_Base
     {
         if (_player == null)
             return;
+        TryDetectPlayer();
         UpdateFovDirection();
         _currentState?.OnUpdate();
         if (_currentState is AI_StateWalk && IsPlayerInSkillRange() && Skill != null && Skill.IsReady(this))
@@ -96,7 +94,19 @@ public class AI_Controller : AI_Base
     
         _currentState?.OnFixedUpdate();    
     }
-
+    private void TryDetectPlayer()
+    {
+    foreach (var obj in _aiFov.GetDetectedObjects())
+    {
+        PlayerStatus status = obj.GetComponent<PlayerStatus>();
+        if (status != null)
+        {
+            _player = obj.transform;
+            _destinationSetter.target = _player;
+            break;
+        }
+    }
+    }
     public void UpdateFovDirection()
     {
         if (_aiFov != null)
@@ -231,6 +241,6 @@ public class AI_Controller : AI_Base
     }
     private void AssignDestinations()
     {
-            _destinationSetter.target = _player;
+            _destinationSetter.target = null;
         }
     }
