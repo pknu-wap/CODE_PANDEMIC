@@ -14,8 +14,8 @@ public class PlayerStatus : MonoBehaviour
     private PlayerController _playerController;
 
     // 체력 정보
-    private int _maxHp = 100;
-    private float _currentHp;
+   private int _maxHp = 100;
+    [SerializeField] private float _currentHp;
     private float _effectHp;
 
     // 데미지 효과
