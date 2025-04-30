@@ -98,12 +98,15 @@ public class AI_Controller : AI_Base
     {
     foreach (var obj in _aiFov.GetDetectedObjects())
     {
-        PlayerStatus status = obj.GetComponent<PlayerStatus>();
-        if (status != null)
+        if (obj.TryGetComponent<PlayerStatus>(out var status))
         {
             _player = obj.transform;
             _destinationSetter.target = _player;
             break;
+        }
+        else
+        {
+            _destinationSetter.target = null;
         }
     }
     }
@@ -149,6 +152,7 @@ public class AI_Controller : AI_Base
 
     public bool IsPlayerDetected()
     {
+        _animator.SetTrigger("Walk");
         return _aiFov != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject);
     }
 
@@ -180,8 +184,7 @@ public class AI_Controller : AI_Base
     {
         if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
         _aiPath.canMove = false;
-        PlayerController player = other.GetComponent<PlayerController>();
-        if (player != null && !(_currentState is AI_StateAttack))
+        if (!(_currentState is AI_StateAttack))
         {
             StartAttack();
         }
@@ -241,6 +244,6 @@ public class AI_Controller : AI_Base
     }
     private void AssignDestinations()
     {
-            _destinationSetter.target = null;
-        }
+        _destinationSetter.target = null;
+    }
     }
