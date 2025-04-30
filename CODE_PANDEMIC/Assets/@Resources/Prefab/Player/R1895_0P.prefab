@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3965594873968723199}
@@ -126,7 +126,7 @@ MonoBehaviour:
   range: 0
   weaponSpriteRenderer: {fileID: 0}
   bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
-  firePoint: {fileID: 1827631032718497299, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
+  firePoint: {fileID: 5789591542077271838}
   bulletSpeed: 15
   reloadTime: 2
   spreadAngle: 1
@@ -140,18 +140,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1279165682500468413}
     m_Modifications:
-    - target: {fileID: 1827631032718497299, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.4624195
-      objectReference: {fileID: 0}
-    - target: {fileID: 1827631032718497299, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.4624195
-      objectReference: {fileID: 0}
-    - target: {fileID: 1827631032718497299, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.4624195
-      objectReference: {fileID: 0}
     - target: {fileID: 1827631032718497299, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.83421886
@@ -192,24 +180,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2394828037336876177, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2394828037336876177, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9083006108061253106, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 9083006108061253106, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
       propertyPath: m_Name
       value: Firepoint
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2394828037336876177, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -217,5 +192,10 @@ PrefabInstance:
 --- !u!4 &3965594873968723199 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1827631032718497299, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
+  m_PrefabInstance: {fileID: 3338736581714285292}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5789591542077271838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9083006108061253106, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
   m_PrefabInstance: {fileID: 3338736581714285292}
   m_PrefabAsset: {fileID: 0}

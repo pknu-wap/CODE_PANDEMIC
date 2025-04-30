@@ -12,7 +12,8 @@ public class PZ_Safe : PZ_Interact_Spawn
 
     public override void Interact(GameObject player)
     {
-        if (_isInteracted || !_hasKey)
+        int key = HasKey();
+        if (_isInteracted ||key==-1)
         {
             Debug.Log("열쇠가 없음");
             return;
@@ -20,11 +21,14 @@ public class PZ_Safe : PZ_Interact_Spawn
 
         base.Interact(player);
 
+        RewardItem(key); 
+      
+        Destroy(gameObject);
         _animator.SetBool("IsOpened", true);
 
         // 금고 해제 및 무기 획득
     }
-
+ 
     public override void OnHighLight()
     {
         if (_hasKey)

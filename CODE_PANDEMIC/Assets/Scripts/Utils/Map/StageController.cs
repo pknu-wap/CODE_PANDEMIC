@@ -22,6 +22,7 @@ public class StageController : MonoBehaviour
         CreateSpawners();
         CreatePuzzles();
         CreateItems();
+        CreateInteracts();
     }
     public void OnEnable()
     {
@@ -84,6 +85,25 @@ public class StageController : MonoBehaviour
                     generatorItem.SetInfo(data);
                 }
 
+            });
+        }
+    }
+    private void CreateInteracts()
+    {
+        List<int> interacts = _stageData.InteractableObjects;
+        Debug.Log(Managers.Data.Interacts);
+        for (int i = 0; i < interacts.Count; i++)
+        {
+            if (!Managers.Data.Interacts.TryGetValue(interacts[i],out InteractObjectData data))
+            {
+                Debug.LogError($"Interact ID :  {interacts[i]} not found in data.");
+                continue;
+            }
+            //if(Managers.Game.)
+            Managers.Resource.Instantiate(data.Prefab, _puzzlesParent, (obj) =>
+            {
+                obj.transform.position = data.Pos;
+                obj.GetComponent<PZ_Interact_Spawn>()?.SetInfo(data);
             });
         }
     }
