@@ -306,7 +306,11 @@ namespace Pathfinding.Util {
 		public void FinalizeDraw () {
 			RemoveUnusedMeshes(meshes);
 
-
+#if UNITY_EDITOR
+			// Make sure the material references are correct
+			if (surfaceMaterial == null) surfaceMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath(EditorResourceHelper.editorAssets + "/Materials/Navmesh.mat", typeof(Material)) as Material;
+			if (lineMaterial == null) lineMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath(EditorResourceHelper.editorAssets + "/Materials/NavmeshOutline.mat", typeof(Material)) as Material;
+#endif
 
 			var cam = Camera.current;
 			var planes = GeometryUtility.CalculateFrustumPlanes(cam);

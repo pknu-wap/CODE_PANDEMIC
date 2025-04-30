@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public abstract class AI_Base : MonoBehaviour
 {
@@ -11,8 +12,6 @@ public abstract class AI_Base : MonoBehaviour
  
     protected AI_State _state = AI_State.Idle;
     public event Action OnDie;
-   
-
     public void SetInfo(MonsterData monsterData)
     {
         _monsterData = monsterData;
@@ -28,8 +27,9 @@ public abstract class AI_Base : MonoBehaviour
             _monsterData.AttackDelay = 5.0f;
             _monsterData.DetectionRange = 7.5f;
             _monsterData.DetectionAngle = 120;
-            _monsterData.MoveSpeed = 100.0f;
-            _monsterData.AttackRange = 2;
+            _monsterData.MoveSpeed = 1.0f;
+            _monsterData.AttackRange = 2f;
+            _monsterData.AttackDamage = 10;
 
         }
         return true;
@@ -61,12 +61,18 @@ public abstract class AI_Base : MonoBehaviour
     public virtual void Die()
     {
         _state = AI_State.Dead;
-        OnDie?.Invoke(); 
+
+        Action callback = OnDie;
+        if (callback != null)
+            callback();
+
         gameObject.SetActive(false);
     }
     public float MoveSpeed { get { return _monsterData.MoveSpeed; } }
     public float DetectionRange { get { return _monsterData.DetectionRange; } }
     public float DetectionAngle { get { return _monsterData.DetectionAngle; } }
     public float Damage { get { return _monsterData.AttackDamage; } }
-    public float Health { get { return _monsterData.Hp; } }
+    public int Health { get { return _monsterData.Hp; } }
+    public float AttackRange { get { return _monsterData.AttackRange; } }
+    public float AttackDelay { get { return _monsterData.AttackDelay; } }
 }
