@@ -2708,6 +2708,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8511153779233006024}
     m_Modifications:
+    - target: {fileID: 3133553816317418532, guid: f89088a8710d2c143aab31393e660a01, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133553816317418532, guid: f89088a8710d2c143aab31393e660a01, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5212317534640581021, guid: f89088a8710d2c143aab31393e660a01, type: 3}
+      propertyPath: m_UsedByComposite
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5741674021920440258, guid: f89088a8710d2c143aab31393e660a01, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
