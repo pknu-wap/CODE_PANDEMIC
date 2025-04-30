@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private float lifeTime = 3f;
+    private float _speed = 10f;
+    private float _lifeTime = 3f;
+    private int _damage = 0;
 
     private Rigidbody2D rb;
 
@@ -11,18 +12,21 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
-
+    public void SetInfo(int damage)
+    {
+        _damage = damage;
+    }
     private void OnEnable()
     {
         CancelInvoke();
-        Invoke("ReturnToPool", lifeTime);
+        Invoke("ReturnToPool", _lifeTime);
         Debug.Log($"ÃÑ¾Ë »ý¼ºµÊ at {transform.position}");
     }
 
     public void Fire(Vector2 direction)
     {
         Debug.Log("ÃÑ¾Ë ¹ß»çµÊ ¹æÇâ: " + direction);
-        rb.velocity = direction.normalized * speed;
+        rb.velocity = direction.normalized * _speed;
     }
 
 
@@ -34,7 +38,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) return; // ÇÊ¿ä ½Ã Á¶°Ç Ãß°¡
+        AI_Base enemy= other.GetComponent<AI_Base>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(_damage);
+        }
         ReturnToPool();
     }
 }

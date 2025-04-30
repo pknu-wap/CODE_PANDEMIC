@@ -9,14 +9,14 @@ public abstract class AI_Base : MonoBehaviour
     // 기본 체력, 데미지, 이동 속도, 감지 범위, 시야각 등 공통 속성
     [SerializeField] UI_EnemyStatusBar _statusBar;
     protected MonsterData _monsterData;
- 
+    int _currentHp = 0;
     protected AI_State _state = AI_State.Idle;
     public event Action OnDie;
     public void SetInfo(MonsterData monsterData)
     {
         _monsterData = monsterData;
-      
-        _statusBar.Init(_monsterData.Hp);
+        _currentHp = monsterData.Hp;
+        _statusBar.Init(_currentHp);
     }
     public virtual bool Init()
     {
@@ -24,6 +24,7 @@ public abstract class AI_Base : MonoBehaviour
         {
             _monsterData.NameID = "TestZombie";
             _monsterData.Hp = 100;
+            _currentHp = _monsterData.Hp;
             _monsterData.AttackDelay = 5.0f;
             _monsterData.DetectionRange = 7.5f;
             _monsterData.DetectionAngle = 120;
@@ -47,12 +48,12 @@ public abstract class AI_Base : MonoBehaviour
 
     public virtual void TakeDamage(int amount)
     {
-        _monsterData.Hp -= amount;
+        _currentHp -= amount;
         if(_statusBar.gameObject.activeSelf==false)
             _statusBar.gameObject.SetActive(true);
-        _statusBar?.UpdateHpBar(Mathf.RoundToInt(_monsterData.Hp));
+        _statusBar?.UpdateHpBar(Mathf.RoundToInt(_currentHp));
         
-        if (_monsterData.Hp <= 0f)
+        if (_currentHp<= 0f)
         {
             Die();
         }
@@ -72,7 +73,7 @@ public abstract class AI_Base : MonoBehaviour
     public float DetectionRange { get { return _monsterData.DetectionRange; } }
     public float DetectionAngle { get { return _monsterData.DetectionAngle; } }
     public float Damage { get { return _monsterData.AttackDamage; } }
-    public int Health { get { return _monsterData.Hp; } }
+    public int Health { get { return _currentHp; } }
     public float AttackRange { get { return _monsterData.AttackRange; } }
     public float AttackDelay { get { return _monsterData.AttackDelay; } }
 }

@@ -10,7 +10,7 @@ public class M870 : WideSpreadWeaphonBase
     {
         if (!CanFire()) return;
 
-        Debug.Log(weaponName + " fired a M870 blast!");
+       
         SetNextFireTime();
 
         for (int i = 0; i < pelletCount; i++)

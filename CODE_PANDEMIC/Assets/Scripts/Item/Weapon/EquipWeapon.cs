@@ -61,6 +61,7 @@ public class EquipWeapon : MonoBehaviour
                 Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
                 {
                     _weapon = obj.GetComponent<WeaponBase>();
+                    _weapon.SetInfo(data);
                 });
                 break;
             case Define.WeaponType.RangeWeapon:

@@ -2,38 +2,38 @@ using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
 {
-    public string weaponName;
-    public float damage;
-    public float fireRate;
-    public float range;
-    private float nextFireTime;
-
+  
+    protected WeaponData _weaponData;
+    private float _nextFireTime;
     private bool isFacingRight = true;
     [SerializeField] private SpriteRenderer weaponSpriteRenderer;
 
     void Update()
     {
-        if (transform.root.CompareTag("Player"))
-        {
-            RotateToMouse();
-        }
+       
+       RotateToMouse();
+        
     }
-
+    public void SetInfo(WeaponData data)
+    {
+        _nextFireTime = 0f;
+        _weaponData = data;
+    }
     public abstract void Attack();
 
     public virtual void Reload()
     {
-        Debug.Log(weaponName + " is reloading...");
+        Debug.Log( " Reloading...");
     }
 
     protected bool CanFire()
     {
-        return Time.time >= nextFireTime;
+        return Time.time >= _nextFireTime;
     }
 
     protected void SetNextFireTime()
     {
-        nextFireTime = Time.time + fireRate;
+        _nextFireTime = Time.time + _weaponData.FireRate;
     }
 
     public void SetFacingDirection(bool facingRight)
