@@ -16,7 +16,7 @@ public class AI_AstarControl : MonoBehaviour
     private float _collisionDiameter = 1.3f;
     private string _obstacleLayerName = "Obstacle";
 
-    private void Update()
+    private void Start()
     {
         ConfigureAllAIPaths();
         AssignDestinations();

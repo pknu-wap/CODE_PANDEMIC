@@ -6,7 +6,7 @@ public class AI_NurseZombie : AI_Controller
     public float SkillCooldown = 8f;
     public float SkillChargeDelay = 0.5f;    
     public float SyringeSpeed = 10f;  
-    public float SyringeRange = 10f;
+    public float SyringeRange = 7f;
 
     public LayerMask TargetLayer;
 

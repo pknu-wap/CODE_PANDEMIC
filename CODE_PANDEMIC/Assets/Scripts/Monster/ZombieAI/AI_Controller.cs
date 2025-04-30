@@ -68,8 +68,20 @@ public class AI_Controller : AI_Base
     {
         if (_player == null)
             return;
-
-        _renderer.flipX = _player.position.x > transform.position.x;
+        if (_currentState is not AI_StateAttack)
+        {
+            Vector3 scale = transform.localScale;
+            if (_player.position.x > transform.position.x)
+            {
+                scale.x = -Mathf.Abs(scale.x);
+            }
+            else
+            {
+                scale.x = Mathf.Abs(scale.x);
+            }
+            transform.localScale = scale;
+        }
+    
         _currentState?.OnFixedUpdate();    
     }
 
@@ -77,7 +89,7 @@ public class AI_Controller : AI_Base
     {
         if (_aiFov != null)
         {
-            float angle = _renderer.flipX ? 0f : 180f;
+            float angle = transform.localScale.x < 0 ? 0f : 180f;
             _aiFov.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
         }
     }
@@ -128,7 +140,7 @@ public class AI_Controller : AI_Base
         }
         if (this is AI_NurseZombie nurse)
         {
-            return distance <= nurse.SyringeRange * 0.5f;
+            return distance <= nurse.SyringeRange * 0.8f;
         }
         if (this is AI_PatientZombie)
         {
@@ -155,7 +167,6 @@ public class AI_Controller : AI_Base
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        _aiPath.canMove = true;
         StopAttack();
     }
     
@@ -187,12 +198,12 @@ public class AI_Controller : AI_Base
 
     public void StopAttack()
     {
-        ChangeState(new AI_StateIdle(this));
         _isAttacking = false;
-        if (_aiDamageCoroutine != null)
+        if (_aiDamageCoroutine != null && !IsAttacking())
         {
             StopCoroutine(_aiDamageCoroutine);
             _aiDamageCoroutine = null;
+            ChangeState(new AI_StateIdle(this));
         }
     }
 }

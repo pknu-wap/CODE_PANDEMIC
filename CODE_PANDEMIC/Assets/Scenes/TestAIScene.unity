@@ -339,7 +339,7 @@ Transform:
   m_GameObject: {fileID: 522302191}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.77, y: -0.11, z: 0}
+  m_LocalPosition: {x: -6.85, y: -0.26, z: 0}
   m_LocalScale: {x: 0.9324808, y: 9.022279, z: 0.98674}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -404,6 +404,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6972020491835940751, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
+      propertyPath: m_Size.y
+      value: 5.138731
+      objectReference: {fileID: 0}
+    - target: {fileID: 6972020491835940751, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.084365726
+      objectReference: {fileID: 0}
     - target: {fileID: 7458043515022671168, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
       propertyPath: m_Name
       value: Player_0
@@ -433,10 +441,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: NurseZombie
       objectReference: {fileID: 0}
+    - target: {fileID: 6178345702329988915, guid: dcfbfb8eeeb31d14785d412732946a4e, type: 3}
+      propertyPath: SyringeRange
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7404335193731527411, guid: dcfbfb8eeeb31d14785d412732946a4e, type: 3}
       propertyPath: _nurseZombie
       value: 
       objectReference: {fileID: 724592866}
+    - target: {fileID: 7535048311615465550, guid: dcfbfb8eeeb31d14785d412732946a4e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7535048311615465550, guid: dcfbfb8eeeb31d14785d412732946a4e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7535048311615465550, guid: dcfbfb8eeeb31d14785d412732946a4e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7686946515410300781, guid: dcfbfb8eeeb31d14785d412732946a4e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.98

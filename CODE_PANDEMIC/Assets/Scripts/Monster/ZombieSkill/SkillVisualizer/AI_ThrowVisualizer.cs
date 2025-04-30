@@ -45,33 +45,37 @@ public class AI_ThrowVisualizer : MonoBehaviour
     }
 
     public void Show(Vector2 targetPosition, float duration)
-    {
-        Vector2 origin = _nurseZombie.transform.position;
-        Vector2 direction = (targetPosition - origin).normalized;
+{
+    Vector2 origin = _nurseZombie.transform.position;
+    Vector2 direction = (targetPosition - origin).normalized;
+    float maxRange = _nurseZombie.SyringeRange;
 
-        float maxRange = _nurseZombie.SyringeRange;
+    transform.position = origin;
+    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
-        // Raycast로 장애물 거리 측정
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxRange, LayerMask.GetMask("Obstacle"));
-        float effectiveRange = hit.collider != null ? hit.distance : maxRange;
+    float height = 0.5f;
+    float width = maxRange;
 
-        // 회전과 위치 지정
-        transform.position = origin;
-        transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+    Vector3 parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
+    float scaleX = 1f / parentScale.x;
+    float scaleY = 1f / parentScale.y;
 
-        float height = 0.5f;
-        float width = effectiveRange;
+    float directionSign = Mathf.Sign(_nurseZombie.transform.localScale.x);
+    float signedWidth = width * directionSign;
 
-        // 외곽 Mesh 생성
-        _outlineFilter.mesh = GenerateRectMesh(height, width);
+    _outlineFilter.mesh = GenerateRectMesh(height, Mathf.Abs(signedWidth));
 
-        if (_fillCoroutine != null)
-            StopCoroutine(_fillCoroutine);
-        _fillCoroutine = StartCoroutine(AnimateFill(duration, height, width));
+    if (_fillCoroutine != null)
+        StopCoroutine(_fillCoroutine);
+    _fillCoroutine = StartCoroutine(AnimateFill(duration, height, signedWidth));
 
-        _meshRenderer.enabled = true;
-        _outlineRenderer.enabled = true;
-    }
+    transform.localScale = new Vector3(1f / parentScale.x, 1f / parentScale.y, 1f);
+
+    _meshRenderer.enabled = true;
+    _outlineRenderer.enabled = true;
+}
+
 
     public void Hide()
     {
@@ -89,17 +93,19 @@ public class AI_ThrowVisualizer : MonoBehaviour
     private IEnumerator AnimateFill(float duration, float height, float fullWidth)
     {
         float elapsed = 0f;
+        float absWidth = Mathf.Abs(fullWidth);
+
         while (elapsed < duration)
         {
             float factor = elapsed / duration;
-            float width = fullWidth * factor;
+            float width = absWidth * factor;
             _meshFilter.mesh = GenerateRectMesh(height, width);
             _meshRenderer.material.color = new Color(1f, 0f, 0f, factor);
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        _meshFilter.mesh = GenerateRectMesh(height, fullWidth);
+        _meshFilter.mesh = GenerateRectMesh(height, absWidth);
         _meshRenderer.material.color = new Color(1f, 0f, 0f, 0.5f);
     }
 
