@@ -46,8 +46,7 @@ public class R1895 : PistolWeaponBase
                 bulletScript.Fire(firePoint.transform.right);
             }
 
-           
-            Debug.Log($"ÃÑ¾Ë ¹ß»çµÊ ¹æÇâ: {firePoint.transform.right}");
+          
         }
     }
 

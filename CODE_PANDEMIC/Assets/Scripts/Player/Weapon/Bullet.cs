@@ -16,12 +16,10 @@ public class Bullet : MonoBehaviour
     {
         CancelInvoke();
         Invoke("ReturnToPool", lifeTime);
-        Debug.Log($"ÃÑ¾Ë »ý¼ºµÊ at {transform.position}");
     }
 
     public void Fire(Vector2 direction)
     {
-        Debug.Log("ÃÑ¾Ë ¹ß»çµÊ ¹æÇâ: " + direction);
         rb.velocity = direction.normalized * speed;
     }
 
