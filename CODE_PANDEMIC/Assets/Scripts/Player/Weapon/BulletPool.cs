@@ -19,7 +19,6 @@ public class BulletPool : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         if (bulletPrefab == null)
         {
