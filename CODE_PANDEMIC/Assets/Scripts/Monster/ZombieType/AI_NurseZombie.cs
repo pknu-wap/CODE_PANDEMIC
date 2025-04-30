@@ -31,7 +31,7 @@ public class AI_NurseZombie : AI_Controller
         _monsterData.AttackDelay = 5.0f;
         _monsterData.DetectionRange = 7.5f;
         _monsterData.DetectionAngle = 180;
-        _monsterData.MoveSpeed = 1f;
+        _monsterData.MoveSpeed = 3.5f;
         _monsterData.AttackRange = 2f;
         _monsterData.AttackDamage = 10;
     }

@@ -234,7 +234,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.6, y: 0.16, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3352684330242121491}
@@ -477,6 +477,7 @@ MonoBehaviour:
   _animator: {fileID: 1968915039016103880}
   _aiFov: {fileID: 1849654547819132813}
   _aiPath: {fileID: 5896992501134200855}
+  _destinationSetter: {fileID: 0}
   SweepRange: 2
   SweepAngle: 90
   SweepCount: 5
