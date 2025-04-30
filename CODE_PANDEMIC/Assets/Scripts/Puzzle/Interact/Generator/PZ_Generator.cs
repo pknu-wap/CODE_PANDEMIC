@@ -15,6 +15,11 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     [SerializeField] private Material _defaultMaterial;
     [SerializeField] private Material _highlightMaterial;
 
+    public void SetInfo(PuzzleData data)
+    {
+        _rememberCount = data.RememberCount;
+    }
+
     private void Start()
     {
         _animator = GetComponentInChildren<Animator>();
@@ -27,8 +32,6 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
         {
             return;
         }
-
-        _isInteracted = true;
 
         Managers.UI.ShowPopupUI<PZ_Remember_Board>("PZ_Remember_Board_Prefab", null, (popupPuzzle) =>
         {
@@ -57,6 +60,8 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
         StartCoroutine(SettingLeverPosition());
 
         _animator.SetBool("IsInteracted", true);
+
+        _isInteracted = true;
 
         // 여기에 맵의 그림자를 걷어내는 로직 구현 예정
     }

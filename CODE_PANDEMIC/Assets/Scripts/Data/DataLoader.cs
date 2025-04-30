@@ -251,7 +251,8 @@ public class PuzzleData
     public RewardData RewardItem;
     public Vector3 Pos;
     public bool IsMain;
-    public BlockData LinkedBlock;   
+    public BlockData LinkedBlock;
+    public int RememberCount;
 }    
 
 [Serializable]

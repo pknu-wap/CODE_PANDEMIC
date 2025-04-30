@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PZ_Safe : PZ_Interact_Base
+public class PZ_Safe : PZ_Interact_Spawn
 {
     public bool _hasKey = false; // 열쇠로 열기
 

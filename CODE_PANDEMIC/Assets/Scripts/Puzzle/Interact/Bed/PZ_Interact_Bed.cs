@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PZ_Interact_Bed : PZ_Interact_Base
+public class PZ_Interact_Bed : PZ_Interact_NonSpawn
 {
     // 침대 상호 작용
     public override void Interact(GameObject player)
