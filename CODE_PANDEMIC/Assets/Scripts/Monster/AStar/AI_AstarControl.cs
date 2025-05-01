@@ -7,7 +7,7 @@ public class AI_AstarControl : MonoBehaviour
     private int _gridDepth = 46;
     private float _nodeSize = 1.0f;
     private float _collisionDiameter = 0.5f;
-    private string _obstacleLayerName = "Obstacle";
+    private string _obstacleLayerName = "Wall";
 
     private void Awake()
     {
