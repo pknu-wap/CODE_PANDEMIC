@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2040285644913179475}
   - component: {fileID: 5418511048883145373}
   - component: {fileID: 4809951674623516810}
+  - component: {fileID: -6898392489721485054}
   m_Layer: 8
   m_Name: PZ_Interact_Bed_Prefab
   m_TagString: Untagged
@@ -100,3 +101,48 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 5418511048883145373}
   _defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   _highlightMaterial: {fileID: 2100000, guid: 10404f29615785a4ba7e41e060f60f20, type: 2}
+--- !u!61 &-6898392489721485054
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6835503875349519600}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0030822754, y: 0.007757187}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.91, y: 1.84}
+    newSize: {x: 1.91, y: 1.84}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.49517822, y: 1.0798454}
+  m_EdgeRadius: 0
