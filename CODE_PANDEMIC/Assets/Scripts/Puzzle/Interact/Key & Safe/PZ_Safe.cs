@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Inventory.Model;
+using System.Collections.Generic;
 
 public class PZ_Safe : PZ_Interact_Spawn
 {
@@ -36,13 +38,26 @@ public class PZ_Safe : PZ_Interact_Spawn
 
         base.Interact(player);
 
-        RewardItem(_key);
+        RemoveKeyAndReward(_key);
 
         _animator.SetBool("IsOpened", true);
 
         StartCoroutine(DestroyThisObject());
     }
-
+    private int HasKey()
+    {
+        int key = Managers.Game.Inventory.HasItem(_interactData.KeyID);
+        return key;
+    }
+    private void RemoveKeyAndReward(int key)
+    {
+        if (key != -1)
+        {
+            Managers.Game.Inventory.RemoveItem(key, 1);
+            RewardItem();
+        }
+       
+    }
     private IEnumerator DestroyThisObject()
     {
         yield return new WaitForSeconds(0.5f);
