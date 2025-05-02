@@ -5,7 +5,7 @@ public class PZ_BloodPack : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody;
 
     private float _speed = 20f; // 던지는 속도
-    private float _distance = 1.5f; // 들고 있는 거리
+    private float _distance = 1.0f; // 들고 있는 거리
     private int _healValue = 10;
 
     private bool _isThrowing = false;
