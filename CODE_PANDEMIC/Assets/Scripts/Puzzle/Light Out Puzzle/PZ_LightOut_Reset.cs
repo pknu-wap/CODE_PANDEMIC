@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class PZ_LightOut_Reset : UI_PopUp
+﻿public class PZ_LightOut_Reset : UI_PopUp
 {
     private void Start()
     {
