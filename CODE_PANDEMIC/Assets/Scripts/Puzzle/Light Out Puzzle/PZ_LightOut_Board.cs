@@ -7,7 +7,7 @@ public class PZ_LightOut_Board : PZ_Puzzle_Main
 
     private List<PZ_LightOut_Button> _lightOutButtonList = new List<PZ_LightOut_Button>(); // 소환된 버튼들 관리
 
-    private int _buttonMaxCount = 25; // Light 버튼 개수
+    private int _buttonMaxCount = 9; // Light 버튼 개수
 
     private void Start()
     {
@@ -51,25 +51,25 @@ public class PZ_LightOut_Board : PZ_Puzzle_Main
         _lightOutButtonList[currentIndex].ChangeButtonState();
 
         // 상 방향 유효 체크
-        if (currentIndex - 5 >= 0)
+        if (currentIndex - 3 >= 0)
         {
-            _lightOutButtonList[currentIndex - 5].ChangeButtonState();
+            _lightOutButtonList[currentIndex - 3].ChangeButtonState();
         }
 
         // 하 방향 유효 체크
-        if (currentIndex + 5 <= _buttonMaxCount - 1)
+        if (currentIndex + 3 <= _buttonMaxCount - 1)
         {
-            _lightOutButtonList[currentIndex + 5].ChangeButtonState();
+            _lightOutButtonList[currentIndex + 3].ChangeButtonState();
         }
 
         // 좌 방향 유효 체크
-        if (currentIndex != 0 && currentIndex != 5 && currentIndex != 10 && currentIndex != 15 && currentIndex != 20)
+        if (currentIndex != 0 && currentIndex != 3 && currentIndex != 6)
         {
             _lightOutButtonList[currentIndex - 1].ChangeButtonState();
         }
 
         // 우 방향 유효 체크
-        if (currentIndex != 4 && currentIndex != 9 && currentIndex != 14 && currentIndex != 19 && currentIndex != 24)
+        if (currentIndex != 2 && currentIndex != 5 && currentIndex != 8)
         {
             _lightOutButtonList[currentIndex + 1].ChangeButtonState();
         }

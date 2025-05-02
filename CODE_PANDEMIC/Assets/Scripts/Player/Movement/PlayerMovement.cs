@@ -10,9 +10,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _weaponLocalPosition = new Vector3(-0.5f, 0f, 0f);
 
     // 이동 관련
-    private float _walkSpeed = 5f;
-    private float _runSpeed = 8f;
-    private float _dashSpeed = 10f;
+    private float _walkSpeed = 3.5f;
+    private float _runSpeed = 5f;
+    private float _dashSpeed = 8f;
     private float _dashDuration = 0.1f;
     private float _dashCooldown = 0.5f;
     private Vector2 _moveInput;
