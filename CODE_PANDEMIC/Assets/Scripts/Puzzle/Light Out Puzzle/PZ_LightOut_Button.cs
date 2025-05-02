@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class PZ_LightOut_Button : UI_Base
 {
-    private RectTransform _rectTransform; // 추후 Bind 배우고 수정 예정
     private Image _image; // 추후 Bind 배우고 수정 예정
 
     private Sprite _correctSprite; // 맞았을때 색
@@ -14,7 +13,6 @@ public class PZ_LightOut_Button : UI_Base
 
     public void Setting(int buttonIndex)
     {
-        _rectTransform = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
 
         Managers.Resource.LoadAsync<Sprite>("PZ_LightOut_Correct_Sprite", (getSprite) =>
@@ -30,8 +28,6 @@ public class PZ_LightOut_Button : UI_Base
         });
 
         _buttonIndex = buttonIndex;
-
-        _rectTransform.sizeDelta = new Vector2(160, 160);
 
         BindEvent(gameObject, OnButtonClick);
     }
