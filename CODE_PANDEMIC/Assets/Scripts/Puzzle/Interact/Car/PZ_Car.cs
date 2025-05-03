@@ -47,6 +47,11 @@ public class PZ_Car : PZ_Interact_NonSpawn
     // 방향키 입력 대기
     private IEnumerator CheckDirection()
     {
+        _Parking.SpawnArrows(transform, CarMoveDirection.North, _isVerticalCar, _body1Index, _body2Index);
+        _Parking.SpawnArrows(transform, CarMoveDirection.West, _isVerticalCar, _body1Index, _body2Index);
+        _Parking.SpawnArrows(transform, CarMoveDirection.South, _isVerticalCar, _body1Index, _body2Index);
+        _Parking.SpawnArrows(transform, CarMoveDirection.East, _isVerticalCar, _body1Index, _body2Index);
+
         yield return new WaitUntil(() =>
         Input.GetKeyDown(KeyCode.W) ||
         Input.GetKeyDown(KeyCode.A) ||
@@ -76,6 +81,8 @@ public class PZ_Car : PZ_Interact_NonSpawn
     private IEnumerator MoveCar()
     {
         yield return StartCoroutine(CheckDirection()); // 입력 대기
+
+        _Parking.DestroyAllArrows();
 
         // 움직일 수 있는지 조건 확인
         if (!_Parking.CanMoveCar(this, _direction, _isVerticalCar, _body1Index, _body2Index))
