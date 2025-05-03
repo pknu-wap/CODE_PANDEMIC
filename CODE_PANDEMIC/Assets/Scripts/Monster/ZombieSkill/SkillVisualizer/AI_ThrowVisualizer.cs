@@ -29,6 +29,7 @@ public class AI_ThrowVisualizer : MonoBehaviour
         mat.color = new Color(1f, 0f, 0f, 0f);
         _meshRenderer.material = mat;
         _meshRenderer.enabled = false;
+        mat.renderQueue = 4000;
 
         _outlineObject = new GameObject("RectOutline");
         _outlineObject.transform.SetParent(transform);
@@ -42,6 +43,7 @@ public class AI_ThrowVisualizer : MonoBehaviour
         Material outlineMat = new Material(Shader.Find("Sprites/Default"));
         outlineMat.color = new Color(1f, 0f, 0f, 0.2f);
         _outlineRenderer.material = outlineMat;
+        outlineMat.renderQueue = 4000;
     }
 
     public void Show(Vector2 targetPosition, float duration)

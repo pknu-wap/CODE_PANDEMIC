@@ -15,6 +15,7 @@ public class AI_ContaminatedArea : MonoBehaviour
 
     private IEnumerator DamageOverTime()
     {
+        yield return new WaitForSeconds(0.5f);
         float elapsed = 0f;
         while (elapsed < _duration)
         {

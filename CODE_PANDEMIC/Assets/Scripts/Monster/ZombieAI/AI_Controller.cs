@@ -79,7 +79,8 @@ public class AI_Controller : AI_Base
         {
             StopAttack();
         }
-    }
+        
+        }
 
     private void FixedUpdate()
     {
@@ -105,17 +106,14 @@ public class AI_Controller : AI_Base
     {
     foreach (var obj in _aiFov.GetDetectedObjects())
     {
-        if (obj.TryGetComponent<PlayerStatus>(out var status))
+        if (obj.TryGetComponent<PlayerStatus>(out _))
         {
             _player = obj.transform;
             _destinationSetter.target = _player;
             break;
         }
-        else
-        {
-            _destinationSetter.target = null;
-        }
     }
+    if (_player == null) _destinationSetter.target = null;
     }
     public void UpdateFovDirection()
     {
@@ -266,7 +264,7 @@ public class AI_Controller : AI_Base
     {
             _aiPath.radius = _radius;
             _aiPath.height = _height;
-            _aiPath.maxSpeed = MoveSpeed;
+            // _aiPath.maxSpeed = MoveSpeed;
             _aiPath.pickNextWaypointDist = _pickNextWaypointDist;
             _aiPath.orientation = OrientationMode.YAxisForward; // 2D 모드
             _aiPath.enableRotation = false;
