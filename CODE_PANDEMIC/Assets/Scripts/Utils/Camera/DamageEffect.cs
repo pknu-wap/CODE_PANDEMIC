@@ -43,10 +43,10 @@ public class DamageEffect : MonoBehaviour
     {
         float hpPercent = (float)obj;
 
-        if (hpPercent <= 0.5f)
+        if (hpPercent <= 0.7f)
         {
             float t = Mathf.InverseLerp(0.5f, 0f, hpPercent);
-            float intensity = Mathf.Lerp(0f, 0.7f, t);
+            float intensity = Mathf.Lerp(0.2f, 0.7f, t);
             _vignette.intensity.value = intensity;
             _vignette.active = true;
         }

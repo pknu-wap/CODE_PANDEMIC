@@ -12,19 +12,9 @@ public class PZ_Interact_Spawn : PZ_Interact_Base
         _interactData = data;
     }
     
-    protected int HasKey()
+    protected void RewardItem()
     {
-       int key= Managers.Game.Inventory.HasItem(_interactData.KeyID);
-        return key;
-    }
-    protected void RewardItem(int key)
-    {
-        if (key != -1)
-        {
-            Managers.Game.Inventory.RemoveItem(key, 1);
-        }
         List<RewardData> rewardItemKey = _interactData.Rewards;
-        Debug.Log(_interactData.Rewards.Count);
         for (int i = 0; i < rewardItemKey.Count; i++)
         {
             int index = i;
@@ -35,7 +25,7 @@ public class PZ_Interact_Spawn : PZ_Interact_Base
             }
             else
             {
-                
+
                 Debug.Log("No Reward");
             }
 
