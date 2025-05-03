@@ -12,7 +12,8 @@ public enum CarMoveDirection
 
 public class PZ_Car : PZ_Interact_NonSpawn
 {
-    [SerializeField] private Rigidbody2D _rigidbody;
+    private PZ_Parking _Parking;
+    private Rigidbody2D _rigidbody;
 
     [SerializeField] private bool _isMainCar = false;
     [SerializeField] private bool _isVerticalCar = false;
@@ -23,6 +24,12 @@ public class PZ_Car : PZ_Interact_NonSpawn
     private CarMoveDirection _direction = CarMoveDirection.None;
 
     private float _moveValue = 3f;
+
+    private void Start()
+    {
+        _Parking = GetComponentInParent<PZ_Parking>();
+        _rigidbody = GetComponentInParent<Rigidbody2D>();
+    }
 
     public override void Interact(GameObject player)
     {
@@ -66,6 +73,14 @@ public class PZ_Car : PZ_Interact_NonSpawn
     private IEnumerator MoveCar()
     {
         yield return StartCoroutine(CheckDirection());
+
+        if (!_Parking.CanMoveCar(this, _direction, _isVerticalCar, _body1Index, _body2Index))
+        {
+            _isInteracted = false;
+            _direction = CarMoveDirection.None;
+
+            yield break;
+        }
 
         Vector2 currentPos = _rigidbody.position;
         Vector2 destinationPos = _rigidbody.position;
