@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '99
+  m_text: '
 
 '
   m_isRightToLeft: 0
@@ -225,8 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8520e6a5e889443bae14d841592fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemImage: {fileID: 0}
-  _text: {fileID: 0}
+  _emptyImage: {fileID: 21300000, guid: 2ddd89b2099a5ea4ab6c98ad2a10c3ce, type: 3}
 --- !u!1 &3165493486869732829
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +292,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 2ddd89b2099a5ea4ab6c98ad2a10c3ce, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

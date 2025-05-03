@@ -9,8 +9,10 @@ public class UIController : MonoBehaviour
 {
     PlayerInput _inputActions;
     InventoryController _inventory;
+   
     private void Awake()
     {
+        
         _inputActions = new PlayerInput();
         _inventory = Utils.GetOrAddComponent<InventoryController>(gameObject);
     }
@@ -21,24 +23,22 @@ public class UIController : MonoBehaviour
 
         _inputActions.UI.Inventory.performed += OnInventory;
         _inputActions.UI.Pause.performed += OnClickEscape;
+        _inputActions.UI.MiniMap.performed += OnClickTab;
     }
 
     private void OnDisable()
     {
-       // if (_inputActions != null)
-       // {
+     
             _inputActions.UI.Inventory.performed -= OnInventory;
             _inputActions.UI.Pause.performed -= OnClickEscape;
-
+             _inputActions.UI.MiniMap.performed -= OnClickTab;   
             _inputActions.Disable();
-           // _inputActions.Dispose(); 
-           // _inputActions = null;
-      //  }
+           
     }
 
     private void OnInventory(InputAction.CallbackContext ctx)
     {
-        if (_inventory != null)
+        if (_inventory != null&&Managers.Scene.CurrentSceneType==Define.SceneType.GameScene)
         {
             _inventory.ShowHide(ctx);
         }
@@ -49,8 +49,23 @@ public class UIController : MonoBehaviour
     {
         if (Managers.UI.HasPopUpUI())
             Managers.UI.ClosePopupUI();
+        else if (Managers.UI.IsOpenInventory())
+            Managers.UI.HideInventoryUI();
         else
-        Managers.UI.ShowPopupUI<UI_PausePopUp>();
+            Managers.UI.ShowPopupUI<UI_PausePopUp>();
+
     }
+    private void OnClickTab(InputAction.CallbackContext ctx)
+    {
+        if (Managers.UI.EnlargedMiniMapUI != null)
+            Managers.UI.CloseEnlargedMiniMap();
+        else
+            Managers.UI.OpenEnlargedMiniMap();
+    }
+       
+         
+        
+            
+        
 
 }

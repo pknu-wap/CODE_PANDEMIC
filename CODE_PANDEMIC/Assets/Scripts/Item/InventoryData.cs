@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static Define;
+using static UnityEditor.Progress;
 
 namespace Inventory.Model
 {
@@ -133,7 +134,8 @@ namespace Inventory.Model
             }
 
             public void SwapItems(int index_1, int index_2)
-            {
+            {   
+                if(index_1 < 0 || _inventoryItems[index_1].IsEmpty) return;
                 InventoryItem item1 = _inventoryItems[index_1];
                 _inventoryItems[index_1] = _inventoryItems[index_2];
                 _inventoryItems[index_2] = item1;
