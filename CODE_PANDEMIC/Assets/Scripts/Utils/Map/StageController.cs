@@ -120,7 +120,9 @@ public class StageController : MonoBehaviour
     {
         if(LinkedBlocks.ContainsKey(id))
         {
-            Destroy(LinkedBlocks[id].gameObject);
+            //Destroy(LinkedBlocks[id].gameObject);
+
+            StartCoroutine(LinkedBlocks[id].DestroyThisObject());
             LinkedBlocks.Remove(id);
         }
     }

@@ -14,8 +14,8 @@ public class PlayerStatus : MonoBehaviour
     private PlayerController _playerController;
 
     // 체력 정보
-    private int _maxHp = 100;
-    private float _currentHp;
+   private int _maxHp = 100;
+    [SerializeField] private float _currentHp;
     private float _effectHp;
 
     // 데미지 효과
@@ -33,6 +33,7 @@ public class PlayerStatus : MonoBehaviour
     {
         _currentHp = _maxHp;
         _effectHp = _maxHp;
+        _playerController = GetComponent<PlayerController>();
 
         if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StatusBar != null)
         {
@@ -77,6 +78,7 @@ public class PlayerStatus : MonoBehaviour
         }
 
         _currentHp = Mathf.Clamp(_currentHp - damageValue, 0, _maxHp);
+        if(_currentHp<=_maxHp*0.5f) Managers.Event.InvokeEvent("RiskDamage", _currentHp/_maxHp);
 
         if (_currentHp <= 0)
         {
@@ -93,6 +95,7 @@ public class PlayerStatus : MonoBehaviour
     // 체력 회복
     public void OnHealed(float healValue)
     {
+        if (_currentHp/_maxHp<=0.5f && (_currentHp+healValue / _maxHp) >  0.5f) Managers.Event.InvokeEvent("ResetIntensity");
         _currentHp = Mathf.Clamp(_currentHp + healValue, 0, _maxHp);
         _effectHp = Mathf.Max(_effectHp, _currentHp);
 
@@ -123,5 +126,6 @@ public class PlayerStatus : MonoBehaviour
     private void OnPlayerDead()
     {
         Managers.Event.InvokeEvent("OnPlayerDead");
+        Managers.Event.InvokeEvent("ResetIntensity");
     }
 }
