@@ -163,13 +163,13 @@ public class PZ_Parking : MonoBehaviour
 
                 case CarMoveDirection.East: // 오른쪽으로 움직이는 경우
 
-                    if (body1Index[1] == 5 || !IsEmptyPlace(body1Index[0], body1Index[1] + 1))
+                    if (body1Index[1] == 5 || !IsEmptyPlace(body2Index[0], body2Index[1] + 1))
                     {
                         return false;
                     }
 
-                    _emptyPlace[body1Index[0], body1Index[1] + 1] = false;
-                    _emptyPlace[body2Index[0], body2Index[1]] = true;
+                    _emptyPlace[body2Index[0], body2Index[1] + 1] = false;
+                    _emptyPlace[body1Index[0], body1Index[1]] = true;
 
                     moveCar._body1Index[0] = body1Index[0];
                     moveCar._body1Index[1] = body1Index[1] + 1;
