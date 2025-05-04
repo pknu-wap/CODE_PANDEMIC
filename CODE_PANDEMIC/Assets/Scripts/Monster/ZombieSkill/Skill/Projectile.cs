@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour
         if (_hasTriggered) return;
 
         if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0 || 
-            ((1 << collision.gameObject.layer) & LayerMask.GetMask("Obstacle")) != 0)
+            ((1 << collision.gameObject.layer) & LayerMask.GetMask("Wall")) != 0)
         {
             Vector2 spawnPos;
 
