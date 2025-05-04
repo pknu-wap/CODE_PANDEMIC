@@ -100,7 +100,6 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isRunning", isMoving && isRunning);
         _animator.SetBool("isDashing", isDashing);
 
-        HandleWeaponHolder();
 
         if (UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
         {
@@ -108,23 +107,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    private void HandleWeaponHolder()
-    {
-        if (_weaponHolder == null)
-            return;
-
-        Vector3 playerScale = transform.localScale;
-
-        if (playerScale.x > 0)
-        {
-            _weaponHolder.localScale = new Vector3(1f, 1f, 1f);
-        }
-        else if (playerScale.x < 0)
-        {
-            _weaponHolder.localScale = new Vector3(1f, -1f, 1f);
-        }
-    }
 
 }
 

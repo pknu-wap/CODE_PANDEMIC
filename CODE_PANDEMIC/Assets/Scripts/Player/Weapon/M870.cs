@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class M870 : WideSpreadWeaphonBase
+public class M870 : WideSpreadWeaponBase
 {
     [SerializeField] private int pelletCount = 6;
     [SerializeField] private float spreadAngle = 15f;
