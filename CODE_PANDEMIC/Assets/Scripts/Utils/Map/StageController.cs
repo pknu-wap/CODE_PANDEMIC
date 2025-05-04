@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class StageController : MonoBehaviour
 {
-    Dictionary<int, PZ_Main_Block> LinkedBlocks;
     StageData _stageData;
+    Dictionary<int, PZ_Main_Block> LinkedBlocks;
     [SerializeField]
     private  PolygonCollider2D _cameraLimit;
     [SerializeField]
     private Camera _mapCamera;
+
     [Header("ParentObject")]
     public Transform _spawnerParent;
     public Transform _puzzlesParent;
     public Transform _ItemsParent;
     public Transform _blockParent;
+
     public PolygonCollider2D CameraLimit { get { return _cameraLimit; } private set { _cameraLimit = value; } }
+
     public void SetInfo(StageData stageData)
     {
         LinkedBlocks = new Dictionary<int, PZ_Main_Block>();
