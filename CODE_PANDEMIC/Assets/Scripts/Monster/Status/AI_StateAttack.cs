@@ -54,5 +54,6 @@ public class AI_StateAttack : AI_IState
         _isSkillPlaying = false;
         _controller.ChangeState(new AI_StateIdle(_controller));
         _controller._animator.SetTrigger("Idle");
+        _controller.StopAttack();
     }
 }

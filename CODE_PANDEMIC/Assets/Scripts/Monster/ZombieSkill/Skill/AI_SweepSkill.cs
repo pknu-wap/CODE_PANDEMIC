@@ -11,6 +11,8 @@ public class AI_SweepSkill : ISkillBehavior
     
     public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
+        controller._isUsingSkill = true;
+        controller._aiPath.canMove = false;
         if (!IsReady(controller))
         {
             var callback = onSkillComplete;
