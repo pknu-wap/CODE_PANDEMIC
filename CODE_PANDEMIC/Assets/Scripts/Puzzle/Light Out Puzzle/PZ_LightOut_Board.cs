@@ -9,6 +9,11 @@ public class PZ_LightOut_Board : PZ_Puzzle_Main
 
     private int _buttonMaxCount = 9; // Light 버튼 개수
 
+    public override bool Init()
+    {
+        return base.Init();
+    }
+
     private void Start()
     {
         Managers.UI.SetCanvas(gameObject);
