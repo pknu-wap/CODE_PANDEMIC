@@ -2,35 +2,55 @@ using UnityEngine;
 
 public class CloseRangeWeaponBase : WeaponBase
 {
-    [SerializeField] protected float attackRange = 1f;
-    [SerializeField] protected int damage = 10;
-    [SerializeField] protected LayerMask targetLayer;
-    [SerializeField] protected Transform attackPoint;
+    [SerializeField]
+    private GameObject bulletPrefab;
+    [SerializeField]
+    private GameObject firePoint;
+
+    private Animator _animator;
+    private bool isPickedUp = false;
+
+    void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     public override void Attack()
     {
         if (!CanFire()) return;
-
-        Debug.Log( " performed a short-range attack!");
         SetNextFireTime();
-        
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayer);
 
-        foreach (Collider2D enemy in hitEnemies)
+
+        if (_animator != null)
         {
-            Debug.Log("Hit " + enemy.name);
+            _animator.SetBool("Fire", true);
         }
+
+        if (bulletPrefab != null && firePoint != null)
+        {
+            GameObject bulletObject = BulletPool.Instance.GetBullet();
+            bulletObject.transform.position = firePoint.transform.position;
+            bulletObject.transform.rotation = firePoint.transform.rotation;
+
+            Bullet bullet = bulletObject.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                bullet.SetInfo(_weaponData.Damage);
+                bullet.Fire(firePoint.transform.right);
+            }
+
+            Debug.Log($"ÃÑ¾Ë ¹ß»çµÊ ¹æÇâ: {firePoint.transform.right}");
+        }
+
+        StartCoroutine(ResetFireBool());
     }
 
-    public override void Reload()
+    private System.Collections.IEnumerator ResetFireBool()
     {
-
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        yield return new WaitForSeconds(0.05f);
+        if (_animator != null)
+        {
+            _animator.SetBool("Fire", false);
+        }
     }
 }

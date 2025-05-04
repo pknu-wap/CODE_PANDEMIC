@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 191bf70b58b9dd24cb19bdf0967694c6
+guid: 7e05717aa5b6f384c8620c50b6400aa2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: R1895_0
+      name: PlayerDashNoArm_0
       rect:
         serializedVersion: 2
-        x: 297
-        y: 248
-        width: 257
-        height: 155
+        x: 218
+        y: 69
+        width: 244
+        height: 493
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c37fd3d5d235ee54e8c358b4f070fcaf
-      internalID: -213502520
+      spriteID: 0769805e6696d1c4cbe5b0292f05588b
+      internalID: 433579528
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_1
+      name: PlayerDashNoArm_1
       rect:
         serializedVersion: 2
-        x: 1076
-        y: 248
-        width: 298
-        height: 175
+        x: 777
+        y: 69
+        width: 345
+        height: 443
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4369eaeb73e5624dafbb2561795bc64
-      internalID: -1290177979
+      spriteID: a171e2bcd45ac514b9fa9d8242adde72
+      internalID: 1928857036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_3
+      name: PlayerDashNoArm_3
       rect:
         serializedVersion: 2
-        x: 1718
-        y: 256
-        width: 506
-        height: 218
+        x: 1299
+        y: 69
+        width: 463
+        height: 403
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f72b7b1bfe4d48a49ae5029e3f6d27dd
-      internalID: -1249857934
+      spriteID: 5840d10f4ba920e4e861c013845e7f37
+      internalID: -1598111557
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_5
+      name: PlayerDashNoArm_4
       rect:
         serializedVersion: 2
-        x: 2516
-        y: 256
-        width: 477
-        height: 218
+        x: 1928
+        y: 69
+        width: 475
+        height: 384
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bdf51d9b11423c84493a154255cbe706
-      internalID: 1152577647
+      spriteID: 1c2214a4ed6c18942b83e4c06850860b
+      internalID: -1853599609
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_8
+      name: PlayerDashNoArm_7
       rect:
         serializedVersion: 2
-        x: 3254
-        y: 256
-        width: 540
-        height: 218
+        x: 2576
+        y: 69
+        width: 466
+        height: 403
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,50 +195,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba6164566abf7db4bba4ba1aa7d3a4ec
-      internalID: -1424147444
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: R1895_9
-      rect:
-        serializedVersion: 2
-        x: 4954
-        y: 237
-        width: 409
-        height: 166
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4816ebeffd8b2a045b14d4489ea395bc
-      internalID: 2093897851
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: R1895_14
-      rect:
-        serializedVersion: 2
-        x: 4155
-        y: 237
-        width: 388
-        height: 147
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d2354ec859402d04faf3b3960e80e59d
-      internalID: -149634745
+      spriteID: 5443d57ebdd80ca45943c70d7fa041e1
+      internalID: -1687436372
       vertices: []
       indices: 
       edges: []
@@ -254,43 +212,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      R1895_0: -213502520
-      R1895_1: -1290177979
-      R1895_10: 421647515
-      R1895_11: 2075707980
-      R1895_12: -1453348354
-      R1895_13: -187179456
-      R1895_14: -149634745
-      R1895_15: -489636233
-      R1895_16: -2145566734
-      R1895_17: -297982772
-      R1895_18: 976983026
-      R1895_19: -648809443
-      R1895_2: -2041865247
-      R1895_20: -1695321954
-      R1895_21: 452310127
-      R1895_22: 980673227
-      R1895_23: -2108789416
-      R1895_24: 1799879578
-      R1895_25: -1623916029
-      R1895_26: 1789874417
-      R1895_27: 496520803
-      R1895_28: 2097620273
-      R1895_29: 1616307276
-      R1895_3: -1249857934
-      R1895_30: -1902065561
-      R1895_31: -1062285794
-      R1895_32: -1531636338
-      R1895_33: -2041015013
-      R1895_34: -1652604956
-      R1895_35: -2117254011
-      R1895_36: 930029960
-      R1895_4: -959139507
-      R1895_5: 1152577647
-      R1895_6: 591549148
-      R1895_7: -312528859
-      R1895_8: -1424147444
-      R1895_9: 2093897851
+      PlayerDashNoArm_0: 433579528
+      PlayerDashNoArm_1: 1928857036
+      PlayerDashNoArm_2: -1751650810
+      PlayerDashNoArm_3: -1598111557
+      PlayerDashNoArm_4: -1853599609
+      PlayerDashNoArm_5: 1033392229
+      PlayerDashNoArm_6: 920295605
+      PlayerDashNoArm_7: -1687436372
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

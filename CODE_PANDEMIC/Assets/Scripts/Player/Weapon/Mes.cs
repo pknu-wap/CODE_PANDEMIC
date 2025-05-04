@@ -1,24 +1,36 @@
 using UnityEngine;
 
-public class Mes : WideSpreadWeaphonBase
+public class Mes : WeaponBase
 {
-    [SerializeField] private float fireForce = 15f;
+    [SerializeField]
+    private GameObject bulletPrefab;
+    [SerializeField]
+    private GameObject firePoint;
+
+    private bool isPickedUp = false;
 
     public override void Attack()
     {
         if (!CanFire()) return;
-
-        
         SetNextFireTime();
+
 
         if (bulletPrefab != null && firePoint != null)
         {
-            GameObject dart = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            Rigidbody2D rb = dart.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            GameObject bulletObject = BulletPool.Instance.GetBullet();
+            bulletObject.transform.position = firePoint.transform.position;
+            bulletObject.transform.rotation = firePoint.transform.rotation;
+
+            Bullet bullet = bulletObject.GetComponent<Bullet>();
+            if (bullet != null)
             {
-                rb.velocity = firePoint.right * fireForce;
+                bullet.SetInfo(_weaponData.Damage);
+                bullet.Fire(firePoint.transform.right);
             }
+
+            Debug.Log($"Mes πﬂªÁµ  πÊ«‚: {firePoint.transform.right}");
         }
+
     }
+
 }

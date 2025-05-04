@@ -9,9 +9,9 @@ public class PlayerMovement : MonoBehaviour
 
     // 이동 관련
     private float _walkSpeed = 3.5f;
-    private float _runSpeed = 5f;
+    private float _runSpeed = 4.5f;
     private float _dashSpeed = 8f;
-    private float _dashDuration = 0.1f;
+    private float _dashDuration = 0.3f;
     private float _dashCooldown = 0.5f;
     private Vector2 _moveInput;
 
