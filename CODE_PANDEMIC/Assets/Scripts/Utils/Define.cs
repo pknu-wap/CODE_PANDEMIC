@@ -40,9 +40,13 @@ public class Define
         QuickSlot,
         Buff,
     }
-
-
+   
     public const int STAGES_PER_CHAPTER = 4; //3 normal 1 boss
+
+    public const int None = 0;
+    public const int PlayerCamera = 11;
+    public const int PuzzleClear = 20;
+    public const int BossSequence = 30;
 }
 public static class QuickSlotIndex
 {

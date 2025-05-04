@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 
 public class PZ_Main_Block : MonoBehaviour
 {
     private Transform _mainBlockTransform;
     private BoxCollider2D _mainBlockCollider;
 
+    [SerializeField] 
+    PuzzleClearCamera _clearCamera;
     public void SetInfo(BlockData data)
     {
         _mainBlockTransform = GetComponent<Transform>();
@@ -17,9 +20,14 @@ public class PZ_Main_Block : MonoBehaviour
         _mainBlockCollider.offset = data.Offset;
         _mainBlockCollider.size = data.Size;
     }
-
+    public void Disappear()
+    {
+        _clearCamera?.gameObject.SetActive(true);
+        _clearCamera?.LookAtDisappear(() => StartCoroutine(DestroyThisObject()));
+    }
     public IEnumerator DestroyThisObject()
     {
+        
         List<SpriteRenderer> spriteRenders = new List<SpriteRenderer>();
 
         GetComponentsInChildren(false, spriteRenders);
@@ -37,10 +45,10 @@ public class PZ_Main_Block : MonoBehaviour
                 spriteRenders[index].color = color;
             }
 
-            yield return new WaitForSeconds(0.02f);
+            yield return CoroutineHelper.WaitForSeconds(0.02f);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return CoroutineHelper.WaitForSeconds(0.5f);
 
         Destroy(gameObject);
     }

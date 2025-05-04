@@ -32,26 +32,25 @@ public class ObjectManager : MonoBehaviour
 
         while (!mapLoaded) yield return null;
 
-        // 플레이어가 설정될 때까지 대기
+      
         while (Player == null) yield return null;
 
-        // 카메라 생성
+     
         bool cameraLoaded = false;
         Managers.Resource.Instantiate("PlayerCamera", null, (obj) =>
         {
             var playerCam = obj.GetComponent<PlayerCamera>();
             _playerCamera = playerCam;
             playerCam.Setup(Player.transform, MapObject.CameraLimit);
-            var vcam = obj.GetComponent<CinemachineVirtualCamera>();
-            if (vcam != null)
-                vcam.Priority = 100;
-
             cameraLoaded = true;
+
+           
+            playerCam.SnapToTargetImmediately();
         });
 
-        while (!cameraLoaded) yield return null;
+       
 
-        // 스포너 로딩 완료될 때까지 대기
+        while (!cameraLoaded) yield return null;
         while (_leftSpawners < stageData.Spawners.Count) yield return null;
 
         Loaded = true;

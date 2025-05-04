@@ -141,7 +141,7 @@ public class StageController : MonoBehaviour
         {
             //Destroy(LinkedBlocks[id].gameObject);
 
-            StartCoroutine(LinkedBlocks[id].DestroyThisObject());
+            LinkedBlocks[id].Disappear();
             LinkedBlocks.Remove(id);
         }
     }
