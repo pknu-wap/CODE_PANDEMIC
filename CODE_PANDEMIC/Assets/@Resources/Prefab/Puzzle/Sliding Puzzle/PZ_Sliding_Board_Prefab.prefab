@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 5696642684186638777}
   - component: {fileID: 9119919081660558566}
   - component: {fileID: 7009942840893416510}
+  - component: {fileID: 8223998816544105675}
   m_Layer: 5
   m_Name: PZ_Sliding_Board_Prefab
   m_TagString: Untagged
@@ -253,6 +254,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8223998816544105675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5433778308250396019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db65bdba6f56b494da976fc7579bdeca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7125619380335448500
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,7 +277,6 @@ GameObject:
   - component: {fileID: 7092578921813160404}
   - component: {fileID: 8127820972189022336}
   - component: {fileID: 8691052985776032370}
-  - component: {fileID: 1995716907790451194}
   - component: {fileID: 3386914240548534214}
   m_Layer: 5
   m_Name: Panel
@@ -332,18 +344,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1995716907790451194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7125619380335448500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db65bdba6f56b494da976fc7579bdeca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!223 &3386914240548534214
 Canvas:
   m_ObjectHideFlags: 0

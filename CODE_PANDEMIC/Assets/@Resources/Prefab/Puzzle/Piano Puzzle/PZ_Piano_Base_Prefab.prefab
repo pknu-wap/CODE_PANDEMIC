@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 1934797467970248954}
   - component: {fileID: 46512523769667381}
   - component: {fileID: 912205090194557485}
-  - component: {fileID: 7107471568645175466}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -237,18 +236,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &7107471568645175466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1345342296316690429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97ada31347e61e944a39e64ca7f3eec1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6829465623144743899
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,6 +296,7 @@ GameObject:
   - component: {fileID: 7993490616593605132}
   - component: {fileID: 1320717626790337435}
   - component: {fileID: 4301331914104609134}
+  - component: {fileID: 1516677781898430586}
   m_Layer: 5
   m_Name: PZ_Piano_Base_Prefab
   m_TagString: Untagged
@@ -399,6 +387,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1516677781898430586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8574133314667533777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ada31347e61e944a39e64ca7f3eec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &884728358708504571
 PrefabInstance:
   m_ObjectHideFlags: 0
