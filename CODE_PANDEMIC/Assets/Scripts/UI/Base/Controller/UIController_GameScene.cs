@@ -5,40 +5,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class UIController : MonoBehaviour
+public class UIController_GameScene : UIController_Base
 {
-    PlayerInput _inputActions;
+   
     InventoryController _inventory;
    
-    private void Awake()
+    protected override bool Init()
     {
-        
-        _inputActions = new PlayerInput();
+        if (base.Init() == false) return false;
+
         _inventory = Utils.GetOrAddComponent<InventoryController>(gameObject);
+
+        return true;
     }
-    private void OnEnable()
+
+    protected override void EnableInput()
     {
-        _inputActions = new PlayerInput();
         _inputActions.UI.Enable();
 
         _inputActions.UI.Inventory.performed += OnInventory;
         _inputActions.UI.Pause.performed += OnClickEscape;
         _inputActions.UI.MiniMap.performed += OnClickTab;
     }
-
-    private void OnDisable()
+    protected override void DisableInput()
     {
-     
-            _inputActions.UI.Inventory.performed -= OnInventory;
-            _inputActions.UI.Pause.performed -= OnClickEscape;
-             _inputActions.UI.MiniMap.performed -= OnClickTab;   
-            _inputActions.Disable();
-           
+        _inputActions.UI.Inventory.performed -= OnInventory;
+        _inputActions.UI.Pause.performed -= OnClickEscape;
+        _inputActions.UI.MiniMap.performed -= OnClickTab;
+        _inputActions.Disable();
     }
-
     private void OnInventory(InputAction.CallbackContext ctx)
     {
-        if (_inventory != null&&Managers.Scene.CurrentSceneType==Define.SceneType.GameScene)
+        if (_inventory != null)
         {
             _inventory.ShowHide(ctx);
         }
@@ -49,6 +47,8 @@ public class UIController : MonoBehaviour
     {
         if (Managers.UI.HasPopUpUI())
             Managers.UI.ClosePopupUI();
+        else if(Managers.UI.EnlargedMiniMapUI!=null)
+            Managers.UI.CloseEnlargedMiniMap();
         else if (Managers.UI.IsOpenInventory())
             Managers.UI.HideInventoryUI();
         else
@@ -62,10 +62,12 @@ public class UIController : MonoBehaviour
         else
             Managers.UI.OpenEnlargedMiniMap();
     }
+
+   
+}
        
          
         
             
         
 
-}

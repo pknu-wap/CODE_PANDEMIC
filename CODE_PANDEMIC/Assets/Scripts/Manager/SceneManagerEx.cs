@@ -22,16 +22,11 @@ public class SceneManagerEx : MonoBehaviour
     {
 
         CurrentScene?.Clear();
-
-      
         Managers.UI.ClearUI();
-
-      
         _currentSceneType = type;
         SceneManager.LoadScene(GetSceneName(type));
-
     }
-
+     
     string GetSceneName(SceneType type)
     {
         string name =System.Enum.GetName(typeof(SceneType), type);
