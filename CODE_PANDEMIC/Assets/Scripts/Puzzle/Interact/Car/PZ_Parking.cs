@@ -20,8 +20,6 @@ public class PZ_Parking : MonoBehaviour
         _emptyPlace[4, 1] = true;
 
         _emptyPlace[3, 2] = true;
-        _emptyPlace[4, 2] = true;
-        _emptyPlace[5, 2] = true;
 
         _emptyPlace[1, 4] = true;
 
@@ -46,10 +44,7 @@ public class PZ_Parking : MonoBehaviour
                     _emptyPlace[body1Index[0] - 1, body1Index[1]] = false;
                     _emptyPlace[body2Index[0], body2Index[1]] = true;
 
-                    moveCar._body1Index[0] = body1Index[0] - 1;
-                    moveCar._body1Index[1] = body1Index[1];
-                    moveCar._body2Index[0] = body2Index[0] - 1;
-                    moveCar._body2Index[1] = body2Index[1];
+                    moveCar.SetBodyIndex(body1Index[0] - 1, body1Index[1], body2Index[0] - 1, body2Index[1]);
 
                     return true;
 
@@ -65,10 +60,7 @@ public class PZ_Parking : MonoBehaviour
                     _emptyPlace[body2Index[0], body2Index[1] - 1] = false;
                     _emptyPlace[body2Index[0], body2Index[1]] = true;
 
-                    moveCar._body1Index[0] = body1Index[0];
-                    moveCar._body1Index[1] = body1Index[1] - 1;
-                    moveCar._body2Index[0] = body2Index[0];
-                    moveCar._body2Index[1] = body2Index[1] - 1;
+                    moveCar.SetBodyIndex(body1Index[0], body1Index[1] - 1, body2Index[0], body2Index[1] - 1);
 
                     return true;
 
@@ -82,10 +74,7 @@ public class PZ_Parking : MonoBehaviour
                     _emptyPlace[body2Index[0] + 1, body2Index[1]] = false;
                     _emptyPlace[body1Index[0], body1Index[1]] = true;
 
-                    moveCar._body1Index[0] = body1Index[0] + 1;
-                    moveCar._body1Index[1] = body1Index[1];
-                    moveCar._body2Index[0] = body2Index[0] + 1;
-                    moveCar._body2Index[1] = body2Index[1];
+                    moveCar.SetBodyIndex(body1Index[0] + 1, body1Index[1], body2Index[0] + 1, body2Index[1]);
 
                     return true;
 
@@ -101,10 +90,7 @@ public class PZ_Parking : MonoBehaviour
                     _emptyPlace[body2Index[0], body2Index[1] + 1] = false;
                     _emptyPlace[body2Index[0], body2Index[1]] = true;
 
-                    moveCar._body1Index[0] = body1Index[0];
-                    moveCar._body1Index[1] = body1Index[1] + 1;
-                    moveCar._body2Index[0] = body2Index[0];
-                    moveCar._body2Index[1] = body2Index[1] + 1;
+                    moveCar.SetBodyIndex(body1Index[0], body1Index[1] + 1, body2Index[0], body2Index[1] + 1);
 
                     return true;
             }
@@ -126,10 +112,7 @@ public class PZ_Parking : MonoBehaviour
                     _emptyPlace[body2Index[0] - 1, body2Index[1]] = false;
                     _emptyPlace[body2Index[0], body2Index[1]] = true;
 
-                    moveCar._body1Index[0] = body1Index[0] - 1;
-                    moveCar._body1Index[1] = body1Index[1];
-                    moveCar._body2Index[0] = body2Index[0] - 1;
-                    moveCar._body2Index[1] = body2Index[1];
+                    moveCar.SetBodyIndex(body1Index[0] - 1, body1Index[1], body2Index[0] - 1, body2Index[1]);
 
                     return true;
 
@@ -143,10 +126,7 @@ public class PZ_Parking : MonoBehaviour
                     _emptyPlace[body1Index[0], body1Index[1] - 1] = false;
                     _emptyPlace[body2Index[0], body2Index[1]] = true;
 
-                    moveCar._body1Index[0] = body1Index[0];
-                    moveCar._body1Index[1] = body1Index[1] - 1;
-                    moveCar._body2Index[0] = body2Index[0];
-                    moveCar._body2Index[1] = body2Index[1] - 1;
+                    moveCar.SetBodyIndex(body1Index[0], body1Index[1] - 1, body2Index[0], body2Index[1] - 1);
 
                     return true;
 
@@ -162,10 +142,7 @@ public class PZ_Parking : MonoBehaviour
                     _emptyPlace[body2Index[0] + 1, body2Index[1]] = false;
                     _emptyPlace[body2Index[0], body2Index[1]] = true;
 
-                    moveCar._body1Index[0] = body1Index[0] + 1;
-                    moveCar._body1Index[1] = body1Index[1];
-                    moveCar._body2Index[0] = body2Index[0] + 1;
-                    moveCar._body2Index[1] = body2Index[1];
+                    moveCar.SetBodyIndex(body1Index[0] + 1, body1Index[1], body2Index[0] + 1, body2Index[1]);
 
                     return true;
 
@@ -179,10 +156,7 @@ public class PZ_Parking : MonoBehaviour
                     _emptyPlace[body2Index[0], body2Index[1] + 1] = false;
                     _emptyPlace[body1Index[0], body1Index[1]] = true;
 
-                    moveCar._body1Index[0] = body1Index[0];
-                    moveCar._body1Index[1] = body1Index[1] + 1;
-                    moveCar._body2Index[0] = body2Index[0];
-                    moveCar._body2Index[1] = body2Index[1] + 1;
+                    moveCar.SetBodyIndex(body1Index[0], body1Index[1] + 1, body2Index[0], body2Index[1] + 1);
 
                     return true;
             }
