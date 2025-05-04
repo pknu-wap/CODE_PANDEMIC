@@ -7,19 +7,19 @@ public abstract class PZ_Puzzle_Base : UI_PopUp
 
     protected RectTransform _rectTransform;
     protected Image _image;
-
+   
     protected void SetComponents()
     {
         _rectTransform = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
     }
-
+  
     // 퍼즐 오너 세팅
     public void SetPuzzleOwnerItem(PZ_Puzzle_Item owner)
     {
         _puzzleOwner = owner;
     }
-
+    
     // 퍼즐 클리어
     protected abstract void PuzzleClear();
 }
