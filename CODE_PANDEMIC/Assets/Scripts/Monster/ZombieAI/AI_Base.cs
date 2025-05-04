@@ -69,6 +69,12 @@ public abstract class AI_Base : MonoBehaviour
 
         gameObject.SetActive(false);
     }
+
+    internal void TakeDamage(int damage, Vector3 knockbackDir)
+    {
+        throw new NotImplementedException();
+    }
+
     public float MoveSpeed { get { return _monsterData.MoveSpeed; } }
     public float DetectionRange { get { return _monsterData.DetectionRange; } }
     public float DetectionAngle { get { return _monsterData.DetectionAngle; } }

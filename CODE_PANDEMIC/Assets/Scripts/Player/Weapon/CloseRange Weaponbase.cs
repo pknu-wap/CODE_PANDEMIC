@@ -47,10 +47,20 @@ public class CloseRangeWeaponBase : WeaponBase
 
     private System.Collections.IEnumerator ResetFireBool()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         if (_animator != null)
         {
             _animator.SetBool("Fire", false);
+        }
+    }
+
+    protected void ApplyDamageWithKnockback(Collider2D target, int damage)//³Ë¹é ±¸Çö
+    {
+        AI_Base enemy = target.GetComponent<AI_Base>();
+        if (enemy != null)
+        {
+            Vector3 knockbackDir = (enemy.transform.position - transform.position).normalized;
+            enemy.TakeDamage(damage, knockbackDir);
         }
     }
 }

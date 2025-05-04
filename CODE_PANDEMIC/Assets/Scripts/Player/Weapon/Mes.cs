@@ -1,36 +1,47 @@
 using UnityEngine;
 
-public class Mes : WeaponBase
+public class Mes : CloseRangeWeaponBase
 {
-    [SerializeField]
-    private GameObject bulletPrefab;
-    [SerializeField]
-    private GameObject firePoint;
+    [SerializeField] private GameObject firePoint;
+    private bool isThrown = false;
+    private Vector3 direction;
+    private float speed;
+    private int damage;
 
-    private bool isPickedUp = false;
+    private void Update()
+    {
+        if (isThrown)
+        {
+            transform.position += direction * speed * Time.deltaTime;
+        }
+    }
 
     public override void Attack()
     {
-        if (!CanFire()) return;
+        if (!CanFire() || isThrown) return;
         SetNextFireTime();
 
+        isThrown = true;
+        direction = firePoint.transform.right.normalized;
+        speed = _weaponData.BulletSpeed;
+        damage = _weaponData.Damage;
 
-        if (bulletPrefab != null && firePoint != null)
-        {
-            GameObject bulletObject = BulletPool.Instance.GetBullet();
-            bulletObject.transform.position = firePoint.transform.position;
-            bulletObject.transform.rotation = firePoint.transform.rotation;
-
-            Bullet bullet = bulletObject.GetComponent<Bullet>();
-            if (bullet != null)
-            {
-                bullet.SetInfo(_weaponData.Damage);
-                bullet.Fire(firePoint.transform.right);
-            }
-
-            Debug.Log($"Mes 발사됨 방향: {firePoint.transform.right}");
-        }
-
+        Debug.Log("Mes가 던져졌습니다.");
+        Destroy(gameObject, 3f);
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        {
+            AI_Base enemy = other.GetComponent<AI_Base>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+        
+        }
+
+        Debug.Log("Mes가 적과 충돌했습니다.");
+        Destroy(gameObject);
+    }
 }
