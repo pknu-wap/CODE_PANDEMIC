@@ -15,7 +15,7 @@ public class AI_Fov : MonoBehaviour
     private List<GameObject> _detectedObjects = new List<GameObject>();
     private void Awake()
     {
-        _layerMask = LayerMask.GetMask("Obstacle", "Player");
+        _layerMask = LayerMask.GetMask("Wall", "Player");
     }
 
     private void Start()
