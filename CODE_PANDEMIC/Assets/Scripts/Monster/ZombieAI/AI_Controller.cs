@@ -32,7 +32,11 @@ public class AI_Controller : AI_Base
     private float _pickNextWaypointDist = 1.2f;
     private Vector3 _gravity = new(0, 0, 0);
 
-    protected virtual void Awake(){}
+    private float _lostPlayerTimer = 0f;
+    private float _playerLostDelay = 1f;
+
+    protected virtual void Awake() { }
+
     protected virtual void Start()
     {
         if (!Init())
@@ -79,13 +83,12 @@ public class AI_Controller : AI_Base
         {
             StopAttack();
         }
-        
-        }
+    }
 
     private void FixedUpdate()
     {
-        if (_player == null)
-            return;
+        if (_player == null) return;
+
         if (_currentState is not AI_StateAttack)
         {
             Vector3 scale = transform.localScale;
@@ -99,29 +102,46 @@ public class AI_Controller : AI_Base
             }
             transform.localScale = scale;
         }
-    
-        _currentState?.OnFixedUpdate();    
+
+        _currentState?.OnFixedUpdate();
     }
+
     private void TryDetectPlayer()
     {
-    foreach (var obj in _aiFov.GetDetectedObjects())
-    {
-        if (obj.TryGetComponent<PlayerStatus>(out _))
+        bool found = false;
+
+        foreach (var obj in _aiFov.GetDetectedObjects())
         {
-            _player = obj.transform;
-            _destinationSetter.target = _player;
-            break;
+            if (obj.TryGetComponent<PlayerStatus>(out _))
+            {
+                _player = obj.transform;
+                _destinationSetter.target = _player;
+                _lostPlayerTimer = _playerLostDelay;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            if (_lostPlayerTimer > 0f)
+            {
+                _lostPlayerTimer -= Time.deltaTime;
+            }
+            else
+            {
+                _player = null;
+                _destinationSetter.target = null;
+            }
         }
     }
-    if (_player == null) _destinationSetter.target = null;
-    }
+
     public void UpdateFovDirection()
     {
-        if (_aiFov != null)
-        {
-            float angle = transform.localScale.x < 0 ? 0f : 180f;
-            _aiFov.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
-        }
+        if (_player == null) return;
+        Vector2 direction = _player.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        _aiFov.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     public void ChasePlayer()
@@ -136,9 +156,9 @@ public class AI_Controller : AI_Base
 
     public void ChangeState(AI_IState newState)
     {
-    if (_currentState != null && _currentState.GetType() == newState.GetType()) //중복 전환 무시
+        if (_currentState != null && _currentState.GetType() == newState.GetType())
         {
-        return;
+            return;
         }
 
         _currentState?.OnExit();
@@ -158,7 +178,7 @@ public class AI_Controller : AI_Base
     public bool IsPlayerDetected()
     {
         _animator.SetTrigger("Walk");
-        return _aiFov != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject);
+        return _aiFov != null && _aiFov.GetDetectedObjects().Contains(_player?.gameObject);
     }
 
     public bool IsPlayerInSkillRange()
@@ -167,7 +187,7 @@ public class AI_Controller : AI_Base
         float distance = Vector2.Distance(transform.position, _player.position);
         if (this is AI_DoctorZombie doctor)
         {
-            return distance <= doctor.SweepRange*0.7f;
+            return distance <= doctor.SweepRange * 0.7f;
         }
         if (this is AI_NurseZombie nurse)
         {
@@ -185,24 +205,6 @@ public class AI_Controller : AI_Base
         return _isAttacking;
     }
 
-    //private void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
-    //    _aiPath.canMove = false;
-    //    PlayerStatus player = other.GetComponent<PlayerStatus>();
-    //    _player = player.transform;
-    //    if (player != null && !(_currentState is AI_StateAttack))
-    //    {
-    //        StartAttack();
-    //    }
-    //}
-
-    //private void OnTriggerExit2D(Collider2D other)
-    //{
-    //    StopAttack();
-    //}
-
-
     private IEnumerator ZombieAttackCoroutine(PlayerStatus player)
     {
         WaitForSeconds wait = new(AttackDelay);
@@ -215,6 +217,7 @@ public class AI_Controller : AI_Base
 
         _aiDamageCoroutine = null;
     }
+
     public void StartAttack()
     {
         if (_isAttacking || _player == null) return;
@@ -243,6 +246,7 @@ public class AI_Controller : AI_Base
             _aiDamageCoroutine = null;
         }
     }
+
     public void PerformAttack()
     {
         Vector2 attackCenter = (Vector2)transform.position + new Vector2(transform.localScale.x * 0.5f, 0f);
@@ -262,16 +266,17 @@ public class AI_Controller : AI_Base
 
     private void ConfigureAllAIPaths()
     {
-            _aiPath.radius = _radius;
-            _aiPath.height = _height;
-            // _aiPath.maxSpeed = MoveSpeed;
-            _aiPath.pickNextWaypointDist = _pickNextWaypointDist;
-            _aiPath.orientation = OrientationMode.YAxisForward; // 2D 모드
-            _aiPath.enableRotation = false;
-            _aiPath.gravity = _gravity;
+        _aiPath.radius = _radius;
+        _aiPath.height = _height;
+        _aiPath.maxSpeed = MoveSpeed;
+        _aiPath.pickNextWaypointDist = _pickNextWaypointDist;
+        _aiPath.orientation = OrientationMode.YAxisForward;
+        _aiPath.enableRotation = false;
+        _aiPath.gravity = _gravity;
     }
+
     private void AssignDestinations()
     {
         _destinationSetter.target = null;
     }
-    }
+}
