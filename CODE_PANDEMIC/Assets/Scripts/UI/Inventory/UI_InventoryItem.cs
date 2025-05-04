@@ -24,8 +24,8 @@ namespace Inventory.UI
         { 
             ItemCount
         }
-        [SerializeField] Image _itemImage;
-        [SerializeField] TextMeshProUGUI _text;
+        [SerializeField] Sprite _emptyImage;
+    
         public event Action<UI_InventoryItem> OnItemClicked, OnItemDroppedOn
              , OnItemBeginDrag, OnItemEndDrag, OnRightMouseButtonClick;
         private bool empty = true;      
@@ -34,8 +34,7 @@ namespace Inventory.UI
         {
             BindImage(typeof(Images));
             BindText(typeof(Texts));
-            _itemImage = GetImage((int)Images.ItemImage);
-            _text = GetText((int)Texts.ItemCount);
+          
             ResetData();
             Deselect();
         }
@@ -47,9 +46,10 @@ namespace Inventory.UI
         public void ResetData()
         {
 
-            GetImage((int)Images.ItemImage).gameObject.SetActive(false);
-        
+            GetImage((int)Images.ItemImage).sprite = _emptyImage;
+            GetText((int)Texts.ItemCount).text = "";
             empty = true;
+          
         }
         public void SetData(Sprite sprite, int quantity)
         {

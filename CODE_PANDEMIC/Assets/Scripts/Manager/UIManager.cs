@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
 
     public UI_Inventory InventoryUI { get; private set; }
     public UI_Scene SceneUI { get; set; }
-
+    public UI_EnlargedMiniMap EnlargedMiniMapUI { get; private set; }
     private GameObject _uiRoot;
     public GameObject UIRoot
     {
@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
             callback?.Invoke(sceneUI);
         });
     }
-
+    
     public void ShowPopupUI<T>(string key = null, Transform parent = null, Action<T> callback = null) where T : UI_PopUp
     {
         if (string.IsNullOrEmpty(key))
@@ -63,7 +63,9 @@ public class UIManager : MonoBehaviour
             _popupStack.Push(popup);
             obj.transform.SetParent(parent != null ? parent : UIRoot.transform, false);
             callback?.Invoke(popup);
+            
         });
+
     }
 
     public void ClosePopupUI(UI_PopUp popup)
@@ -73,9 +75,24 @@ public class UIManager : MonoBehaviour
             Debug.Log("Close Popup Failed!");
             return;
         }
-
         ClosePopupUI();
     }
+    public void CloseEnlargedMiniMap()
+    {
+        if (EnlargedMiniMapUI != null)
+        {
+            Destroy(EnlargedMiniMapUI.gameObject);
+            EnlargedMiniMapUI = null;
+        }
+    }
+    public void OpenEnlargedMiniMap()
+    {
+        Managers.Resource.Instantiate("UI_EnlargedMiniMap", UIRoot.transform, obj =>
+        {
+            EnlargedMiniMapUI = obj.GetComponent<UI_EnlargedMiniMap>();
+            SetCanvas(obj, true);
+        });
+    }         
 
     public void ClosePopupUI()
     {
@@ -98,7 +115,7 @@ public class UIManager : MonoBehaviour
     {
         return _popupStack.Count > 0;
     }
-
+    
     public void ShowInventoryUI(Action<UI_Inventory> callback = null)
     {
         if (InventoryUI == null)
@@ -121,7 +138,13 @@ public class UIManager : MonoBehaviour
             callback?.Invoke(InventoryUI);
         }
     }
-
+    public bool IsOpenInventory()
+    {
+        if(!InventoryUI) return false;  
+        if(InventoryUI.gameObject.activeSelf==false) return false;
+        return true;
+        
+    }
     public void HideInventoryUI()
     {
         if (InventoryUI != null)
@@ -218,7 +241,10 @@ public class UIManager : MonoBehaviour
            Destroy(SceneUI.gameObject);
             SceneUI = null;
         }
-
+        if(EnlargedMiniMapUI != null)
+        {
+            CloseEnlargedMiniMap();
+        }
 
         CloseAllPopUI();
     }

@@ -1,6 +1,4 @@
-﻿using Inventory.Model;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PZ_HealPack : PZ_Interact_Spawn
 {
@@ -19,8 +17,5 @@ public class PZ_HealPack : PZ_Interact_Spawn
         _spriteRenderer.sprite = _interactedSprite;
 
         RewardItem();
-        // 여기에 아이템 획득 기능 구현
     }
-    
-       
 }

@@ -4,34 +4,53 @@ using UnityEngine;
 
 public class StageController : MonoBehaviour
 {
-    Dictionary<int, PZ_Main_Block> LinkedBlocks;
     StageData _stageData;
+    Dictionary<int, PZ_Main_Block> LinkedBlocks;
     [SerializeField]
     private  PolygonCollider2D _cameraLimit;
+    [SerializeField]
+    private Camera _mapCamera;
+
     [Header("ParentObject")]
     public Transform _spawnerParent;
     public Transform _puzzlesParent;
     public Transform _ItemsParent;
     public Transform _blockParent;
+
     public PolygonCollider2D CameraLimit { get { return _cameraLimit; } private set { _cameraLimit = value; } }
+
     public void SetInfo(StageData stageData)
     {
         LinkedBlocks = new Dictionary<int, PZ_Main_Block>();
         _stageData = stageData;
-
+       
         CreateSpawners();
         CreatePuzzles();
         CreateItems();
         CreateInteracts();
     }
+    private void Start()
+    {
+        if (_mapCamera != null)
+        {
+            _mapCamera.gameObject.SetActive(false);
+        }
+    }
     public void OnEnable()
     {
         Managers.Event.Subscribe("MainPuzzleClear",OnPuzzleCleared);
+        Managers.Event.Subscribe("OnMapCamera", OnMapCamera);
+        Managers.Event.Subscribe("OffMapCamera", OffMapCamera);
+
     }
     public void OnDisable()
     {
         Managers.Event.Unsubscribe("MainPuzzleClear", OnPuzzleCleared);
+        Managers.Event.Unsubscribe("OnMapCamera", OnMapCamera);
+        Managers.Event.Unsubscribe("OffMapCamera", OffMapCamera);
+
     }
+
     public void CreateSpawners()
     {
         List<SpawnerInfoData> spawners = _stageData.Spawners;
@@ -157,5 +176,13 @@ public class StageController : MonoBehaviour
            DestroyLinkedBlock(puzzle.ID);
         }
     }
-        
+    private void OnMapCamera(object obj)
+    {
+        _mapCamera.gameObject.SetActive(true);
+    }
+    private void OffMapCamera(object  obj)
+    {
+        _mapCamera.gameObject.SetActive(false);
+    }
+
 }
