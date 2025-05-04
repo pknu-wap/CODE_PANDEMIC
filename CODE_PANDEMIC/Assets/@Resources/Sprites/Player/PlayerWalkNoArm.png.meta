@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 191bf70b58b9dd24cb19bdf0967694c6
+guid: 3a7f5bdc2cf32904b95caecb2e72cc16
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: R1895_0
+      name: PlayerWalkNoArm_0
       rect:
         serializedVersion: 2
-        x: 297
-        y: 248
-        width: 257
-        height: 155
+        x: 216
+        y: 66
+        width: 248
+        height: 498
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c37fd3d5d235ee54e8c358b4f070fcaf
-      internalID: -213502520
+      spriteID: 8592057d22291da4b8a2deae59045701
+      internalID: 1486649936
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_1
+      name: PlayerWalkNoArm_1
       rect:
         serializedVersion: 2
-        x: 1076
-        y: 248
-        width: 298
-        height: 175
+        x: 856
+        y: 66
+        width: 248
+        height: 498
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4369eaeb73e5624dafbb2561795bc64
-      internalID: -1290177979
+      spriteID: 486bbb87ed94c584e9b7e2c0e670b0f2
+      internalID: 2087104930
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_3
+      name: PlayerWalkNoArm_2
       rect:
         serializedVersion: 2
-        x: 1718
-        y: 256
-        width: 506
-        height: 218
+        x: 1486
+        y: 66
+        width: 248
+        height: 498
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f72b7b1bfe4d48a49ae5029e3f6d27dd
-      internalID: -1249857934
+      spriteID: 3e4a5fd3ef52ad147be378595855fffb
+      internalID: -46064913
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_5
+      name: PlayerWalkNoArm_3
       rect:
         serializedVersion: 2
-        x: 2516
-        y: 256
-        width: 477
-        height: 218
+        x: 2126
+        y: 66
+        width: 248
+        height: 488
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bdf51d9b11423c84493a154255cbe706
-      internalID: 1152577647
+      spriteID: 6f576a57a4b7fdd469c8da34500d8527
+      internalID: 161875599
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_8
+      name: PlayerWalkNoArm_4
       rect:
         serializedVersion: 2
-        x: 3254
-        y: 256
-        width: 540
-        height: 218
+        x: 2776
+        y: 66
+        width: 248
+        height: 488
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba6164566abf7db4bba4ba1aa7d3a4ec
-      internalID: -1424147444
+      spriteID: 266b1d58ca81db54199d193105434fba
+      internalID: -1513211821
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_9
+      name: PlayerWalkNoArm_5
       rect:
         serializedVersion: 2
-        x: 4954
-        y: 237
-        width: 409
-        height: 166
+        x: 3416
+        y: 66
+        width: 248
+        height: 498
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4816ebeffd8b2a045b14d4489ea395bc
-      internalID: 2093897851
+      spriteID: 6ebe34f829cd54a4398569d4ccdb2a7d
+      internalID: -145149089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: R1895_14
+      name: PlayerWalkNoArm_6
       rect:
         serializedVersion: 2
-        x: 4155
-        y: 237
-        width: 388
-        height: 147
+        x: 4056
+        y: 66
+        width: 248
+        height: 498
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,8 +237,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2354ec859402d04faf3b3960e80e59d
-      internalID: -149634745
+      spriteID: 30ac3cbe16235d748ad835176ebbb304
+      internalID: 945514632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkNoArm_7
+      rect:
+        serializedVersion: 2
+        x: 4696
+        y: 66
+        width: 248
+        height: 488
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7ccb75adc90a944298f8365c131db37
+      internalID: -1183279998
       vertices: []
       indices: 
       edges: []
@@ -254,43 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      R1895_0: -213502520
-      R1895_1: -1290177979
-      R1895_10: 421647515
-      R1895_11: 2075707980
-      R1895_12: -1453348354
-      R1895_13: -187179456
-      R1895_14: -149634745
-      R1895_15: -489636233
-      R1895_16: -2145566734
-      R1895_17: -297982772
-      R1895_18: 976983026
-      R1895_19: -648809443
-      R1895_2: -2041865247
-      R1895_20: -1695321954
-      R1895_21: 452310127
-      R1895_22: 980673227
-      R1895_23: -2108789416
-      R1895_24: 1799879578
-      R1895_25: -1623916029
-      R1895_26: 1789874417
-      R1895_27: 496520803
-      R1895_28: 2097620273
-      R1895_29: 1616307276
-      R1895_3: -1249857934
-      R1895_30: -1902065561
-      R1895_31: -1062285794
-      R1895_32: -1531636338
-      R1895_33: -2041015013
-      R1895_34: -1652604956
-      R1895_35: -2117254011
-      R1895_36: 930029960
-      R1895_4: -959139507
-      R1895_5: 1152577647
-      R1895_6: 591549148
-      R1895_7: -312528859
-      R1895_8: -1424147444
-      R1895_9: 2093897851
+      PlayerWalkNoArm_0: 1486649936
+      PlayerWalkNoArm_1: 2087104930
+      PlayerWalkNoArm_2: -46064913
+      PlayerWalkNoArm_3: 161875599
+      PlayerWalkNoArm_4: -1513211821
+      PlayerWalkNoArm_5: -145149089
+      PlayerWalkNoArm_6: 945514632
+      PlayerWalkNoArm_7: -1183279998
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

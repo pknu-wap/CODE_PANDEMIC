@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WideSpreadWeaphonBase : WeaponBase
+public class WideSpreadWeaponBase : WeaponBase
 {
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform firePoint;
