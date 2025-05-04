@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: 24.760345, y: -0.6614685, z: 0}
   m_ShapePathHash: -1906007371
   m_Mesh: {fileID: 0}
-  m_InstanceId: 54448
+  m_InstanceId: 52774
   m_LocalBounds:
     m_Center: {x: 11.417221, y: 0.12110138, z: 0}
     m_Extent: {x: 13.343124, y: 0.90366364, z: 0}
@@ -239,7 +239,7 @@ MonoBehaviour:
   - {x: -32.771484, y: -16.532295, z: 0}
   m_ShapePathHash: -1831850987
   m_Mesh: {fileID: 0}
-  m_InstanceId: 54520
+  m_InstanceId: 198618
   m_LocalBounds:
     m_Center: {x: 8.992264, y: 8.162888, z: 0}
     m_Extent: {x: 45.805008, y: 29.048347, z: 0}
@@ -379,6 +379,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3316173368764276319}
   - {fileID: 7367693965772510033}
   - {fileID: 6347285667112246716}
   - {fileID: 7400858301874554284}
@@ -422,6 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraLimit: {fileID: 2380712979452332987}
+  _mapCamera: {fileID: 2988637060849571406}
   _spawnerParent: {fileID: 6070563981490176907}
   _puzzlesParent: {fileID: 0}
   _ItemsParent: {fileID: 3920750223273171540}
@@ -509,7 +511,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1434,6 +1436,77 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
   m_PrefabInstance: {fileID: 2884104408581398859}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2892853814844168076
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4691941943280161308}
+    m_Modifications:
+    - target: {fileID: 98162908619997634, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: orthographic size
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 420
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 96
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3556847781791751103, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_Name
+      value: MapCamera
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+--- !u!20 &2988637060849571406 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 98162908619997634, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+  m_PrefabInstance: {fileID: 2892853814844168076}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3316173368764276319 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+  m_PrefabInstance: {fileID: 2892853814844168076}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3317639949889663157
 PrefabInstance:

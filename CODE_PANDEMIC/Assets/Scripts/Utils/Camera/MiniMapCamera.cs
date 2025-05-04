@@ -15,6 +15,7 @@ public class MiniMapCamera : MonoBehaviour
     void Start()
     {
         _miniMapCam.targetTexture = _miniMapTexture;
+        
         Managers.Event.InvokeEvent("OnMiniMapReady", _miniMapTexture);
     }
 }
