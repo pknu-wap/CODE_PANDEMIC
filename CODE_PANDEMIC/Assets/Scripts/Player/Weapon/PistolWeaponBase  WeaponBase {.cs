@@ -15,11 +15,6 @@ public class PistolWeaponBase : WeaponBase
         _animator = GetComponent<Animator>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (isPickedUp) return;
-    }
-
     public override void Attack()
     {
         if (!CanFire()) return;

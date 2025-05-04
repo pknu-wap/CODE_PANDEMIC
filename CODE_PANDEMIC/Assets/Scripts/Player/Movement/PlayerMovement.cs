@@ -7,13 +7,11 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
 
-    private Vector3 _weaponLocalPosition = new Vector3(-0.5f, 0f, 0f);
-
     // 이동 관련
     private float _walkSpeed = 3.5f;
-    private float _runSpeed = 5f;
+    private float _runSpeed = 4.5f;
     private float _dashSpeed = 8f;
-    private float _dashDuration = 0.1f;
+    private float _dashDuration = 0.3f;
     private float _dashCooldown = 0.5f;
     private Vector2 _moveInput;
 
@@ -82,14 +80,8 @@ public class PlayerMovement : MonoBehaviour
                 transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
              
             }
-            
 
-            if (_playerController._weaponHolder != null)
-            {
-                Vector3 adjustedPosition = _weaponLocalPosition;
-                adjustedPosition.x *= _spriteRenderer.flipX ? -1 : 1;
-                _playerController._weaponHolder.localPosition = adjustedPosition;
-            }
+            
         }
 
         _playerController._currentState = _moveInput != Vector2.zero ? PlayerState.Move : PlayerState.Idle;
