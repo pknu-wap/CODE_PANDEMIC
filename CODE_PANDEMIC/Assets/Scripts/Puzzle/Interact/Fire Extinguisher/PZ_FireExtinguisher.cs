@@ -6,6 +6,7 @@ public class PZ_FireExtinguisher : PZ_Interact_NonSpawn
 
     private float _speed = 20f; // 던지는 속도
     private float _distance = 1.0f; // 들고 있는 거리
+    private int _damage = 100;
 
     private bool _isThrowing = false;
     [SerializeField] private GameObject _explosionEffect;
@@ -59,6 +60,13 @@ public class PZ_FireExtinguisher : PZ_Interact_NonSpawn
 
         if (_isInteracted && _isThrowing) // 던져서 터트리기
         {
+            AI_Base monster = collision.GetComponent<AI_Base>();
+
+            if (monster)
+            {
+                monster.TakeDamage(_damage);
+            }
+
             Instantiate(_explosionEffect, transform.position, transform.rotation);
 
             Destroy(gameObject);
