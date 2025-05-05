@@ -7,9 +7,7 @@ public class AI_ThrowSkill : ISkillBehavior
     private Coroutine _skillCoroutine;
     private float _lastSkillTime = -Mathf.Infinity;
     private AI_NurseZombie _currentNurse;
-    private Transform _player;
     public AI_ThrowVisualizer _throwVisualizer;
-
     public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
 {
     controller._isUsingSkill = true;

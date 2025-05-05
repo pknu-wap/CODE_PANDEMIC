@@ -34,7 +34,6 @@ public class AI_PatientAttack : ISkillBehavior
 
     public void StopSkill()
     {
-        // 없음
     }
 
     public float GetCooldown()

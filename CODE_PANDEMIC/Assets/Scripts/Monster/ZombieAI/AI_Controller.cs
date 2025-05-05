@@ -37,9 +37,6 @@ public class AI_Controller : AI_Base
 
     private float _lostPlayerTimer = 0f;
     private float _playerLostDelay = 1f;
-
-    public bool IsUsingSkill => _isUsingSkill; // ★ getter
-
     protected virtual void Awake() { }
 
     protected virtual void Start()
@@ -93,7 +90,6 @@ public class AI_Controller : AI_Base
     private void FixedUpdate()
     {
         if (_player == null) return;
-
         if (_currentState is not AI_StateAttack && !_isUsingSkill)
         {
             Vector3 scale = transform.localScale;
@@ -133,7 +129,7 @@ public class AI_Controller : AI_Base
     {
         _player = null;
         _destinationSetter.target = null;
-        StopMoving(); // ★ 플레이어 감지 해제 시 이동 중지
+        StopMoving();
     }
 }
     }
@@ -167,7 +163,7 @@ public class AI_Controller : AI_Base
     }
 
     public override void TakeDamage(int amount)
-    {
+    {   
         base.TakeDamage(amount);
         if (Health <= 0f && _currentState is not AI_StateDie)
         {
@@ -227,11 +223,11 @@ public class AI_Controller : AI_Base
     if (Skill != null && Skill.IsReady(this))
     {
         _isUsingSkill = true;
-        _aiPath.canMove = false; // ★ 이동 비활성화
+        _aiPath.canMove = false;
 
         Skill.StartSkill(this, () => {
             _isUsingSkill = false;
-            _aiPath.canMove = true; // ★ 이동 재활성화
+            _aiPath.canMove = true;
         });
     }
 }
