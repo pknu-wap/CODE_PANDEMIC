@@ -46,6 +46,8 @@ public class AI_Controller : AI_Base
             enabled = false;
             return;
         }
+        UpdateDirection();
+        UpdateFovDirection();
     }
 
     public override bool Init()
@@ -89,15 +91,7 @@ public class AI_Controller : AI_Base
     private void FixedUpdate()
     {
         if (_player == null) return;
-        if (!_isUsingSkill)
-        {
-            Vector3 scale = transform.localScale;
-            if (_player.position.x > transform.position.x)
-                scale.x = -Mathf.Abs(scale.x);
-            else
-                scale.x = Mathf.Abs(scale.x);
-            transform.localScale = scale;
-        }
+        UpdateDirection();
         UpdateFovDirection();
 
         _currentState?.OnFixedUpdate();
@@ -139,6 +133,18 @@ public class AI_Controller : AI_Base
         if (_player == null) return;
         float angle = transform.localScale.x < 0 ? 0f : 180f;
         _aiFov.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+    }
+    public void UpdateDirection()
+    {
+        if (!_isUsingSkill)
+        {
+            Vector3 scale = transform.localScale;
+            if (_player.position.x > transform.position.x)
+                scale.x = -Mathf.Abs(scale.x);
+            else
+                scale.x = Mathf.Abs(scale.x);
+            transform.localScale = scale;
+        }
     }
 
     public void ChasePlayer()

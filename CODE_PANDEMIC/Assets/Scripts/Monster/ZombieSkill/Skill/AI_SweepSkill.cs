@@ -8,7 +8,7 @@ public class AI_SweepSkill : ISkillBehavior
     private float _lastSkillTime = -Mathf.Infinity;
     private AI_DoctorZombie _currentDoctor;
     private AI_SweepVisualizer SweepVisualizer;
-    
+
     public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
         controller._isUsingSkill = true;
@@ -23,7 +23,7 @@ public class AI_SweepSkill : ISkillBehavior
         _currentDoctor = controller as AI_DoctorZombie;
         SweepVisualizer = _currentDoctor._sweepVisualizer;
         _lastSkillTime = Time.time;
-        _skillCoroutine = controller.StartCoroutine(SweepRoutine(controller as AI_DoctorZombie, onSkillComplete));
+        _skillCoroutine = controller.StartCoroutine(SweepRoutine(_currentDoctor, onSkillComplete));
     }
 
     public void StopSkill(){}
@@ -72,7 +72,7 @@ public class AI_SweepSkill : ISkillBehavior
                 float damage = doctor.AiDamage * 0.5f;
                 if (hit.TryGetComponent<PlayerStatus>(out var player))
                 {
-                    // player.OnDamaged(doctor.gameObject, damage);
+                    player.OnDamaged(doctor.gameObject, damage);
                     Debug.Log($"[AI_SweepSkill] {doctor.AIName} hit {player.gameObject.name} for {damage} damage.");
                 }
             }

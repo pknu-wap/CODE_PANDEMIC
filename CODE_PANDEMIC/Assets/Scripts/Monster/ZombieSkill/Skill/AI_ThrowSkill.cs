@@ -71,6 +71,11 @@ public class AI_ThrowSkill : ISkillBehavior
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         projectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        Projectile projComponent = projectile.GetComponent<Projectile>();
+        if (projComponent != null)
+        {
+            projComponent.SetOwner(nurse);
+        }
 
     }
 
