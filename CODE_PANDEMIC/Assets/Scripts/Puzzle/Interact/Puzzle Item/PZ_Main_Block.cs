@@ -10,20 +10,25 @@ public class PZ_Main_Block : MonoBehaviour
 
     [SerializeField] 
     PuzzleClearCamera _clearCamera;
+    [SerializeField]
+    BlockLight _light;
     public void SetInfo(BlockData data)
     {
         _mainBlockTransform = GetComponent<Transform>();
         _mainBlockCollider = GetComponent<BoxCollider2D>();
 
         _mainBlockTransform.position = data.Pos;
-
         _mainBlockCollider.offset = data.Offset;
         _mainBlockCollider.size = data.Size;
     }
+
+
     public void Disappear()
     {
         _clearCamera?.gameObject.SetActive(true);
-        _clearCamera?.LookAtDisappear(() => StartCoroutine(DestroyThisObject()));
+        _light?.gameObject.SetActive(true);
+        
+        _clearCamera?.LookAtDisappear(()=>_light?.LightBlock(()=>StartCoroutine(DestroyThisObject())));
     }
     public IEnumerator DestroyThisObject()
     {
