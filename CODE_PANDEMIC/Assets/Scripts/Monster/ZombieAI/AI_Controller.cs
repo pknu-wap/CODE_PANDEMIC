@@ -68,7 +68,6 @@ public class AI_Controller : AI_Base
     private void Update()
     {
         TryDetectPlayer();
-        UpdateFovDirection();
         _currentState?.OnUpdate();
 
         if (_player == null || Skill == null) return;
@@ -90,7 +89,7 @@ public class AI_Controller : AI_Base
     private void FixedUpdate()
     {
         if (_player == null) return;
-        if (_currentState is not AI_StateAttack && !_isUsingSkill)
+        if (!_isUsingSkill)
         {
             Vector3 scale = transform.localScale;
             if (_player.position.x > transform.position.x)
@@ -99,6 +98,7 @@ public class AI_Controller : AI_Base
                 scale.x = Mathf.Abs(scale.x);
             transform.localScale = scale;
         }
+        UpdateFovDirection();
 
         _currentState?.OnFixedUpdate();
     }
@@ -137,9 +137,8 @@ public class AI_Controller : AI_Base
     public void UpdateFovDirection()
     {
         if (_player == null) return;
-        Vector2 direction = _player.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        _aiFov.transform.rotation = Quaternion.Euler(0, 0, angle);
+        float angle = transform.localScale.x < 0 ? 0f : 180f;
+        _aiFov.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     public void ChasePlayer()
