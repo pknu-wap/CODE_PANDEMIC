@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour
     private Rigidbody2D _rb;
     private bool _hasTriggered = false;
     private PlayerStatus player;
+    private AI_NurseZombie _nurseZombie;
 
     private void Awake()
     {
@@ -43,7 +44,7 @@ public class Projectile : MonoBehaviour
 
             if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0)
             {
-                player.OnDamaged(gameObject, 10);
+                player.OnDamaged(gameObject, _nurseZombie.AiDamage);
                 spawnPos = collision.transform.position;
             }
             else

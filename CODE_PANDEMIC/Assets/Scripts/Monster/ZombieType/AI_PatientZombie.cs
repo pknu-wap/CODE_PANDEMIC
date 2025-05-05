@@ -44,4 +44,10 @@ public class AI_PatientZombie : AI_Controller
     {
         Skill?.StartSkill(this, null);
     }
+    public override bool IsPlayerInSkillRange()
+    {
+        if (_player == null) return false;
+        float distance = Vector2.Distance(transform.position, _player.position);
+        return distance <= 7.5f;
+    }
 }

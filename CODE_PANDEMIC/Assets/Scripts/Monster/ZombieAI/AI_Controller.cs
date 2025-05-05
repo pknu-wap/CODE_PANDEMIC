@@ -175,17 +175,10 @@ public class AI_Controller : AI_Base
         return _aiFov != null && _aiFov.GetDetectedObjects().Contains(_player?.gameObject);
     }
 
-    public bool IsPlayerInSkillRange()
+    public virtual bool IsPlayerInSkillRange()
     {
         if (_player == null) return false;
-        float distance = Vector2.Distance(transform.position, _player.position);
-        if (this is AI_DoctorZombie doctor)
-            return distance <= doctor.SweepRange * 0.7f;
-        if (this is AI_NurseZombie nurse)
-            return distance <= nurse.SyringeRange * 0.8f;
-        if (this is AI_PatientZombie)
-            return distance <= 7.5f;
-        return false;
+        return Vector2.Distance(transform.position, _player.position) <= 7.5f;
     }
 
     public bool IsAttacking()

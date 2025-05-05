@@ -61,8 +61,6 @@ public class AI_ThrowVisualizer : MonoBehaviour
     float width = maxRange;
 
     Vector3 parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
-    float scaleX = 1f / parentScale.x;
-    float scaleY = 1f / parentScale.y;
 
     float directionSign = Mathf.Sign(_nurseZombie.transform.localScale.x);
     float signedWidth = width * directionSign;

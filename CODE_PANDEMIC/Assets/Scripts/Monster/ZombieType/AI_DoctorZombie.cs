@@ -52,5 +52,11 @@ public class AI_DoctorZombie : AI_Controller
 
     _skill = new AI_SweepSkill();
 }
+    public override bool IsPlayerInSkillRange()
+        {
+            if (_player == null) return false;
+            float distance = Vector2.Distance(transform.position, _player.position);
+            return distance <= SweepRange * 0.7f;
+        }
 
 }
