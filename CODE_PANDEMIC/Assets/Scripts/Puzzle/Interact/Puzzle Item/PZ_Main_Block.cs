@@ -27,8 +27,16 @@ public class PZ_Main_Block : MonoBehaviour
     {
         _clearCamera?.gameObject.SetActive(true);
         _light?.gameObject.SetActive(true);
-        
-        _clearCamera?.LookAtDisappear(()=>_light?.LightBlock(()=>StartCoroutine(DestroyThisObject())));
+       
+        _clearCamera?.LookAtDisappear(()=>
+        {   
+            if(_light!=null) _light.LightBlock(() => StartCoroutine(DestroyThisObject()));
+            else StartCoroutine(DestroyThisObject());
+        }
+        );
+          
+            
+
     }
     public IEnumerator DestroyThisObject()
     {
