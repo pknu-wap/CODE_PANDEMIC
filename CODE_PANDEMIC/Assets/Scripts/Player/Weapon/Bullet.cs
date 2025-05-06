@@ -5,16 +5,17 @@ public class Bullet : MonoBehaviour
     private float _speed = 10f;
     private float _lifeTime = 3f;
     private int _damage = 0;
-
+    PlayerController _onwer;
     private Rigidbody2D rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    public void SetInfo(int damage)
+    public void SetInfo(int damage,PlayerController owner)
     {
         _damage = damage;
+        _onwer= owner;
     }
     private void OnEnable()
     {
@@ -43,6 +44,8 @@ public class Bullet : MonoBehaviour
         {
             enemy.TakeDamage(_damage);
         }
+        _damage = 0;
+        _onwer = null;
         ReturnToPool();
     }
 }

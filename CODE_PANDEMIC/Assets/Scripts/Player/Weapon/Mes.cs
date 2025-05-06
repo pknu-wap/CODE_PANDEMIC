@@ -16,7 +16,7 @@ public class Mes : CloseRangeWeaponBase
         }
     }
 
-    public override void Attack()
+    public override void Attack(PlayerController owner)
     {
         if (!CanFire() || isThrown) return;
         SetNextFireTime();

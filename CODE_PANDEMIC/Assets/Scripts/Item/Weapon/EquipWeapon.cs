@@ -80,9 +80,9 @@ public class EquipWeapon : MonoBehaviour
 
 
     }
-    public void Attack()
+    public void Attack(PlayerController owner)
     {
-        _weapon?.Attack();
+        _weapon?.Attack(owner);
     }
 
     private bool EquipQuickSlot(int v)

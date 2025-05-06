@@ -15,7 +15,7 @@ public class CloseRangeWeaponBase : WeaponBase
         _animator = GetComponent<Animator>();
     }
 
-    public override void Attack()
+    public override void Attack(PlayerController owner)
     {
         if (!CanFire()) return;
         SetNextFireTime();
@@ -35,7 +35,7 @@ public class CloseRangeWeaponBase : WeaponBase
             Bullet bullet = bulletObject.GetComponent<Bullet>();
             if (bullet != null)
             {
-                bullet.SetInfo(_weaponData.Damage);
+                bullet.SetInfo(_weaponData.Damage,owner);
                 bullet.Fire(firePoint.transform.right);
             }
 

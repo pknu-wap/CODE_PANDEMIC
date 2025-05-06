@@ -6,7 +6,7 @@ public class M870 : WideSpreadWeaponBase
     [SerializeField] private float spreadAngle = 15f;
     [SerializeField] private float fireForce = 10f;
 
-    public override void Attack()
+    public override void Attack(PlayerController owner)
     {
         if (!CanFire()) return;
 

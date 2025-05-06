@@ -5,7 +5,7 @@ public class WideSpreadWeaponBase : WeaponBase
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform firePoint;
 
-    public override void Attack()
+    public override void Attack(PlayerController owner)
     {
         if (!CanFire()) return;
 

@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
         if (UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
         {
-            _equipWeapon?.Attack();
+            _equipWeapon?.Attack(this);
         }
     }
 
