@@ -180,6 +180,7 @@ public class StageProgressData
 {
     public List<int> ObtainedItemIDs = new();
     public List<int> ClearedPuzzleIDs = new();
+    public List<int> InteractObjectIDS = new();
 }
 
 public class StageProgressSaver

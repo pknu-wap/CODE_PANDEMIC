@@ -50,6 +50,7 @@ public class GameManagerEx
 
     private HashSet<int> _clearPuzzleID;
     private HashSet<int> _obtainedItemIDs;
+    private HashSet<int> _interactObjects;
 
     private int _prevStage;
     private int _prevChapter;
@@ -57,7 +58,7 @@ public class GameManagerEx
     public HashSet<int> ObtainedItemIDs => _obtainedItemIDs;
     public HashSet<int> ClearPuzzleID => _clearPuzzleID;
 
-
+    public HashSet<int>InteractObjects => _interactObjects; 
 
     public GameData SaveData
     {
@@ -165,7 +166,14 @@ public class GameManagerEx
             _stageProgressSaver.Save(_stageProgressData);
         }
     }
-
+    public void InteractedObjects(int id)
+    {
+        if(InteractObjects.Add(id))
+        {
+            _stageProgressData.InteractObjectIDS = new List<int>(_interactObjects);
+            _stageProgressSaver.Save(_stageProgressData);
+        }
+    }
     public void CompleteStage()
     {
         if (Stage == Define.STAGES_PER_CHAPTER)
@@ -212,10 +220,11 @@ public class GameManagerEx
         _gameSaver.LoadGame(ref _gameData);
         _inventorySaver.LoadInventory();
         _stageProgressData = _stageProgressSaver.Load();
-        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
-        _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
 
         _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
+        _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
+        _interactObjects = new HashSet<int>(_stageProgressData.InteractObjectIDS);
+
         return true;
     }
     public void QuitGame()

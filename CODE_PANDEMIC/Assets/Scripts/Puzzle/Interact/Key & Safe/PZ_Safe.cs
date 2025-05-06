@@ -54,6 +54,7 @@ public class PZ_Safe : PZ_Interact_Spawn
         if (key != -1)
         {
             Managers.Game.Inventory.RemoveItem(key, 1);
+            Managers.Game.InteractedObjects(_interactData.ID);
             RewardItem();
         }
        
