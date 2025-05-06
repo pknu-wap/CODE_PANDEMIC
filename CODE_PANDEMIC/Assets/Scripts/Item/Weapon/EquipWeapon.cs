@@ -59,13 +59,14 @@ public class EquipWeapon : MonoBehaviour
             case Define.WeaponType.ShortWeapon:
                 break;
             case Define.WeaponType.PistolWeapon:
-                if (!CheckSameWeapon(data)) return;
+                if (!CheckSameWeapon(data,_weapon)) return;
 
+                DestroyPrevWeapon();
                 Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
                 {
-                   
                     _weapon = obj.GetComponent<WeaponBase>();
                     _weapon.SetInfo(data);
+                   
                 });
                 break;
             case Define.WeaponType.RangeWeapon:
@@ -75,15 +76,20 @@ public class EquipWeapon : MonoBehaviour
         }
 
     }
-    bool CheckSameWeapon(WeaponData item)
+    bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
     {
-        if (_weapon == null) return true;
+        if (currentWeapon == null) return true; //장착이 아무것도 안되어있음 
 
-        if (item.TemplateID == _weapon.ID) return false;
+        if (item.TemplateID == currentWeapon.ID) return false; //현재 장착되
         else return true;
     }
 
-
+    private void DestroyPrevWeapon()
+    {
+        if (_weapon == null) return;
+        Destroy(_weapon.gameObject);
+        _weapon = null;
+    }
     public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
     {
 
