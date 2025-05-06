@@ -8,6 +8,11 @@ public abstract class PZ_Puzzle_Base : UI_PopUp
     protected RectTransform _rectTransform;
     protected Image _image;
 
+    public override bool Init()
+    {
+        return base.Init();
+    }
+
     protected void SetComponents()
     {
         _rectTransform = GetComponent<RectTransform>();

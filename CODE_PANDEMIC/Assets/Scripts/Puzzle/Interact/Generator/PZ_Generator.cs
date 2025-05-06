@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class PZ_Generator : PZ_Puzzle_Base, IInteractable
@@ -9,6 +10,8 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     private bool _isInteracted = false;
 
     private int _rememberCount = 5;
+
+    public static event Action TurnOnGenerator;
 
     // 하이라이트 기능
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -63,7 +66,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
 
         _isInteracted = true;
 
-        // 여기에 맵의 그림자를 걷어내는 로직 구현 예정
+        TurnOnGenerator?.Invoke();
     }
 
     public void OnHighLight()
