@@ -2,6 +2,7 @@ using UnityEngine;
 using Inventory.Model;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Cinemachine;
 
 public class EquipWeapon : MonoBehaviour
 {
@@ -58,6 +59,8 @@ public class EquipWeapon : MonoBehaviour
             case Define.WeaponType.ShortWeapon:
                 break;
             case Define.WeaponType.PistolWeapon:
+                if (!CheckSameWeapon(data)) return;
+
                 Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
                 {
                    
@@ -71,10 +74,16 @@ public class EquipWeapon : MonoBehaviour
                 break;
         }
 
-
-
-
     }
+    bool CheckSameWeapon(WeaponData item)
+    {
+        if (_weapon == null) return true;
+
+        if (item.TemplateID == _weapon.ID) return false;
+        else return true;
+    }
+
+
     public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
     {
 

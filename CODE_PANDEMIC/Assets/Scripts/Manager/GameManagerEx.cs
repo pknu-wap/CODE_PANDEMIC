@@ -57,9 +57,7 @@ public class GameManagerEx
 
     public HashSet<int> ObtainedItemIDs => _obtainedItemIDs;
     public HashSet<int> ClearPuzzleID => _clearPuzzleID;
-
     public HashSet<int>InteractObjects => _interactObjects; 
-
     public GameData SaveData
     {
         get => _gameData;
@@ -250,8 +248,5 @@ public class GameManagerEx
         _gameData = new GameData();
         Init();
     }
-    
-    
 }
-
 #endregion
