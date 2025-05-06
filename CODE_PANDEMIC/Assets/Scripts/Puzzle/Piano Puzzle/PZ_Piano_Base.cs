@@ -13,6 +13,11 @@ public class PZ_Piano_Base : PZ_Puzzle_Main
     private int _maxPianoCount = 7; // 최대 선택될 음 개수 ( == 정답 음의 개수)
     private int _currentIndex = 0;
 
+    public override bool Init()
+    {
+        return base.Init();
+    }
+
     private void Start()
     {
         SettingCorrectPianoNotes();

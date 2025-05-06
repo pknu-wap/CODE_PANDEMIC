@@ -5006,8 +5006,6 @@ GameObject:
   - component: {fileID: 725748389856807712}
   - component: {fileID: 725748389856807713}
   - component: {fileID: 725748389856807726}
-  - component: {fileID: -4746877729307602436}
-  - component: {fileID: -8851771674106677218}
   m_Layer: 0
   m_Name: PZ_FireExtinguisher_Effect_Prefab
   m_TagString: Untagged
@@ -9893,39 +9891,6 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 0}
---- !u!114 &-4746877729307602436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725748389856807714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b1ff1fe9cf8637499b45758d7bd9834, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &-8851771674106677218
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725748389856807714}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3, y: 3, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &725748390055121426
 GameObject:
   m_ObjectHideFlags: 0

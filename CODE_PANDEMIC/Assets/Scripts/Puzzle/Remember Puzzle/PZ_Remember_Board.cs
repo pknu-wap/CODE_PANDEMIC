@@ -14,6 +14,11 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
 
     private PZ_Generator _owner; // 발전기
 
+    public override bool Init()
+    {
+        return base.Init();
+    }
+
     // 세팅
     public void Setting(PZ_Generator owner, int selectedRememberCount)
     {

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2739872691815673615}
   - component: {fileID: 4126964595238080367}
   - component: {fileID: 6314252292915270406}
+  - component: {fileID: 2653900688295187163}
+  - component: {fileID: 6906882202489739848}
   m_Layer: 5
   m_Name: PZ_LightOut_Reset_Prefab
   m_TagString: Untagged
@@ -89,6 +91,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b472577b42dcd46b21146f1da43920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &2653900688295187163
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429259567122528740}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &6906882202489739848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429259567122528740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &2998022651912454806
 GameObject:
   m_ObjectHideFlags: 0
