@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 9128132341900747423}
   - component: {fileID: 900739690360220375}
   - component: {fileID: -7041060866340681694}
+  - component: {fileID: 8772615385997474638}
+  - component: {fileID: 9000863924684259282}
   m_Layer: 5
   m_Name: PZ_LightOut_Button_Prefab
   m_TagString: Untagged
@@ -88,5 +90,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91aacf1e745f25642a960f4aa420200c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _correctMaterial: {fileID: 2100000, guid: 4356803dd1f45f940acdb0264a98f53c, type: 2}
-  _wrongMaterial: {fileID: 2100000, guid: 136f6b8fadb31b546aa6b36bc5b9ab58, type: 2}
+--- !u!223 &8772615385997474638
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192872306901819450}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &9000863924684259282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192872306901819450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295

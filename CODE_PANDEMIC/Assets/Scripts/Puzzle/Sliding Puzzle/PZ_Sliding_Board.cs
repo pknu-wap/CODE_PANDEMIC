@@ -14,6 +14,11 @@ public class PZ_Sliding_Board : PZ_Puzzle_Main
 
     public Vector3 EmptyTilePosition { get; set; } // 빈 타일의 위치
 
+    public override bool Init()
+    {
+        return base.Init();
+    }
+
     private IEnumerator Start()
     {
         GetSpawnedTiles();
