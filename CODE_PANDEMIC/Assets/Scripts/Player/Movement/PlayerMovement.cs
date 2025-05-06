@@ -78,10 +78,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 scaleX *= -1;
                 transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
-             
+
             }
 
-            
+
         }
 
         _playerController._currentState = _moveInput != Vector2.zero ? PlayerState.Move : PlayerState.Idle;

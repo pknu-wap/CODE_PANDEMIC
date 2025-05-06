@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 _forwardVector;
 
     [SerializeField] public Transform _weaponHolder;
-    
+
     #region Base
 
     private void Awake()
@@ -111,4 +111,3 @@ public class PlayerController : MonoBehaviour
 }
 
 #endregion
-
