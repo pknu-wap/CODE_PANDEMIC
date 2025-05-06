@@ -1,43 +1,59 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class AI_PatientAttack : ISkillBehavior
 {
-    private GameObject _attackColliderPrefab;
-    private float _cooldown = 1.5f;
-    private float _lastSkillTime = -Mathf.Infinity;
+    private GameObject _hitboxPrefab;
+    private Transform _spawnPoint;
+    private float _cooldown;
+    private float _duration;
+    private float _lastUsedTime;
+    private Coroutine _currentCoroutine;
 
-    public AI_PatientAttack(GameObject attackColliderPrefab)
+    public AI_PatientAttack(GameObject hitboxPrefab, Transform spawnPoint, float cooldown, float duration)
     {
-        _attackColliderPrefab = attackColliderPrefab;
+        _hitboxPrefab = hitboxPrefab;
+        _spawnPoint = spawnPoint;
+        _cooldown = cooldown;
+        _duration = duration;
     }
 
-    public bool IsReady(AI_Controller controller)
+    public bool IsReady(AI_Controller ai)
     {
-        return Time.time >= _lastSkillTime + _cooldown;
+        return Time.time >= _lastUsedTime + _cooldown;
     }
 
-    public void StartSkill(AI_Controller controller, Action onComplete)
+    public void StartSkill(AI_Controller ai, System.Action onComplete)
     {
-        if (!IsReady(controller)) return;
+        _lastUsedTime = Time.time;
+        ai._isUsingSkill = true;
+        ai._aiPath.canMove = false;
 
-        _lastSkillTime = Time.time;
+        _currentCoroutine = ai.StartCoroutine(SkillRoutine(ai, onComplete));
+    }
 
-        Vector2 offset = controller.transform.localScale.x > 0f ? Vector2.right : Vector2.left;
-        Vector2 spawnPos = (Vector2)controller.transform.position + offset * 0.5f;
-        // GameObject colliderObj = UnityEngine.Object.Instantiate(_attackColliderPrefab, spawnPos, Quaternion.identity);
+    private IEnumerator SkillRoutine(AI_Controller ai, System.Action onComplete)
+    {
+        Vector3 spawnPos = _spawnPoint.position;
+        if (ai.transform.localScale.x < 0)
+        {
+            float offset = _spawnPoint.localPosition.x;
+            spawnPos = ai.transform.position + new Vector3(-offset, _spawnPoint.localPosition.y, 0f);
+        }
 
-        // colliderObj.transform.right = offset;
+        GameObject hitbox = GameObject.Instantiate(_hitboxPrefab, spawnPos, Quaternion.identity);
+        LayerMask targetLayer = LayerMask.GetMask("Player");
+        hitbox.GetComponent<AttackCollider>().Initialize((int)ai.Damage, _duration, targetLayer);
 
+        yield return new WaitForSeconds(_duration);
+
+        ai._isUsingSkill = false;
+        ai._aiPath.canMove = true;
         onComplete?.Invoke();
     }
 
     public void StopSkill()
     {
-    }
-
-    public float GetCooldown()
-    {
-        return _cooldown;
+        // Future use: stop coroutine if necessary
     }
 }

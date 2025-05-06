@@ -2,27 +2,31 @@ using UnityEngine;
 
 public class AttackCollider : MonoBehaviour
 {
-    private int damage = 10;
-    private float lifeTime = 0.3f;
-    private LayerMask targetLayer;
+    private int _damage;
+    private float _lifetime;
+    private LayerMask _targetLayer;
 
-    private bool _hasDealtDamage = false;
-
-    private void Start()
+    public void Initialize(int damage, float duration, LayerMask targetLayer)
     {
-        Destroy(gameObject, lifeTime);
+        _damage = damage;
+        _lifetime = duration;
+        _targetLayer = targetLayer;
+        Invoke(nameof(DestroySelf), _lifetime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_hasDealtDamage) return;
-        targetLayer = LayerMask.GetMask("Player");
-
-        if (((1 << collision.gameObject.layer) & targetLayer) != 0)
+        if (((1 << other.gameObject.layer) & _targetLayer) != 0)
         {
-            PlayerStatus player = collision.GetComponent<PlayerStatus>();
-                player.OnDamaged(gameObject, damage);
-                _hasDealtDamage = true;
+            if (other.TryGetComponent<PlayerStatus>(out var playerStatus))
+            {
+                playerStatus.OnDamaged(gameObject, _damage);
+            }
         }
+    }
+
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }

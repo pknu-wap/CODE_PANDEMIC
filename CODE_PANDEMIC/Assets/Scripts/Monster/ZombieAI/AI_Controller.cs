@@ -63,7 +63,6 @@ public class AI_Controller : AI_Base
         _destinationSetter = GetComponent<AIDestinationSetter>();
         ConfigureAllAIPaths();
         AssignDestinations();
-
         return true;
     }
 
@@ -99,34 +98,34 @@ public class AI_Controller : AI_Base
 
     private void TryDetectPlayer()
     {
-        bool found = false;
+            bool found = false;
 
-        foreach (var obj in _aiFov.GetDetectedObjects())
-        {
-            if (obj.TryGetComponent<PlayerStatus>(out _))
+            foreach (var obj in _aiFov.GetDetectedObjects())
             {
-                _player = obj.transform;
-                _destinationSetter.target = _player;
-                _lostPlayerTimer = _playerLostDelay;
-                found = true;
-                break;
+                if (obj.TryGetComponent<PlayerStatus>(out _))
+                {
+                    _player = obj.transform;
+                    _destinationSetter.target = _player;
+                    _lostPlayerTimer = _playerLostDelay;
+                    found = true;
+                    break;
+                }
             }
-        }
 
-        if (!found)
-{
-    if (_lostPlayerTimer > 0f)
+            if (!found)
     {
-        _lostPlayerTimer -= Time.deltaTime;
+        if (_lostPlayerTimer > 0f)
+        {
+            _lostPlayerTimer -= Time.deltaTime;
+        }
+        else
+        {
+            _player = null;
+            _destinationSetter.target = null;
+            StopMoving();
+        }
     }
-    else
-    {
-        _player = null;
-        _destinationSetter.target = null;
-        StopMoving();
-    }
-}
-    }
+        }
 
     public void UpdateFovDirection()
     {

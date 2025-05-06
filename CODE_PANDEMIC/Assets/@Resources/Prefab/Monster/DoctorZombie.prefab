@@ -200,7 +200,6 @@ MonoBehaviour:
   segmentCount: 30
   material: {fileID: 2100000, guid: 9e7c6bed0090d0a4d927e2b7d23a6609, type: 2}
   fadeDuration: 0.5
-  _doctorZombie: {fileID: 6620039756431980143}
 --- !u!1 &7197098220426517872
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,7 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _statusBar: {fileID: 0}
-  _player: {fileID: 0}
+  _player: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
   _animator: {fileID: 1968915039016103880}
   _aiFov: {fileID: 1849654547819132813}
   _aiPath: {fileID: 5896992501134200855}

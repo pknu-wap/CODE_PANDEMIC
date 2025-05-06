@@ -11,6 +11,10 @@ public class AI_PatientZombie : AI_Controller
     public string AIName => _monsterData.NameID;
     public Transform Player => _player.transform;
     [SerializeField] private GameObject attackColliderPrefab;
+    [SerializeField] private Transform hitboxSpawnPoint;
+    private float _skillCooldown = 5f;
+    private float _duration = 0.2f;
+
     private ISkillBehavior _skill;    
     public override ISkillBehavior Skill { get { return _skill; } }
     protected override void Awake()
@@ -33,7 +37,7 @@ public class AI_PatientZombie : AI_Controller
     //     _monsterData.AttackDamage = 10;
     // }        
         base.Start();
-        _skill = new AI_PatientAttack(attackColliderPrefab);
+        _skill = new AI_PatientAttack(attackColliderPrefab, hitboxSpawnPoint, _skillCooldown, _duration);
         if (!Init())
         {
             enabled = false;
@@ -48,6 +52,6 @@ public class AI_PatientZombie : AI_Controller
     {
         if (_player == null) return false;
         float distance = Vector2.Distance(transform.position, _player.position);
-        return distance <= 7.5f;
+        return distance <= _monsterData.AttackRange * 0.7f;
     }
 }
