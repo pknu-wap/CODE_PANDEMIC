@@ -31,6 +31,14 @@ public class PZ_Car : PZ_Interact_NonSpawn
         _rigidbody = GetComponentInParent<Rigidbody2D>();
     }
 
+    public void SetBodyIndex(int body1_x, int body1_y, int body2_x, int body2_y)
+    {
+        _body1Index[0] = body1_x;
+        _body1Index[1] = body1_y;
+        _body2Index[0] = body2_x;
+        _body2Index[1] = body2_y;
+    }
+
     // 상호 작용
     public override void Interact(GameObject player)
     {

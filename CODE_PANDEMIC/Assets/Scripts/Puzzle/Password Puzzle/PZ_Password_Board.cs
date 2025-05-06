@@ -12,6 +12,11 @@ public class PZ_Password_Board : PZ_Puzzle_Main
     private string _correctPassword = "IUYC"; // 정답 비밀 번호
     private string _inputPassword; // 입력 받는 비밀 번호
 
+    public override bool Init()
+    {
+        return base.Init();
+    }
+
     private void Start()
     {
         Managers.UI.SetCanvas(gameObject);
