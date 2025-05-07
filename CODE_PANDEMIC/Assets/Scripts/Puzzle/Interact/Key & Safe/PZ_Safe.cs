@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Inventory.Model;
-using System.Collections.Generic;
 
 public class PZ_Safe : PZ_Interact_Spawn
 {
@@ -44,11 +42,13 @@ public class PZ_Safe : PZ_Interact_Spawn
 
         StartCoroutine(DestroyThisObject());
     }
+
     private int HasKey()
     {
         int key = Managers.Game.Inventory.HasItem(_interactData.KeyID);
         return key;
     }
+
     private void RemoveKeyAndReward(int key)
     {
         if (key != -1)

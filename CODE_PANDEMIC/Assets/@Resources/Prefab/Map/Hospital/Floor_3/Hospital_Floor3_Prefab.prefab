@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: 5.482971, y: -1.3580933, z: 0}
   m_ShapePathHash: -1582462315
   m_Mesh: {fileID: 0}
-  m_InstanceId: -4486
+  m_InstanceId: 50496
   m_LocalBounds:
     m_Center: {x: 2.4951172, y: -0.42152023, z: 0}
     m_Extent: {x: 2.987854, y: 0.936573, z: 0}
@@ -72,8 +72,9 @@ GameObject:
   m_Component:
   - component: {fileID: 171865512408350136}
   - component: {fileID: 3086067925199548489}
+  - component: {fileID: 2743028374316106545}
   m_Layer: 0
-  m_Name: GlobalLight2D
+  m_Name: Global Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,6 +145,19 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &2743028374316106545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485000393543354964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90057c04a0038ac4e90469f13edfe8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _light: {fileID: 3086067925199548489}
 --- !u!1 &1702525534834344532
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +481,7 @@ MonoBehaviour:
   - {x: -4.878174, y: -3.4979553, z: 0}
   m_ShapePathHash: -111521873
   m_Mesh: {fileID: 0}
-  m_InstanceId: 50524
+  m_InstanceId: 50506
   m_LocalBounds:
     m_Center: {x: 22.419434, y: 6.6103706, z: 0}
     m_Extent: {x: 32.947327, y: 19.848103, z: 0}

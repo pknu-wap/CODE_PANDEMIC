@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2184642420346358735}
   - component: {fileID: 6001353345323192632}
   - component: {fileID: 7753538789451155365}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PZ_Blood_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4224
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -112,10 +112,10 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4224
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4224
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
