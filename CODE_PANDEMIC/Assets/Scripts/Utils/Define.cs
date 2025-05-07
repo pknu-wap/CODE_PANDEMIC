@@ -78,9 +78,9 @@ public static class QuickSlotIndex
 }
 public static class EquipSlotIndex
 {
-    public const int Helmet=1;
-    public const int Armor = 2;
-    public const int Shoes = 3;
+    public const int Helmet=0;
+    public const int Armor = 1;
+    public const int Shoes = 2;
 
     public static int GetSlotIndex(Define.ArmorType type)
     {
@@ -89,7 +89,7 @@ public static class EquipSlotIndex
             Define.ArmorType.Helmet => Helmet,
             Define.ArmorType.Armor => Armor,
             Define.ArmorType.Shoes => Shoes,
-            _ => throw new System.ArgumentOutOfRangeException(nameof(type), $"지원되지 않는 ArmorType입니다: {type}")
+            _ => -1
         };
     }
 }

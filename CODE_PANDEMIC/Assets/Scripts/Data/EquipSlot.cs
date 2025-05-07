@@ -10,8 +10,7 @@ public class EquipSlot : MonoBehaviour
     {
         if (equipItem == null) return;
 
-        int slotIndex = 0;// EquipSlotIndex.GetSlotIndex(equipItem.ArmorStats.Type);
-
+        int slotIndex = 0;
         if (_equipItems.ContainsKey(slotIndex))
         {
             SwapSlotItem(equipItem);
@@ -24,7 +23,7 @@ public class EquipSlot : MonoBehaviour
 
     public void SwapSlotItem(EquipItem newItem)
     {
-        int slotIndex = 0;//EquipSlotIndex.GetSlotIndex(newItem.ArmorStats.Type);
+        int slotIndex = 0;
 
         if (_equipItems.TryGetValue(slotIndex, out var oldItem))
         {
