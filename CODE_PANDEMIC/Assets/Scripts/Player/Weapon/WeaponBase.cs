@@ -67,7 +67,6 @@ public abstract class WeaponBase : MonoBehaviour
         Vector3 direction = mouseWorldPosition - transform.position;
         direction.z = 0f;
 
-        // 무기는 항상 마우스를 향하게 회전
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 

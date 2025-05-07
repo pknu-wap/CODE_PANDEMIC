@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8396306310223651720}
   - component: {fileID: 6648638237781099610}
   - component: {fileID: 736645698222586288}
+  - component: {fileID: 2691582638553107487}
   m_Layer: 0
   m_Name: AR15
   m_TagString: Untagged
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2121126109, guid: 8491ad975f4b42849a15357858a90dc4, type: 3}
+  m_Sprite: {fileID: 1655646564, guid: 7fab467178944734496ab46bb7bd4a7c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -112,7 +113,7 @@ Animator:
   m_GameObject: {fileID: 2860592720366552676}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0de7fc8315823c043b0b3b2aabff14fc, type: 2}
+  m_Controller: {fileID: 9100000, guid: e70a8960826861148bc96e38c601c6a0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -123,6 +124,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2691582638553107487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2860592720366552676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c5387d2580ac454e8feda8f5a9ddb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSpriteRenderer: {fileID: 0}
+  bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
+  firePoint: {fileID: 8536330896334085753}
 --- !u!1 &8536330896334085753
 GameObject:
   m_ObjectHideFlags: 0
