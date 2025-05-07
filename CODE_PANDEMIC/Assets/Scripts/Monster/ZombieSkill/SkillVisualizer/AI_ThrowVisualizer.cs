@@ -55,13 +55,12 @@ public class AI_ThrowVisualizer : MonoBehaviour
     transform.position = origin;
     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
     transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    transform.localScale = new Vector3(Mathf.Sign(_nurseZombie.transform.localScale.x), 1f, 1f);
 
     float height = 0.5f;
     float width = maxRange;
 
     Vector3 parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
-    float scaleX = 1f / parentScale.x;
-    float scaleY = 1f / parentScale.y;
 
     float directionSign = Mathf.Sign(_nurseZombie.transform.localScale.x);
     float signedWidth = width * directionSign;

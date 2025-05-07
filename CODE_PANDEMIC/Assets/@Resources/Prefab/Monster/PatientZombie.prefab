@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4049583265976071348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348540778898651143}
+  m_Layer: 0
+  m_Name: AttackArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1348540778898651143
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049583265976071348}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.134, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1102260489838019856}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4705586778829154930
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +173,7 @@ Transform:
   - {fileID: 2842384960043235698}
   - {fileID: 2623124598422141672}
   - {fileID: 2094077170628104959}
+  - {fileID: 1348540778898651143}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2153667376359497120
@@ -325,9 +357,14 @@ MonoBehaviour:
   _aiFov: {fileID: 6679038620727708155}
   _aiPath: {fileID: 4393325965198675154}
   _destinationSetter: {fileID: 0}
+  _isUsingSkill: 0
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
+  patientAttack: {fileID: 6682378130748408680, guid: 968b303345c0bd74d9f50d0a59fb3f63, type: 3}
+  attackColliderPrefab: {fileID: 6682378130748408680, guid: 968b303345c0bd74d9f50d0a59fb3f63, type: 3}
+  hitboxSpawnPoint: {fileID: 1348540778898651143}
+  _skillCooldown: 2
 --- !u!95 &-3182065775556293199
 Animator:
   serializedVersion: 5
