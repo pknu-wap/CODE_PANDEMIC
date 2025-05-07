@@ -8,7 +8,12 @@ public class Projectile : MonoBehaviour
     private Rigidbody2D _rb;
     private bool _hasTriggered = false;
     private PlayerStatus player;
+    private AI_NurseZombie _nurseZombie;
 
+    public void SetOwner(AI_NurseZombie nurseZombie)
+    {
+        _nurseZombie = nurseZombie;
+    }
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -24,7 +29,6 @@ public class Projectile : MonoBehaviour
     private void FixedUpdate()
     {
         if (_hasTriggered) return;
-
         float dist = Vector2.Distance(_startPos, transform.position);
         if (dist >= MaxDistance)
         {
@@ -43,7 +47,7 @@ public class Projectile : MonoBehaviour
 
             if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0)
             {
-                player.OnDamaged(gameObject, 10);
+                player.OnDamaged(gameObject, _nurseZombie.AiDamage);
                 spawnPos = collision.transform.position;
             }
             else

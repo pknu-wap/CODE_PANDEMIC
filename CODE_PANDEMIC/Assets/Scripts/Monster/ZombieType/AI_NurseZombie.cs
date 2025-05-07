@@ -24,7 +24,7 @@ public class AI_NurseZombie : AI_Controller
     protected override void Start()
     {
     //    if (_monsterData == null)
-    //{
+    // {
     //    _monsterData = new MonsterData();
     //    _monsterData.NameID = "NurseZombie";
     //    _monsterData.Hp = 90;
@@ -34,7 +34,7 @@ public class AI_NurseZombie : AI_Controller
     //    _monsterData.MoveSpeed = 3.5f;
     //    _monsterData.AttackRange = 2f;
     //    _monsterData.AttackDamage = 10;
-    //}
+    // }
         base.Start();
         if (!Init())
         {
@@ -42,5 +42,11 @@ public class AI_NurseZombie : AI_Controller
             return;
         }
         _skill = new AI_ThrowSkill();
+    }
+    public override bool IsPlayerInSkillRange()
+    {
+        if (_player == null) return false;
+        float distance = Vector2.Distance(transform.position, _player.position);
+        return distance <= SyringeRange * 0.8f;
     }
 }
