@@ -35,7 +35,7 @@ public abstract class WeaponBase : MonoBehaviour
         _weaponData = data;
     }
 
-    public abstract void Attack(PlayerController owner);
+    public abstract void Attack();
 
     public virtual void Reload()
     {

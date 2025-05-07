@@ -15,7 +15,7 @@ public class PistolWeaponBase : WeaponBase
         _animator = GetComponent<Animator>();
     }
 
-    public override void Attack(PlayerController owner)
+    public override void Attack()
     {
         if (!CanFire()) return;
         SetNextFireTime();
@@ -35,7 +35,7 @@ public class PistolWeaponBase : WeaponBase
             Bullet bullet = bulletObject.GetComponent<Bullet>();
             if (bullet != null)
             {
-                bullet.SetInfo(_weaponData.Damage,owner);
+                bullet.SetInfo(_weaponData.Damage);
                 bullet.Fire(firePoint.transform.right);
             }
 

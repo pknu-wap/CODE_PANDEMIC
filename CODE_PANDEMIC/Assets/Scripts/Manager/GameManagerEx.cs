@@ -36,9 +36,12 @@ public class GameData
 #region GameManagerEx
 public class GameManagerEx
 {
-    private QuickSlot _quickSlot;
     private bool _isPaused;
-    
+    #region Slot
+    private QuickSlot _quickSlot;
+
+    #endregion
+    #region Data
     private GameData _gameData = new GameData();
     private GameSaver _gameSaver;
     
@@ -51,6 +54,8 @@ public class GameManagerEx
     private HashSet<int> _clearPuzzleID;
     private HashSet<int> _obtainedItemIDs;
     private HashSet<int> _interactObjects;
+
+    #endregion
 
     private int _prevStage;
     private int _prevChapter;
@@ -111,8 +116,6 @@ public class GameManagerEx
 
     }
        
-    
-    
     public void SetResolutionMode(Resolution res)
     {
         Screen.SetResolution(res.width, res.height, SaveData.IsFullScreen);

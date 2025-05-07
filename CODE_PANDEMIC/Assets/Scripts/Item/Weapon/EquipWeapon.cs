@@ -94,14 +94,14 @@ public class EquipWeapon : MonoBehaviour
         Destroy(_weapon.gameObject);
         _weapon = null;
     }
-    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
+    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState=null)
     {
 
 
     }
-    public void Attack(PlayerController owner)
+    public void Attack()
     {
-        _weapon?.Attack(owner);
+        _weapon?.Attack();
     }
 
     private bool EquipQuickSlot(int v)

@@ -86,7 +86,7 @@ public class QuickSlot
                         NotifySlotUpdate(slotIndex, quickSlotItem);
                     break;
 
-                case Define.ItemType.Equippable:
+                case Define.ItemType.Weaponable:
                     Debug.Log($"[QuickSlot] {quickSlotItem.ItemData.Name} ÀåÂø ¿Ï·á");
                     break;
                   

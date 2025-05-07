@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Define 
@@ -30,8 +31,10 @@ public class Define
     public enum ItemType
     {
         Edible,
+        Weaponable,
+        Interact,
         Equippable,
-        Interact
+        Buff
     }
     public enum ActionType
     { 
@@ -40,9 +43,16 @@ public class Define
         QuickSlot,
         Buff,
     }
-   
+   public enum ArmorType
+    {
+        None,
+        Helmet,
+        Armor,
+        Shoes
+    }
     public const int STAGES_PER_CHAPTER = 4; //3 normal 1 boss
 
+    public const int ArmorIndex = 3;
     public const int None = 0;
     public const int PlayerCamera = 11;
     public const int PuzzleClear = 20;
@@ -63,6 +73,23 @@ public static class QuickSlotIndex
             Define.WeaponType.PistolWeapon => PistolWeapon,
             Define.WeaponType.RangeWeapon => RangeWeapon,
             _ => Portion
+        };
+    }
+}
+public static class EquipSlotIndex
+{
+    public const int Helmet=1;
+    public const int Armor = 2;
+    public const int Shoes = 3;
+
+    public static int GetSlotIndex(Define.ArmorType type)
+    {
+        return type switch
+        {
+            Define.ArmorType.Helmet => Helmet,
+            Define.ArmorType.Armor => Armor,
+            Define.ArmorType.Shoes => Shoes,
+            _ => throw new System.ArgumentOutOfRangeException(nameof(type), $"지원되지 않는 ArmorType입니다: {type}")
         };
     }
 }

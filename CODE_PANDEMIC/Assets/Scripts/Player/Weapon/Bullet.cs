@@ -12,10 +12,10 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    public void SetInfo(int damage,PlayerController owner)
+    public void SetInfo(int damage)
     {
         _damage = damage;
-        _onwer= owner;
+         
     }
     private void OnEnable()
     {
