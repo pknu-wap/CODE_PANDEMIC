@@ -144,7 +144,17 @@ namespace Inventory
             if (inventoryItem.IsEmpty) return;
             ItemData itemData = inventoryItem.Item;
             Debug.Log("EquipItem");
-            //
+            if(itemData is IItemAction actionItem)
+            {
+                bool success = actionItem.PerformAction(Managers.Object.Player.gameObject,itemData.Parameters);
+
+                if (!success)
+                {
+                    Debug.Log("½ÇÆÐ");
+                    return;
+                }
+            }
+          
             _inventoryData.RemoveItem(index, quantity);
             UIInventory.ResetSelection();
         }

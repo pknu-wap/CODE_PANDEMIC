@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Collections;
+using static Define;
 
 #region GameSaver
 public class GameSaver
@@ -213,5 +214,75 @@ public class StageProgressSaver
         {
             Debug.Log("No save data to delete.");
         }
+    }
+}
+[Serializable]
+public class EquipSlotData
+{
+    public int slotIndex; 
+    public int ItemID;
+}
+
+[Serializable]
+public class EquipSaveData
+{
+    public List<EquipSlotData> EquipSlots = new();
+}
+
+public class EquipSaver
+{
+    private EquipSlot _equipSlot;
+    private static string SavePath => Application.persistentDataPath + "/equip.json";
+
+    public EquipSaver(EquipSlot equipSlot)
+    {
+        _equipSlot = equipSlot;
+    }
+
+    public void SaveEquip()
+    {
+        var saveData = new EquipSaveData();
+
+        foreach (var pair in _equipSlot.GetEquippedItems())
+        {
+            saveData.EquipSlots.Add(new EquipSlotData
+            {
+                slotIndex = pair.Key,
+                ItemID = pair.Value.TemplateID,
+            });
+        }
+
+        string json = JsonUtility.ToJson(saveData);
+        File.WriteAllText(SavePath, json);
+        Debug.Log("Equip saved.");
+    }
+
+    public void LoadEquip()
+    {
+        if (!File.Exists(SavePath)) return;
+
+        string json = File.ReadAllText(SavePath);
+        var saveData = JsonUtility.FromJson<EquipSaveData>(json);
+
+        foreach (var slotData in saveData.EquipSlots)
+        {
+            // 아이템 데이터 가져오기
+            if (Managers.Data.Items.TryGetValue(slotData.ItemID, out var itemData))
+            {
+                EquipItem equipItem = ItemFactoryManager.CreateItem(itemData.Type, itemData) as EquipItem;
+                if (equipItem != null)
+                {
+                    _equipSlot.RegisterEquipSlot(equipItem);
+                }
+            }
+        }
+
+        Debug.Log("Equip loaded.");
+    }
+
+    public void DeleteData()
+    {
+        if (File.Exists(SavePath))
+            File.Delete(SavePath);
     }
 }

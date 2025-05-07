@@ -1,4 +1,5 @@
 using Inventory.Model;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,12 @@ public class EquipSlot : MonoBehaviour
     {
         if (equipItem == null) return;
 
-        int slotIndex = 0;
+        if (Managers.Data.Armors.TryGetValue(equipItem.TemplateID, out ArmorData data) == false) return;
+
+        int slotIndex = EquipSlotIndex.GetSlotIndex(data.Type);
         if (_equipItems.ContainsKey(slotIndex))
         {
-            SwapSlotItem(equipItem);
+            SwapSlotItem(equipItem,slotIndex);
             return;
         }
 
@@ -21,9 +24,9 @@ public class EquipSlot : MonoBehaviour
         NotifySlotUpdate(slotIndex, equipItem);
     }
 
-    public void SwapSlotItem(EquipItem newItem)
+    public void SwapSlotItem(EquipItem newItem,int index)
     {
-        int slotIndex = 0;
+        int slotIndex = index;
 
         if (_equipItems.TryGetValue(slotIndex, out var oldItem))
         {
@@ -40,11 +43,25 @@ public class EquipSlot : MonoBehaviour
         return equipItem;
     }
 
-
-
     private void NotifySlotUpdate(int slotIndex, EquipItem item)
     {
-      //  Managers.Event.InvokeEvent("OnEquipSlotUpdated", new EquipSlotUpdateData(slotIndex, item));
+       Managers.Event.InvokeEvent("OnEquipSlotUpdated", new EquipSlotUpdateData(slotIndex, item));
     }
 
+    public Dictionary<int, EquipItem> GetEquippedItems()
+    {
+        return _equipItems;
+    }
+}
+
+public  class EquipSlotUpdateData
+{
+    private int slotIndex;
+    private EquipItem item;
+
+    public EquipSlotUpdateData(int slotIndex, EquipItem item)
+    {
+        this.slotIndex = slotIndex;
+        this.item = item;
+    }
 }
