@@ -5,9 +5,14 @@ public enum PlayerState
 {
     Idle,
     Move,
+    Dead,
     Invincible,
-    Dead
+    IsIdleWithArm,
+    IsIdleNoArm,
+    IsRunningNoArm,
+    IsWalkingNoArm
 }
+
 
 public class PlayerStatus : MonoBehaviour
 {

@@ -9,13 +9,17 @@ public class EquipWeapon : MonoBehaviour
     [SerializeField]
     private WeaponBase _weapon;
 
-    [SerializeField]
-    private GameObject _socket;
-
     private QuickSlot _quickSlot;
     private PlayerInput _weaponInput;
 
+    [SerializeField] private Transform _socket;
 
+    public bool HasWeapon()
+    {
+        return _socket.childCount >=1;
+    }
+
+    public Transform WeaponSocket => _socket;
 
     private void Awake()
     {

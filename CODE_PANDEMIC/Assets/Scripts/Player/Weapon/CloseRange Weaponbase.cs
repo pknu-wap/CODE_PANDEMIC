@@ -54,13 +54,4 @@ public class CloseRangeWeaponBase : WeaponBase
         }
     }
 
-    protected void ApplyDamageWithKnockback(Collider2D target, int damage)//³Ë¹é ±¸Çö
-    {
-        AI_Base enemy = target.GetComponent<AI_Base>();
-        if (enemy != null)
-        {
-            Vector3 knockbackDir = (enemy.transform.position - transform.position).normalized;
-            enemy.TakeDamage(damage, knockbackDir);
-        }
-    }
 }
