@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Build.Pipeline;
 using UnityEngine;
 
 public class AI_ThrowSkill : ISkillBehavior
@@ -6,22 +7,24 @@ public class AI_ThrowSkill : ISkillBehavior
     private Coroutine _skillCoroutine;
     private float _lastSkillTime = -Mathf.Infinity;
     private AI_NurseZombie _currentNurse;
-    private Transform _player;
     public AI_ThrowVisualizer _throwVisualizer;
-
     public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
+{
+    controller._isUsingSkill = true;
+    controller._aiPath.canMove = false;
+
+    if (!IsReady(controller))
     {
-        if (!IsReady(controller))
-        {
-            var callback = onSkillComplete;
-            if (callback != null)
-                callback();
-            return;
-        }
-        _currentNurse = controller as AI_NurseZombie;
-        _throwVisualizer = _currentNurse._throwVisualizer;
-        _lastSkillTime = Time.time;
-        _skillCoroutine = controller.StartCoroutine(ThrowRoutine(controller as AI_NurseZombie, onSkillComplete));
+        controller._isUsingSkill = false; 
+        var callback = onSkillComplete;
+        callback?.Invoke();
+        return;
+    }
+
+    _lastSkillTime = Time.time;
+    _currentNurse = controller as AI_NurseZombie;
+    _throwVisualizer = _currentNurse._throwVisualizer;
+    _skillCoroutine = controller.StartCoroutine(ThrowRoutine(controller as AI_NurseZombie, onSkillComplete));
     }
 
     public void StopSkill()
@@ -68,17 +71,20 @@ public class AI_ThrowSkill : ISkillBehavior
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         projectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        Projectile projComponent = projectile.GetComponent<Projectile>();
+        if (projComponent != null)
+        {
+            projComponent.SetOwner(nurse);
+        }
 
     }
 
     public bool IsReady(AI_Controller controller)
     {
-        if (_currentNurse == null)
-            _currentNurse = controller as AI_NurseZombie;
-
-        if (_currentNurse != null)
-            return Time.time >= _lastSkillTime + _currentNurse.SkillCooldown;
-
+        var nurse = controller as AI_NurseZombie;
+        if (nurse != null) {
+            return Time.time >= _lastSkillTime + nurse.SkillCooldown;
+        }
         return false;
     }
 }
