@@ -73,7 +73,7 @@ public class UI_EquipPopUp : UI_PopUp
 
      private void UpdateAllSlot()
     {
-        for (int i = 1; i <= 3; i++) 
+        for (int i = 0; i < Define.ArmorCount; i++) 
         {
             EquipItem item = Managers.Game.EquipSlot.GetEquipItem(i);
             UpdateSlot(i, item);
