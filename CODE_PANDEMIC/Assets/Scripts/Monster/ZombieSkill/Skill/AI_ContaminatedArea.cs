@@ -14,31 +14,49 @@ public class AI_ContaminatedArea : MonoBehaviour
     }
 
     private IEnumerator DamageOverTime()
-    {
-        yield return new WaitForSeconds(0.5f);
-        float elapsed = 0f;
-        while (elapsed < _duration)
-        {
-            Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, _radius, LayerMask.GetMask("Player"));
-            foreach (var target in targets)
-            {
-                if (target.TryGetComponent<PlayerStatus>(out var player))
-                {
-                    player.OnDamaged(gameObject,_damagePerSecond);
-                    Debug.Log($"{_damagePerSecond} 데미지");
-                }
-            }
+{
+    yield return new WaitForSeconds(0.5f);
+    float elapsed = 0f;
 
-            yield return new WaitForSeconds(_interval);
-            elapsed += _interval;
+    while (elapsed < _duration)
+    {
+        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, _radius, LayerMask.GetMask("Player"));
+        foreach (var target in targets)
+        {
+            if (target.TryGetComponent<PlayerStatus>(out var player))
+            {
+                player.OnDamaged(gameObject, _damagePerSecond);
+            }
+        }
+
+        yield return new WaitForSeconds(_interval);
+        elapsed += _interval;
+    }
+
+    StartCoroutine(FadeOut());
+}
+
+    private IEnumerator FadeOut()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr == null)
+        {
+            Destroy(gameObject);
+            yield break;
+        }
+
+        float fadeDuration = 1f;
+        float fadeElapsed = 0f;
+        Color originalColor = sr.color;
+
+        while (fadeElapsed < fadeDuration)
+        {
+            float alpha = Mathf.Lerp(1f, 0f, fadeElapsed / fadeDuration);
+            sr.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            fadeElapsed += Time.deltaTime;
+            yield return null;
         }
 
         Destroy(gameObject);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _radius);
     }
 }

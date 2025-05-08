@@ -46,20 +46,22 @@ public class AI_SweepVisualizer : MonoBehaviour
 }
 
     public void Show(Vector2 forward, float fullAngle, float fullRadius, float chargeTime)
-    {
-        Vector2 snapped = SnapDirection(forward);
-        transform.rotation = Quaternion.FromToRotation(Vector2.up, snapped);
+{
+    Vector2 snapped = SnapDirection(forward);
+    transform.rotation = Quaternion.FromToRotation(Vector2.up, snapped);
 
-        Mesh outlineMesh = GenerateMesh(fullAngle, fullRadius);
-        _outlineFilter.mesh = outlineMesh;
+    Mesh outlineMesh = GenerateMesh(fullAngle, fullRadius);
+    _outlineFilter.mesh = outlineMesh;
 
-        if (_fillCoroutine != null)
-            StopCoroutine(_fillCoroutine);
-        _fillCoroutine = StartCoroutine(AnimateFill(chargeTime, fullAngle, fullRadius));
-        _meshRenderer.enabled = true;
-        _outlineRenderer.enabled = true;
-        
-    }
+    if (_fillCoroutine != null)
+        StopCoroutine(_fillCoroutine);
+    _fillCoroutine = StartCoroutine(AnimateFill(chargeTime, fullAngle, fullRadius));
+    _meshRenderer.enabled = true;
+    _outlineRenderer.enabled = true;
+
+    Vector3 parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
+    transform.localScale = new Vector3(1f / parentScale.x, 1f / parentScale.y, 1f);
+}
 
     public void Hide()
     {

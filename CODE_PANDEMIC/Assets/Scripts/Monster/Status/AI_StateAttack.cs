@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class AI_StateAttack : AI_IState
 {
-    private bool _isSkillPlaying;
     private float _chargeDelay = 1f;
     private readonly AI_Controller _controller;
 
@@ -16,13 +15,13 @@ public class AI_StateAttack : AI_IState
     {
         _controller._animator.SetTrigger("Attack");
         _controller.StopMoving();
-        _isSkillPlaying = true;
+        _controller._isUsingSkill = true;
         _controller.StartCoroutine(ChargeAndExecuteSkill());
     }
 
     public virtual void OnUpdate()
     {
-        if (_isSkillPlaying)
+        if (_controller._isUsingSkill)
             return;
     }
 
@@ -32,7 +31,7 @@ public class AI_StateAttack : AI_IState
     {
         if (_controller.Skill != null)
             _controller.Skill.StopSkill();
-        _isSkillPlaying = false;
+        _controller._isUsingSkill = false;
     }
 
     private IEnumerator ChargeAndExecuteSkill()
@@ -51,8 +50,9 @@ public class AI_StateAttack : AI_IState
 
     private void OnSkillComplete()
     {
-        _isSkillPlaying = false;
+        _controller._isUsingSkill = false;
         _controller.ChangeState(new AI_StateIdle(_controller));
         _controller._animator.SetTrigger("Idle");
+        _controller.StopAttack();
     }
 }
