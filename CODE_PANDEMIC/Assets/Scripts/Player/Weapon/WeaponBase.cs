@@ -75,7 +75,6 @@ public abstract class WeaponBase : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        // flip은 스프라이트 반전용으로만 처리 (scale.y 반전)
         bool shouldFaceRight = direction.x >= 0;
 
         if (shouldFaceRight != isFacingRight)
