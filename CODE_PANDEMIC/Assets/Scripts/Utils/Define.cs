@@ -52,11 +52,13 @@ public class Define
     }
     public const int STAGES_PER_CHAPTER = 4; //3 normal 1 boss
 
-    public const int ArmorIndex = 3;
+    public const int ArmorCount = 3;
+
     public const int None = 0;
     public const int PlayerCamera = 11;
     public const int PuzzleClear = 20;
     public const int BossSequence = 30;
+
 }
 public static class QuickSlotIndex
 {
@@ -78,7 +80,7 @@ public static class QuickSlotIndex
 }
 public static class EquipSlotIndex
 {
-    public const int Helmet=0;
+    public const int Helmet= 0;
     public const int Armor = 1;
     public const int Shoes = 2;
 

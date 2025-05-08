@@ -232,8 +232,8 @@ public class ArmorData
 {
     public int TemplateID;
     public int Defense;
-    public int Speed;
-    public int HealthAmount;
+    public int Health;
+    public float Speed;
     public ArmorType Type;
 
 }

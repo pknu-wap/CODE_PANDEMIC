@@ -26,12 +26,18 @@ public class UIController_GameScene : UIController_Base
         _inputActions.UI.Inventory.performed += OnInventory;
         _inputActions.UI.Pause.performed += OnClickEscape;
         _inputActions.UI.MiniMap.performed += OnClickTab;
+        _inputActions.UI.Equip.performed += OnClickEquip;
     }
+
+  
+
     protected override void DisableInput()
     {
         _inputActions.UI.Inventory.performed -= OnInventory;
         _inputActions.UI.Pause.performed -= OnClickEscape;
         _inputActions.UI.MiniMap.performed -= OnClickTab;
+        _inputActions.UI.Equip.performed -= OnClickEquip;
+
         _inputActions.Disable();
     }
     private void OnInventory(InputAction.CallbackContext ctx)
@@ -41,7 +47,10 @@ public class UIController_GameScene : UIController_Base
             _inventory.ShowHide(ctx);
         }
     }
+    private void OnClickEquip(InputAction.CallbackContext context)
+    {
 
+    }
 
     private void OnClickEscape(InputAction.CallbackContext context)
     {

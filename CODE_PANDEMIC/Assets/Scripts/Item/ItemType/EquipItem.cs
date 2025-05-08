@@ -10,8 +10,8 @@ namespace Inventory.Model
        
         public bool PerformAction(GameObject character, List<ItemParameter> itemState)
         {
-            throw new System.NotImplementedException();
-           //TODO : EQUIP SLOT
+            Managers.Game.EquipSlot.RegisterEquipSlot(this);
+            return true;
         }
     }
 }

@@ -1,0 +1,108 @@
+using Inventory.Model;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UI_EquipPopUp : UI_PopUp
+{
+
+    enum GameObjects
+    { 
+         ShoesSlot,
+         ArmorSlot,
+         HeadSlot,
+    }
+
+   
+    enum Texts
+    {
+        HpText,
+        ArmorText,
+        SpeedText
+    }
+   
+    public override bool Init()
+    {
+        if (base.Init() == false) return false;
+
+        BindImage(typeof(GameObjects));
+        BindText(typeof(Texts));
+        UpdateAllSlot();
+        InitializeUI();
+        return true;
+    }
+    private void InitializeUI()
+    {
+        for(int i =0; i<Define.ArmorCount; i++)
+        {
+            UI_EquipSlotItem slotItem = GetObject(i).GetComponent<UI_EquipSlotItem>();
+            int index = i;  // 클로저 캡처 방지용
+            slotItem.OnRightMouseButtonClick += (clickedSlot) => OnSlotRightClicked(index);
+        }
+    }
+
+    private void OnSlotRightClicked(int index)
+    {
+        Managers.Game.EquipSlot.UnEquipItem(index);
+    }
+
+    private void OnEnable()
+    {
+        Managers.Event.Subscribe("OnEquipSlotUpdated", OnEquipSlotUpdated);
+    }
+
+    private void OnDisable()
+    {
+        Managers.Event.Unsubscribe("OnEquipSlotUpdated", OnEquipSlotUpdated);
+    }
+    private void OnEquipSlotUpdated(object obj)
+    {
+        if (obj is EquipSlotUpdateData data)
+        {
+            
+            UpdateSlot(data.SlotIndex, data.Item);
+            UpdateText();
+        }
+        else
+        {
+            Debug.LogWarning("OnEquipSlotUpdated: 데이터 타입 불일치");
+        }
+    }
+
+     private void UpdateAllSlot()
+    {
+        for (int i = 1; i <= 3; i++) 
+        {
+            EquipItem item = Managers.Game.EquipSlot.GetEquipItem(i);
+            UpdateSlot(i, item);
+        }
+
+        UpdateText();
+    }
+
+    public void UpdateSlot(int armorIndex, ItemData data)
+    {
+        int index = armorIndex ;
+        
+        UpdateSlotImage(index, data);
+
+    }
+    public void UpdateSlotImage(int armorIndex,ItemData data)
+    {
+        UI_EquipSlotItem targetObject = GetObject(armorIndex).GetComponent<UI_EquipSlotItem>();
+
+        if (targetObject == null) return;
+
+        if (data == null)
+            targetObject.UpdateRemoveItem();
+        else
+            targetObject.UpdateSlotItem(data);
+
+    }
+    public void UpdateText()
+    {
+
+    }
+}

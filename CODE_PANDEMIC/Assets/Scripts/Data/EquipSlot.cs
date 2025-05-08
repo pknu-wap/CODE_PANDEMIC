@@ -52,16 +52,28 @@ public class EquipSlot : MonoBehaviour
     {
         return _equipItems;
     }
+    public void UnEquipItem(int slotIndex)
+    {
+        if (_equipItems.TryGetValue(slotIndex, out var oldItem))
+        {
+            Managers.Game.Inventory.AddItem(oldItem, 1);
+            _equipItems[slotIndex] = null;
+
+            NotifySlotUpdate(slotIndex, null);
+        }
+    }
 }
 
 public  class EquipSlotUpdateData
 {
-    private int slotIndex;
-    private EquipItem item;
+    private int _slotIndex;
+    private EquipItem _item;
+    public int SlotIndex => _slotIndex;
+    public EquipItem Item => _item;
 
     public EquipSlotUpdateData(int slotIndex, EquipItem item)
     {
-        this.slotIndex = slotIndex;
-        this.item = item;
+        _slotIndex = slotIndex;
+        _item = item;
     }
 }

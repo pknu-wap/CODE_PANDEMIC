@@ -205,6 +205,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Equip"",
+                    ""type"": ""Button"",
+                    ""id"": ""98e1bfee-99e2-4f4b-bf60-e6aca48f06ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -238,6 +247,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc67d3a4-91d7-4916-a233-0cdc40f764dd"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -346,6 +366,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_UI_Inventory = m_UI.FindAction("Inventory", throwIfNotFound: true);
         m_UI_MiniMap = m_UI.FindAction("MiniMap", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
+        m_UI_Equip = m_UI.FindAction("Equip", throwIfNotFound: true);
         // QuickSlot
         m_QuickSlot = asset.FindActionMap("QuickSlot", throwIfNotFound: true);
         m_QuickSlot_Equip1 = m_QuickSlot.FindAction("Equip1", throwIfNotFound: true);
@@ -494,6 +515,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Inventory;
     private readonly InputAction m_UI_MiniMap;
     private readonly InputAction m_UI_Pause;
+    private readonly InputAction m_UI_Equip;
     public struct UIActions
     {
         private @PlayerInput m_Wrapper;
@@ -501,6 +523,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Inventory => m_Wrapper.m_UI_Inventory;
         public InputAction @MiniMap => m_Wrapper.m_UI_MiniMap;
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        public InputAction @Equip => m_Wrapper.m_UI_Equip;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -519,6 +542,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Equip.started += instance.OnEquip;
+            @Equip.performed += instance.OnEquip;
+            @Equip.canceled += instance.OnEquip;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -532,6 +558,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Equip.started -= instance.OnEquip;
+            @Equip.performed -= instance.OnEquip;
+            @Equip.canceled -= instance.OnEquip;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -632,6 +661,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnInventory(InputAction.CallbackContext context);
         void OnMiniMap(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnEquip(InputAction.CallbackContext context);
     }
     public interface IQuickSlotActions
     {
