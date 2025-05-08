@@ -92,8 +92,9 @@ public class PlayerController : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            _equipWeapon?.Attack();
+            _equipWeapon?.Attack(this);
         }
+
     }
 
     private void OnPlayerDead(object obj)
@@ -115,6 +116,6 @@ public class PlayerController : MonoBehaviour
     {
         _playerStatus.OnHealed(healValue);
     }
-
     public bool IsDead() => _currentState == PlayerState.Dead;
+
 }

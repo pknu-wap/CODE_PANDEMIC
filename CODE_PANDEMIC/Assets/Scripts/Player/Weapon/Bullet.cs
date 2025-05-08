@@ -1,10 +1,12 @@
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
+
 {
     private float _speed = 10f;
     private float _lifeTime = 3f;
     private int _damage = 0;
+    private PlayerController _owner;
 
     private Rigidbody2D rb;
 
@@ -44,5 +46,15 @@ public class Bullet : MonoBehaviour
             enemy.TakeDamage(_damage);
         }
         ReturnToPool();
+    }
+
+    public void SetOwner(PlayerController owner)
+    {
+        _owner = owner;
+    }
+
+    public PlayerController GetOwner()
+    {
+        return _owner;
     }
 }
