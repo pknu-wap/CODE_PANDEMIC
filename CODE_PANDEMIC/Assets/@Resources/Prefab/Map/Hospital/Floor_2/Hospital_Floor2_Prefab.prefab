@@ -200,7 +200,7 @@ MonoBehaviour:
   - {x: 85.74576, y: -16.458267, z: 0}
   m_ShapePathHash: -784746365
   m_Mesh: {fileID: 0}
-  m_InstanceId: 49140
+  m_InstanceId: 70336
   m_LocalBounds:
     m_Center: {x: 40.697067, y: 13.435352, z: 0}
     m_Extent: {x: 45.04869, y: 29.89362, z: 0}
@@ -395,7 +395,7 @@ MonoBehaviour:
   - {x: 8.268524, y: -16.955307, z: 0}
   m_ShapePathHash: -1787807955
   m_Mesh: {fileID: 0}
-  m_InstanceId: 49110
+  m_InstanceId: 70306
   m_LocalBounds:
     m_Center: {x: 2.4578552, y: -8.054211, z: 0}
     m_Extent: {x: 5.9757385, y: 8.901096, z: 0}
@@ -457,7 +457,7 @@ MonoBehaviour:
   - {x: 8.329742, y: -0.52575684, z: 0}
   m_ShapePathHash: -13925291
   m_Mesh: {fileID: 0}
-  m_InstanceId: 49112
+  m_InstanceId: 70308
   m_LocalBounds:
     m_Center: {x: 1.892273, y: 0.37345886, z: 0}
     m_Extent: {x: 6.4374695, y: 0.8992157, z: 0}
@@ -3990,6 +3990,10 @@ PrefabInstance:
     - target: {fileID: -385292282140852716, guid: a81af6c87b0de184182b8b3cc1404cad, type: 3}
       propertyPath: _currentMap
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -385292282140852716, guid: a81af6c87b0de184182b8b3cc1404cad, type: 3}
+      propertyPath: _isNextElevator
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 691067035797449633, guid: a81af6c87b0de184182b8b3cc1404cad, type: 3}
       propertyPath: m_LocalPosition.x

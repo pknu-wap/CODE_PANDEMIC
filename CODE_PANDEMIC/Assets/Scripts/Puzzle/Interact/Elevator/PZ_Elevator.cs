@@ -13,6 +13,7 @@ public class PZ_Elevator : PZ_Interact_NonSpawn
     [SerializeField] private ElevatingMap _elevatingMap; // 해당 엘레베이터로 이동할 맵
     private Animator _animator;
     private PZ_Elevator_Screen _elevatorScreen; // 층수 화면
+    [SerializeField] private bool _isNextElevator = true;
 
     private void Start()
     {
@@ -33,14 +34,16 @@ public class PZ_Elevator : PZ_Interact_NonSpawn
         base.Interact(player);
 
         _animator.SetBool("IsOpened", true);
-        
-        Managers.Event.InvokeEvent("NextStage");
+
+        if (_isNextElevator)
+        {
+            Managers.Event.InvokeEvent("NextStage");
+        }
+        else
+        {
+            Managers.Event.InvokeEvent("PrevStage");
+        }
 
         _elevatorScreen.Setting(_elevatingMap);
-    }
-
-    private void UpdateStage()
-    {
-
     }
 }
