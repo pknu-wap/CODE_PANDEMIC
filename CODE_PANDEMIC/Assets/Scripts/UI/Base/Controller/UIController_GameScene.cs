@@ -9,7 +9,7 @@ public class UIController_GameScene : UIController_Base
 {
    
     InventoryController _inventory;
-   
+    UI_EquipPopUp _equipPopUp;
     protected override bool Init()
     {
         if (base.Init() == false) return false;
@@ -49,13 +49,16 @@ public class UIController_GameScene : UIController_Base
     }
     private void OnClickEquip(InputAction.CallbackContext context)
     {
-
+        if (Managers.UI.HasEquipPopUpUI()) Managers.UI.CloseEquipPopUpUI();
+        else Managers.UI.ShowEquipPopUpUI();
     }
 
     private void OnClickEscape(InputAction.CallbackContext context)
     {
         if (Managers.UI.HasPopUpUI())
             Managers.UI.ClosePopupUI();
+        else if (Managers.UI.HasEquipPopUpUI())
+            Managers.UI.CloseEquipPopUpUI();
         else if(Managers.UI.EnlargedMiniMapUI!=null)
             Managers.UI.CloseEnlargedMiniMap();
         else if (Managers.UI.IsOpenInventory())

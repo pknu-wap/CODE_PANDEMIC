@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UI_EquipSlotItem :UI_Base, IPointerClickHandler
 {
@@ -12,45 +13,46 @@ public class UI_EquipSlotItem :UI_Base, IPointerClickHandler
         ItemImage,
         BGItemImage
     }
+    bool _init = false;
     Color _bgOriginal;
-    
+    [SerializeField] Sprite _emptySprite;
     public override bool Init()
     {
+        if (_init) return true;
         if (base.Init() == false) return false;
        
         BindImage(typeof(Images));
+       
        _bgOriginal = GetImage((int)Images.BGItemImage).color;
+        _init = true;
         return true;
     }
   
     public event Action<UI_EquipSlotItem> OnRightMouseButtonClick;
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right) OnRightMouseButtonClick?.Invoke(this); 
+        if (eventData.button == PointerEventData.InputButton.Right) OnRightMouseButtonClick?.Invoke(this);
+        Debug.Log("RightClick");
     }
 
     public void UpdateSlotItem(ItemData data)
     {
         Managers.Resource.LoadAsync<Sprite>(data.Sprite, callback: (sprite) =>
         {
-            if (sprite != null)
-            {
-                GetImage((int)Images.ItemImage).sprite = sprite;
-                Color color = GetImage((int)Images.BGItemImage).color;
-                color.a = 0.0f;
-                GetImage((int)Images.BGItemImage).color = color;
-            }
-            else
-            {
-                Debug.LogWarning($"[UI_InGameSlot] {data.Name} 스프라이트 로딩 실패");
-            }
-                
+          
+          GetImage((int)Images.ItemImage).sprite = sprite;
+          Color color = GetImage((int)Images.BGItemImage).color;
+          color.a = 0.0f;
+          GetImage((int)Images.BGItemImage).color = color;
+          
+        
         });
     }
     
     public void UpdateRemoveItem()
     {
-        GetImage((int)Images.ItemImage).sprite = null;
+     
+        GetImage((int)Images.ItemImage).sprite = _emptySprite;
         GetImage((int)Images.BGItemImage).color = _bgOriginal;
     }
 }

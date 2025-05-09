@@ -209,7 +209,7 @@ public class EquipSaver
                 ItemID = pair.Value.TemplateID,
             });
         }
-
+        
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(SavePath, json);
         Debug.Log("Equip saved.");
@@ -221,7 +221,7 @@ public class EquipSaver
 
         string json = File.ReadAllText(SavePath);
         var saveData = JsonUtility.FromJson<EquipSaveData>(json);
-
+        _equipSlot.ClearSlots();
         foreach (var slotData in saveData.EquipSlots)
         {
             

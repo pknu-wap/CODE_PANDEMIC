@@ -89,6 +89,26 @@ public class EquippableItemFactory : IItemFactory
         };
     }
 }
+public class BuffItemFactory : IItemFactory
+{
+    public ItemData CreateItem(ItemData data)
+    {
+        if (data == null) throw new ArgumentNullException(nameof(data));
+
+        return new BuffItem
+        {
+            TemplateID = data.TemplateID,
+            Name = data.Name,
+            Description = data.Description,
+            IsStackable = data.IsStackable,
+            MaxStackSize = data.MaxStackSize,
+            Sprite = data.Sprite,
+            Type = ItemType.Weaponable,
+            Weapon = data.Weapon,
+            Parameters = data.Parameters
+        };
+    }
+}
 public class ItemFactoryManager
 {
     private static readonly Dictionary<ItemType, IItemFactory> FactoryMap = new Dictionary<ItemType, IItemFactory>

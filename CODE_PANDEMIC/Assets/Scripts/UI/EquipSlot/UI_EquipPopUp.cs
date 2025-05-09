@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_EquipPopUp : UI_PopUp
+public class UI_EquipPopUp :  UI_Base
 {
 
     enum GameObjects
     { 
-         ShoesSlot,
-         ArmorSlot,
          HeadSlot,
+         ArmorSlot,
+         ShoesSlot,
     }
 
    
@@ -27,10 +27,10 @@ public class UI_EquipPopUp : UI_PopUp
     {
         if (base.Init() == false) return false;
 
-        BindImage(typeof(GameObjects));
+        BindObject(typeof(GameObjects));
         BindText(typeof(Texts));
-        UpdateAllSlot();
         InitializeUI();
+        UpdateAllSlot();
         return true;
     }
     private void InitializeUI()
@@ -38,6 +38,7 @@ public class UI_EquipPopUp : UI_PopUp
         for(int i =0; i<Define.ArmorCount; i++)
         {
             UI_EquipSlotItem slotItem = GetObject(i).GetComponent<UI_EquipSlotItem>();
+            slotItem.Init();
             int index = i;  // 클로저 캡처 방지용
             slotItem.OnRightMouseButtonClick += (clickedSlot) => OnSlotRightClicked(index);
         }
@@ -45,6 +46,7 @@ public class UI_EquipPopUp : UI_PopUp
 
     private void OnSlotRightClicked(int index)
     {
+        Debug.Log(index);
         Managers.Game.EquipSlot.UnEquipItem(index);
     }
 
@@ -91,8 +93,8 @@ public class UI_EquipPopUp : UI_PopUp
     }
     public void UpdateSlotImage(int armorIndex,ItemData data)
     {
+        Debug.Log(armorIndex);
         UI_EquipSlotItem targetObject = GetObject(armorIndex).GetComponent<UI_EquipSlotItem>();
-
         if (targetObject == null) return;
 
         if (data == null)

@@ -64,8 +64,8 @@ namespace Inventory.Model
                 InformAboutChange();
                 return quantity;
             }
-        
 
+           
             private int AddItemToFreeSlot(ItemData item, int quantity, List<ItemParameter> itemState = null)
             {
                 InventoryItem newItem = new InventoryItem(item, quantity, new List<ItemParameter>(itemState == null ? item.Parameters : itemState));

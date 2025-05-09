@@ -9,11 +9,12 @@ public class UIManager : MonoBehaviour
     int _index = 20;
     Stack<UI_PopUp> _popupStack = new Stack<UI_PopUp>();
     GameObject _fadeImage;
-
     public UI_Inventory InventoryUI { get; private set; }
     public UI_Scene SceneUI { get; set; }
     public UI_EnlargedMiniMap EnlargedMiniMapUI { get; private set; }
+
     private GameObject _uiRoot;
+
     public GameObject UIRoot
     {
         get
@@ -224,7 +225,41 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    
+    public UI_EquipPopUp EquipPopUpUI { get; private set; }
+
+    public void ShowEquipPopUpUI(Action<UI_EquipPopUp> callback = null)
+    {
+        if (EquipPopUpUI == null)
+        {
+            Transform parent = SceneUI != null ? SceneUI.transform : UIRoot.transform;
+
+            Managers.Resource.Instantiate("UI_EquipPopUp", parent, (obj) =>
+            {
+                EquipPopUpUI = Utils.GetOrAddComponent<UI_EquipPopUp>(obj);
+                SetCanvas(obj, false);
+                callback?.Invoke(EquipPopUpUI);
+            });
+        }
+        else
+        {
+            EquipPopUpUI.gameObject.SetActive(true);
+            callback?.Invoke(EquipPopUpUI);
+        }
+    }
+    public bool HasEquipPopUpUI()
+    {
+        return EquipPopUpUI!=null;
+    }
+    public void CloseEquipPopUpUI()
+    {
+        if (EquipPopUpUI != null)
+        {
+            Managers.Resource.Destroy(EquipPopUpUI.gameObject);
+            EquipPopUpUI = null;
+        }
+    }
+
+   
     public void ClearUI()
     {
         CloseAllPopUI();
@@ -241,9 +276,15 @@ public class UIManager : MonoBehaviour
            Destroy(SceneUI.gameObject);
             SceneUI = null;
         }
+
         if(EnlargedMiniMapUI != null)
         {
             CloseEnlargedMiniMap();
+        }
+
+        if (HasEquipPopUpUI())
+        {
+            CloseEquipPopUpUI();
         }
 
         CloseAllPopUI();

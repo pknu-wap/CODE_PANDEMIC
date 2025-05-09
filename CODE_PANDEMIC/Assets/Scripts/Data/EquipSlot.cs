@@ -30,7 +30,8 @@ public class EquipSlot : MonoBehaviour
 
         if (_equipItems.TryGetValue(slotIndex, out var oldItem))
         {
-            Managers.Game.Inventory.AddItem(oldItem, 1);
+            Managers.Data.Items.TryGetValue(oldItem.TemplateID, out ItemData data);
+            Managers.Game.Inventory.AddItem(data, 1);
         }
 
         _equipItems[slotIndex] = newItem;
@@ -54,13 +55,18 @@ public class EquipSlot : MonoBehaviour
     }
     public void UnEquipItem(int slotIndex)
     {
-        if (_equipItems.TryGetValue(slotIndex, out var oldItem))
+        if (_equipItems.TryGetValue(slotIndex, out EquipItem oldItem))
         {
-            Managers.Game.Inventory.AddItem(oldItem, 1);
-            _equipItems[slotIndex] = null;
+            Managers.Data.Items.TryGetValue(oldItem.TemplateID, out ItemData item);
+            Managers.Game.Inventory.AddItem(item, 1);
+            _equipItems.Remove(slotIndex);
 
             NotifySlotUpdate(slotIndex, null);
         }
+    }
+    public void ClearSlots()
+    {
+        _equipItems.Clear();
     }
 }
 
