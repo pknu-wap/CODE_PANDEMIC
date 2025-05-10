@@ -305,7 +305,17 @@
       "StageID": 4,
       "BossTemplateID": 1,
       "MapAddress": "Map1_4",
-      "MapName": "봉쇄된 입구"
+      "MapName": "봉쇄된 입구",
+      "Spawners": [
+        {
+          "ID": 4,
+          "Name": "PlayerSpawner",
+          "Pos": {
+            "x": -9.6,
+            "y": -11.5
+          }
+        }
+      ]
     }
   ]
 }
