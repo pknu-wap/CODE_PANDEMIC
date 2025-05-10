@@ -25,6 +25,8 @@ public class PZ_Car : PZ_Interact_NonSpawn
 
     private float _moveValue = 3f; // 이동 거리
 
+    [SerializeField] private Sprite _upSprite;
+
     private void Start()
     {
         _Parking = GetComponentInParent<PZ_Parking>();
@@ -161,11 +163,32 @@ public class PZ_Car : PZ_Interact_NonSpawn
         Vector2 currentPos = _rigidbody.position; // 시작점
         Vector2 destinationPos = _rigidbody.position; // 도착점
 
-        destinationPos.x += 6;
+        destinationPos.x += 8;
 
         float currentTime = 0f;
         float currentPercent = 0f;
         float moveDuration = 0.5f;
+
+        while (currentTime <= 1)
+        {
+            currentTime += Time.fixedDeltaTime;
+            currentPercent = currentTime / moveDuration;
+
+            _rigidbody.position = Vector2.Lerp(currentPos, destinationPos, currentPercent);
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        _spriteRenderer.sprite = _upSprite;
+
+        currentPos = _rigidbody.position;
+        destinationPos = _rigidbody.position;
+
+        destinationPos.y += 210;
+
+        currentTime = 0f;
+        currentPercent = 0f;
+        moveDuration = 4f;
 
         while (currentTime <= 1)
         {
