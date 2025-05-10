@@ -84,7 +84,7 @@ public class StageController : MonoBehaviour
                 Debug.LogError($"Puzzle ID {puzzles[i]} not found in data.");
                 continue;
             }
-            if (Managers.Game.ClearPuzzleID.Contains(puzzles[i])) continue; //clear puzzle ignore
+            if (Managers.Game.ClearPuzzleID.Contains(puzzles[i])) continue; 
             Managers.Resource.Instantiate(data.Prefab, _puzzlesParent, (obj) =>
             {
                 obj.transform.position = data.Pos;
@@ -118,7 +118,7 @@ public class StageController : MonoBehaviour
                 Debug.LogError($"Interact ID :  {interacts[i]} not found in data.");
                 continue;
             }
-            //if(Managers.Game.)
+            if (Managers.Game.InteractObjects.Contains(data.ID)) continue;
             Managers.Resource.Instantiate(data.Prefab, _puzzlesParent, (obj) =>
             {
                 obj.transform.position = data.Pos;
@@ -141,7 +141,7 @@ public class StageController : MonoBehaviour
         {
             //Destroy(LinkedBlocks[id].gameObject);
 
-            StartCoroutine(LinkedBlocks[id].DestroyThisObject());
+            LinkedBlocks[id].Disappear();
             LinkedBlocks.Remove(id);
         }
     }

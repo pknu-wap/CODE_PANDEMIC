@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Define 
@@ -30,8 +31,10 @@ public class Define
     public enum ItemType
     {
         Edible,
+        Weaponable,
+        Interact,
         Equippable,
-        Interact
+        Buff
     }
     public enum ActionType
     { 
@@ -40,9 +43,22 @@ public class Define
         QuickSlot,
         Buff,
     }
-
-
+   public enum ArmorType
+    {
+        None,
+        Helmet,
+        Armor,
+        Shoes
+    }
     public const int STAGES_PER_CHAPTER = 4; //3 normal 1 boss
+
+    public const int ArmorCount = 3;
+
+    public const int None = 0;
+    public const int PlayerCamera = 11;
+    public const int PuzzleClear = 20;
+    public const int BossSequence = 30;
+
 }
 public static class QuickSlotIndex
 {
@@ -59,6 +75,23 @@ public static class QuickSlotIndex
             Define.WeaponType.PistolWeapon => PistolWeapon,
             Define.WeaponType.RangeWeapon => RangeWeapon,
             _ => Portion
+        };
+    }
+}
+public static class EquipSlotIndex
+{
+    public const int Helmet= 0;
+    public const int Armor = 1;
+    public const int Shoes = 2;
+
+    public static int GetSlotIndex(Define.ArmorType type)
+    {
+        return type switch
+        {
+            Define.ArmorType.Helmet => Helmet,
+            Define.ArmorType.Armor => Armor,
+            Define.ArmorType.Shoes => Shoes,
+            _ => -1
         };
     }
 }

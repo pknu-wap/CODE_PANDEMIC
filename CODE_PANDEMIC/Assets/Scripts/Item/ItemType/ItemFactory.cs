@@ -29,7 +29,7 @@ public class EdibleItemFactory : IItemFactory
     }
 }
 
-public class EquippableItemFactory : IItemFactory
+public class WeaponableItemFactory : IItemFactory
 {
     public ItemData CreateItem(ItemData data)
     {
@@ -43,7 +43,7 @@ public class EquippableItemFactory : IItemFactory
             IsStackable = data.IsStackable,
             MaxStackSize = data.MaxStackSize,
             Sprite = data.Sprite,
-            Type = ItemType.Equippable,
+            Type = ItemType.Weaponable,
             Weapon = data.Weapon,
             Parameters = data.Parameters
         };
@@ -63,7 +63,47 @@ public class InteractableItemFactory:IItemFactory
             IsStackable = data.IsStackable,
             MaxStackSize = data.MaxStackSize,
             Sprite = data.Sprite,
-            Type = ItemType.Equippable,
+            Type = ItemType.Weaponable,
+            Weapon = data.Weapon,
+            Parameters = data.Parameters
+        };
+    }
+}
+public class EquippableItemFactory : IItemFactory
+{
+    public ItemData CreateItem(ItemData data)
+    {
+        if (data == null) throw new ArgumentNullException(nameof(data));
+
+        return new EquipItem
+        {
+            TemplateID = data.TemplateID,
+            Name = data.Name,
+            Description = data.Description,
+            IsStackable = data.IsStackable,
+            MaxStackSize = data.MaxStackSize,
+            Sprite = data.Sprite,
+            Type = ItemType.Weaponable,
+            Weapon = data.Weapon,
+            Parameters = data.Parameters
+        };
+    }
+}
+public class BuffItemFactory : IItemFactory
+{
+    public ItemData CreateItem(ItemData data)
+    {
+        if (data == null) throw new ArgumentNullException(nameof(data));
+
+        return new BuffItem
+        {
+            TemplateID = data.TemplateID,
+            Name = data.Name,
+            Description = data.Description,
+            IsStackable = data.IsStackable,
+            MaxStackSize = data.MaxStackSize,
+            Sprite = data.Sprite,
+            Type = ItemType.Weaponable,
             Weapon = data.Weapon,
             Parameters = data.Parameters
         };
@@ -74,8 +114,9 @@ public class ItemFactoryManager
     private static readonly Dictionary<ItemType, IItemFactory> FactoryMap = new Dictionary<ItemType, IItemFactory>
     {
         { ItemType.Edible, new EdibleItemFactory() },
-        { ItemType.Equippable, new EquippableItemFactory() },
-        {ItemType.Interact,new InteractableItemFactory()  }
+        { ItemType.Weaponable, new WeaponableItemFactory() },
+        {ItemType.Interact, new InteractableItemFactory()  },
+        {ItemType.Equippable,new EquippableItemFactory() },
     };
 
     public static ItemData CreateItem(ItemType type, ItemData data)

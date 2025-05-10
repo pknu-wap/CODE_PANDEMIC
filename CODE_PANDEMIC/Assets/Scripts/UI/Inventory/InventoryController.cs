@@ -115,10 +115,10 @@ namespace Inventory
                 {   
                     case Define.ActionType.QuickSlot: UIInventory.AddAction("Slot", () => SlotItem(index, inventoryItem.Quantity));
                         break;
-                    case Define.ActionType.Buff:BuffItem(index, inventoryItem.Quantity);
+                    case Define.ActionType.Buff:UIInventory.AddAction("Buff",()=> BuffItem(index, inventoryItem.Quantity));
                         break;
-                    case Define.ActionType.Equip:
-                        EquipItem(index, inventoryItem.Quantity);
+                    case Define.ActionType.Equip:UIInventory.AddAction("Equip", () => EquipItem(index, inventoryItem.Quantity));
+                        
                         break;
                     case Define.ActionType.None:
                         break;
@@ -140,7 +140,23 @@ namespace Inventory
         }
         private void EquipItem(int index ,int quantity)
         {
+            InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
+            if (inventoryItem.IsEmpty) return;
+            ItemData itemData = inventoryItem.Item;
+            Debug.Log("EquipItem");
+            if(itemData is IItemAction actionItem)
+            {
+                bool success = actionItem.PerformAction(Managers.Object.Player.gameObject,itemData.Parameters);
 
+                if (!success)
+                {
+                    Debug.Log("½ÇÆÐ");
+                    return;
+                }
+            }
+          
+            _inventoryData.RemoveItem(index, quantity);
+            UIInventory.ResetSelection();
         }
         private void SlotItem(int index, int quantity)
         {
