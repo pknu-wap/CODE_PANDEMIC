@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public enum PlayerState
 {
@@ -18,26 +19,44 @@ public class PlayerStatus : MonoBehaviour
 {
     private PlayerController _playerController;
 
-    // 체력 정보
-   private int _maxHp = 100;
+    
+    private int _maxHp;
     [SerializeField] private float _currentHp;
     private float _effectHp;
 
+    private int _defend;
+    
     // 데미지 효과
     public delegate void HpEffectUpdateDelegate(float realRatio, float effectRatio);
     private HpEffectUpdateDelegate _onHpEffectUpdated;
 
     private Coroutine _damageEffectCoroutine;
 
-    public float MaxRealHp => _maxHp;
+    public int MaxRealHp => _maxHp;
     public float RealHp => _currentHp;
     public float EffectHp => _effectHp;
 
+    public int Defend => _defend;
     // 초기화
     public void SetInfo()
     {
-        _currentHp = _maxHp;
-        _effectHp = _maxHp;
+        
+        _maxHp = Managers.Game.PlayerStat.MaxHp;
+        _defend=Managers.Game.PlayerStat.Defend;
+        int hp = _maxHp;
+        _currentHp = hp;
+        _effectHp = hp;
+       
+        if (Managers.Game.PlayerStat.CurrentHp != -1)
+        {
+            _currentHp =Managers.Game.PlayerStat.CurrentHp;
+            _effectHp = _currentHp;
+        }
+        else
+        {
+            Managers.Game.PlayerStat.SetCurrentHp(_currentHp);
+        }
+       
         _playerController = GetComponent<PlayerController>();
 
         if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StatusBar != null)
@@ -58,12 +77,31 @@ public class PlayerStatus : MonoBehaviour
 
         SetHpEffectDelegate(Managers.UI.SceneUI.GetComponent<UI_GameScene>().StatusBar.UpdateHp);
     }
+    private void OnEnable()
+    {
+        Managers.Event.Subscribe("StatUpdated", OnStatUpdated);
+    }
+
+    private void OnStatUpdated(object obj)
+    {
+      
+        if (obj is PlayerStat stat)
+        {
+            _maxHp= stat.MaxHp;
+            _defend=stat.Defend;
+            
+            _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
+        }
+
+    }
+
     private void OnDisable()
     {
         if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StatusBar != null)
         {
             DisableDelegate(gameSceneUI.StatusBar.UpdateHp);
         }
+        Managers.Event.Unsubscribe("StatUpdated", OnStatUpdated);
     }
     public void SetHpEffectDelegate(HpEffectUpdateDelegate updateMethod)
     {
@@ -83,6 +121,7 @@ public class PlayerStatus : MonoBehaviour
         }
 
         _currentHp = Mathf.Clamp(_currentHp - damageValue, 0, _maxHp);
+        Managers.Game.PlayerStat.SetCurrentHp(_currentHp);
         if(_currentHp<=_maxHp*0.5f) Managers.Event.InvokeEvent("RiskDamage", _currentHp/_maxHp);
 
         if (_currentHp <= 0)
@@ -105,6 +144,7 @@ public class PlayerStatus : MonoBehaviour
         _effectHp = Mathf.Max(_effectHp, _currentHp);
 
         _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
+        Managers.Game.PlayerStat.SetCurrentHp( _currentHp); 
     }
 
     // 데미지 효과

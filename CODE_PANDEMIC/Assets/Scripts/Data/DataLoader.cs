@@ -252,8 +252,30 @@ public class ArmorDataLoader : ILoader<int, ArmorData>
         return true;
     }
 }
+[Serializable]
+public class BuffItemData
+{
+    public int TemplateID;
+    public BuffType Type;
+    public float amount;
+    public float Time;
+}
+public class BuffItemDataLoader : ILoader<int, BuffItemData>
+{
+    public List<BuffItemData> buffItems = new List<BuffItemData>();
+    public Dictionary<int, BuffItemData> MakeDic()
+    {
+        Dictionary<int, BuffItemData> dic = new Dictionary<int, BuffItemData>();
+        foreach (BuffItemData buff in buffItems)
+            dic.Add(buff.TemplateID, buff);
+        return dic;
+    }
 
-
+    public bool Validate()
+    {
+        throw new NotImplementedException();
+    }
+}
 
 [Serializable]
 public class RewardData
@@ -356,4 +378,3 @@ public class InteractObjectDataLoader : ILoader<int, InteractObjectData>
         return true;
     }
 }
-
