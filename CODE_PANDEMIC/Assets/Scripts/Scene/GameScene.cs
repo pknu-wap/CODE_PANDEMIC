@@ -58,7 +58,8 @@ public class GameScene : BaseScene
         while (!_uiLoad)yield return null;
         StartCoroutine(Managers.Object.CoLoadStage(stageData));
         while (Managers.Object.Loaded == false) yield return null;
-        
+
+       
         Managers.UI.FadeIn();
     }
     private void ChangeStage()
@@ -92,8 +93,7 @@ public class GameScene : BaseScene
         ChangeStage();
     }
     private void OnPlayerDead(object obj)
-    {
-        
+    { 
         ChangeStage();
     }
         

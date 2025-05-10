@@ -58,9 +58,36 @@
       "Weapon": 1
     },
     {
+      "TemplateID": 401,
+      "Name": "오토바이 헬멧",
+      "Description": "중국집 배달용 헬멧이다.\n방어력을 <color=#cbfc07>15</color>,체력을 <color=#cbfc07>20</color>을 올려준다",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Portion_1",
+      "Type": 3
+    },
+    {
+      "TemplateID": 501,
+      "Name": "방탄복",
+      "Description": "군사용 방탄복이다.\n방어력을 <color=#cbfc07>10</color>,체력을 <color=#cbfc07>50</color>을 올려주지만,\n이동속도가 <color=#bc0000>0.25</color>느려진다",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Portion_1",
+      "Type": 3
+    },
+    {
+      "TemplateID": 601,
+      "Name": "선수용 러닝화",
+      "Description": "신어도 안 신은것과 같이 가벼운느낌이 든다.\n이동속도를<color=#cbfc07>0.3</color> 올려준다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Portion_1",
+      "Type": 3
+    },
+    {
       "TemplateID": 1001,
       "Name": "3층 금고 열쇠",
-      "Description": "<color=#df01f8>3층</color> 금고에서 사용될 열쇠이다.",
+      "Description": "<color=#df01f8>3층</color> 금고에서 사용될 열쇠이다.\n 이 아이템은 버릴 수 없다.",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Key_1",
@@ -69,7 +96,7 @@
     {
       "TemplateID": 1002,
       "Name": "2층 금고 열쇠",
-      "Description": "<color=#df01f8>2층</color> 금고에서 사용될 열쇠이다.",
+      "Description": "<color=#df01f8>2층</color> 금고에서 사용될 열쇠이다.\n 이 아이템은 버릴 수 없다.",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Key_1",
@@ -78,7 +105,7 @@
     {
       "TemplateID": 1003,
       "Name": "1층 금고 열쇠",
-      "Description": "<color=#df01f8>1층</color> 금고에서 사용될 열쇠이다.",
+      "Description": "<color=#df01f8>1층</color> 금고에서 사용될 열쇠이다.\n 이 아이템은 버릴 수 없다.",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Key_1",

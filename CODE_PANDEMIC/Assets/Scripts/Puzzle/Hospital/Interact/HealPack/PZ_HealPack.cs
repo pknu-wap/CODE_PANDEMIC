@@ -15,7 +15,7 @@ public class PZ_HealPack : PZ_Interact_Spawn
         base.Interact(player);
 
         _spriteRenderer.sprite = _interactedSprite;
-
+        Managers.Game.InteractedObjects(_interactData.ID);
         RewardItem();
     }
 }

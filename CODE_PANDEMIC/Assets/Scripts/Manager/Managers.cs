@@ -27,6 +27,7 @@ public class Managers : MonoBehaviour
     public static GameManagerEx Game { get { return _instance._game; } }
 
     public static ObjectManager Object { get { return _instance._object; } }
+
     public static bool Init()
     {
         if (_instance == null)

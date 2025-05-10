@@ -7,12 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 #region GameData 구조체 정의
-[Serializable]
-public class QuickSlotItemData
-{
-    public int ItemID;
-    public int Quantity;
-}
+
 
 [Serializable]
 public class GameData
@@ -21,8 +16,7 @@ public class GameData
     public int HighestStage = 1;
     public int Chapter =1;
     public int Stage = 1;
-    public QuickSlotItemData[] QuickSlotItems = new QuickSlotItemData[4];
-
+   
     public int MasterVolume;
     public int BgmVolume;
     public int EffectVolume;
@@ -36,9 +30,16 @@ public class GameData
 #region GameManagerEx
 public class GameManagerEx
 {
-    private QuickSlot _quickSlot;
     private bool _isPaused;
+    #region Slot
+
+    private QuickSlot _quickSlot;
+    private QuickSlotSaver _quickSlotSaver;
     
+    private EquipSlot _equipSlot;
+    private EquipSaver _equipSaver;
+    #endregion
+    #region Data
     private GameData _gameData = new GameData();
     private GameSaver _gameSaver;
     
@@ -50,15 +51,16 @@ public class GameManagerEx
 
     private HashSet<int> _clearPuzzleID;
     private HashSet<int> _obtainedItemIDs;
+    private HashSet<int> _interactObjects;
+
+    #endregion
 
     private int _prevStage;
     private int _prevChapter;
 
     public HashSet<int> ObtainedItemIDs => _obtainedItemIDs;
     public HashSet<int> ClearPuzzleID => _clearPuzzleID;
-
-
-
+    public HashSet<int>InteractObjects => _interactObjects; 
     public GameData SaveData
     {
         get => _gameData;
@@ -67,7 +69,9 @@ public class GameManagerEx
 
     public InventoryData Inventory => _inventoryData;
     public QuickSlot QuickSlot => _quickSlot;
+    public EquipSlot EquipSlot => _equipSlot;
 
+    #region Chapter&Stage
     public int LatestChapter
     {
         get => _prevChapter;
@@ -99,27 +103,37 @@ public class GameManagerEx
         set => _gameData.Stage = value;
     }
 
+    #endregion
+
     public void Init()
     {
         _isPaused = false;
-        
+
         _quickSlot = new QuickSlot();
+        _quickSlotSaver =new  QuickSlotSaver(QuickSlot);
+
+        _equipSlot = new EquipSlot();
+        _equipSaver = new EquipSaver(_equipSlot);
+
         _inventoryData = new InventoryData();
         _inventorySaver = new InventorySaver(_inventoryData);
-        _stageProgressSaver = new StageProgressSaver();
-      
-        _gameSaver = new GameSaver(_quickSlot);
 
+        _stageProgressSaver = new StageProgressSaver();
+        
+        _gameSaver = new GameSaver();
+
+        _clearPuzzleID = new HashSet<int>();
+        _obtainedItemIDs = new HashSet<int>();
+        _interactObjects = new HashSet<int>();
     }
+     
        
-    
-    
     public void SetResolutionMode(Resolution res)
     {
         Screen.SetResolution(res.width, res.height, SaveData.IsFullScreen);
         SaveData.SaveResolution = res;
-       
     }
+       
 
     public void SetScreenMode(bool value)
     {
@@ -156,7 +170,6 @@ public class GameManagerEx
             _stageProgressSaver.Save(_stageProgressData);
         }
     }
-
     public void ObtainItem(int mapItemId)
     {
         if (_obtainedItemIDs.Add(mapItemId))
@@ -165,7 +178,14 @@ public class GameManagerEx
             _stageProgressSaver.Save(_stageProgressData);
         }
     }
-
+    public void InteractedObjects(int id)
+    {
+        if(InteractObjects.Add(id))
+        {
+            _stageProgressData.InteractObjectIDS = new List<int>(_interactObjects);
+            _stageProgressSaver.Save(_stageProgressData);
+        }
+    }
     public void CompleteStage()
     {
         if (Stage == Define.STAGES_PER_CHAPTER)
@@ -186,7 +206,6 @@ public class GameManagerEx
 
         SaveGame();
     }
-
     public void PrevStage()
     {
         if (Chapter == 1 && Stage == 1) return;
@@ -203,19 +222,26 @@ public class GameManagerEx
     {
         _gameSaver.SaveGame(_gameData);
         _inventorySaver.SaveInventory();
+        _equipSaver.SaveEquip();
+        _quickSlotSaver.SaveQuickSlot();
         _stageProgressSaver.Save(_stageProgressData);
-    
     }
 
     public bool LoadGame()
     {
         _gameSaver.LoadGame(ref _gameData);
+
         _inventorySaver.LoadInventory();
+
         _stageProgressData = _stageProgressSaver.Load();
-        _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
-        _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
+
+        _quickSlotSaver.LoadQuickSlot();
+        _equipSaver.LoadEquip();
 
         _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
+        _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
+        _interactObjects = new HashSet<int>(_stageProgressData.InteractObjectIDS);
+
         return true;
     }
     public void QuitGame()
@@ -227,7 +253,6 @@ public class GameManagerEx
 #endif
         Debug.Log("Game Quit.");
     }
-
     public bool HasFile()
     {
         return File.Exists(GameData.FilePath);
@@ -237,12 +262,12 @@ public class GameManagerEx
     {
         _gameSaver.DeleteData();
         _inventorySaver.DeleteData();
+        
         _stageProgressSaver.DeleteData();
+        _quickSlotSaver.DeleteData();
+        _equipSaver.DeleteData();
         _gameData = new GameData();
         Init();
     }
-    
-    
 }
-
 #endregion

@@ -8,6 +8,11 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField] private SpriteRenderer weaponSpriteRenderer;
 
     private Vector3 _originalScale;
+    public int ID
+    {
+        get { return _weaponData.TemplateID; }
+     
+    }
 
     void Awake()
     {

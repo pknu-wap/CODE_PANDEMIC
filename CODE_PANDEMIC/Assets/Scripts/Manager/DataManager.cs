@@ -25,8 +25,9 @@ public class DataManager
     public Dictionary<int, PuzzleData> Puzzles { get; private set; }    
     public Dictionary<int, FieldItemData> FieldItems { get; private set; }
     public Dictionary<int,MonsterData> Monsters { get; private set; }
-
     public Dictionary<int, InteractObjectData> Interacts { get; private set; }  
+
+    public Dictionary<int,ArmorData>Armors { get; private set; }
 
 
     public void Init(Action onComplete)
@@ -35,11 +36,11 @@ public class DataManager
         LoadJson<ItemDataLoader, int, ItemData>("ItemData", (loader) => { Items = loader.MakeDic(); });
         LoadJson<SpawnerDataLoader,int,SpawnerData>("SpawnData",(loader) => { Spawners = loader.MakeDic(); });
         LoadJson<PuzzleDataLoader, int, PuzzleData>("PuzzleData", (loader) => { Puzzles = loader.MakeDic(); });
-       LoadJson<FieldItemDataLoader, int, FieldItemData>("FieldItemData", (loader) => { FieldItems = loader.MakeDic(); });
+        LoadJson<FieldItemDataLoader, int, FieldItemData>("FieldItemData", (loader) => { FieldItems = loader.MakeDic(); });
         LoadJson<MonsterDataLoader, int,MonsterData>("MonsterData", (loader) => { Monsters = loader.MakeDic(); });
         LoadJson<WeaponDataLoader, int, WeaponData>("WeaponData", (loader) => { Weapons = loader.MakeDic(); });
         LoadJson<InteractObjectDataLoader, int, InteractObjectData>("InteractData", (loader) => { Interacts = loader.MakeDic(); });
-
+        LoadJson<ArmorDataLoader, int, ArmorData>("ArmorData", (loader) => { Armors = loader.MakeDic(); }); 
 
         onComplete?.Invoke();
     }
@@ -54,7 +55,7 @@ public class DataManager
         if (Spawners == null) return false;
         if (Puzzles==null) return false;
         if (FieldItems == null) return false;
-
+        if(Armors == null) return false;    
         return true;
 
         //if (Bosses == null)
