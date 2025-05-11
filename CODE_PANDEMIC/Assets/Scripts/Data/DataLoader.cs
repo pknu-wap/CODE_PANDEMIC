@@ -256,12 +256,10 @@ public class ArmorDataLoader : ILoader<int, ArmorData>
 public class BuffItemData
 {
     public int TemplateID;
-    public int IncreaseHealth;
-    public int IncreaseDefend;
-    public int IncreaseSpeed;
+    public BuffType Type;
+    public float amount;
     public float Time;
 }
- 
 public class BuffItemDataLoader : ILoader<int, BuffItemData>
 {
     public List<BuffItemData> buffItems = new List<BuffItemData>();
@@ -275,7 +273,7 @@ public class BuffItemDataLoader : ILoader<int, BuffItemData>
 
     public bool Validate()
     {
-        return true;
+        throw new NotImplementedException();
     }
 }
 

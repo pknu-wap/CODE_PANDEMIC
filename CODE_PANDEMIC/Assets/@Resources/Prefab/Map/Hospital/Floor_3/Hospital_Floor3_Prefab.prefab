@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: 5.482971, y: -1.3580933, z: 0}
   m_ShapePathHash: -1582462315
   m_Mesh: {fileID: 0}
-  m_InstanceId: 110080
+  m_InstanceId: 131856
   m_LocalBounds:
     m_Center: {x: 2.4951172, y: -0.42152023, z: 0}
     m_Extent: {x: 2.987854, y: 0.936573, z: 0}
@@ -79,7 +79,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &171865512408350136
 Transform:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ MonoBehaviour:
   - {x: -4.878174, y: -3.4979553, z: 0}
   m_ShapePathHash: -111521873
   m_Mesh: {fileID: 0}
-  m_InstanceId: 110090
+  m_InstanceId: 131866
   m_LocalBounds:
     m_Center: {x: 22.419434, y: 6.6103706, z: 0}
     m_Extent: {x: 32.947327, y: 19.848103, z: 0}
@@ -2846,10 +2846,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8496876562382724710, guid: 7070caa7cfd1e4a44bc2c25951b3ce72, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 9092455786774521110, guid: 7070caa7cfd1e4a44bc2c25951b3ce72, type: 3}
       propertyPath: m_Layer
       value: 0
