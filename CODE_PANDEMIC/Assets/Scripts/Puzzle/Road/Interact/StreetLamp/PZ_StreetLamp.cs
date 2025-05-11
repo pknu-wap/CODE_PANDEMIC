@@ -4,7 +4,6 @@ using UnityEngine.Rendering.Universal;
 public class PZ_StreetLamp : PZ_Interact_NonSpawn
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private bool _isLeft = true;
     [SerializeField] private Light2D _pointLight;
 
     public override void Interact(GameObject player)
@@ -15,19 +14,6 @@ public class PZ_StreetLamp : PZ_Interact_NonSpawn
         }
 
         base.Interact(player);
-
-        //if (_isLeft)
-        //{
-        //    Vector3 target = transform.position;
-        //    target.x += 0.5f;
-        //    transform.position = target;
-        //}
-        //else
-        //{
-        //    Vector3 target = transform.position;
-        //    target.x -= 0.5f;
-        //    transform.position = target;
-        //}
 
         _animator.SetBool("IsTurnOn", true);
 
