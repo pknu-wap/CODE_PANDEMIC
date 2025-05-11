@@ -75,7 +75,7 @@
 
       ],
       "Puzzles": [ 1, 2 ],
-      "FieldItems": [  2, 3, 4, 5, 6, 1001 ],
+      "FieldItems": [ 1, 2, 3, 4, 5, 6, 1001 ],
       "InteractableObjects":[1,2,8]
     },
 
@@ -305,7 +305,17 @@
       "StageID": 4,
       "BossTemplateID": 1,
       "MapAddress": "Map1_4",
-      "MapName": "봉쇄된 입구"
+      "MapName": "봉쇄된 입구",
+      "Spawners": [
+        {
+          "ID": 4,
+          "Name": "PlayerSpawner",
+          "Pos": {
+            "x": -9.6,
+            "y": -11.5
+          }
+        }
+      ]
     }
   ]
 }

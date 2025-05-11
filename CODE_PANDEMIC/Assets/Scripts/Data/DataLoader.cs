@@ -228,6 +228,34 @@ public class WeaponDataLoader : ILoader<int, WeaponData>
 }
 
 [Serializable]
+public class ArmorData
+{
+    public int TemplateID;
+    public int Defense;
+    public int Health;
+    public float Speed;
+    public ArmorType Type;
+
+}
+public class ArmorDataLoader : ILoader<int, ArmorData>
+{
+    public List<ArmorData> armors= new List<ArmorData>();
+    public Dictionary<int, ArmorData> MakeDic()
+    {
+        Dictionary<int, ArmorData> dic = new Dictionary<int, ArmorData>();
+        foreach (ArmorData weapon in armors)
+            dic.Add(weapon.TemplateID, weapon);
+        return dic;
+    }
+    public bool Validate()
+    {
+        return true;
+    }
+}
+
+
+
+[Serializable]
 public class RewardData
 {
     public int ID;

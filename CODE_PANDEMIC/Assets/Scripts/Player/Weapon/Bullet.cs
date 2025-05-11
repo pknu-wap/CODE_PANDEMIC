@@ -1,13 +1,11 @@
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
-
 {
     private float _speed = 10f;
     private float _lifeTime = 3f;
     private int _damage = 0;
-    private PlayerController _owner;
-
+    PlayerController _onwer;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -17,6 +15,7 @@ public class Bullet : MonoBehaviour
     public void SetInfo(int damage)
     {
         _damage = damage;
+         
     }
     private void OnEnable()
     {
@@ -45,16 +44,8 @@ public class Bullet : MonoBehaviour
         {
             enemy.TakeDamage(_damage);
         }
+        _damage = 0;
+        _onwer = null;
         ReturnToPool();
-    }
-
-    public void SetOwner(PlayerController owner)
-    {
-        _owner = owner;
-    }
-
-    public PlayerController GetOwner()
-    {
-        return _owner;
     }
 }

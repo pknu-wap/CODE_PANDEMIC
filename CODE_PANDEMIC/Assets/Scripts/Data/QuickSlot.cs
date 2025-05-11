@@ -1,4 +1,5 @@
 using Inventory.Model;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -86,7 +87,7 @@ public class QuickSlot
                         NotifySlotUpdate(slotIndex, quickSlotItem);
                     break;
 
-                case Define.ItemType.Equippable:
+                case Define.ItemType.Weaponable:
                     Debug.Log($"[QuickSlot] {quickSlotItem.ItemData.Name} ÀåÂø ¿Ï·á");
                     break;
                   
@@ -126,6 +127,15 @@ public class QuickSlot
     {
         _slotItems.TryGetValue(slotIndex, out var item);
         return item;
+    }
+
+    public void ClearAllSlots()
+    {
+       for(int i=1; i<=4; i++)
+        {
+
+            ClearSlot(i);
+        }
     }
 }
 

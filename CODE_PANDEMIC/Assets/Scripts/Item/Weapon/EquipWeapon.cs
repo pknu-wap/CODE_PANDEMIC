@@ -2,6 +2,7 @@ using UnityEngine;
 using Inventory.Model;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Cinemachine;
 
 public class EquipWeapon : MonoBehaviour
 {
@@ -62,11 +63,14 @@ public class EquipWeapon : MonoBehaviour
             case Define.WeaponType.ShortWeapon:
                 break;
             case Define.WeaponType.PistolWeapon:
+                if (!CheckSameWeapon(data,_weapon)) return;
+
+                DestroyPrevWeapon();
                 Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
                 {
-                   
                     _weapon = obj.GetComponent<WeaponBase>();
                     _weapon.SetInfo(data);
+                   
                 });
                 break;
             case Define.WeaponType.RangeWeapon:
@@ -75,11 +79,22 @@ public class EquipWeapon : MonoBehaviour
                 break;
         }
 
-
-
-
     }
-    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
+    bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
+    {
+        if (currentWeapon == null) return true; //장착이 아무것도 안되어있음 
+
+        if (item.TemplateID == currentWeapon.ID) return false; //현재 장착되
+        else return true;
+    }
+
+    private void DestroyPrevWeapon()
+    {
+        if (_weapon == null) return;
+        Destroy(_weapon.gameObject);
+        _weapon = null;
+    }
+    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState=null)
     {
 
 
