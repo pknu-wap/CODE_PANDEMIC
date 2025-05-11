@@ -31,8 +31,7 @@ public class AI_BossSweep : AI_SweepSkill
 
                 if (hit.TryGetComponent<PlayerStatus>(out var player))
                 {
-                    Debug.Log($"[AI_BossSweep] hit {player.gameObject.name} for {damage} {SweepInterval} damage.");
-                    // player.OnDamaged(_controller.gameObject, damage);
+                    player.OnDamaged(_controller.gameObject, damage);
                 }
             }
         }

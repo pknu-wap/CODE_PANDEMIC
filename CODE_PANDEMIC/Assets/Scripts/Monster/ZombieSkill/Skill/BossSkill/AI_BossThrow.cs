@@ -16,7 +16,6 @@ public class AI_BossThrow : AI_ThrowSkill
     if (_bossController == null) return;
 
     int count = _bossController.IsBerserk ? 4 : 3;
-    float speed = 10f;
     float baseAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
     float[] angles = _bossController.IsBerserk
@@ -30,7 +29,7 @@ public class AI_BossThrow : AI_ThrowSkill
 
         Vector2 shootPos = (Vector2)_bossController.transform.position + dir * 1.2f;
 
-        Quaternion rotation = Quaternion.Euler(0, 0, angle + 180f);
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
 
         GameObject syringe = GameObject.Instantiate(_bossController._syringePrefab, shootPos, rotation);
 
@@ -46,7 +45,7 @@ public class AI_BossThrow : AI_ThrowSkill
         Rigidbody2D rb = syringe.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.velocity = dir * speed;
+            rb.velocity = dir * _bossController.SyringeSpeed;
         }
     }
 }

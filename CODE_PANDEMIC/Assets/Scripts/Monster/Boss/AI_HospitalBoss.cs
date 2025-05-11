@@ -18,9 +18,12 @@ public class AI_HospitalBoss : AI_BossController
 
     public float DashCooldown = 20f;
     public float DashRange = 12f;
-    public float DashDuration = 0.3f;
+    public float DashDuration = 0.8f;
     public float DashWidth = 5f;
+    public float DashSpeed = 20f;
 
+    private float _lastSkillTime = -Mathf.Infinity;
+    private float _skillDelay = 3f;
     public AI_ThrowVisualizer _throwVisualizer;
     public override float AiDamage => _monsterData.AttackDamage;
     public int MaxHealth => _monsterData.Hp;
@@ -37,7 +40,6 @@ public class AI_HospitalBoss : AI_BossController
 
     protected override void Start()
     {
-  
         ChangeState(new AI_BossIdle(this));
         _throwSkill.SetController(this);
         _sweepSkill.SetController(this);
@@ -54,7 +56,7 @@ public class AI_HospitalBoss : AI_BossController
        _monsterData.AttackRange = 2f;
        _monsterData.AttackDamage = 20;
     }
-    // EnterBerserkMode();
+    EnterBerserkMode();
         base.Start();
         if (!Init())
         {
@@ -70,6 +72,8 @@ public class AI_HospitalBoss : AI_BossController
         {
             EnterBerserkMode();
         }
+        if (Health <= 0f && _currentState is not AI_BossDie)
+            ChangeState(new AI_BossDie(this));
     }
     protected override void Awake()
     {
@@ -89,24 +93,45 @@ public class AI_HospitalBoss : AI_BossController
         onSkillComplete?.Invoke();
         return;
     }
+    float now = Time.time;
+
+    if (now < _lastSkillTime + _skillDelay)
+    {
+        onSkillComplete?.Invoke();
+        Debug.Log($"[AI_HospitalBoss] Skill is on cooldown. Time left: {_lastSkillTime + _skillDelay - now}");
+
+        return;
+    }
 
     float distance = Vector2.Distance(transform.position, _player.position);
-    float now = Time.time;
 
     if (IsBerserk && now >= _lastDashTime + DashCooldown)
     {
         _lastDashTime = now;
+        Debug.Log("Dash Skill Activated");
+        _isUsingSkill = true;
         _dashSkill.StartSkill(this, onSkillComplete);
+        _lastSkillTime = now;
+        _isUsingSkill = false;
+
     }
     else if (distance >= 4f && now >= _lastThrowTime + ThrowCooldown)
     {
         _lastThrowTime = now;
+        Debug.Log("Throw Skill Activated");
+        _isUsingSkill = true;
         _throwSkill.StartSkill(this, onSkillComplete);
+        _lastSkillTime = now;
+        _isUsingSkill = false;
     }
     else if (distance < 4f && now >= _lastSweepTime + SweepCooldown)
     {
         _lastSweepTime = now;
+        Debug.Log("Sweep Skill Activated");
+        _isUsingSkill = true;
         _sweepSkill.StartSkill(this, onSkillComplete);
+        _lastSkillTime = now;
+        _isUsingSkill = false;
     }
     else
     {

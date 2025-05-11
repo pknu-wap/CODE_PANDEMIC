@@ -43,35 +43,42 @@ public class AI_DashSkill : ISkillBehavior
 
    protected virtual IEnumerator DashRoutine(System.Action onSkillComplete)
 {
-    Vector2 dashDirection = (_controller._player.position - _controller.transform.position).normalized;
-    float startTime = Time.time;
-    float endTime = startTime + DashDuration;
+    Vector2 start = _controller.transform.position;
+    Vector2 target = _controller._player.position;
 
+    Vector2 direction = (target - start).normalized;
+    float distance = Vector2.Distance(start, target) + 2f;
+    float duration = distance / DashSpeed;
+
+    float elapsed = 0f;
     _controller._aiPath.canMove = false;
 
     Rigidbody2D rb = _controller.GetComponent<Rigidbody2D>();
-    if (rb != null)
-    {
-        rb.velocity = dashDirection * DashSpeed;
-    }
-
     bool _hasHitPlayer = false;
     Transform playerTransform = _controller._player;
     float dashCheckRadius = 1.0f;
 
-    while (Time.time < endTime)
+    yield return new WaitForSeconds(DashDuration);
+
+    while (elapsed < duration)
     {
-        if (!_hasHitPlayer){
-            float distance = Vector2.Distance(_controller.transform.position, playerTransform.position);
-            if (distance <= dashCheckRadius)
+        elapsed += Time.deltaTime;
+        if (rb != null)
+        {
+            rb.velocity = direction * DashSpeed;
+        }
+
+        if (!_hasHitPlayer)
+        {
+            float currentDistance = Vector2.Distance(_controller.transform.position, playerTransform.position);
+            if (currentDistance <= dashCheckRadius)
             {
                 _hasHitPlayer = true;
 
                 if (playerTransform.TryGetComponent<PlayerStatus>(out var playerStatus))
                 {
-                    int damage = Mathf.RoundToInt(_controller.AiDamage * 1.5f);
-                    Debug.Log($"[AI_DashSkill] hit {playerTransform.gameObject.name} for {damage} damage.");
-                    // playerStatus.OnDamaged(_controller.gameObject, damage);
+                    int damage = Mathf.RoundToInt(_controller.AiDamage * 0.8f);
+                    playerStatus.OnDamaged(_controller.gameObject, damage);
                 }
             }
         }
@@ -79,9 +86,10 @@ public class AI_DashSkill : ISkillBehavior
         yield return null;
     }
 
-
-    rb.velocity = Vector2.zero;
-    Debug.Log($"[AI_DashSkill] {rb.velocity} stopped.");
+    if (rb != null)
+    {
+        rb.velocity = Vector2.zero;
+    }
 
     _controller._aiPath.canMove = true;
     _controller._isUsingSkill = false;
@@ -90,11 +98,11 @@ public class AI_DashSkill : ISkillBehavior
 
 
 
-    // === Overridable Properties ===
+    protected AI_AthleteZombie _athleteZombie => _controller as AI_AthleteZombie;
+    protected AI_HospitalBoss _hospitalBoss => _controller as AI_HospitalBoss; 
 
-    protected virtual float Cooldown => 20f;
-    protected virtual float DashDuration => 0.3f;
-    protected virtual float DashSpeed => 40f; // DashRange / DashDuration (e.g., 12 / 0.3 = 40)
-    protected virtual float DashRange => 12f;
-    protected virtual float DashWidth => 5f;
+    protected virtual float Cooldown => _athleteZombie?.SkillCooldown ?? _hospitalBoss?.DashCooldown ?? 20f;
+    protected virtual float DashDuration => _athleteZombie?.SkillChargeDelay ?? _hospitalBoss?.DashDuration ?? 1f;
+    protected virtual float DashSpeed => _athleteZombie?.DashSpeed ?? _hospitalBoss?.DashSpeed ?? 40f; // DashRange / DashDuration (e.g., 12 / 0.3 = 40)
+    protected virtual float DashWidth => _athleteZombie?.DashWidth ?? _hospitalBoss?.DashWidth ?? 1f;
 }
