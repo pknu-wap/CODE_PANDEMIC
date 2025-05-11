@@ -316,7 +316,7 @@ Transform:
   m_GameObject: {fileID: 7458043515022671168}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.906, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.33, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -432,7 +432,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.06343889, y: 2.4677687}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -443,7 +443,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4806056, y: 4.97}
+  m_Size: {x: 1.5232568, y: 4.982687}
   m_EdgeRadius: 0
 --- !u!50 &8741614795324971763
 Rigidbody2D:
@@ -512,9 +512,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipWeapon: {fileID: 0}
+  _weaponHolder: {fileID: 0}
   _currentState: 0
   _forwardVector: {x: 0, y: 0}
-  _weaponHolder: {fileID: 0}
 --- !u!114 &-5189419664297786888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,7 +618,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.009498984, y: -0.099999994}
+  m_Offset: {x: 0.009498954, y: 0.3975742}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -629,5 +629,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3960316, y: 0.8}
+  m_Size: {x: 1.3960316, y: 0.67829084}
   m_EdgeRadius: 0
