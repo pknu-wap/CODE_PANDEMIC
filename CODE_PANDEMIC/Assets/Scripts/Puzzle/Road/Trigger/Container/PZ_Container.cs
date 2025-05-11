@@ -6,6 +6,11 @@ public class PZ_Container : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag != "Player")
+        {
+            return;
+        }
+
         _animator.SetBool("IsOpened", true);
 
         // 여기에 좀비를 소환하는 로직 추가 예정

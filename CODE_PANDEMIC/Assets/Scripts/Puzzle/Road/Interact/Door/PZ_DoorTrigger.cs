@@ -7,6 +7,11 @@ public class PZ_DoorTrigger : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag != "Player")
+        {
+            return;
+        }
+
         CloseWorksiteDoor?.Invoke();
         Destroy(gameObject);
     }
