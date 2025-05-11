@@ -8,11 +8,13 @@ public class Projectile : MonoBehaviour
     private Rigidbody2D _rb;
     private bool _hasTriggered = false;
     private PlayerStatus player;
-    private AI_NurseZombie _nurseZombie;
+    private AI_Controller _owner;
+    private float _safeTime = 0.05f; // 발사 직후 0.05초 동안 충돌 무시
+    private float _spawnTime;
 
-    public void SetOwner(AI_NurseZombie nurseZombie)
+    public void SetOwner(AI_Controller owner)
     {
-        _nurseZombie = nurseZombie;
+        _owner = owner;
     }
     private void Awake()
     {
@@ -24,6 +26,7 @@ public class Projectile : MonoBehaviour
     {
         _startPos = transform.position;
         _hasTriggered = false;
+        _spawnTime = Time.time;
     }
 
     private void FixedUpdate()
@@ -36,9 +39,9 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_hasTriggered) return;
+        if (_hasTriggered || Time.time - _spawnTime < _safeTime) return;
 
         if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0 || 
             ((1 << collision.gameObject.layer) & LayerMask.GetMask("Wall")) != 0)
@@ -47,7 +50,7 @@ public class Projectile : MonoBehaviour
 
             if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0)
             {
-                player.OnDamaged(gameObject, _nurseZombie.AiDamage);
+                player.OnDamaged(gameObject, _owner.AiDamage);
                 spawnPos = collision.transform.position;
             }
             else

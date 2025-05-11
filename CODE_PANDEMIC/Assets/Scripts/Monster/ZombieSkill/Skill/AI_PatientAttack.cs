@@ -10,6 +10,10 @@ public class AI_PatientAttack : ISkillBehavior
     private float _lastUsedTime;
     private Coroutine _currentCoroutine;
 
+    public void SetController(AI_Controller ai)
+    {
+    }
+
     public AI_PatientAttack(GameObject hitboxPrefab, Transform spawnPoint, float cooldown, float duration)
     {
         _hitboxPrefab = hitboxPrefab;

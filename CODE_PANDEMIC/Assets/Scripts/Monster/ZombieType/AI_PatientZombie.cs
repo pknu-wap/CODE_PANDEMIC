@@ -7,7 +7,7 @@ public class AI_PatientZombie : AI_Controller
 {
     public LayerMask TargetLayer;
     public GameObject patientAttack;
-    public float AiDamage => _monsterData.AttackDamage;
+    public override float AiDamage => _monsterData.AttackDamage;
     public string AIName => _monsterData.NameID;
     public Transform Player => _player.transform;
     [SerializeField] private GameObject attackColliderPrefab;
