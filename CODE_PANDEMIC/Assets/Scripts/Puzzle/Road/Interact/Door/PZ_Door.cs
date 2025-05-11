@@ -14,8 +14,22 @@ public class PZ_Door : PZ_Interact_NonSpawn
 
         base.Interact(player);
 
+        OpenDoor();
+
+        PZ_DoorTrigger.CloseWorksiteDoor += CloseDoor;
+    }
+
+    private void OpenDoor()
+    {
         _animator.SetBool("IsOpened", true);
 
         _boxCollider.isTrigger = true;
+    }
+
+    private void CloseDoor()
+    {
+        _animator.SetBool("IsOpened", false);
+
+        _boxCollider.isTrigger = false;
     }
 }
