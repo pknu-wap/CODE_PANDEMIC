@@ -17,7 +17,7 @@ public class Managers : MonoBehaviour
     EventManager _event =new EventManager();
     GameManagerEx _game =new GameManagerEx();
     SceneManagerEx _scene = new SceneManagerEx();
-    
+    BuffManager _buff;
     public static DataManager Data { get { return Instance?._data; } }
     public static Managers Instance { get { return _instance; } }
     public static ResourceManager Resource { get { return _instance._resource; }}
@@ -26,6 +26,7 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return _instance._scene; } }
     public static GameManagerEx Game { get { return _instance._game; } }
 
+    public static BuffManager Buffs { get { return _instance._buff; } } 
     public static ObjectManager Object { get { return _instance._object; } }
 
     public static bool Init()
@@ -37,6 +38,7 @@ public class Managers : MonoBehaviour
                 go = new GameObject { name = "Managers" };
 
             _instance = go.GetOrAddComponent<Managers>();
+            _instance._buff = go.GetOrAddComponent<BuffManager>();
             DontDestroyOnLoad(go);
 
             _instance._data.Init(()=>

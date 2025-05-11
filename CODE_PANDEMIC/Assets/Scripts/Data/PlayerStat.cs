@@ -39,17 +39,33 @@ public class PlayerStat
         {
             var modifier = new StatModifier();
 
+        
             foreach (var armor in _equippedArmors.Values)
             {
                 ArmorData data = armor;
                 modifier.IncreaseHp += data.Health;
-                modifier.IncreaseDefend +=data.Defense;
-                modifier.IncreaseSpeed +=  data.Speed;
+                modifier.IncreaseDefend += data.Defense;
+                modifier.IncreaseSpeed += data.Speed;
+                modifier.IncreaseDefend += data.Defense;
+                modifier.IncreaseSpeed += data.Speed;
+            }
+
+           
+            if (Managers.Buffs != null)
+            {
+                foreach (var buff in Managers.Buffs.ActiveBuffs)
+                {
+                    StatModifier buffMod = buff.GetModifier();
+                    modifier.IncreaseHp += buffMod.IncreaseHp;
+                    modifier.IncreaseDefend += buffMod.IncreaseDefend;
+                    modifier.IncreaseSpeed += buffMod.IncreaseSpeed;
+                }
             }
 
             return modifier;
         }
     }
+    
 
     public StatData StatData { get { return _statData; } private set { _statData = value; } }
    

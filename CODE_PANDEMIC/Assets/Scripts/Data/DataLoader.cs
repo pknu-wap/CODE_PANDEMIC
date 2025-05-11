@@ -258,8 +258,12 @@ public class BuffItemData
     public int TemplateID;
     public BuffType Type;
     public float amount;
+    public int IncreaseHealth;
+    public int IncreaseDefend;
+    public int IncreaseSpeed;
     public float Time;
 }
+
 public class BuffItemDataLoader : ILoader<int, BuffItemData>
 {
     public List<BuffItemData> buffItems = new List<BuffItemData>();
