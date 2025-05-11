@@ -6,7 +6,7 @@ public class PZ_Container : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag != "Player")
+        if (!collision.GetComponentInParent<PlayerController>())
         {
             return;
         }
