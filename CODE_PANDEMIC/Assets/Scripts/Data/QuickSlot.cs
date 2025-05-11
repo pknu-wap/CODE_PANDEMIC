@@ -33,12 +33,13 @@ public class QuickSlot
 
         if (_slotItems.TryGetValue(slotIndex, out var oldSlotItem))
         {
+
+              _slotItems[slotIndex] = new QuickSlotItem(newItem, quantity);
+            NotifySlotUpdate(slotIndex, _slotItems[slotIndex]);
             Managers.Game.Inventory.AddItem(oldSlotItem.ItemData, oldSlotItem.Quantity);
         }
 
-        _slotItems[slotIndex] = new QuickSlotItem(newItem, quantity);
-
-        NotifySlotUpdate(slotIndex, _slotItems[slotIndex]);
+       
     }
     public bool HasItem(ItemData itemData)
     {
@@ -56,10 +57,10 @@ public class QuickSlot
         NotifySlotUpdate(index, _slotItems[index]);
         return remain;
     }
-    
+
     public bool CheckSlot(int slotIndex)
     {
-        if(!_slotItems.TryGetValue(slotIndex, out var quickSlotItem)) return false;
+        if (!_slotItems.TryGetValue(slotIndex, out var quickSlotItem)) return false;
         return true;
     }
     public void UseQuickSlot(int slotIndex, GameObject user)
@@ -73,7 +74,7 @@ public class QuickSlot
 
             if (!success)
             {
-                Debug.LogWarning($"[QuickSlot] {quickSlotItem.ItemData.Name} 사용 실패");
+                Debug.LogWarning($"[QuickSlot] {quickSlotItem.ItemData.Name} ");
                 return;
             }
 
@@ -88,16 +89,16 @@ public class QuickSlot
                     break;
 
                 case Define.ItemType.Weaponable:
-                    Debug.Log($"[QuickSlot] {quickSlotItem.ItemData.Name} 장착 완료");
+                    Debug.Log($"[QuickSlot] {quickSlotItem.ItemData.Name}");
                     break;
-                  
-                  
+
+
             }
         }
     }
 
     public void ClearSlot(int slotIndex)
-    {   
+    {
         if (_slotItems.ContainsKey(slotIndex))
         {
             _slotItems.Remove(slotIndex);
@@ -108,7 +109,7 @@ public class QuickSlot
     public void InitializeAllSlots()
     {
         foreach (var item in _slotItems)
-        { 
+        {
             NotifySlotUpdate(item.Key, item.Value);
         }
     }
@@ -131,7 +132,7 @@ public class QuickSlot
 
     public void ClearAllSlots()
     {
-       for(int i=1; i<=4; i++)
+        for (int i = 1; i <= 4; i++)
         {
 
             ClearSlot(i);
@@ -157,8 +158,8 @@ public class QuickSlotItem
     public int IncreaseQuantity(int amount)
     {
         int remain = 0;
-        if(Quantity+amount>ItemData.MaxStackSize)remain=Quantity+amount-ItemData.MaxStackSize;  
-        Quantity = Mathf.Min(Quantity+amount, ItemData.MaxStackSize);
+        if (Quantity + amount > ItemData.MaxStackSize) remain = Quantity + amount - ItemData.MaxStackSize;
+        Quantity = Mathf.Min(Quantity + amount, ItemData.MaxStackSize);
 
         return remain;
     }
