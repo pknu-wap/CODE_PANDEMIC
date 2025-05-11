@@ -56,11 +56,11 @@ public class DataManager
         if (Spawners == null) return false;
         if (Puzzles==null) return false;
         if (FieldItems == null) return false;
-        if(Armors == null) return false;    
+        if(Armors == null) return false;
+        if (BuffItems == null) return false;
         return true;
 
-        //if (Bosses == null)
-        //    return false;
+      
         
     }
         

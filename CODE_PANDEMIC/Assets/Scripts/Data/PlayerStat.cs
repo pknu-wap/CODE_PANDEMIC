@@ -81,6 +81,7 @@ public class PlayerStat
     public void SetCurrentHp(float amount)
     {
         _statData.CurrentHp = amount;
+        if (_statData.CurrentHp <= 0) _statData.CurrentHp = MaxHp;
     }
 
     public void UpdateCurrentHp(float amount)

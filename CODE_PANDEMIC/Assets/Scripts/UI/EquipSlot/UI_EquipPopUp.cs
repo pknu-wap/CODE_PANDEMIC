@@ -53,13 +53,13 @@ public class UI_EquipPopUp :  UI_Base
     private void OnEnable()
     {
         Managers.Event.Subscribe("OnEquipSlotUpdated", OnEquipSlotUpdated);
-        Managers.Event.Subscribe("OnStatUpdated", OnStatUpdated);
+        Managers.Event.Subscribe("StatUpdated", OnStatUpdated);
     }
 
     private void OnDisable()
     {
         Managers.Event.Unsubscribe("OnEquipSlotUpdated", OnEquipSlotUpdated);
-        Managers.Event.Unsubscribe("OnStatUpdated", OnStatUpdated);
+        Managers.Event.Unsubscribe("StatUpdated", OnStatUpdated);
     }
     private void OnEquipSlotUpdated(object obj)
     {

@@ -15,8 +15,11 @@ public class Buff
         if (Managers.Data.BuffItems.TryGetValue(ID, out BuffItemData data))
         {
             _data = data;
-            _timeRemaining = data.Time;
+           
+            _timeRemaining = data.Timer;
+            
         }
+        
     }
     public StatModifier GetModifier()
     {
@@ -30,11 +33,12 @@ public class Buff
 
     public void Refresh()
     {
-        _timeRemaining = _data.Time;
+        _timeRemaining = _data.Timer;
     }
     public void Tick(float deltaTime)
     {
         _timeRemaining -= deltaTime;
+       
         if (_timeRemaining <= 0f)
         {
             _timeRemaining = 0f;

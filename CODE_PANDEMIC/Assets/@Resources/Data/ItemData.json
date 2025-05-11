@@ -17,6 +17,38 @@
       ]
     },
     {
+      "TemplateID": 2,
+      "Name": "<color=#ff0000><sprite=0></color>혈액 팩",
+      "Description": "위급할때 사용하는 혈액팩인듯하다.\n체력을 <color=#33fc2f>50</color> 회복한다.",
+      "IsStackable": true,
+      "MaxStackSize": 30,
+      "Sprite": "Portion_2",
+      "Type": 0,
+      "Weapon": 0,
+      "Parameters": [
+        {
+          "parameterName": "Health",
+          "value": 50
+        }
+      ]
+    },
+    {
+      "TemplateID": 3,
+      "Name": "<color=#ff0000><sprite=0></color>구급상자",
+      "Description": "왠만한 심각한 상처들도 치료할 수있을 것 같다. \n체력을 <color=#33fc2f>100</color> 회복한다.",
+      "IsStackable": true,
+      "MaxStackSize": 20,
+      "Sprite": "Portion_3",
+      "Type": 0,
+      "Weapon": 0,
+      "Parameters": [
+        {
+          "parameterName": "Health",
+          "value": 100
+        }
+      ]
+    },
+    {
       "TemplateID": 101,
       "Name": "R1895",
       "Description": "기본적인 권총이다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다",
@@ -83,6 +115,15 @@
       "MaxStackSize": 1,
       "Sprite": "Portion_1",
       "Type": 3
+    },
+    {
+      "TemplateID": 801,
+      "Name": "아드로핀 주사기",
+      "Description": "엉덩이나 허벅지 근육에 찔러넣는다\n이동속도를  <color=#ba01f8>60</color>초간 <color=#cbfc07>0.2</color> 올려준다.",
+      "IsStackable": true,
+      "MaxStackSize": 1,
+      "Sprite": "Buff_1",
+      "Type": 4
     },
     {
       "TemplateID": 1001,
