@@ -200,7 +200,7 @@ MonoBehaviour:
   - {x: 85.74576, y: -16.458267, z: 0}
   m_ShapePathHash: -784746365
   m_Mesh: {fileID: 0}
-  m_InstanceId: 70336
+  m_InstanceId: 172906
   m_LocalBounds:
     m_Center: {x: 40.697067, y: 13.435352, z: 0}
     m_Extent: {x: 45.04869, y: 29.89362, z: 0}
@@ -395,7 +395,7 @@ MonoBehaviour:
   - {x: 8.268524, y: -16.955307, z: 0}
   m_ShapePathHash: -1787807955
   m_Mesh: {fileID: 0}
-  m_InstanceId: 70306
+  m_InstanceId: 172876
   m_LocalBounds:
     m_Center: {x: 2.4578552, y: -8.054211, z: 0}
     m_Extent: {x: 5.9757385, y: 8.901096, z: 0}
@@ -457,7 +457,7 @@ MonoBehaviour:
   - {x: 8.329742, y: -0.52575684, z: 0}
   m_ShapePathHash: -13925291
   m_Mesh: {fileID: 0}
-  m_InstanceId: 70308
+  m_InstanceId: 172878
   m_LocalBounds:
     m_Center: {x: 1.892273, y: 0.37345886, z: 0}
     m_Extent: {x: 6.4374695, y: 0.8992157, z: 0}
@@ -2838,6 +2838,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8836330780557501383}
     m_Modifications:
+    - target: {fileID: 98162908619997634, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: orthographic size
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 361
+      objectReference: {fileID: 0}
+    - target: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 101
+      objectReference: {fileID: 0}
     - target: {fileID: 4565531970422500785, guid: 620371ef616e2984fa301cd05e82479d, type: 3}
       propertyPath: m_Name
       value: PZ_Debris_Prefab

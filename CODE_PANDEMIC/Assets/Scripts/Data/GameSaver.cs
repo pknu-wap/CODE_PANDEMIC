@@ -317,3 +317,31 @@ public class QuickSlotItemData
     public int ItemID;
     public int Quantity;
 }
+public class PlayerStatSaver
+{
+    public StatData _statData;
+    public PlayerStatSaver(StatData statData)
+    {
+        _statData = statData;
+    }
+
+    private static string SavePath => Application.persistentDataPath + "/playerstat.json";
+
+    public void SaveStat()
+    {
+        string json = JsonUtility.ToJson(_statData);
+        File.WriteAllText(SavePath, json);
+    }
+
+    public StatData LoadStat()
+    {
+        if (!File.Exists(SavePath)) return new StatData();
+        string json = File.ReadAllText(SavePath);
+        return JsonUtility.FromJson<StatData>(json);
+    }
+
+    public void DeleteData()
+    {
+        if (File.Exists(SavePath)) File.Delete(SavePath);
+    }
+}

@@ -115,9 +115,9 @@ namespace Inventory
                 {   
                     case Define.ActionType.QuickSlot: UIInventory.AddAction("Slot", () => SlotItem(index, inventoryItem.Quantity));
                         break;
-                    case Define.ActionType.Buff:UIInventory.AddAction("Buff",()=> BuffItem(index, inventoryItem.Quantity));
+                    case Define.ActionType.Buff:UIInventory.AddAction("Buff",()=> PerfromAction(index, 1));
                         break;
-                    case Define.ActionType.Equip:UIInventory.AddAction("Equip", () => EquipItem(index, inventoryItem.Quantity));
+                    case Define.ActionType.Equip:UIInventory.AddAction("Equip", () => PerfromAction(index, inventoryItem.Quantity));
                         
                         break;
                     case Define.ActionType.None:
@@ -134,19 +134,14 @@ namespace Inventory
 
             // Slot
         }
-        private void BuffItem(int index, int quantity)
+        private void PerfromAction(int index, int quantity)
         {
-
-        }
-        private void EquipItem(int index ,int quantity)
-        {
-            InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
-            if (inventoryItem.IsEmpty) return;
+            InventoryItem inventoryItem=_inventoryData.GetItemAt(index);    
+            if(inventoryItem.IsEmpty) return;
             ItemData itemData = inventoryItem.Item;
-            Debug.Log("EquipItem");
-            if(itemData is IItemAction actionItem)
+            if (itemData is IItemAction actionItem)
             {
-                bool success = actionItem.PerformAction(Managers.Object.Player.gameObject,itemData.Parameters);
+                bool success = actionItem.PerformAction(Managers.Object.Player.gameObject, itemData.Parameters);
 
                 if (!success)
                 {
@@ -154,10 +149,11 @@ namespace Inventory
                     return;
                 }
             }
-          
+            Debug.Log("Perform");
             _inventoryData.RemoveItem(index, quantity);
             UIInventory.ResetSelection();
         }
+      
         private void SlotItem(int index, int quantity)
         {
             InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
@@ -176,22 +172,7 @@ namespace Inventory
             UIInventory.ResetSelection();
         }
 
-        public void PerformAction(int index)
-        {
-            InventoryItem inventoryItem = _inventoryData.GetItemAt(index);
-            if (inventoryItem.IsEmpty) return;
-            IDestroyableItem destroyableItem = inventoryItem.Item as IDestroyableItem;
-            if (destroyableItem != null)
-            {
-                _inventoryData.RemoveItem(index, 1);
-            }
-            IItemAction itemAction = inventoryItem.Item as IItemAction;
-            if (itemAction != null)
-            {
-                itemAction.PerformAction(gameObject, inventoryItem.ItemState);
-                if (_inventoryData.GetItemAt(index).IsEmpty) UIInventory.ResetSelection();
-            }
-        }
+     
 
         private void HandleDragging(int index)
         {
