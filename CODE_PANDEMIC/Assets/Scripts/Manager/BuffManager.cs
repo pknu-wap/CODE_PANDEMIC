@@ -56,37 +56,39 @@ public class Buff
 }
 public class BuffManager : MonoBehaviour
 {
-    private List<Buff> _activeBuffs = new List<Buff>();
-    public List<Buff> ActiveBuffs => _activeBuffs;
-
+    private Dictionary<int, Buff> _activeBuffs = new Dictionary<int, Buff>();
+    public IEnumerable<Buff> ActiveBuffs => _activeBuffs.Values;
 
     private void Update()
     {
-        for (int i = _activeBuffs.Count - 1; i >= 0; i--)
-        {
-            _activeBuffs[i].Tick(Time.deltaTime);
+        List<int> expiredBuffs = new List<int>();
 
-            if (_activeBuffs[i].TimeRemaining <= 0)
-            {
-                _activeBuffs.RemoveAt(i);
-                Managers.Event.InvokeEvent("StatUpdated");
-            }
+        foreach (var pair in _activeBuffs)
+        {
+            pair.Value.Tick(Time.deltaTime);
+            if (pair.Value.TimeRemaining <= 0)
+                expiredBuffs.Add(pair.Key);
+        }
+
+        foreach (int id in expiredBuffs)
+        {
+            _activeBuffs.Remove(id);
+            Managers.Event.InvokeEvent("StatUpdated");
         }
     }
 
     public void AddBuff(int ID)
     {
-        Buff existingBuff = _activeBuffs.Find(buff => buff.Data.TemplateID == ID);
-        if (existingBuff != null)
+        if (_activeBuffs.TryGetValue(ID, out Buff existingBuff))
         {
             existingBuff.Refresh();
         }
         else
         {
             Buff newBuff = new Buff(ID);
-            _activeBuffs.Add(newBuff);
+            _activeBuffs.Add(ID, newBuff);
         }
+
         Managers.Event.InvokeEvent("StatUpdated");
     }
-
 }

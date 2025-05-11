@@ -115,7 +115,7 @@ namespace Inventory
                 {   
                     case Define.ActionType.QuickSlot: UIInventory.AddAction("Slot", () => SlotItem(index, inventoryItem.Quantity));
                         break;
-                    case Define.ActionType.Buff:UIInventory.AddAction("Buff",()=> PerfromAction(index, inventoryItem.Quantity));
+                    case Define.ActionType.Buff:UIInventory.AddAction("Buff",()=> PerfromAction(index, 1));
                         break;
                     case Define.ActionType.Equip:UIInventory.AddAction("Equip", () => PerfromAction(index, inventoryItem.Quantity));
                         
