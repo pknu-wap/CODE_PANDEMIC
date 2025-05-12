@@ -15,7 +15,12 @@ public class PanzerfaustWeapon : WeaponBase
         Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.velocity = firePoint.right * fireForce;
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 dir = (mousePos - firePoint.position);
+            dir.z = 0f;
+            dir.Normalize();
+
+            rb.velocity = dir * fireForce;
         }
 
         var projectile = proj.GetComponent<PanzerfaustProjectile>();
@@ -24,4 +29,5 @@ public class PanzerfaustWeapon : WeaponBase
             projectile.SetDamage(_weaponData.Damage);
         }
     }
+
 }

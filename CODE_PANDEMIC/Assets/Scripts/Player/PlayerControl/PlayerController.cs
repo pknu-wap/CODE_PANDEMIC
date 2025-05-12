@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 
     public PlayerState _currentState = PlayerState.Idle;
     public Vector2 _forwardVector;
+    public bool IsFacingRight => transform.localScale.x < 0f;
+
 
     private void Awake()
     {

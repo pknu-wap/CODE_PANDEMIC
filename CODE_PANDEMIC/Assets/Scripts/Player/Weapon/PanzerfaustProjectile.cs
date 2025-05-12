@@ -34,7 +34,7 @@ public class PanzerfaustProjectile : MonoBehaviour
             }
         }
 
-        Debug.Log("판처파우스트 폭발 발생!");
+        Debug.Log("판처파우스트 폭발!!");
         Destroy(gameObject);
     }
 
