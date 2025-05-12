@@ -22,6 +22,8 @@ public class PZ_Piano_Base : PZ_Puzzle_Main
     {
         SettingCorrectPianoNotes();
         GetSpawnedPianoTiles();
+
+        ReadyToPause();
     }
 
     private void SettingCorrectPianoNotes()

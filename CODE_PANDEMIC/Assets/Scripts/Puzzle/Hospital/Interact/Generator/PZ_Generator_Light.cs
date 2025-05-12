@@ -45,4 +45,9 @@ public class PZ_Generator_Light : MonoBehaviour
 
         _light.color = targetColor;
     }
+
+    private void OnDestroy()
+    {
+        PZ_Generator.TurnOnGenerator -= StartTurnOnLight;
+    }
 }

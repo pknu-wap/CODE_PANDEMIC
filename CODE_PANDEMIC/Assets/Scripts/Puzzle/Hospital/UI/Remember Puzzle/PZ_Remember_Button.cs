@@ -41,7 +41,7 @@ public class PZ_Remember_Button : UI_Base
     {
         _image.sprite = _pressedSprite;
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSecondsRealtime(0.4f);
 
         _image.sprite = _normalSprite;
     }

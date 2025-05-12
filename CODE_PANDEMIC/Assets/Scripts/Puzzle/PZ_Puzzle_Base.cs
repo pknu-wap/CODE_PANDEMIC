@@ -27,4 +27,14 @@ public abstract class PZ_Puzzle_Base : UI_PopUp
     
     // 퍼즐 클리어
     protected abstract void PuzzleClear();
+
+    protected void ReadyToPause()
+    {
+        Managers.Game.PauseGame();
+    }
+
+    private void OnDisable()
+    {
+        Managers.Game.ResumeGame();
+    }
 }
