@@ -34,6 +34,8 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
         }
 
         StartCoroutine(StartRandomEvent());
+
+        ReadyToPause();
     }
 
     // 랜덤으로 불 키는 이벤트
@@ -44,7 +46,7 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
             _buttonList[index]._isShowingEvent = true;
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
 
         for (int index = 0; index < _rememberCount; index++)
         {
@@ -54,7 +56,7 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
 
             _correctNumbers.Add(randomInt);
 
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSecondsRealtime(0.6f);
         }
 
         for (int index = 0; index < _buttonCount; index++)
