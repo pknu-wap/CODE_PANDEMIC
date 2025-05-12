@@ -9,8 +9,8 @@ public class BuffItem : ItemData, IItemAction, IDestroyableItem
     
     public bool PerformAction(GameObject character, List<ItemParameter> itemState)
     {
-        if (character == null) return false;
-
+        Managers.Buffs.AddBuff(TemplateID);
+        
         return true;
     }
 

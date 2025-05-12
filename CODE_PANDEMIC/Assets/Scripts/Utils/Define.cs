@@ -50,6 +50,14 @@ public class Define
         Armor,
         Shoes
     }
+    public enum BuffType
+    {
+        None,
+        Health,
+        Defend,
+        Speed,
+        Attack
+    }
     public const int STAGES_PER_CHAPTER = 4; //3 normal 1 boss
 
     public const int ArmorCount = 3;
