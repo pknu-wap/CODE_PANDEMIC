@@ -6,6 +6,7 @@ public abstract class WeaponBase : MonoBehaviour
     private float _nextFireTime;
     private bool isFacingRight = true;
     [SerializeField] private SpriteRenderer weaponSpriteRenderer;
+    public virtual void StopAttack() { }
 
     private Vector3 _originalScale;
     public int ID

@@ -3,10 +3,10 @@ using UnityEngine;
 public class HybridWeaponBase : WeaponBase
 {
     [SerializeField] private GameObject firePoint;
-    [SerializeField] private float meleeRange = 1.5f;//거리 범위
+    [SerializeField] private float meleeRange = 1.5f;
     [SerializeField] private LayerMask enemyLayer;
 
-    [SerializeField] private bool shouldRotateWhileFlying = true; // 회전 여부 설정
+    [SerializeField] private bool shouldRotateWhileFlying = true;
 
     private bool isThrown = false;
     private Vector3 direction;
