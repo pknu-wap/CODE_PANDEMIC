@@ -27,7 +27,8 @@ public class UI_EquipSlotItem :UI_Base, IPointerClickHandler
         _init = true;
         return true;
     }
-  
+   
+    
     public event Action<UI_EquipSlotItem> OnRightMouseButtonClick;
     public void OnPointerClick(PointerEventData eventData)
     {

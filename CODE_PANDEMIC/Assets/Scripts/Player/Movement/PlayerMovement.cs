@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
 
-    private float _walkSpeed = 3.5f;
-    private float _runSpeed = 4.5f;
-    private float _dashSpeed = 8f;
-    private float _dashDuration = 0.3f;
-    private float _dashCooldown = 0.5f;
+    private float _walkSpeed ;
+    private float _runSpeed ;
+    private float _dashSpeed ;
+    private float _dashDuration;
+    private float _dashCooldown ;
 
     private bool _isDashing = false;
     public bool IsDashing => _isDashing;
@@ -19,7 +21,26 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
+    private void Start()
+    {
+        PlayerStat data = Managers.Game.PlayerStat;
+        _walkSpeed = data.BaseSpeed;
+        _runSpeed = data.RunSpeed;
+        _dashSpeed = data.DashSpeed;    
+        _dashDuration = data.DashDuration;
+        _dashCooldown = data.DashCoolDown;
+    }
+    private void OnEnable()
+    {
+        Managers.Event.Subscribe("StatUpdated", OnStatUpdated);
+    }
 
+
+
+    private void OnDisable()
+    {
+        Managers.Event.Unsubscribe("StatUpdated", OnStatUpdated);
+    }
     public void Move(Vector2 input, bool isRunning)
     {
         if (_isDashing) return;
@@ -38,7 +59,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
+    private void OnStatUpdated(object obj)
+    {
+        PlayerStat stat = Managers.Game.PlayerStat;
+        _walkSpeed = stat.BaseSpeed;
+        Debug.Log(_walkSpeed);
+        _runSpeed = stat.RunSpeed;
+    }
     public void TryDash(Vector2 direction)
     {
         if (_isDashing || Time.time < _lastDashTime + _dashCooldown) return;

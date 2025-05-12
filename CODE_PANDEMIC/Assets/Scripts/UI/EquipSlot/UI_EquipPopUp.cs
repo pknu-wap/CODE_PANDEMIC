@@ -53,17 +53,18 @@ public class UI_EquipPopUp :  UI_Base
     private void OnEnable()
     {
         Managers.Event.Subscribe("OnEquipSlotUpdated", OnEquipSlotUpdated);
+        Managers.Event.Subscribe("StatUpdated", OnStatUpdated);
     }
 
     private void OnDisable()
     {
         Managers.Event.Unsubscribe("OnEquipSlotUpdated", OnEquipSlotUpdated);
+        Managers.Event.Unsubscribe("StatUpdated", OnStatUpdated);
     }
     private void OnEquipSlotUpdated(object obj)
     {
         if (obj is EquipSlotUpdateData data)
         {
-            
             UpdateSlot(data.SlotIndex, data.Item);
             UpdateText();
         }
@@ -71,6 +72,7 @@ public class UI_EquipPopUp :  UI_Base
         {
             Debug.LogWarning("OnEquipSlotUpdated: 데이터 타입 불일치");
         }
+            
     }
 
      private void UpdateAllSlot()
@@ -101,10 +103,17 @@ public class UI_EquipPopUp :  UI_Base
             targetObject.UpdateRemoveItem();
         else
             targetObject.UpdateSlotItem(data);
-
     }
+    private void OnStatUpdated(object obj)
+    {
+        UpdateText();
+    }
+
     public void UpdateText()
     {
-
+        PlayerStat playerStat= Managers.Game.PlayerStat;
+        GetText((int)Texts.HpText).text = $"{playerStat.CurrentHp}/{playerStat.MaxHp}";
+        GetText((int)Texts.ArmorText).text = $"{playerStat.Defend}";
+        GetText((int)Texts.SpeedText).text = $"{playerStat.BaseSpeed}";
     }
 }

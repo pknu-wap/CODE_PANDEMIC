@@ -117,6 +117,7 @@ public class ItemFactoryManager
         { ItemType.Weaponable, new WeaponableItemFactory() },
         {ItemType.Interact, new InteractableItemFactory()  },
         {ItemType.Equippable,new EquippableItemFactory() },
+        {ItemType.Buff,new BuffItemFactory() }, 
     };
 
     public static ItemData CreateItem(ItemType type, ItemData data)
