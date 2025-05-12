@@ -14,6 +14,7 @@ public class EquipSlot : MonoBehaviour
         if (Managers.Data.Armors.TryGetValue(equipItem.TemplateID, out ArmorData data) == false) return;
 
         int slotIndex = EquipSlotIndex.GetSlotIndex(data.Type);
+        Managers.Game.PlayerStat.EquipArmor(data, slotIndex);
         if (_equipItems.ContainsKey(slotIndex))
         {
             SwapSlotItem(equipItem,slotIndex);
@@ -58,6 +59,7 @@ public class EquipSlot : MonoBehaviour
         if (_equipItems.TryGetValue(slotIndex, out EquipItem oldItem))
         {
             Managers.Data.Items.TryGetValue(oldItem.TemplateID, out ItemData item);
+            Managers.Game.PlayerStat.UnequipArmor(slotIndex);
             Managers.Game.Inventory.AddItem(item, 1);
             _equipItems.Remove(slotIndex);
 

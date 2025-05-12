@@ -32,7 +32,9 @@ namespace Inventory.Model
             }
             public int AddItem(ItemData item, int quantity, List<ItemParameter> itemState = null)
             {
-               
+                Debug.Log(item);
+                Debug.Log(quantity);
+
                 ItemData newItem = ItemFactoryManager.CreateItem(item.Type, item);
                 if (newItem == null)
                 {
@@ -40,32 +42,34 @@ namespace Inventory.Model
                     return quantity;
                 }
 
-                if (newItem.Type == ItemType.Edible && Managers.Game.QuickSlot.HasItem(item))
+                int remainQuantity = quantity;
+
+               
+               if (newItem.Type == ItemType.Edible && Managers.Game.QuickSlot.HasItem(item))
                 {
-                    quantity = Managers.Game.QuickSlot.AddStackableItem( quantity);
+                    remainQuantity = Managers.Game.QuickSlot.AddStackableItem( remainQuantity);
                     InformAboutChange();
-                    return quantity;
+                    return remainQuantity;
                 }
 
+               
                 if (!newItem.IsStackable)
                 {
-                    while (quantity > 0 && !IsInventoryFull())
+                    while (remainQuantity > 0 && !IsInventoryFull())
                     {
-                        
-                        quantity -= AddItemToFreeSlot(newItem, 1, itemState);
+                        remainQuantity -= AddItemToFreeSlot(newItem, 1, itemState);
                     }
                 }
-                else // 스택 가능한 경우
+                else 
                 {
-                    
-                    quantity = AddStackableItem(newItem, quantity);
+                    remainQuantity = AddStackableItem(newItem, remainQuantity);
                 }
 
                 InformAboutChange();
-                return quantity;
+                return remainQuantity;
             }
 
-           
+
             private int AddItemToFreeSlot(ItemData item, int quantity, List<ItemParameter> itemState = null)
             {
                 InventoryItem newItem = new InventoryItem(item, quantity, new List<ItemParameter>(itemState == null ? item.Parameters : itemState));

@@ -49,6 +49,9 @@ public class GameManagerEx
     private StageProgressData _stageProgressData;
     private StageProgressSaver _stageProgressSaver;
 
+    private PlayerStat _playerStat;
+    private PlayerStatSaver _playerStatSaver;
+
     private HashSet<int> _clearPuzzleID;
     private HashSet<int> _obtainedItemIDs;
     private HashSet<int> _interactObjects;
@@ -70,6 +73,7 @@ public class GameManagerEx
     public InventoryData Inventory => _inventoryData;
     public QuickSlot QuickSlot => _quickSlot;
     public EquipSlot EquipSlot => _equipSlot;
+    public PlayerStat PlayerStat=> _playerStat;
 
     #region Chapter&Stage
     public int LatestChapter
@@ -115,6 +119,9 @@ public class GameManagerEx
         _equipSlot = new EquipSlot();
         _equipSaver = new EquipSaver(_equipSlot);
 
+        _playerStat = new PlayerStat();
+        _playerStatSaver = new PlayerStatSaver(_playerStat.StatData);
+        
         _inventoryData = new InventoryData();
         _inventorySaver = new InventorySaver(_inventoryData);
 
@@ -222,9 +229,12 @@ public class GameManagerEx
     {
         _gameSaver.SaveGame(_gameData);
         _inventorySaver.SaveInventory();
+        _playerStatSaver.SaveStat();
         _equipSaver.SaveEquip();
+
         _quickSlotSaver.SaveQuickSlot();
         _stageProgressSaver.Save(_stageProgressData);
+
     }
 
     public bool LoadGame()
@@ -235,9 +245,11 @@ public class GameManagerEx
 
         _stageProgressData = _stageProgressSaver.Load();
 
-        _quickSlotSaver.LoadQuickSlot();
         _equipSaver.LoadEquip();
+        _quickSlotSaver.LoadQuickSlot();
 
+
+        _playerStat.LoadStatData(_playerStatSaver.LoadStat());
         _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
         _obtainedItemIDs = new HashSet<int>(_stageProgressData.ObtainedItemIDs);
         _interactObjects = new HashSet<int>(_stageProgressData.InteractObjectIDS);
@@ -266,6 +278,7 @@ public class GameManagerEx
         _stageProgressSaver.DeleteData();
         _quickSlotSaver.DeleteData();
         _equipSaver.DeleteData();
+        _playerStatSaver.DeleteData();
         _gameData = new GameData();
         Init();
     }
