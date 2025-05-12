@@ -24,6 +24,8 @@ public class PZ_Password_Board : PZ_Puzzle_Main
         _passwordInputUI = GetComponentInChildren<PZ_Password_InputUI>();
 
         GetSpawnedButtons();
+
+        ReadyToPause();
     }
 
     #endregion

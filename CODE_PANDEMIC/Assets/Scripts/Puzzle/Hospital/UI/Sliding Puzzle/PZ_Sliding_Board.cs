@@ -69,6 +69,8 @@ public class PZ_Sliding_Board : PZ_Puzzle_Main
 
         // 셔플이 끝난 후 빈 타일의 현재 위치를 저장 (3번)
         EmptyTilePosition = _tileList[2].GetComponent<RectTransform>().localPosition;
+
+        ReadyToPause();
     }
 
     public void MoveTile(PZ_Sliding_Tile tile)
