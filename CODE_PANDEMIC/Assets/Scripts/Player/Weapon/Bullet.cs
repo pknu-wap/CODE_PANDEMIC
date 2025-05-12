@@ -5,7 +5,7 @@ public class Bullet : MonoBehaviour
     private float _speed = 10f;
     private float _lifeTime = 3f;
     private int _damage = 0;
-    private PlayerController _onwer;
+    private PlayerController _owner;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -21,12 +21,12 @@ public class Bullet : MonoBehaviour
     {
         CancelInvoke();
         Invoke("ReturnToPool", _lifeTime);
-        Debug.Log($"ÃÑ¾Ë »ý¼ºµÊ at {transform.position}");
+        Debug.Log($"ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ at {transform.position}");
     }
 
     public void Fire(Vector2 direction)
     {
-        Debug.Log("ÃÑ¾Ë ¹ß»çµÊ ¹æÇâ: " + direction);
+        Debug.Log("ï¿½Ñ¾ï¿½ ï¿½ß»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: " + direction);
         rb.velocity = direction.normalized * _speed;
     }
 
@@ -45,7 +45,16 @@ public class Bullet : MonoBehaviour
             enemy.TakeDamage(_damage);
         }
         _damage = 0;
-        _onwer = null;
+        _owner = null;
         ReturnToPool();
+    }
+    public void SetOwner(PlayerController owner)
+    {
+        _owner = owner;
+    }
+
+    public PlayerController GetOwner()
+    {
+        return _owner;
     }
 }

@@ -1,18 +1,111 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_ZombieBall : MonoBehaviour
+public class AI_ZombieBall : AI_Controller
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject zombiePrefab;
+    public int maxSummonedZombies = 3;
+    public float summonCooldown = 8f;
+    public float summonRadius = 1.5f;
+    public float rushSpeed = 12f;
+    public float rushDuration = 2f;
+    public float rushCooldown = 5f;
+
+    private float _lastSummonTime = -Mathf.Infinity;
+    private float _lastRushTime = -Mathf.Infinity;
+    private float _rushEndTime = -Mathf.Infinity;
+
+    private bool _isRushing = false;
+    private Vector2 _rushDirection;
+
+    protected override void Start()
     {
-        
+        base.Start();
+        ChangeState(new AI_StateIdle(this));
     }
 
-    // Update is called once per frame
-    void Update()
+    protected void Update()
     {
-        
+
+        if (_isRushing)
+        {
+            _rb.velocity = _rushDirection * rushSpeed;
+
+            if (Time.time >= _rushEndTime)
+            {
+                _isRushing = false;
+                _rb.velocity = Vector2.zero;
+            }
+        }
+    }
+
+    private void TrySummon()
+    {
+        if (Time.time < _lastSummonTime + summonCooldown || _player == null)
+            return;
+
+        int count = 0;
+        for (int i = 0; i < maxSummonedZombies; i++)
+        {
+            Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * summonRadius;
+            GameObject zombie = Instantiate(zombiePrefab, spawnPos, Quaternion.identity);
+
+            AI_Controller zombieAI = zombie.GetComponent<AI_Controller>();
+            if (zombieAI != null)
+            {
+                zombieAI.ForceDetectTarget(_player);
+            }
+
+            count++;
+        }
+
+        if (count > 0)
+        {
+            _lastSummonTime = Time.time;
+        }
+    }
+
+    public void TriggerRush(Vector2 direction)
+    {
+        if (_isRushing || Time.time < _lastRushTime + rushCooldown)
+            return;
+
+        _rushDirection = direction.normalized;
+        _isRushing = true;
+        _rushEndTime = Time.time + rushDuration;
+        _lastRushTime = Time.time;
+    }
+
+    public override void TakeDamage(int amount)
+    {
+        base.TakeDamage(amount);
+        if (Health <= 0)
+        {
+            TrySummon();
+        }   
+    }
+
+    public override void ForceDetectTarget(Transform player)
+    {
+        base.ForceDetectTarget(player);
+
+        if (player != null)
+        {
+            Vector2 direction = (player.position - transform.position).normalized;
+            TriggerRush(direction);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Bullet bullet = other.GetComponent<Bullet>();
+        if (bullet != null)
+        {
+            PlayerController shooter = bullet.GetOwner();
+            if (shooter != null)
+            {
+                Vector2 dir = (shooter.transform.position - transform.position).normalized;
+                TriggerRush(dir);
+            }
+        }
     }
 }

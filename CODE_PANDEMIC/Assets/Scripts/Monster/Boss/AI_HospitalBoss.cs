@@ -8,6 +8,7 @@ public class AI_HospitalBoss : AI_BossController
     public GameObject _syringePrefab;
     public float SyringeSpeed;
     public float ThrowCooldown = 10f;
+    public float SyringeRange = 10f;
     public float SkillChargeDelay = 0.5f;
 
     public float SweepCooldown = 15f;
@@ -24,7 +25,7 @@ public class AI_HospitalBoss : AI_BossController
 
     private float _lastSkillTime = -Mathf.Infinity;
     private float _skillDelay = 3f;
-    public AI_ThrowVisualizer _throwVisualizer;
+    public AI_ThrowVisualizer _syringeVisualizer;
     public override float AiDamage => _monsterData.AttackDamage;
     public int MaxHealth => _monsterData.Hp;
 

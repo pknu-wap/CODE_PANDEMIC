@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using UnityEngine;
 
 public class AI_ThrowSkill : ISkillBehavior
@@ -42,25 +43,28 @@ public class AI_ThrowSkill : ISkillBehavior
     }
 
     protected virtual IEnumerator ThrowRoutine(System.Action onSkillComplete)
+{
+    var visualizer = (_controller as AI_NurseZombie)?._syringeVisualizer 
+                     ?? (_controller as AI_HospitalBoss)?._syringeVisualizer;
+        if (_controller._player == null){yield break;}
+        Vector2 origin = _controller.transform.position;
+        Vector2 target = _controller._player.position;
+        float width = _nurseZombie?.SyringeRange ?? _hospitalBoss?.SyringeRange ?? 5f;
+        float height = 0.5f;
+        visualizer.Show(origin, target, width, height);
+
+    yield return new WaitForSeconds(ChargeDelay);
+    if (visualizer != null)
     {
-        AI_ThrowVisualizer visualizer = (_controller as AI_NurseZombie)?._throwVisualizer ?? (_controller as AI_HospitalBoss)?._throwVisualizer;
-
-        if (visualizer != null && _controller._player != null)
-        {
-            visualizer.transform.position = _controller.transform.position;
-            visualizer.Show(_controller._player.position, ChargeDelay);
-        }
-        Vector2 direction = (_controller._player.position - _controller.transform.position).normalized;
-
-        yield return new WaitForSeconds(ChargeDelay);
-
-        visualizer?.Hide();
-        ThrowSyringe(direction);
-
-        _controller._aiPath.canMove = true;
-        _controller._isUsingSkill = false;
-        onSkillComplete?.Invoke();
+        visualizer.Hide();
     }
+
+    ThrowSyringe((target - origin).normalized);
+
+    _controller._aiPath.canMove = true;
+    _controller._isUsingSkill = false;
+    onSkillComplete?.Invoke();
+}
 
     protected virtual void ThrowSyringe(Vector2 direction)
     {

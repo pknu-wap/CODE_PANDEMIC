@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
             if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0)
             {
                 player.OnDamaged(gameObject, _owner.AiDamage);
-                spawnPos = collision.transform.position;
+                spawnPos = transform.position;
             }
             else
             {

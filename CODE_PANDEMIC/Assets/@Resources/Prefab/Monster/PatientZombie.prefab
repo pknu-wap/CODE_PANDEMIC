@@ -217,12 +217,12 @@ SpriteRenderer:
   m_SortingLayerID: 459735487
   m_SortingLayer: 2
   m_SortingOrder: 15
-  m_Sprite: {fileID: -1267920226, guid: 8e69408dc23081447854cbf3ced1e23a, type: 3}
+  m_Sprite: {fileID: -252504397, guid: 443895267e5003e439c4dfded2debc30, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 3.08}
+  m_Size: {x: 1, y: 1.0009767}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -356,7 +356,6 @@ MonoBehaviour:
   _animator: {fileID: -3182065775556293199}
   _aiFov: {fileID: 6679038620727708155}
   _aiPath: {fileID: 4393325965198675154}
-  _destinationSetter: {fileID: 0}
   _isUsingSkill: 0
   TargetLayer:
     serializedVersion: 2
@@ -364,7 +363,6 @@ MonoBehaviour:
   patientAttack: {fileID: 6682378130748408680, guid: 968b303345c0bd74d9f50d0a59fb3f63, type: 3}
   attackColliderPrefab: {fileID: 6682378130748408680, guid: 968b303345c0bd74d9f50d0a59fb3f63, type: 3}
   hitboxSpawnPoint: {fileID: 1348540778898651143}
-  _skillCooldown: 2
 --- !u!95 &-3182065775556293199
 Animator:
   serializedVersion: 5
@@ -422,8 +420,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 2, y: 3.08}
+    oldSize: {x: 1, y: 1.0009767}
+    newSize: {x: 1, y: 1.0009767}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

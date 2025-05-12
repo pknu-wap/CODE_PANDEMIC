@@ -162,6 +162,11 @@ public class AI_Controller : AI_Base
     {
         return _player != null && Vector2.Distance(transform.position, _player.position) <= SkillRange;
     }
+    public virtual void ForceDetectTarget(Transform player)
+    {
+        _destinationSetter.target = player;
+        ChangeState(new AI_StateWalk(this));
+    }
 
     public bool IsAttacking() => _isAttacking;
 
