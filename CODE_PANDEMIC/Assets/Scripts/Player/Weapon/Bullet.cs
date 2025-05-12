@@ -5,7 +5,7 @@ public class Bullet : MonoBehaviour
     private float _speed = 10f;
     private float _lifeTime = 3f;
     private int _damage = 0;
-    PlayerController _onwer;
+    private PlayerController _onwer;
     private Rigidbody2D rb;
 
     private void Awake()
