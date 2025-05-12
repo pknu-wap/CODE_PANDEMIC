@@ -6,6 +6,7 @@ public class PZ_Soccer_Ball : PZ_Interact_NonSpawn
 {
     [SerializeField] private Rigidbody2D _rigidbody;
 
+    [SerializeField] private GameObject _clearObject;
     [SerializeField] private GameObject _arrowUp;
     [SerializeField] private GameObject _arrowLeft;
     [SerializeField] private GameObject _arrowRight;
@@ -105,7 +106,7 @@ public class PZ_Soccer_Ball : PZ_Interact_NonSpawn
 
         // 여기에 축구화(장비:신발)를 주는 로직 구현 예정
 
-        Debug.Log("Soccer Clear!!");
+        Instantiate(_clearObject, transform.position, transform.rotation);
 
         Destroy(gameObject);
     }
