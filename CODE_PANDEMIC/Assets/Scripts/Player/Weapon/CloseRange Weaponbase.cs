@@ -15,7 +15,7 @@ public class CloseRangeWeaponBase : WeaponBase
         _animator = GetComponent<Animator>();
     }
 
-    public override void Attack()
+    public override void Attack(PlayerController owner)
     {
         if (!CanFire()) return;
         SetNextFireTime();

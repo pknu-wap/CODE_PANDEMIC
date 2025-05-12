@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 
     public PlayerState _currentState = PlayerState.Idle;
     public Vector2 _forwardVector;
+    public bool IsFacingRight => transform.localScale.x < 0f;
+
 
     private void Awake()
     {
@@ -92,8 +94,9 @@ public class PlayerController : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            _equipWeapon?.Attack();
+            _equipWeapon?.Attack(this);
         }
+
     }
 
     private void OnPlayerDead(object obj)
@@ -115,6 +118,6 @@ public class PlayerController : MonoBehaviour
     {
         _playerStatus.OnHealed(healValue);
     }
-
     public bool IsDead() => _currentState == PlayerState.Dead;
+
 }
