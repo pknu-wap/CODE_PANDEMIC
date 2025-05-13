@@ -21,18 +21,21 @@ public class ShockWave : MonoBehaviour
     {
         if (_material == null)
             _material = GetComponent<Renderer>().material;
+       
 
-        float aspect = (float)Screen.width / Screen.height;
-        _material.SetFloat(_xSizeRatioID, aspect);
     }
     private void Start()
     {
-        
-        //gameObject.SetActive(false);
+        float aspect = (float)Screen.width / Screen.height;
+        _material.SetFloat(_xSizeRatioID, aspect);
+        gameObject.SetActive(false);
     }
    
     public void CallShockWave(int repeatCount = 1, float delayBetween = 0.1f)
     {
+        float aspect = (float)Screen.width / Screen.height;
+        _material.SetFloat(_xSizeRatioID, aspect);
+
         if (_shockWaveCoroutine != null)
             StopCoroutine(_shockWaveCoroutine);
 
