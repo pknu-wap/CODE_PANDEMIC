@@ -51,7 +51,7 @@
     {
       "TemplateID": 101,
       "Name": "R1895",
-      "Description": "기본적인 권총이다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다",
+      "Description": "기본적인 권총이다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다\n탄창 : 6",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Pistol_1",
@@ -61,8 +61,8 @@
     },
     {
       "TemplateID": 201,
-      "Name": "일반 소총",
-      "Description": "기본적인 소총이다.",
+      "Name": "AR15",
+      "Description": "기본적인 소총이다.\n적에게 <color=#fc2f2f>10</color>의 공격을 가한다.\n탄창 : 30",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Range_1",
@@ -71,8 +71,28 @@
     },
     {
       "TemplateID": 202,
-      "Name": "낡은 샷건",
-      "Description": "낡은 샷건이다. 공격력은 강해보인다",
+      "Name": "M870",
+      "Description": "샷건이다. 맞으면 많이 아플것같다.\n한번에 <color=#fc2f2f>10</color>의 공격의 탄이 4개 나간다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Range_1",
+      "Type": 1,
+      "Weapon": 3
+    },
+    {
+      "TemplateID": 203,
+      "Name": "판저파우스트",
+      "Description": "이 무기는 사용자 본인도 조심해야할것같다 \n적에게 <color=#fc2f2f>45</color>의 공격을 가한다.\n탄창 : 1",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Range_1",
+      "Type": 1,
+      "Weapon": 3
+    },
+    {
+      "TemplateID": 204,
+      "Name": "화염방사기",
+      "Description": "사람에게 방사하면 위험하다. \n1초당 <color=#fc2f2f>8</color>의 공격을 가한다.",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Range_1",

@@ -26,7 +26,7 @@ public class AI_Controller : AI_Base
     public virtual ISkillBehavior Skill { get { return null; } }
 
     private Coroutine _aiDamageCoroutine;
-
+    EnemyDamageEffect _damageEffect;
     private bool _isAttacking;
     public bool _isUsingSkill; 
 
@@ -37,7 +37,10 @@ public class AI_Controller : AI_Base
 
     private float _lostPlayerTimer = 0f;
     private float _playerLostDelay = 1f;
-    protected virtual void Awake() { }
+    protected virtual void Awake() {
+        _damageEffect = Utils.GetOrAddComponent<EnemyDamageEffect>(gameObject);
+
+    }
 
     protected virtual void Start()
     {
@@ -169,6 +172,7 @@ public class AI_Controller : AI_Base
     public override void TakeDamage(int amount)
     {   
         base.TakeDamage(amount);
+        if(Health>0) _damageEffect.CallDamageFlash();
         if (Health <= 0f && _currentState is not AI_StateDie)
         {
             ChangeState(new AI_StateDie(this));
