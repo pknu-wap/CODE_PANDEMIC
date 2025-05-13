@@ -24,7 +24,7 @@ public class AI_Controller : AI_Base
     protected bool _isAttacking;
     public bool _isUsingSkill;
     public bool _foundPlayer;
-
+    EnemyDamageEffect _damageEffect;
     private const float DetectionLoseDelay = 1f;
     private const float SkillRange = 7.5f;
     private float _lostPlayerTimer;
@@ -39,6 +39,8 @@ public class AI_Controller : AI_Base
         _animator = GetComponent<Animator>();
         _aiPath = GetComponent<AIPath>();
         _destinationSetter = GetComponent<AIDestinationSetter>();
+        _damageEffect = Utils.GetOrAddComponent<EnemyDamageEffect>(gameObject);
+
     }
     protected virtual void Start()
     {
@@ -146,6 +148,7 @@ public class AI_Controller : AI_Base
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
+        if(Health>0) _damageEffect.CallDamageFlash();
         if (Health <= 0f && _currentState is not AI_StateDie)
             ChangeState(new AI_StateDie(this));
     }

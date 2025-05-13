@@ -74,21 +74,17 @@ public class GameScene : BaseScene
         yield return null; // Destroy 완료될 때까지 1프레임 대기
         PrepareStage();
     }
-    private void UpdateLatestStage()
-    {
-        Managers.Game.LatestChapter= Managers.Game.Chapter;
-        Managers.Game.LatestStage= Managers.Game.Stage;
-    }
+  
     public void NextStage(object  obj)
     {
-        UpdateLatestStage();
+        Managers.Game.UpdateLatestStage();
         Managers.Game.CompleteStage();
         ChangeStage();
     }
    
     public void PrevStage(object obj)
     {
-        UpdateLatestStage();
+        Managers.Game.UpdateLatestStage();
         Managers.Game.PrevStage();
         ChangeStage();
     }

@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 6100147105550675336}
   - component: {fileID: -3182065775556293199}
   - component: {fileID: 6395987070898186553}
+  - component: {fileID: 5520743982244161564}
   m_Layer: 12
   m_Name: PatientZombie
   m_TagString: Enemy
@@ -196,7 +197,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: e1423e5742461c040845d50d66c019a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,7 +216,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 459735487
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 15
   m_Sprite: {fileID: -252504397, guid: 443895267e5003e439c4dfded2debc30, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -430,6 +431,43 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3296821, y: 0.7883849}
   m_EdgeRadius: 0
+--- !u!114 &5520743982244161564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7932018542185672789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f46cc28fbf5370d4da86a386b6cd57bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashColor: {r: 2.297397, g: 0, b: 0, a: 1}
+  _flashSpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -4
+      outSlope: -4
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25
+      value: 0
+      inSlope: -2.1484594
+      outSlope: -2.1484594
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041731894
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &2117501483977694626
 PrefabInstance:
   m_ObjectHideFlags: 0
