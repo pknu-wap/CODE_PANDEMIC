@@ -72,7 +72,7 @@ public class PZ_Sliding_Tile : UI_Base
 
         while (currentPecentage < 1)
         {
-            currentTime += Time.deltaTime;
+            currentTime += Time.unscaledDeltaTime;
             currentPecentage = currentTime / moveDuration;
             GetComponent<RectTransform>().localPosition = Vector3.Lerp(startPosition, endPosition, currentPecentage);
 

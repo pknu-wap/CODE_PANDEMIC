@@ -75,7 +75,7 @@ public class PZ_Piano_Tile_White : UI_Base
         _image.material = _pressedMaterial;
         _image.SetMaterialDirty();
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
 
         _image.material = _normalMaterial;
         _image.SetMaterialDirty();

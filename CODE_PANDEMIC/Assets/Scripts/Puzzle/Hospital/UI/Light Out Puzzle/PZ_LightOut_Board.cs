@@ -19,6 +19,8 @@ public class PZ_LightOut_Board : PZ_Puzzle_Main
         Managers.UI.SetCanvas(gameObject);
 
         GetSpawnedButtons();
+
+        ReadyToPause();
     }
 
     #endregion
