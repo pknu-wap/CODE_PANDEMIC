@@ -20,11 +20,24 @@ public class AI_ZombieBall : AI_Controller
     protected override void Start()
     {
         base.Start();
+    //     if (_monsterData == null)
+    // {
+    //     _monsterData = new MonsterData();
+    //     _monsterData.NameID = "ZombieBall";
+    //     _monsterData.Hp = 300;
+    //     _monsterData.AttackDelay = 0;
+    //     _monsterData.DetectionRange = 0;
+    //     _monsterData.DetectionAngle = 0;
+    //     _monsterData.MoveSpeed = 0.01f;
+    //     _monsterData.AttackRange = 0;
+    //     _monsterData.AttackDamage = 50;
+    // }       
         ChangeState(new AI_StateIdle(this));
     }
 
     protected void Update()
     {
+        TrySummon();
 
         if (_isRushing)
         {
@@ -49,10 +62,10 @@ public class AI_ZombieBall : AI_Controller
             Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * summonRadius;
             GameObject zombie = Instantiate(zombiePrefab, spawnPos, Quaternion.identity);
 
-            AI_Controller zombieAI = zombie.GetComponent<AI_Controller>();
-            if (zombieAI != null)
+            AI_Controller summonZombie = zombie.GetComponent<AI_PatientZombie>();
+            if (summonZombie != null)
             {
-                zombieAI.ForceDetectTarget(_player);
+                summonZombie.ForceDetectTarget(_player);
             }
 
             count++;
@@ -81,7 +94,7 @@ public class AI_ZombieBall : AI_Controller
         if (Health <= 0)
         {
             TrySummon();
-        }   
+        }
     }
 
     public override void ForceDetectTarget(Transform player)

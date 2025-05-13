@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  target: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
+  target: {fileID: 0}
 --- !u!50 &3308298478456471422
 Rigidbody2D:
   serializedVersion: 4
@@ -357,6 +357,7 @@ MonoBehaviour:
   _aiFov: {fileID: 6679038620727708155}
   _aiPath: {fileID: 4393325965198675154}
   _isUsingSkill: 0
+  _foundPlayer: 0
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128

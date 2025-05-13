@@ -23,6 +23,7 @@ public class AI_Controller : AI_Base
     protected AI_IState _currentState;
     protected bool _isAttacking;
     public bool _isUsingSkill;
+    public bool _foundPlayer;
 
     private const float DetectionLoseDelay = 1f;
     private const float SkillRange = 7.5f;
@@ -39,7 +40,6 @@ public class AI_Controller : AI_Base
         _aiPath = GetComponent<AIPath>();
         _destinationSetter = GetComponent<AIDestinationSetter>();
     }
-
     protected virtual void Start()
     {
         if (!Init())
@@ -49,11 +49,10 @@ public class AI_Controller : AI_Base
         }
 
         ConfigurePathfinding();
-        AssignInitialDestination();
-
         ChangeState(new AI_StateIdle(this));
         _state = AI_State.Idle;
 
+        AssignInitialDestination();
         UpdateDirection();
         UpdateFovDirection();
     }
@@ -91,8 +90,6 @@ public class AI_Controller : AI_Base
 
     private void HandlePlayerDetection()
     {
-        bool found = false;
-
         foreach (var obj in _aiFov.GetDetectedObjects())
         {
             if (obj.TryGetComponent<PlayerStatus>(out _))
@@ -100,12 +97,12 @@ public class AI_Controller : AI_Base
                 _player = obj.transform;
                 _destinationSetter.target = _player;
                 _lostPlayerTimer = DetectionLoseDelay;
-                found = true;
+                _foundPlayer = true;
                 break;
             }
         }
 
-        if (!found)
+        if (!_foundPlayer)
         {
             _lostPlayerTimer -= Time.deltaTime;
             if (_lostPlayerTimer <= 0f)
@@ -155,7 +152,7 @@ public class AI_Controller : AI_Base
 
     public bool IsPlayerDetected()
     {
-        return _aiFov != null && _player != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject);
+        return _foundPlayer ||(_player != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject));
     }
 
     public virtual bool IsPlayerInSkillRange()
@@ -164,7 +161,9 @@ public class AI_Controller : AI_Base
     }
     public virtual void ForceDetectTarget(Transform player)
     {
+        _player = player.transform;
         _destinationSetter.target = player;
+        _foundPlayer = true;
         ChangeState(new AI_StateWalk(this));
     }
 
