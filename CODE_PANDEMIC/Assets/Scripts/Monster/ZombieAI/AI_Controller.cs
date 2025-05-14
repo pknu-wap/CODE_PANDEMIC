@@ -165,9 +165,6 @@ public class AI_Controller : AI_Base
         _destinationSetter.target = player;
         _foundPlayer = true;
         _aiPath.destination = player.position;
-        _aiPath.canSearch = true;
-        _aiPath.SearchPath();
-        _aiPath.canMove = true;
         ChangeState(new AI_StateWalk(this));
     }
 
