@@ -4,7 +4,7 @@ using System.Collections;
 public class PZ_Hospital_Boss_Block : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rd;
-
+    [SerializeField] ShockWave _shockWave;
     public void StartMove()
     {
         StartCoroutine(DropTheCars());
@@ -12,6 +12,7 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
     private IEnumerator DropTheCars()
     {
+       
         Vector3 start = new Vector2(6.16f, -20);
         Vector3 middle = new Vector2(6.16f, -20.5f);
         Vector3 end = new Vector2(6.16f, -21);
@@ -31,7 +32,12 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
+       
+            _shockWave.gameObject.SetActive(true);
+            _shockWave.CallShockWave(2);
 
+        
+       
         currentTime = 0;
         currentPercent = 0;
 
@@ -56,7 +62,7 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-
+      
         currentTime = 0;
         currentPercent = 0;
         moveDuration = 0.1f;
@@ -70,7 +76,7 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-
+       
         currentTime = 0;
         currentPercent = 0;
 
@@ -83,7 +89,7 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-
+      
         currentTime = 0;
         currentPercent = 0;
         moveDuration = 0.05f;
@@ -95,7 +101,7 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-
+       
         currentTime = 0;
         currentPercent = 0;
         moveDuration = 0.1f;
@@ -109,5 +115,9 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
+        
+
+        
+
     }
 }

@@ -64,5 +64,6 @@ public class ShockWave : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        
     }
 }
