@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Inventory.Model;
+using System;
 
 public class UI_InGameSlot : UI_Base
 {
@@ -11,27 +12,57 @@ public class UI_InGameSlot : UI_Base
         RangeWeaponImage,
         PortionImage
     }
-
+    enum GameObjects
+    {
+        PistolCoolTime,
+        RangeCoolTime
+    }
     enum Texts
     {
         PortionCount
     }
-
+    UI_CoolTime _pistolCoolTime;
+    UI_CoolTime _RangeCoolTime;
     public override bool Init()
     {
         if (base.Init() == false) return false;
-
+        BindObject(typeof(GameObjects));
         BindImage(typeof(Images));
         BindText(typeof(Texts));
-       
+
+        _pistolCoolTime=GetObject((int)GameObjects.PistolCoolTime).GetComponent<UI_CoolTime>(); 
+        _RangeCoolTime=GetObject((int)GameObjects.RangeCoolTime).GetComponent<UI_CoolTime>();       
+
         Managers.Event.Subscribe("OnQuickSlotUpdated", OnQuickSlotUpdated);
         Managers.Game.QuickSlot.InitializeAllSlots();
         return true;
     }
-    
+    private void OnEnable()
+    {
+        Managers.Event.Subscribe("Reload", OnReload);
+    }
     private void OnDisable()
     {
         Managers.Event.Unsubscribe("OnQuickSlotUpdated", OnQuickSlotUpdated);
+        Managers.Event.Unsubscribe("Reload", OnReload);
+    }
+
+    private void OnReload(object obj)
+    {
+       if(obj is WeaponData data)
+        {
+           switch(data.Type)
+            {
+                case Define.WeaponType.PistolWeapon:
+                    _pistolCoolTime.StartCoolTime(data.ReloadTime);
+                    break;
+                case Define.WeaponType.RangeWeapon:
+                    _RangeCoolTime.StartCoolTime(data.ReloadTime); 
+                    break;
+                  
+
+            }
+        }
     }
 
     private void OnQuickSlotUpdated(object data)
@@ -60,7 +91,7 @@ public class UI_InGameSlot : UI_Base
 
         if (targetImage == null)
         {
-            Debug.LogWarning($"[UI_InGameSlot] ΩΩ∑‘ {slotIndex}ø° ¿ÃπÃ¡ˆ æ¯¿Ω");
+            Debug.LogWarning($"[UI_InGameSlot] Ïä¨Î°Ø {slotIndex}Ïóê Ïù¥ÎØ∏ÏßÄ ÏóÜÏùå");
             return;
         }
 
@@ -80,7 +111,7 @@ public class UI_InGameSlot : UI_Base
             }
             else
             {
-                Debug.LogWarning($"[UI_InGameSlot] {itemData.Name} Ω∫«¡∂Û¿Ã∆Æ ∑Œµ˘ Ω«∆–");
+                Debug.LogWarning($"[UI_InGameSlot] {itemData.Name} Ïä§ÌîÑÎùºÏù¥Ìä∏ Î°úÎî© Ïã§Ìå®");
             }
         });
     }
