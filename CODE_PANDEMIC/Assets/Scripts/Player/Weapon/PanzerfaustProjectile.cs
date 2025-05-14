@@ -34,7 +34,7 @@ public class PanzerfaustProjectile : MonoBehaviour
             }
         }
 
-        Debug.Log("ÆÇÃ³ÆÄ¿ì½ºÆ® Æø¹ß!!");
+        Debug.Log("íŒì²˜íŒŒìš°ìŠ¤íŠ¸ í­ë°œ!!");
         Destroy(gameObject);
     }
 
