@@ -6,9 +6,9 @@ public class WideSpreadWeaponBase : WeaponBase
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject firePoint;
 
-    [SerializeField] protected int pelletCount = 6;       // ÃÑ¾Ë °³¼ö
-    [SerializeField] protected float spreadAngle = 15f;   // ÆÛÁü °¢µµ
-    [SerializeField] protected float fireForce = 10f;     // ¹ß»ç ¼Óµµ
+    [SerializeField] protected int pelletCount = 6;       // ì´ì•Œ ê°œìˆ˜
+    [SerializeField] protected float spreadAngle = 15f;   // í¼ì§ ê°ë„
+    [SerializeField] protected float fireForce = 10f;     // ë°œì‚¬ ì†ë„
 
     private Animator _animator;
 
@@ -21,6 +21,7 @@ public class WideSpreadWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
         SetNextFireTime();
+        _currentAmmo--;
 
         if (_animator != null)
         {
@@ -47,7 +48,7 @@ public class WideSpreadWeaponBase : WeaponBase
                     bullet.Fire(fireDirection.normalized * fireForce);
                 }
 
-                Debug.Log($"ÃÑ¾Ë ¹ß»çµÊ ¹æÇâ: {rotation * Vector2.right}");
+                Debug.Log($"ì´ì•Œ ë°œì‚¬ë¨ ë°©í–¥: {rotation * Vector2.right}");
             }
         }
 

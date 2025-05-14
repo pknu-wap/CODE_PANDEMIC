@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         float speed = isRunning ? _runSpeed : _walkSpeed;
         _rigidbody.MovePosition(_rigidbody.position + input * speed * Time.fixedDeltaTime);
 
-        // 방향 전환 (flip)
+        // 방향 전환
         if (input.x != 0)
         {
             float scaleX = transform.localScale.x;

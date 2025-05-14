@@ -21,7 +21,7 @@ public class HybridWeaponBase : WeaponBase
 
             if (shouldRotateWhileFlying)
             {
-                // È¸Àü ¼Óµµ Á¶Á¤ (°¢µµ´Â Á¶Àı ÇÊ¿äÇÔ)
+                // íšŒì „ ì†ë„ ì¡°ì • (ê°ë„ëŠ” ì¡°ì ˆ í•„ìš”í•¨)
                 transform.Rotate(0, 0, 720 * Time.deltaTime);
             }
         }
@@ -31,6 +31,7 @@ public class HybridWeaponBase : WeaponBase
     {
         if (!CanFire() || isThrown) return;
         SetNextFireTime();
+        _currentAmmo--;
 
         Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, meleeRange, enemyLayer);
 
@@ -40,7 +41,7 @@ public class HybridWeaponBase : WeaponBase
             {
                 ApplyDamageWithKnockback(enemyCollider, _weaponData.Damage);
             }
-            Debug.Log("±ÙÁ¢ °ø°İ ½ÇÇàµÊ.");
+            Debug.Log("ê·¼ì ‘ ê³µê²© ì‹¤í–‰ë¨.");
         }
         else
         {
@@ -49,7 +50,7 @@ public class HybridWeaponBase : WeaponBase
             speed = _weaponData.BulletSpeed;
             damage = _weaponData.Damage;
 
-            Debug.Log("ÅõÃ´Ã¼°¡ ´øÁ®Á³½À´Ï´Ù.");
+            Debug.Log("íˆ¬ì²™ì²´ê°€ ë˜ì ¸ì¡ŒìŠµë‹ˆë‹¤.");
             Destroy(gameObject, 3f);
         }
     }
@@ -62,7 +63,7 @@ public class HybridWeaponBase : WeaponBase
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
-            Debug.Log("ÅõÃ´Ã¼°¡ Àû°ú Ãæµ¹Çß½À´Ï´Ù.");
+            Debug.Log("íˆ¬ì²™ì²´ê°€ ì ê³¼ ì¶©ëŒí–ˆìŠµë‹ˆë‹¤.");
             Destroy(gameObject);
         }
     }

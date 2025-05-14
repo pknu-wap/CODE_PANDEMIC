@@ -75,6 +75,11 @@ public abstract class AI_Base : MonoBehaviour
         throw new NotImplementedException();
     }
 
+    internal void TakeDamage(float handAttackDamage)
+    {
+        throw new NotImplementedException();
+    }
+
     public float MoveSpeed { get { return _monsterData.MoveSpeed; } }
     public float DetectionRange { get { return _monsterData.DetectionRange; } }
     public float DetectionAngle { get { return _monsterData.DetectionAngle; } }
