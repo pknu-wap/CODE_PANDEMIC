@@ -1,14 +1,23 @@
 using UnityEngine;
+using System.Collections;
+
 
 public abstract class WeaponBase : MonoBehaviour
 {
     protected WeaponData _weaponData;
     private float _nextFireTime;
     private bool isFacingRight = true;
-    [SerializeField] private SpriteRenderer weaponSpriteRenderer;
+    private Vector3 _originalScale;
     public virtual void StopAttack() { }
 
-    private Vector3 _originalScale;
+    protected bool _isReloading = false;
+    protected int _currentAmmo;
+
+    public bool IsReloading => _isReloading;
+
+    [SerializeField] private SpriteRenderer weaponSpriteRenderer;
+
+
     public int ID
     {
         get { return _weaponData.TemplateID; }
@@ -32,21 +41,45 @@ public abstract class WeaponBase : MonoBehaviour
 
     public void SetInfo(WeaponData data)
     {
-        _nextFireTime = 0f;
         _weaponData = data;
+        _currentAmmo = _weaponData.BulletCount;
+        _isReloading = false;
+        _nextFireTime = 0f;
     }
-
-    public abstract void Attack(PlayerController owner);
 
     public virtual void Reload()
     {
+        if (_isReloading || _currentAmmo == _weaponData.BulletCount) return;
+
+        _isReloading = true;
         Debug.Log("Reloading...");
+        StartCoroutine(ReloadRoutine());
     }
+
+    private IEnumerator ReloadRoutine()
+    {
+        yield return new WaitForSeconds(_weaponData.ReloadTime);
+        _currentAmmo = _weaponData.BulletCount;
+        _isReloading = false;
+        Debug.Log("Reload complete");
+    }
+
+
+    public abstract void Attack(PlayerController owner);
 
     protected bool CanFire()
     {
+        if (_isReloading) return false;
+
+        if (_currentAmmo <= 0)
+        {
+            Reload();
+            return false;
+        }
+
         return Time.time >= _nextFireTime;
     }
+
 
     protected void SetNextFireTime()
     {
