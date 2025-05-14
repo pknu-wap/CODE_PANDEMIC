@@ -16,7 +16,10 @@ public class GameData
     public int HighestStage = 1;
     public int Chapter =1;
     public int Stage = 1;
-   
+
+    public int LatestChapter = 0;
+    public int LatestStage = 0;  
+
     public int MasterVolume;
     public int BgmVolume;
     public int EffectVolume;
@@ -58,8 +61,7 @@ public class GameManagerEx
 
     #endregion
 
-    private int _prevStage;
-    private int _prevChapter;
+    
 
     public HashSet<int> ObtainedItemIDs => _obtainedItemIDs;
     public HashSet<int> ClearPuzzleID => _clearPuzzleID;
@@ -78,13 +80,13 @@ public class GameManagerEx
     #region Chapter&Stage
     public int LatestChapter
     {
-        get => _prevChapter;
-        set => _prevChapter = value;
+        get => _gameData.LatestChapter;
+        set => _gameData.LatestChapter = value;
     }
     public int LatestStage
     {
-        get => _prevStage;
-        set => _prevStage = value;
+        get => _gameData.LatestStage;
+        set => _gameData.LatestStage = value;
     }
     public int HighestChapter
     {
@@ -193,6 +195,17 @@ public class GameManagerEx
             _stageProgressSaver.Save(_stageProgressData);
         }
     }
+    public bool IsNextStage()
+    {
+        if (Chapter > LatestChapter) return true;
+        else if (Chapter < LatestChapter) return false;
+        else
+        {
+            if (Stage > LatestStage) return true;
+            else return false;
+        }
+    }
+
     public void CompleteStage()
     {
         if (Stage == Define.STAGES_PER_CHAPTER)
@@ -224,7 +237,11 @@ public class GameManagerEx
             Stage = Define.STAGES_PER_CHAPTER;
         }
     }
-
+    public void UpdateLatestStage()
+    {
+        LatestChapter = Chapter;
+       LatestStage = Stage;
+    }
     public void SaveGame()
     {
         _gameSaver.SaveGame(_gameData);

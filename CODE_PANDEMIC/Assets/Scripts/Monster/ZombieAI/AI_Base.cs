@@ -12,6 +12,8 @@ public abstract class AI_Base : MonoBehaviour
     int _currentHp = 0;
     protected AI_State _state = AI_State.Idle;
     public event Action OnDie;
+
+    
     public void SetInfo(MonsterData monsterData)
     {
         _monsterData = monsterData;
