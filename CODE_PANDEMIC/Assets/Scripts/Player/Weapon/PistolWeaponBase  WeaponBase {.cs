@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PistolWeaponBase : WeaponBase
 {
@@ -20,6 +20,7 @@ public class PistolWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
         SetNextFireTime();
+        _currentAmmo--;
 
         if (_animator != null)
         {
