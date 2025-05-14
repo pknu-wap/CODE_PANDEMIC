@@ -123,6 +123,73 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &1239103419 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1599453976078614775, guid: 074abb09c3b08d8438bd818e6c654d6f, type: 3}
+  m_PrefabInstance: {fileID: 2035018455}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1313158559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1313158560}
+  - component: {fileID: 1313158562}
+  - component: {fileID: 1313158561}
+  m_Layer: 11
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1313158560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313158559}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -68.91, y: -87.713, z: 15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1239103419}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1313158561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313158559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730641ce183a41141acf62a76b53e49a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1313158562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313158559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 0c9ab6401120fbb4bbb55486dc7f5758, type: 2}
 --- !u!1 &1969719032
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,6 +247,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 2845625967982202381, guid: 074abb09c3b08d8438bd818e6c654d6f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5645802889880250828, guid: 074abb09c3b08d8438bd818e6c654d6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 68.91
@@ -220,9 +291,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8175562169164135553, guid: 074abb09c3b08d8438bd818e6c654d6f, type: 3}
+      propertyPath: m_VolumeTrigger
+      value: 
+      objectReference: {fileID: 1313158560}
+    - target: {fileID: 8175562169164135553, guid: 074abb09c3b08d8438bd818e6c654d6f, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175562169164135553, guid: 074abb09c3b08d8438bd818e6c654d6f, type: 3}
+      propertyPath: m_VolumeLayerMask.m_Bits
+      value: 2049
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1599453976078614775, guid: 074abb09c3b08d8438bd818e6c654d6f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1313158560}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 074abb09c3b08d8438bd818e6c654d6f, type: 3}
 --- !u!1001 &2133915760
@@ -237,6 +323,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Road_1_Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 6857309915304332424, guid: de651e9fe6d7f0e4bb5eec47db18aaf8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3c33db8570410444abb12d776e02f729, type: 2}
     - target: {fileID: 7942556049896048753, guid: de651e9fe6d7f0e4bb5eec47db18aaf8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
