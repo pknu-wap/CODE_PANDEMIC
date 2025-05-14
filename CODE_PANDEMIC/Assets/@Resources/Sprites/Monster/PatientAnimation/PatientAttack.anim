@@ -23,7 +23,7 @@ AnimationClip:
     - time: 0
       value: {fileID: 281168271, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
     - time: 0.16666667
-      value: {fileID: -32906424, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
+      value: {fileID: 281168271, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
     - time: 0.33333334
       value: {fileID: -2095376258, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
     - time: 0.5
@@ -59,7 +59,7 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: 281168271, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
-    - {fileID: -32906424, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
+    - {fileID: 281168271, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
     - {fileID: -2095376258, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
     - {fileID: -283226621, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
     - {fileID: -1021942686, guid: 0670ac7e565ceef4f89973d5638929a6, type: 3}
@@ -91,7 +91,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.5
+  - time: 0.33333334
     functionName: AttackHit
     data: 
     objectReferenceParameter: {fileID: 0}

@@ -13,7 +13,7 @@ public class AI_StateAttack : AI_IState
 
     public virtual void OnEnter()
     {
-        _controller._animator.SetTrigger("Attack");
+        _controller._animator.SetBool("Attack" , true);
         _controller.StopMoving();
         _controller._isUsingSkill = true;
         _controller.StartCoroutine(ChargeAndExecuteSkill());
@@ -52,8 +52,8 @@ public class AI_StateAttack : AI_IState
     private void OnSkillComplete()
     {
         _controller._isUsingSkill = false;
-        _controller.ChangeState(new AI_StateIdle(_controller));
-        _controller._animator.SetTrigger("Idle");
+        _controller.ChangeState(new AI_StateWalk(_controller));
+        _controller._animator.SetBool("Attack" , false);
         _controller.StopAttack();
     }
 }
