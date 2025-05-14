@@ -32,6 +32,7 @@ public class AI_StateAttack : AI_IState
         if (_controller.Skill != null)
             _controller.Skill.StopSkill();
         _controller._isUsingSkill = false;
+        _controller.StopAttack();
     }
 
     private IEnumerator ChargeAndExecuteSkill()

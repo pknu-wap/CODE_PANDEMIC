@@ -45,19 +45,18 @@ public class AI_HospitalBoss : AI_BossController
         _throwSkill.SetController(this);
         _sweepSkill.SetController(this);
         _dashSkill.SetController(this);
-        if (_monsterData == null)
-        {
-       _monsterData = new MonsterData();
-       _monsterData.NameID = "HospitalBoss";
-       _monsterData.Hp = 500;
-       _monsterData.AttackDelay = 5.0f;
-       _monsterData.DetectionRange = 7.5f;
-       _monsterData.DetectionAngle = 360;
-       _monsterData.MoveSpeed = 3.5f;
-       _monsterData.AttackRange = 2f;
-       _monsterData.AttackDamage = 20;
-    }
-    EnterBerserkMode();
+    //     if (_monsterData == null)
+    //     {
+    //    _monsterData = new MonsterData();
+    //    _monsterData.NameID = "HospitalBoss";
+    //    _monsterData.Hp = 1000;
+    //    _monsterData.AttackDelay = 5.0f;
+    //    _monsterData.DetectionRange = 7.5f;
+    //    _monsterData.DetectionAngle = 360;
+    //    _monsterData.MoveSpeed = 3.5f;
+    //    _monsterData.AttackRange = 2f;
+    //    _monsterData.AttackDamage = 20;
+    // }
         base.Start();
         if (!Init())
         {
@@ -84,7 +83,6 @@ public class AI_HospitalBoss : AI_BossController
     private void EnterBerserkMode()
     {
         IsBerserk = true;
-        Debug.Log("Berserk Mode!");
     }
 
    public override void TryUseSkill(System.Action onSkillComplete)
@@ -99,8 +97,6 @@ public class AI_HospitalBoss : AI_BossController
     if (now < _lastSkillTime + _skillDelay)
     {
         onSkillComplete?.Invoke();
-        Debug.Log($"[AI_HospitalBoss] Skill is on cooldown. Time left: {_lastSkillTime + _skillDelay - now}");
-
         return;
     }
 
@@ -109,7 +105,6 @@ public class AI_HospitalBoss : AI_BossController
     if (IsBerserk && now >= _lastDashTime + DashCooldown)
     {
         _lastDashTime = now;
-        Debug.Log("Dash Skill Activated");
         _isUsingSkill = true;
         _dashSkill.StartSkill(this, onSkillComplete);
         _lastSkillTime = now;
@@ -119,7 +114,6 @@ public class AI_HospitalBoss : AI_BossController
     else if (distance >= 4f && now >= _lastThrowTime + ThrowCooldown)
     {
         _lastThrowTime = now;
-        Debug.Log("Throw Skill Activated");
         _isUsingSkill = true;
         _throwSkill.StartSkill(this, onSkillComplete);
         _lastSkillTime = now;
@@ -128,7 +122,6 @@ public class AI_HospitalBoss : AI_BossController
     else if (distance < 4f && now >= _lastSweepTime + SweepCooldown)
     {
         _lastSweepTime = now;
-        Debug.Log("Sweep Skill Activated");
         _isUsingSkill = true;
         _sweepSkill.StartSkill(this, onSkillComplete);
         _lastSkillTime = now;

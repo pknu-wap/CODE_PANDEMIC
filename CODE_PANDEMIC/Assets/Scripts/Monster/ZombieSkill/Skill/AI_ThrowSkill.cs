@@ -62,8 +62,8 @@ public class AI_ThrowSkill : ISkillBehavior
     ThrowSyringe((target - origin).normalized);
 
     _controller._aiPath.canMove = true;
-    _controller._isUsingSkill = false;
     onSkillComplete?.Invoke();
+    _controller._isUsingSkill = false;
 }
 
     protected virtual void ThrowSyringe(Vector2 direction)
@@ -92,7 +92,7 @@ public class AI_ThrowSkill : ISkillBehavior
     protected virtual float Cooldown => _nurseZombie?.SkillCooldown ?? _hospitalBoss?.ThrowCooldown ?? 15f;
     protected virtual float ChargeDelay => _nurseZombie?.SkillChargeDelay ?? _hospitalBoss?.SkillChargeDelay ?? 0.5f;
     protected virtual GameObject GetSyringePrefab() =>
-        _nurseZombie?._syringePrefab;
+        _nurseZombie?._syringePrefab ?? _hospitalBoss?._syringePrefab;
 
     protected virtual float GetSyringeSpeed() =>
         _nurseZombie?.SyringeSpeed ?? _hospitalBoss?.SyringeSpeed ?? 10f;
