@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FlameHitbox : MonoBehaviour
 {
-    [SerializeField] private float damagePerSecond = 10.0f;
+    [SerializeField] private float damagePerSecond = 5.0f;
 
     private void OnTriggerStay2D(Collider2D other)
     {
