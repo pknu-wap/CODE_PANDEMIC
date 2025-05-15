@@ -7,7 +7,7 @@ public class AI_PatientZombie : AI_Controller
 {
     public LayerMask TargetLayer;
     public GameObject patientAttack;
-    public float AiDamage => _monsterData.AttackDamage;
+    public override float AiDamage => _monsterData.AttackDamage;
     public string AIName => _monsterData.NameID;
     public Transform Player => _player.transform;
     [SerializeField] private GameObject attackColliderPrefab;
@@ -37,16 +37,16 @@ public class AI_PatientZombie : AI_Controller
     //     _monsterData.AttackDamage = 10;
     // }        
         base.Start();
-        _skill = new AI_PatientAttack(attackColliderPrefab, hitboxSpawnPoint, _skillCooldown, _duration);
         if (!Init())
         {
             enabled = false;
             return;
         }
+        _skill = new AI_PatientAttack(attackColliderPrefab, hitboxSpawnPoint, _skillCooldown, _duration);
     }
     public void AttackHit()
     {
-        Skill?.StartSkill(this, null);
+        _skill.StartSkill(this, null);
     }
     public override bool IsPlayerInSkillRange()
     {

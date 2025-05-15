@@ -3,12 +3,18 @@ using UnityEngine;
 
 public class AI_PatientAttack : ISkillBehavior
 {
+    protected AI_Controller _controller;
     private GameObject _hitboxPrefab;
     private Transform _spawnPoint;
     private float _cooldown;
     private float _duration;
     private float _lastUsedTime;
-    private Coroutine _currentCoroutine;
+    private Coroutine _skillCoroutine;
+
+    public void SetController(AI_Controller controller)
+    {
+        _controller = controller;
+    }
 
     public AI_PatientAttack(GameObject hitboxPrefab, Transform spawnPoint, float cooldown, float duration)
     {
@@ -18,42 +24,51 @@ public class AI_PatientAttack : ISkillBehavior
         _duration = duration;
     }
 
-    public bool IsReady(AI_Controller ai)
+    public bool IsReady(AI_Controller controller)
     {
         return Time.time >= _lastUsedTime + _cooldown;
     }
 
-    public void StartSkill(AI_Controller ai, System.Action onComplete)
+    public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
+        if (!IsReady(controller))
+        {
+            onSkillComplete?.Invoke();
+            return;
+        }
+        _controller = controller;
         _lastUsedTime = Time.time;
-        ai._isUsingSkill = true;
-        ai._aiPath.canMove = false;
+        _controller._isUsingSkill = true;
+        _controller._aiPath.canMove = false;
 
-        _currentCoroutine = ai.StartCoroutine(SkillRoutine(ai, onComplete));
+        _skillCoroutine = _controller.StartCoroutine(SkillRoutine(onSkillComplete));
     }
 
-    private IEnumerator SkillRoutine(AI_Controller ai, System.Action onComplete)
+    private IEnumerator SkillRoutine(System.Action onSkillComplete)
     {
         Vector3 spawnPos = _spawnPoint.position;
-        if (ai.transform.localScale.x < 0)
+        if (_controller.transform.localScale.x < 0)
         {
             float offset = _spawnPoint.localPosition.x;
-            spawnPos = ai.transform.position + new Vector3(-offset, _spawnPoint.localPosition.y, 0f);
+            spawnPos = _controller.transform.position + new Vector3(-offset, _spawnPoint.localPosition.y, 0f);
         }
 
         GameObject hitbox = GameObject.Instantiate(_hitboxPrefab, spawnPos, Quaternion.identity);
         LayerMask targetLayer = LayerMask.GetMask("Player");
-        hitbox.GetComponent<AttackCollider>().Initialize((int)ai.Damage, _duration, targetLayer);
+        hitbox.GetComponent<AttackCollider>().Initialize((int)_controller.Damage, _duration, targetLayer);
 
         yield return new WaitForSeconds(_duration);
 
-        ai._isUsingSkill = false;
-        ai._aiPath.canMove = true;
-        onComplete?.Invoke();
+        _controller._isUsingSkill = false;
+        _controller._aiPath.canMove = true;
+        onSkillComplete?.Invoke();
     }
 
     public void StopSkill()
     {
-        // Future use: stop coroutine if necessary
+        if (_skillCoroutine != null && _controller != null)
+        {
+            _controller.StopCoroutine(_skillCoroutine);
+        }
     }
 }

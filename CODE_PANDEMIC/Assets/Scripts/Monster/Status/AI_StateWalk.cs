@@ -12,15 +12,15 @@ public class AI_StateWalk : AI_IState
     public void OnEnter()
     {
         _controller.ChasePlayer();
-        _controller._animator.SetTrigger("Walk");
+        _controller._animator.SetBool("Walk", true);
     }
 
     public void OnUpdate()
     {
-        if (!_controller.IsPlayerDetected())
+        if (!_controller.IsPlayerDetected() && !_controller._foundPlayer)
         {
             _controller.ChangeState(new AI_StateIdle(_controller));
-            _controller._animator.SetTrigger("Idle");
+            _controller._animator.SetBool("Walk", false);
         }
     }
 

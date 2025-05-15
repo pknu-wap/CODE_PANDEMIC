@@ -1,91 +1,98 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using Unity.VisualScripting;
 
 public class AI_SweepSkill : ISkillBehavior
 {
+    protected AI_Controller _controller;
     private Coroutine _skillCoroutine;
     private float _lastSkillTime = -Mathf.Infinity;
-    private AI_DoctorZombie _currentDoctor;
-    private AI_SweepVisualizer SweepVisualizer;
 
-    public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
+    public void SetController(AI_Controller controller)
     {
-        controller._isUsingSkill = true;
-        controller._aiPath.canMove = false;
+        _controller = controller;
+    }
+
+    public virtual bool IsReady(AI_Controller controller)
+    {
+        return Time.time >= _lastSkillTime + Cooldown;
+    }
+
+    public virtual void StartSkill(AI_Controller controller, System.Action onSkillComplete)
+    {
         if (!IsReady(controller))
         {
-            var callback = onSkillComplete;
-            if (callback != null)
-                callback();
+            onSkillComplete?.Invoke();
             return;
         }
-        _currentDoctor = controller as AI_DoctorZombie;
-        SweepVisualizer = _currentDoctor._sweepVisualizer;
+
+        _controller = controller;
         _lastSkillTime = Time.time;
-        _skillCoroutine = controller.StartCoroutine(SweepRoutine(_currentDoctor, onSkillComplete));
+        _controller._isUsingSkill = true;
+        _controller._aiPath.canMove = false;
+
+        _skillCoroutine = _controller.StartCoroutine(SweepRoutine(onSkillComplete));
     }
 
-    public void StopSkill(){}
-
-    private IEnumerator SweepRoutine(AI_DoctorZombie doctor, System.Action onSkillComplete)
+    public virtual void StopSkill()
     {
-        var aiPath = doctor._aiPath;
-        aiPath.canMove = false;
-
-        Vector2 attackDirection = (doctor.Player != null)
-            ? ((Vector2)doctor.Player.position - (Vector2)doctor.transform.position).normalized
-            : doctor.transform.up;
-
-        if (SweepVisualizer != null)
+        if (_skillCoroutine != null && _controller != null)
         {
-            SweepVisualizer.transform.position = doctor.transform.position;
-            SweepVisualizer.Show(attackDirection, doctor.SweepAngle, doctor.SweepRange, doctor.SkillChargeDelay);
+            _controller.StopCoroutine(_skillCoroutine);
         }
+    }
+    protected AI_DoctorZombie _doctorZombie => _controller as AI_DoctorZombie;
+    protected AI_HospitalBoss _hospitalBoss => _controller as AI_HospitalBoss;
+    protected virtual float Cooldown => _doctorZombie?.SkillCooldown ?? _hospitalBoss?.SweepCooldown ?? 15f;
+    protected virtual float ChargeDelay => _doctorZombie?.SkillChargeDelay ?? _hospitalBoss?.SkillChargeDelay ?? 0.5f;
+    protected virtual int SweepCount => _doctorZombie?.SweepCount ?? _hospitalBoss?.SweepCount ?? 5;
+    protected virtual float SweepInterval => _doctorZombie?.SweepInterval ?? _hospitalBoss?.SweepInterval ?? 0.5f;
+    protected virtual float SweepRange => _doctorZombie?.SweepRange ?? _hospitalBoss?.SweepRange ?? 4f;
+    protected virtual float SweepAngle => _doctorZombie?.SweepAngle ?? _hospitalBoss?.SweepAngle ?? 90f;
+    protected virtual LayerMask TargetLayer => LayerMask.GetMask("Player");
 
-        yield return new WaitForSeconds(doctor.SkillChargeDelay);
+    protected virtual IEnumerator SweepRoutine(System.Action onSkillComplete)
+    {
+        AI_SweepVisualizer visualizer = (_controller as AI_DoctorZombie)?._sweepVisualizer;
+        Vector2 attackDirection = (_controller._player != null)
+            ? ((Vector2)_controller._player.position - (Vector2)_controller.transform.position).normalized
+            : _controller.transform.up;
 
-        for (int i = 0; i < doctor.SweepCount; i++)
+        if (visualizer != null)
         {
-            DoSweepAttack(doctor, attackDirection);
-            yield return new WaitForSeconds(doctor.SweepInterval);
+            visualizer.transform.position = _controller.transform.position;
+            visualizer.Show(attackDirection, SweepAngle, SweepRange, ChargeDelay);
         }
+        yield return new WaitForSeconds(ChargeDelay);
+        
 
-        SweepVisualizer?.Hide();
-        aiPath.canMove = true;
-
-        var callback = onSkillComplete;
-        if (callback != null)
-            callback();
+        for (int i = 0; i < SweepCount; i++)
+        {
+            DoSweepAttack(attackDirection);
+            yield return new WaitForSeconds(SweepInterval);
+        }
+        visualizer?.Hide();
+        _controller._aiPath.canMove = true;
+        _controller._isUsingSkill = false;
+        onSkillComplete?.Invoke();
     }
 
-    private void DoSweepAttack(AI_DoctorZombie doctor, Vector2 forward)
+    protected virtual void DoSweepAttack(Vector2 forward)
     {
-        Vector2 origin = doctor.transform.position;
-        Collider2D[] hits = Physics2D.OverlapCircleAll(origin, doctor.SweepRange, doctor.TargetLayer);
-
+        Vector2 origin = _controller.transform.position;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(origin, SweepRange, TargetLayer);
         foreach (var hit in hits)
         {
             Vector2 toTarget = ((Vector2)hit.transform.position - origin).normalized;
-            if (Vector2.Angle(forward, toTarget) <= doctor.SweepAngle * 0.5f)
+            if (Vector2.Angle(forward, toTarget) <= SweepAngle * 0.5f)
             {
-                float damage = doctor.AiDamage * 0.5f;
+                float damage = _controller.AiDamage * 0.5f;
+
                 if (hit.TryGetComponent<PlayerStatus>(out var player))
                 {
-                    player.OnDamaged(doctor.gameObject, damage);
-                    Debug.Log($"[AI_SweepSkill] {doctor.AIName} hit {player.gameObject.name} for {damage} damage.");
+                    player.OnDamaged(_controller.gameObject, damage);
                 }
             }
         }
-    }
-
-    public bool IsReady(AI_Controller controller)
-    {
-        if (_currentDoctor == null)
-            _currentDoctor = controller as AI_DoctorZombie;
-        if (_currentDoctor != null)
-            return Time.time >= _lastSkillTime + _currentDoctor.SkillCooldown;
-
-        return false;
     }
 }

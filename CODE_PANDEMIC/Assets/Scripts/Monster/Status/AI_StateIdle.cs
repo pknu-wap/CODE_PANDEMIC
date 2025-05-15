@@ -10,7 +10,7 @@ public class AI_StateIdle : AI_IState
 
     public void OnEnter()
     {
-        _controller._animator.SetTrigger("Idle");
+        _controller._animator.SetBool("Walk", false);
         _controller.StopMoving();
     }
 
@@ -19,7 +19,7 @@ public class AI_StateIdle : AI_IState
         if (_controller.IsPlayerDetected())
         {
             _controller.ChangeState(new AI_StateWalk(_controller));
-            _controller._animator.SetTrigger("Walk");
+            _controller._animator.SetBool("Walk", true);
         }
     }
 
