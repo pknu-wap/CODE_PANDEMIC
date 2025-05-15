@@ -74,6 +74,14 @@ public class EquipWeapon : MonoBehaviour
                 });
                 break;
             case Define.WeaponType.RangeWeapon:
+                if (!CheckSameWeapon(data, _weapon)) return;
+                DestroyPrevWeapon();
+                Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
+                {
+                    _weapon = obj.GetComponent<WeaponBase>();
+                    _weapon.SetInfo(data);
+
+                });
                 break;
             default:
                 break;
@@ -82,9 +90,9 @@ public class EquipWeapon : MonoBehaviour
     }
     bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
     {
-        if (currentWeapon == null) return true; //ÀåÂøÀÌ ¾Æ¹«°Íµµ ¾ÈµÇ¾îÀÖÀ½ 
+        if (currentWeapon == null) return true; //ì¥ì°©ì´ ì•„ë¬´ê²ƒë„ ì•ˆë˜ì–´ìˆìŒ 
 
-        if (item.TemplateID == currentWeapon.ID) return false; //ÇöÀç ÀåÂøµÇ
+        if (item.TemplateID == currentWeapon.ID) return false; //í˜„ì¬ ì¥ì°©ë˜
         else return true;
     }
 
