@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: 24.760345, y: -0.6614685, z: 0}
   m_ShapePathHash: -1906007371
   m_Mesh: {fileID: 0}
-  m_InstanceId: 126706
+  m_InstanceId: 100546
   m_LocalBounds:
     m_Center: {x: 11.417221, y: 0.12110138, z: 0}
     m_Extent: {x: 13.343124, y: 0.90366364, z: 0}
@@ -333,7 +333,7 @@ MonoBehaviour:
   - {x: -32.771484, y: -16.532295, z: 0}
   m_ShapePathHash: -1831850987
   m_Mesh: {fileID: 0}
-  m_InstanceId: 126788
+  m_InstanceId: 100628
   m_LocalBounds:
     m_Center: {x: 8.992264, y: 8.162888, z: 0}
     m_Extent: {x: 45.805008, y: 29.048347, z: 0}
@@ -530,6 +530,7 @@ GameObject:
   - component: {fileID: 4691941943280161308}
   - component: {fileID: 2451659089529389754}
   - component: {fileID: -8346558105324527182}
+  - component: {fileID: 5740173566420740193}
   m_Layer: 0
   m_Name: Hospital_Floor1_Prefab
   m_TagString: Untagged
@@ -602,6 +603,19 @@ MonoBehaviour:
   _puzzlesParent: {fileID: 0}
   _ItemsParent: {fileID: 3920750223273171540}
   _blockParent: {fileID: 5774452182500017811}
+--- !u!114 &5740173566420740193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793907906904278117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08fc240c615a093479a34c2ef88f0e3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _environmentData: {fileID: 11400000, guid: ba10f60ff3fe77c4782a74c434baf275, type: 2}
 --- !u!1 &3946614114466458782
 GameObject:
   m_ObjectHideFlags: 0

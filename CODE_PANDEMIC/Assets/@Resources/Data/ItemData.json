@@ -101,11 +101,31 @@
     },
     {
       "TemplateID": 301,
-      "Name": "쇠파이프",
-      "Description": "이거에 맞으면 아프다",
+      "Name": "Mes",
+      "Description": "수술용 도구인것으로 보인다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다.",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Short_1",
+      "Type": 1,
+      "Weapon": 1
+    },
+    {
+      "TemplateID": 302,
+      "Name": "소방도끼",
+      "Description": "소방용 도끼이다.\n적에게 <color=#fc2f2f>22</color>의 공격을 가한다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Short_2",
+      "Type": 1,
+      "Weapon": 1
+    },
+    {
+      "TemplateID": 303,
+      "Name": "후라이팬",
+      "Description": "이거에 맞으면 아프다.\n적에게 <color=#fc2f2f>20</color>의 공격을 가한다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Short_3",
       "Type": 1,
       "Weapon": 1
     },

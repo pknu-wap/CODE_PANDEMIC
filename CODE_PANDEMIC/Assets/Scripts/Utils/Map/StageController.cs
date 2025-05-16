@@ -36,7 +36,8 @@ public class StageController : MonoBehaviour
     }
     private void Start()
     {   
-        _mapCamera?.gameObject.SetActive(false);
+        if(_mapCamera!=null)
+        _mapCamera.gameObject.SetActive(false);
         
     }
     public void OnEnable()

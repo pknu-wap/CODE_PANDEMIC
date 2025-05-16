@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using System;
+[Serializable]
 public struct ToneData
 {
     public Vector4 shadow;
@@ -22,6 +23,7 @@ public class SDHController : MonoBehaviour
         _volume = GetComponent<Volume>();
         if (_volume.profile.TryGet(out _smh))
         {
+            Debug.Log(_smh.shadows.value);
             _smh.active = false;
         }
         else
@@ -31,40 +33,14 @@ public class SDHController : MonoBehaviour
     }
     private void OnEnable()
     {
-        Managers.Event.Subscribe("ShadowToneUpGraded", ShadowToneUpdated);
-        Managers.Event.Subscribe("MidToneUpGraded", MidToneUpdated);
-        Managers.Event.Subscribe("StageHighlightUpGraded", StageHightlightUpdated);
-        Managers.Event.Subscribe("TotalUpgraded",TotalUpdated );
+        Managers.Event.Subscribe("ToneUpdated",TotalUpdated );
 
     }
     private void OnDisable()
     {
-        Managers.Event.Unsubscribe("ShadowToneUpGraded", ShadowToneUpdated);
-        Managers.Event.Unsubscribe("MidToneUpGraded", MidToneUpdated);
-        Managers.Event.Unsubscribe("StageHighlightUpGraded", StageHightlightUpdated);
-        Managers.Event.Unsubscribe("TotalUpgraded", TotalUpdated);
+        Managers.Event.Unsubscribe("ToneUpdated", TotalUpdated);
     }
-    private void ShadowToneUpdated(object obj)
-    {
-        if (obj is Vector4 tone)
-        {
-            SettingStageShadowTone(tone);
-        }
-    }
-    private void MidToneUpdated(object obj)
-    {
-        if (obj is Vector4 tone)
-        {
-            SettingStageMidTone(tone);
-        }
-    }
-    private void StageHightlightUpdated(object obj)
-    {
-        if (obj is Vector4 tone)
-        {
-            SettingStageHighlightTone(tone);
-        }
-    }
+   
     private void TotalUpdated(object obj)
     {
         if (obj is ToneData tone)
@@ -76,20 +52,24 @@ public class SDHController : MonoBehaviour
     
     public void SettingStageShadowTone(Vector4 tone)
     {
-        if(_smh.active==false)_smh.active=true;
+        if (tone.x < 0) return;
+
+       
         _smh.shadows.overrideState = true;
         _smh.shadows.value= tone;
        
     }
     public void SettingStageMidTone(Vector4 tone)
     {
-        if (_smh.active == false) _smh.active = true;
+        if (tone.x < 0) return;
+      
         _smh.midtones.overrideState = true;
         _smh.midtones.value = tone;
     }
     public void SettingStageHighlightTone(Vector4 tone)
     {
-        if (_smh.active == false) _smh.active = true;
+        if (tone.x < 0) return;
+       
         _smh.highlights.overrideState = true;
         _smh.highlights.value = tone;   
     }
@@ -99,5 +79,6 @@ public class SDHController : MonoBehaviour
         SettingStageShadowTone(tone.shadow);
         SettingStageMidTone(tone.mid);
         SettingStageHighlightTone(tone.highlight);
+        if(tone.shadow.x<0&&tone.mid.x<0&&tone.highlight.x<0)_smh.active = false;
     }
 }
