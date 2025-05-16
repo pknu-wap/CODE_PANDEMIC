@@ -8,11 +8,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private EquipWeapon _equipWeapon;
     [SerializeField] private Transform _weaponHolder;
 
-    [Header("Hand Attack")]
-    [SerializeField] private float handAttackRange = 10.0f;
-    [SerializeField] private float handAttackDamage = 5f;
-    [SerializeField] private LayerMask EnemyLayer;
-
     private PlayerStatus _playerStatus;
     private PlayerInteraction _playerInteraction;
     private PlayerMovement _playerMovement;
@@ -26,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public PlayerState _currentState = PlayerState.Idle;
     public Vector2 _forwardVector;
     public bool IsFacingRight => transform.localScale.x < 0f;
+
 
     private void Awake()
     {
@@ -71,6 +67,7 @@ public class PlayerController : MonoBehaviour
         bool hasWeapon = socket.childCount > 0;
         _animator.SetBool("isHasArm", !hasWeapon);
 
+        // 이동 입력
         Vector2 moveInput = _moveAction.ReadValue<Vector2>();
         bool isMoving = moveInput != Vector2.zero;
         bool isRunning = _runAction.IsPressed();
@@ -82,6 +79,7 @@ public class PlayerController : MonoBehaviour
 
         bool isDashing = _playerMovement.IsDashing;
 
+        // 애니메이션 처리
         _animator.SetBool("isWalking", isMoving && !isRunning);
         _animator.SetBool("isRunning", isMoving && isRunning);
         _animator.SetBool("isDashing", isDashing);
@@ -93,48 +91,15 @@ public class PlayerController : MonoBehaviour
             _playerMovement.TryDash(_forwardVector);
         }
 
-        // 공격 처리
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.isPressed)
         {
-            if (hasWeapon)
-            {
-                _equipWeapon?.Attack(this);
-            }
-            else
-            {
-                StartCoroutine(HandAttack());
-            }
+            _equipWeapon?.StartAttack(this);
         }
-    }
-
-    private IEnumerator HandAttack()
-    {
-
-        yield return new WaitForSeconds(0.1f); // 공격 판정 타이밍
-
-        Vector2 attackDirection = _forwardVector != Vector2.zero ? _forwardVector : Vector2.right;
-        Vector2 attackCenter = (Vector2)transform.position + attackDirection.normalized * 0.5f;
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackCenter, handAttackRange, EnemyLayer);
-
-        foreach (var hit in hits)
+        else
         {
-            if (hit.CompareTag("Enemy"))
-            {
-                hit.GetComponent<AI_Base>()?.TakeDamage(handAttackRange);
-            }
+            _equipWeapon?.StopAttack();
         }
-    }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (!Application.isPlaying) return;
-
-        Vector2 attackDirection = _forwardVector != Vector2.zero ? _forwardVector : Vector2.right;
-        Vector2 attackCenter = (Vector2)transform.position + attackDirection.normalized * 0.5f;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackCenter, handAttackRange);
     }
 
     private void OnPlayerDead(object obj)
@@ -156,6 +121,6 @@ public class PlayerController : MonoBehaviour
     {
         _playerStatus.OnHealed(healValue);
     }
-
     public bool IsDead() => _currentState == PlayerState.Dead;
+
 }

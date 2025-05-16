@@ -8,15 +8,41 @@ public abstract class WeaponBase : MonoBehaviour
     private float _nextFireTime;
     private bool isFacingRight = true;
     private Vector3 _originalScale;
-    public virtual void StopAttack() { }
-
     protected bool _isReloading = false;
     protected int _currentAmmo;
-
+    protected bool _isAttacking = false;
     public bool IsReloading => _isReloading;
 
     [SerializeField] private SpriteRenderer weaponSpriteRenderer;
 
+    public virtual void StopAttack()
+    {
+        _isAttacking = false;
+    }
+
+    public virtual void StartAttack(PlayerController owner)
+    {
+        if (!_isAttacking)
+        {
+            _isAttacking = true;
+            StartCoroutine(ContinuousFire(owner));
+        }
+    }
+
+    private IEnumerator ContinuousFire(PlayerController owner)
+    {
+        while (_isAttacking)
+        {
+            if (CanFire())
+            {
+                Attack(owner);
+            }
+
+            yield return null;
+        }
+    }
+
+    public abstract void Attack(PlayerController owner);
 
     public int ID
     {
@@ -64,9 +90,6 @@ public abstract class WeaponBase : MonoBehaviour
         Debug.Log("Reload complete");
     }
 
-
-    public abstract void Attack(PlayerController owner);
-
     protected bool CanFire()
     {
         if (_isReloading) return false;
@@ -79,7 +102,6 @@ public abstract class WeaponBase : MonoBehaviour
 
         return Time.time >= _nextFireTime;
     }
-
 
     protected void SetNextFireTime()
     {

@@ -20,6 +20,25 @@ public class EquipWeapon : MonoBehaviour
     }
 
     public Transform WeaponSocket => _socket;
+    public void Attack(PlayerController owner)
+    {
+        _weapon?.Attack(owner);
+    }
+
+    public void StartAttack(PlayerController owner)
+    {
+        _weapon?.StartAttack(owner);
+    }
+
+    public void StopAttack()
+    {
+        _weapon?.StopAttack();
+    }
+
+    public void Equip(WeaponBase weapon)
+    {
+        _weapon = weapon;
+    }
 
     private void Awake()
     {
@@ -82,9 +101,9 @@ public class EquipWeapon : MonoBehaviour
     }
     bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
     {
-        if (currentWeapon == null) return true; //ÀåÂøÀÌ ¾Æ¹«°Íµµ ¾ÈµÇ¾îÀÖÀ½ 
+        if (currentWeapon == null) return true; //ì¥ì°©ì´ ì•„ë¬´ê²ƒë„ ì•ˆë˜ì–´ìˆìŒ 
 
-        if (item.TemplateID == currentWeapon.ID) return false; //ÇöÀç ÀåÂøµÇ
+        if (item.TemplateID == currentWeapon.ID) return false; //í˜„ì¬ ì¥ì°©ë˜
         else return true;
     }
 
@@ -98,10 +117,6 @@ public class EquipWeapon : MonoBehaviour
     {
 
 
-    }
-    public void Attack(PlayerController owner)
-    {
-        _weapon?.Attack(owner);
     }
 
     private bool EquipQuickSlot(int v)

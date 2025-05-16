@@ -22,6 +22,12 @@ public class PistolWeaponBase : WeaponBase
         SetNextFireTime();
         _currentAmmo--;
 
+        if (_currentAmmo <= 0)
+        {
+            Reload();
+        }
+
+
         if (_animator != null)
         {
             _animator.SetBool("Fire", true);
