@@ -29,6 +29,7 @@ public class HybridWeaponBase : WeaponBase
 
     public override void Attack(PlayerController owner)
     {
+        
         if (!CanFire() || isThrown) return;
         SetNextFireTime();
         _currentAmmo--;

@@ -24674,7 +24674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a2ff5e2bc8a324785e5e566a67c43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _light: {fileID: 0}
+  _light: {fileID: 1593091675569037300}
   _cameraLimit: {fileID: 6733658490743485546}
   _mapCamera: {fileID: 9143067254598586357}
   _spawnerParent: {fileID: 8604999299785185642}
@@ -24693,6 +24693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08fc240c615a093479a34c2ef88f0e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _environmentData: {fileID: 11400000, guid: 46dce02ce48ae9c48a7ca1803e972b06, type: 2}
 --- !u!1 &1993983356444109836
 GameObject:
   m_ObjectHideFlags: 0
@@ -138630,7 +138631,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -144587,6 +144588,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75f1a7a8fb7609a479db6b02e14c645a, type: 3}
+--- !u!114 &1593091675569037300 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 998199323304225433, guid: 75f1a7a8fb7609a479db6b02e14c645a, type: 3}
+  m_PrefabInstance: {fileID: 2000051846591935853}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5636f51e864f584cbb1648269cd1c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6908961927076670996 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4908937658750966649, guid: 75f1a7a8fb7609a479db6b02e14c645a, type: 3}

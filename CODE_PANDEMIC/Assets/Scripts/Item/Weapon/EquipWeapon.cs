@@ -52,42 +52,43 @@ public class EquipWeapon : MonoBehaviour
     public void SetWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
     {
 
-        Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
+       Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
         if (data == null)
         {
             Debug.Log("None Data");
             return;
         }
+        if (!CheckSameWeapon(data, _weapon)) return;
         switch (data.Type)
         {
             case Define.WeaponType.ShortWeapon:
+                Equip(data, _socket); //TODO : SOCKET POS 
                 break;
             case Define.WeaponType.PistolWeapon:
-                if (!CheckSameWeapon(data,_weapon)) return;
 
-                DestroyPrevWeapon();
-                Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
-                {
-                    _weapon = obj.GetComponent<WeaponBase>();
-                    _weapon.SetInfo(data);
-                   
-                });
+                Equip(data, _socket);
                 break;
             case Define.WeaponType.RangeWeapon:
-                if (!CheckSameWeapon(data, _weapon)) return;
-                DestroyPrevWeapon();
-                Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
-                {
-                    _weapon = obj.GetComponent<WeaponBase>();
-                    _weapon.SetInfo(data);
-
-                });
+                Equip(data, _socket);
+               
                 break;
             default:
                 break;
         }
 
     }
+    public void Equip(WeaponData data ,Transform socket)
+    {
+        if (_weapon != null) DestroyPrevWeapon();
+
+        Managers.Resource.Instantiate(data.WeaponPrefab, socket.transform, (obj) =>
+        {
+            _weapon = obj.GetComponent<WeaponBase>();
+            _weapon.SetInfo(data);
+
+        });
+    }
+
     bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
     {
         if (currentWeapon == null) return true; //장착이 아무것도 안되어있음 
@@ -98,15 +99,10 @@ public class EquipWeapon : MonoBehaviour
 
     private void DestroyPrevWeapon()
     {
-        if (_weapon == null) return;
         Destroy(_weapon.gameObject);
         _weapon = null;
     }
-    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState=null)
-    {
-
-
-    }
+  
     public void Attack(PlayerController owner)
     {
         _weapon?.Attack(owner);
