@@ -85,6 +85,7 @@ public class AI_Controller : AI_Base
         UpdateDirection();
         UpdateFovDirection();
         _currentState?.OnFixedUpdate();
+        // Debug.Log($"Current State: {_currentState?.GetType().Name}");
     }
 
     private void DetectPlayer()
@@ -200,6 +201,10 @@ public class AI_Controller : AI_Base
             _isUsingSkill = false;
             ChasePlayer();
         });
+    }
+    public virtual void TryUseSkill(System.Action onSkillComplete)
+    {
+        onSkillComplete?.Invoke();
     }
 
     private void ConfigurePathfinding()

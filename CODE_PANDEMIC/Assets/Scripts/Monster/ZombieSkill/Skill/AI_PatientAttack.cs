@@ -22,6 +22,8 @@ public class AI_PatientAttack : ISkillBehavior
         _spawnPoint = spawnPoint;
         _cooldown = cooldown;
         _duration = duration;
+        if (_hitboxPrefab != null)
+            _hitboxPrefab.SetActive(false); 
     }
 
     public bool IsReady(AI_Controller controller)
@@ -52,13 +54,12 @@ public class AI_PatientAttack : ISkillBehavior
             float offset = _spawnPoint.localPosition.x;
             spawnPos = _controller.transform.position + new Vector3(-offset, _spawnPoint.localPosition.y, 0f);
         }
-
-        GameObject hitbox = GameObject.Instantiate(_hitboxPrefab, spawnPos, Quaternion.identity);
-        LayerMask targetLayer = LayerMask.GetMask("Player");
-        hitbox.GetComponent<AttackCollider>().Initialize((int)_controller.Damage, _duration, targetLayer);
+        _hitboxPrefab.transform.position = spawnPos;
+        _hitboxPrefab.SetActive(true);
+        _hitboxPrefab.GetComponent<AttackCollider>().Initialize((int)_controller.Damage, _duration, LayerMask.GetMask("Player"));
 
         yield return new WaitForSeconds(_duration);
-
+        _hitboxPrefab.SetActive(false);
         _controller._isUsingSkill = false;
         _controller._aiPath.canMove = true;
         onSkillComplete?.Invoke();

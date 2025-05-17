@@ -9,10 +9,10 @@ public class AI_BossController : AI_Controller
     protected float _lostTimer = 0f;
     protected float _playerLostDelay = 1f;
 
-    public virtual void TryUseSkill(System.Action onSkillComplete)
-    {
-        onSkillComplete?.Invoke();
-    }
+    // public virtual void TryUseSkill(System.Action onSkillComplete)
+    // {
+    //     onSkillComplete?.Invoke();
+    // }
 
     protected override void Start()
     {

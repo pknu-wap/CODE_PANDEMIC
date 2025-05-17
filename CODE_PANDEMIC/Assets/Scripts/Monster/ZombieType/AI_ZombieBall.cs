@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class AI_ZombieBall : AI_Controller
 {
-    public GameObject zombiePrefab;
-    public GameObject explosionEffectPrefab;
+    [SerializeField] private GameObject zombiePrefab;
+    [SerializeField] private GameObject explosionEffectPrefab;
     public float summonRadius = 1.5f;
     public float rushDuration = 5f;
     public float explosionRadius = 2.5f;
@@ -17,18 +17,18 @@ public class AI_ZombieBall : AI_Controller
     protected override void Start()
     {
     
-    if (_monsterData == null)
-    {
-        _monsterData = new MonsterData();
-        _monsterData.NameID = "ZombieBall";
-        _monsterData.Hp = 300;
-        _monsterData.AttackDelay = 0;
-        _monsterData.DetectionRange = 0;
-        _monsterData.DetectionAngle = 0;
-        _monsterData.MoveSpeed = 7f;
-        _monsterData.AttackRange = 0;
-        _monsterData.AttackDamage = 50;
-    }      
+    // if (_monsterData == null)
+    // {
+    //     _monsterData = new MonsterData();
+    //     _monsterData.NameID = "ZombieBall";
+    //     _monsterData.Hp = 300;
+    //     _monsterData.AttackDelay = 0;
+    //     _monsterData.DetectionRange = 0;
+    //     _monsterData.DetectionAngle = 0;
+    //     _monsterData.MoveSpeed = 7f;
+    //     _monsterData.AttackRange = 0;
+    //     _monsterData.AttackDamage = 50;
+    // }      
         base.Start();   
         ChangeState(new AI_StateIdle(this));
     }
@@ -116,18 +116,6 @@ public class AI_ZombieBall : AI_Controller
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Bullet bullet = other.GetComponent<Bullet>();
-        if (bullet != null)
-        {
-            PlayerController shooter = bullet.GetOwner();
-            if (shooter != null)
-            {
-                Vector2 dir = (shooter.transform.position - transform.position).normalized;
-                TriggerRush(dir);
-            }
-            return;
-        }
-
         int otherLayer = other.gameObject.layer;
         LayerMask playerMask = LayerMask.GetMask("Player");
         LayerMask wallMask = LayerMask.GetMask("Wall");
