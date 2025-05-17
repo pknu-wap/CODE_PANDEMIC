@@ -15,6 +15,8 @@ public class LightController : MonoBehaviour
   
     public void SettingLight(Color color)
     {
-        _light.color = color;
+        Color lightColor = color;
+
+        _light.color = lightColor;
     }
 }

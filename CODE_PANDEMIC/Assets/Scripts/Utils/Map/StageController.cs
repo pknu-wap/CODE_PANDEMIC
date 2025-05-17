@@ -105,7 +105,8 @@ public class StageController : MonoBehaviour
                 }
                 else if (generatorItem != null)
                 {
-                    Color color = Color.black;
+                    Color color = new Color(0.00784f, 0.00784f, 0.00784f, 0);
+                    
                     _light?.SettingLight(color);
                     generatorItem.SetInfo(data);
                 }

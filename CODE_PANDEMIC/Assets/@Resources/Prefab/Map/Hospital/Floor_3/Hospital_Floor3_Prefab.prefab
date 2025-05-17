@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: 5.482971, y: -1.3580933, z: 0}
   m_ShapePathHash: -1582462315
   m_Mesh: {fileID: 0}
-  m_InstanceId: 141072
+  m_InstanceId: 87450
   m_LocalBounds:
     m_Center: {x: 2.4951172, y: -0.42152023, z: 0}
     m_Extent: {x: 2.987854, y: 0.936573, z: 0}
@@ -400,7 +400,7 @@ MonoBehaviour:
   - {x: -4.878174, y: -3.4979553, z: 0}
   m_ShapePathHash: -111521873
   m_Mesh: {fileID: 0}
-  m_InstanceId: 141082
+  m_InstanceId: 87460
   m_LocalBounds:
     m_Center: {x: 22.419434, y: 6.6103706, z: 0}
     m_Extent: {x: 32.947327, y: 19.848103, z: 0}
@@ -2518,6 +2518,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9198502002361008264}
     m_Modifications:
+    - target: {fileID: 998199323304225433, guid: 75f1a7a8fb7609a479db6b02e14c645a, type: 3}
+      propertyPath: _originColor.b
+      value: 0.29411766
+      objectReference: {fileID: 0}
+    - target: {fileID: 998199323304225433, guid: 75f1a7a8fb7609a479db6b02e14c645a, type: 3}
+      propertyPath: _originColor.g
+      value: 0.29411766
+      objectReference: {fileID: 0}
+    - target: {fileID: 998199323304225433, guid: 75f1a7a8fb7609a479db6b02e14c645a, type: 3}
+      propertyPath: _originColor.r
+      value: 0.29411766
+      objectReference: {fileID: 0}
     - target: {fileID: 4108988873737907694, guid: 75f1a7a8fb7609a479db6b02e14c645a, type: 3}
       propertyPath: m_Name
       value: GlobalLight2D

@@ -46,6 +46,7 @@ public class EquipWeapon : MonoBehaviour
         _weaponInput.QuickSlot.Equip2.performed -= Equip2;
         _weaponInput.QuickSlot.Equip3.performed -= Equip3;
         _weaponInput.QuickSlot.Equip4.performed -= Equip4;
+        Managers.Event.InvokeEvent("EquipDisable");
         _weaponInput.Disable();
     }
 
@@ -58,26 +59,33 @@ public class EquipWeapon : MonoBehaviour
             Debug.Log("None Data");
             return;
         }
+
         if (!CheckSameWeapon(data, _weapon)) return;
+
         switch (data.Type)
         {
             case Define.WeaponType.ShortWeapon:
+                CallNotUsingBullet();
                 Equip(data, _socket); //TODO : SOCKET POS 
                 break;
             case Define.WeaponType.PistolWeapon:
-
+                CallUsingBullet(data.BulletCount);
                 Equip(data, _socket);
                 break;
             case Define.WeaponType.RangeWeapon:
+                CallUsingBullet(data.BulletCount);
+
                 Equip(data, _socket);
-               
+
                 break;
             default:
                 break;
+               
         }
 
     }
-    public void Equip(WeaponData data ,Transform socket)
+    
+    private void Equip(WeaponData data ,Transform socket)
     {
         if (_weapon != null) DestroyPrevWeapon();
 
@@ -89,7 +97,7 @@ public class EquipWeapon : MonoBehaviour
         });
     }
 
-    bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
+    private  bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
     {
         if (currentWeapon == null) return true; //장착이 아무것도 안되어있음 
 
@@ -103,11 +111,16 @@ public class EquipWeapon : MonoBehaviour
         _weapon = null;
     }
   
-    public void Attack(PlayerController owner)
+    private void CallNotUsingBullet()
     {
-        _weapon?.Attack(owner);
+        Managers.Event.InvokeEvent("ShortWeaponEquipped");
     }
-
+    private void CallUsingBullet(int  bullet)
+    {
+          Managers.Event.InvokeEvent("GunWeaponEquipped",bullet);
+    }
+      
+    
     private bool EquipQuickSlot(int v)
     {
         Debug.Log(v);
@@ -116,6 +129,10 @@ public class EquipWeapon : MonoBehaviour
 
         _quickSlot.UseQuickSlot(v, gameObject);
         return true;
+    }
+    public void Attack(PlayerController owner)
+    {
+        _weapon?.Attack(owner);
     }
 
     private void Equip1(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(1);

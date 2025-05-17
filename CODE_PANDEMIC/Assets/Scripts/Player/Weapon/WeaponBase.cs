@@ -62,6 +62,7 @@ public abstract class WeaponBase : MonoBehaviour
         Managers.Event.InvokeEvent("Reload",_weaponData);
         yield return CoroutineHelper.WaitForSeconds(_weaponData.ReloadTime);
         _currentAmmo = _weaponData.BulletCount;
+        Managers.Event.InvokeEvent("BulletUpdated", _currentAmmo);
         _isReloading = false;
         Debug.Log("Reload complete");
     }

@@ -33,7 +33,7 @@ public class HybridWeaponBase : WeaponBase
         if (!CanFire() || isThrown) return;
         SetNextFireTime();
         _currentAmmo--;
-
+    
         Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, meleeRange, enemyLayer);
 
         if (nearbyEnemies.Length > 0)
