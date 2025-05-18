@@ -45,24 +45,24 @@
         },
         "Prefab": "PZ_Main_Block_3_Prefab"
       }
+    },
+    {
+      "ID": 3,
+      "Prefab": "PZ_Generator_Prefab",
+      "UIPath": "PZ_Piano_Base_Prefab",
+      "RewardItem": {
+        "ID": -1,
+        "Quantity": 0
       },
-      {
-        "ID": 3,
-        "Prefab": "PZ_Generator_Prefab",
-        "UIPath": "PZ_Piano_Base_Prefab",
-        "RewardItem": {
-          "ID": -1,
-          "Quantity": 0
-        },
-        "Pos": {
-          "x": 363.71,
-          "y": 87.18,
-          "z": 0
-        },
-        "IsMain": false,
-        "IsClear": false,
-        "RememberCount": 6
+      "Pos": {
+        "x": 363.71,
+        "y": 87.18,
+        "z": 0
       },
+      "IsMain": false,
+      "IsClear": false,
+      "RememberCount": 6
+    },
     {
       "ID": 4,
       "Prefab": "PZ_Puzzle_Item_Prefab",
@@ -125,22 +125,22 @@
       }
 
     },
-      {
-        "ID": 6,
-        "Prefab": "PZ_Generator_Prefab",
-        "RewardItem": {
-          "ID": -1,
-          "Quantity": 0
-        },
-        "Pos": {
-          "x": 428.1,
-          "y": 119.95,
-          "z": 0
-        },
-        "IsMain": false,
-        "IsClear": false,
-        "RememberCount": 7
+    {
+      "ID": 6,
+      "Prefab": "PZ_Generator_Prefab",
+      "RewardItem": {
+        "ID": -1,
+        "Quantity": 0
       },
+      "Pos": {
+        "x": 428.1,
+        "y": 119.95,
+        "z": 0
+      },
+      "IsMain": false,
+      "IsClear": false,
+      "RememberCount": 7
+    },
     {
       "ID": 7,
       "Prefab": "PZ_Puzzle_Item_Prefab",
@@ -170,6 +170,49 @@
         },
         "Prefab": "PZ_Main_Block_1_Prefab"
       }
+    },
+    {
+      "ID": 8,
+      "Prefab": "PZ_Parking_Prefab",
+      "RewardItem": {
+        "ID": 401,
+        "Quantity": 0
+      },
+      "Pos": {
+        "x": 41.89,
+        "y": 46.88,
+        "z": 0
+      },
+      "IsMain": true
+
+    },
+    {
+      "ID": 9,
+      "Prefab": "PZ_Fish_Puzzle_Prefab",
+      "RewardItem": {
+        "ID": 501,
+        "Quantity": 1
+      },
+      "Pos": {
+        "x": 92.39,
+        "y": 57.5,
+        "z": 0
+      },
+      "IsMain": false
+    },
+    {
+      "ID": 10,
+      "Prefab": "PZ_Soccer_Prefab",
+      "RewardItem": {
+        "ID": 601,
+        "Quantity": 1
+      },
+      "Pos": {
+        "x": 69.49,
+        "y": 97.72,
+        "z": 0
+      },
+      "IsMain": false
 
     }
 

@@ -50,17 +50,17 @@
     },
     {
       "TemplateID": 4,
-      "Name": "<color=#ff0000><sprite=0></color>버타 500",
-      "Description": "참고로 나는 오로나빈 C가 더 좋다. \n체력을 <color=#33fc2f>30</color> 회복한다.",
+      "Name": "<sprite=0>버타 500",
+      "Description": "마시면 상쾌한 느낌이든다. \n체력을 <color=#33fc2f>45</color> 회복한다.",
       "IsStackable": true,
-      "MaxStackSize": 20,
+      "MaxStackSize": 50,
       "Sprite": "Portion_4",
       "Type": 0,
       "Weapon": 0,
       "Parameters": [
         {
           "parameterName": "Health",
-          "value": 30
+          "value": 45
         }
       ]
     },
