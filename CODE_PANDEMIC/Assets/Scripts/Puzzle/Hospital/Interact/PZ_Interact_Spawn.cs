@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Inventory.Model;
 using System.Collections.Generic;
 
@@ -22,6 +22,7 @@ public class PZ_Interact_Spawn : PZ_Interact_Base
 
             if (Managers.Data.Items.TryGetValue(rewardItemKey[index].ID, out ItemData item) == true)
             {
+                Managers.Event.InvokeEvent("ItemReward", item);
                 Managers.Game.Inventory.AddItem(item, rewardItemKey[index].Quantity);
 
                 Debug.Log(item.TemplateID);
