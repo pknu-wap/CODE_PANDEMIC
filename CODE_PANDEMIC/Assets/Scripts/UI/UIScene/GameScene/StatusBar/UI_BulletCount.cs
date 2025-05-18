@@ -26,8 +26,10 @@ public class UI_BulletCount :UI_Base
         if (base.Init() == false) return false;
         BindImage(typeof(Images));
         BindText(typeof(Texts));
+
         _text = GetText((int)Texts.CountText);
         _bulletImage=GetImage((int)Images.BulletImage); 
+
         ResetInfo();
         return true;
     }
@@ -60,7 +62,8 @@ public class UI_BulletCount :UI_Base
 
     private void OnGunWeaponEquipped(object obj)
     {
-        _bulletImage.gameObject.SetActive(true);
+        
+        _bulletImage.gameObject?.SetActive(true);
         if (obj is int count)
         {
             _text.text = count.ToString();
