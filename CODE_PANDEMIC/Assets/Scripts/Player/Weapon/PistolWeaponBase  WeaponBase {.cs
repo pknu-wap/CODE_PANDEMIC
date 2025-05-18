@@ -21,7 +21,7 @@ public class PistolWeaponBase : WeaponBase
         if (!CanFire()) return;
         SetNextFireTime();
         _currentAmmo--;
-
+        Managers.Event.InvokeEvent("BulletUpdated", _currentAmmo);
         if (_animator != null)
         {
             _animator.SetBool("Fire", true);

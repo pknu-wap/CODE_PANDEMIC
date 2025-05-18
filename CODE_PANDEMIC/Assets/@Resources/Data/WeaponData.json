@@ -24,7 +24,7 @@
       "WeaponPrefab": "R_002",
       "BulletID": 1,
       "BulletCount": 30,
-      "Type": 1
+      "Type": 3
     },
     {
       "TemplateID": 202,
@@ -40,7 +40,7 @@
       "Type": 3
     },
     {
-      "TemplateID": 203, 
+      "TemplateID": 203,
       "Damage": 45,
       "FireRate": 1.5,
       "BulletSpeed": 8,
@@ -53,7 +53,7 @@
       "Type": 3
     },
     {
-      "TemplateID": 204, 
+      "TemplateID": 204,
       "Damage": 5,
       "FireRate": 0.1,
       "BulletSpeed": 0,
@@ -64,6 +64,34 @@
       "BulletID": 1,
       "BulletCount": 0,
       "Type": 3
+    },
+    {
+      "TemplateID": 301,
+      "Damage": 15,
+      "FireRate": 0.05,
+      "Range": 10,
+      "SpreadAngle": 30,
+      "WeaponPrefab": "C_006",
+      "Type": 1
+    },
+    {
+      "TemplateID": 302,
+      "Damage": 22,
+      "FireRate": 1.0,
+      "Range": 15,
+      "SpreadAngle": 50,
+      "WeaponPrefab": "C_007",
+      "Type": 1
+
+    },
+    {
+      "TemplateID": 303,
+      "Damage": 20,
+      "FireRate": 0.8,
+      "Range": 8,
+      "SpreadAngle": 60,
+      "WeaponPrefab": "C_008",
+      "Type": 1
     }
   ]
     
