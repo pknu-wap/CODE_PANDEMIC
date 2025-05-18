@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,19 +6,24 @@ public class StageController : MonoBehaviour
 {
     StageData _stageData;
     Dictionary<int, PZ_Main_Block> LinkedBlocks;
+    [Header("Light")]
+    [SerializeField]
+    LightController _light;
+
+    [Header("CameraSetting")]
     [SerializeField]
     private  PolygonCollider2D _cameraLimit;
     [SerializeField]
     private Camera _mapCamera;
 
-    [Header("ParentObject")]
+    [Header("Transform")]
     public Transform _spawnerParent;
     public Transform _puzzlesParent;
     public Transform _ItemsParent;
     public Transform _blockParent;
 
     public PolygonCollider2D CameraLimit { get { return _cameraLimit; } private set { _cameraLimit = value; } }
-
+   
     public void SetInfo(StageData stageData)
     {
         LinkedBlocks = new Dictionary<int, PZ_Main_Block>();
@@ -30,11 +35,10 @@ public class StageController : MonoBehaviour
         CreateInteracts();
     }
     private void Start()
-    {
-        if (_mapCamera != null)
-        {
-            _mapCamera.gameObject.SetActive(false);
-        }
+    {   
+        if(_mapCamera!=null)
+        _mapCamera.gameObject.SetActive(false);
+        
     }
     public void OnEnable()
     {
@@ -101,6 +105,9 @@ public class StageController : MonoBehaviour
                 }
                 else if (generatorItem != null)
                 {
+                    Color color = new Color(0.00784f, 0.00784f, 0.00784f, 0);
+                    
+                    _light?.SettingLight(color);
                     generatorItem.SetInfo(data);
                 }
 

@@ -46,64 +46,81 @@ public class EquipWeapon : MonoBehaviour
         _weaponInput.QuickSlot.Equip2.performed -= Equip2;
         _weaponInput.QuickSlot.Equip3.performed -= Equip3;
         _weaponInput.QuickSlot.Equip4.performed -= Equip4;
+        Managers.Event.InvokeEvent("EquipDisable");
         _weaponInput.Disable();
     }
 
     public void SetWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
     {
 
-        Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
+       Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
         if (data == null)
         {
             Debug.Log("None Data");
             return;
         }
+
+        if (!CheckSameWeapon(data, _weapon)) return;
+
         switch (data.Type)
         {
             case Define.WeaponType.ShortWeapon:
+                CallNotUsingBullet();
+                Equip(data, _socket); //TODO : SOCKET POS 
                 break;
             case Define.WeaponType.PistolWeapon:
-                if (!CheckSameWeapon(data,_weapon)) return;
-
-                DestroyPrevWeapon();
-                Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
-                {
-                    _weapon = obj.GetComponent<WeaponBase>();
-                    _weapon.SetInfo(data);
-                   
-                });
+                CallUsingBullet(data.BulletCount);
+                Equip(data, _socket);
                 break;
             case Define.WeaponType.RangeWeapon:
+                CallUsingBullet(data.BulletCount);
+
+                Equip(data, _socket);
+
                 break;
             default:
                 break;
+               
         }
 
     }
-    bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
+    
+    private void Equip(WeaponData data ,Transform socket)
     {
-        if (currentWeapon == null) return true; //ÀåÂøÀÌ ¾Æ¹«°Íµµ ¾ÈµÇ¾îÀÖÀ½ 
+        if (_weapon != null) DestroyPrevWeapon();
 
-        if (item.TemplateID == currentWeapon.ID) return false; //ÇöÀç ÀåÂøµÇ
+        Managers.Resource.Instantiate(data.WeaponPrefab, socket.transform, (obj) =>
+        {
+            _weapon = obj.GetComponent<WeaponBase>();
+            _weapon.SetInfo(data);
+
+        });
+    }
+
+    private  bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
+    {
+        if (currentWeapon == null) return true; //ì¥ì°©ì´ ì•„ë¬´ê²ƒë„ ì•ˆë˜ì–´ìˆìŒ 
+
+        if (item.TemplateID == currentWeapon.ID) return false; //í˜„ì¬ ì¥ì°©ë˜
         else return true;
     }
 
     private void DestroyPrevWeapon()
     {
-        if (_weapon == null) return;
         Destroy(_weapon.gameObject);
         _weapon = null;
     }
-    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState=null)
+  
+    private void CallNotUsingBullet()
     {
-
-
+        Managers.Event.InvokeEvent("ShortWeaponEquipped");
     }
-    public void Attack(PlayerController owner)
+    private void CallUsingBullet(int  bullet)
     {
-        _weapon?.Attack(owner);
+          Managers.Event.InvokeEvent("GunWeaponEquipped",bullet);
     }
-
+      
+    
     private bool EquipQuickSlot(int v)
     {
         Debug.Log(v);
@@ -112,6 +129,10 @@ public class EquipWeapon : MonoBehaviour
 
         _quickSlot.UseQuickSlot(v, gameObject);
         return true;
+    }
+    public void Attack(PlayerController owner)
+    {
+        _weapon?.Attack(owner);
     }
 
     private void Equip1(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(1);

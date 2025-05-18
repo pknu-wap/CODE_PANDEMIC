@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -8,7 +8,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     private Animator _animator;
 
     private bool _isInteracted = false;
-
+    private PuzzleData _data;
     private int _rememberCount = 5;
 
     public static event Action TurnOnGenerator;
@@ -20,6 +20,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
 
     public void SetInfo(PuzzleData data)
     {
+        _data = data;
         _rememberCount = data.RememberCount;
     }
 
@@ -65,7 +66,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
         _animator.SetBool("IsInteracted", true);
 
         _isInteracted = true;
-
+        Managers.Game.ClearPuzzle(_data.ID);
         TurnOnGenerator?.Invoke();
     }
 

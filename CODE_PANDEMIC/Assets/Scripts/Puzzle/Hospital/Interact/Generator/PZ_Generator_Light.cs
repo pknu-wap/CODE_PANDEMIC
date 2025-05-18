@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Rendering.Universal;
 
@@ -25,23 +25,23 @@ public class PZ_Generator_Light : MonoBehaviour
         targetColor.g = 75f / 255f;
         targetColor.b = 75f / 255f;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return CoroutineHelper.WaitForSeconds(0.2f);
 
         _light.color = targetColor;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return  CoroutineHelper.WaitForSeconds(0.5f);
 
         _light.color = originalColor;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return CoroutineHelper.WaitForSeconds(0.5f);
 
         _light.color = targetColor;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return CoroutineHelper.WaitForSeconds(0.2f);
 
         _light.color = originalColor;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return CoroutineHelper.WaitForSeconds(0.2f);
 
         _light.color = targetColor;
     }

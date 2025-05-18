@@ -19,6 +19,7 @@ public class PuzzleClearCamera : MonoBehaviour
     }
     private void Start()
     {
+        _camera.Priority = Define.None;
         gameObject.SetActive(false);
     }
     public void LookAtDisappear(Action action)
