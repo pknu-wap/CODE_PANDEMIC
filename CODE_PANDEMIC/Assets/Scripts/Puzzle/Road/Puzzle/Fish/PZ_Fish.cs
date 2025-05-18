@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PZ_Fish : PZ_Interact_NonSpawn
 {
+    [SerializeField] private PZ_Fish_Puzzle _fishPuzzle;
+
     private bool _isDelayed = true;
 
     private void Start()
@@ -26,7 +28,7 @@ public class PZ_Fish : PZ_Interact_NonSpawn
 
         FishTimeOver();
 
-        // 여기에 보상이나 무언가가 되는 로직 구현 예정
+        _fishPuzzle.ClearPuzzle();
     }
 
     private void FishTimeOver()
