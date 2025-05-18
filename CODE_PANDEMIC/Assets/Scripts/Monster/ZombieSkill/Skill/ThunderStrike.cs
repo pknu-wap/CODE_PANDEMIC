@@ -27,11 +27,12 @@ public class ThunderStrike : MonoBehaviour
         {
             if (target.TryGetComponent<PlayerStatus>(out var damageable))
             {
-                damageable.OnDamaged(gameObject , _damage);
+                damageable.OnDamaged(gameObject, _damage);
             }
         }
 
-        Destroy(gameObject);  }
+        Destroy(gameObject);
+    }
 
     private void OnDrawGizmosSelected()
     {

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AI_BossWalk : AI_StateBase
@@ -12,7 +13,7 @@ public class AI_BossWalk : AI_StateBase
     {
         base.OnEnter();
         _bossController._aiPath.canMove = true;
-        _bossController._animator.SetTrigger("Walk");
+        _bossController._animator.SetBool("Walk" , true);
     }
 
     public override void OnUpdate()
@@ -20,6 +21,8 @@ public class AI_BossWalk : AI_StateBase
         if (_bossController.IsPlayerInSkillRange())
         {
             _bossController.ChangeState(new AI_BossAttack(_bossController));
+            _bossController._animator.SetBool("Walk", false);
+            _bossController._animator.SetBool("Attack", true);
         }
     }
 }

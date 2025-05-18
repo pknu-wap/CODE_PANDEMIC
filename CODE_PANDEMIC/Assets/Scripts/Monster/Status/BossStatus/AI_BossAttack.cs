@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AI_BossAttack : AI_StateBase
@@ -15,7 +16,7 @@ public class AI_BossAttack : AI_StateBase
         base.OnEnter();
 
         _isSkillActive = true;
-        _bossController._animator.SetTrigger("Attack");
+        _bossController._animator.SetBool("Attack" , true);
 
         _bossController.TryUseSkill(() =>
         {
@@ -27,7 +28,8 @@ public class AI_BossAttack : AI_StateBase
     {
         if (!_isSkillActive)
         {
-            _bossController.ChangeState(new AI_BossIdle(_bossController));
+            _bossController.ChangeState(new AI_BossWalk(_bossController));
+            _bossController._animator.SetBool("Attack", false);
         }
     }
 

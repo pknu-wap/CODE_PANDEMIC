@@ -13,9 +13,7 @@ public class AI_NurseZombie : AI_Controller
 
     public override float AiDamage => _monsterData.AttackDamage;
     public string AIName => _monsterData.NameID;
-    public Transform Player => _player.transform;
     private ISkillBehavior _skill;
-    public AI_ThrowVisualizer _throwVisualizer;
     public override ISkillBehavior Skill { get { return _skill; } }
     protected override void Awake()
     {

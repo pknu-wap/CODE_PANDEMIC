@@ -12,9 +12,9 @@ public class AI_BossIdle : AI_StateBase
 
     public override void OnEnter()
     {
-        base.OnEnter();
         _elapsedTime = 0f;
-        _bossController._animator.SetTrigger("Idle");
+        _bossController._animator.SetBool("Walk", false);
+        _bossController.StopMoving();
     }
 
     public override void OnUpdate()
@@ -24,10 +24,12 @@ public class AI_BossIdle : AI_StateBase
         if (_bossController.IsPlayerInSkillRange())
         {
             _bossController.ChangeState(new AI_BossAttack(_bossController));
+            _bossController._animator.SetBool("Walk", true);
         }
         else if (_elapsedTime >= _idleTime)
         {
             _bossController.ChangeState(new AI_BossWalk(_bossController));
+            _bossController._animator.SetBool("Walk", true);
         }
     }
 }

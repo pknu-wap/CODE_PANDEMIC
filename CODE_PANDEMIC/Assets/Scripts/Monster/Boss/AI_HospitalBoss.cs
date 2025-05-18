@@ -6,7 +6,7 @@ public class AI_HospitalBoss : AI_BossController
     public bool IsBerserk { get; private set; }
 
     public GameObject _syringePrefab;
-    public float SyringeSpeed;
+    public float SyringeSpeed = 10f;
     public float ThrowCooldown = 10f;
     public float SyringeRange = 10f;
     public float SkillChargeDelay = 0.5f;
@@ -57,7 +57,6 @@ public class AI_HospitalBoss : AI_BossController
        _monsterData.AttackRange = 2f;
        _monsterData.AttackDamage = 20;
     }
-    EnterBerserkMode();
         base.Start();
         if (!Init())
         {

@@ -11,7 +11,7 @@ public class AI_ThunderSkill : ISkillBehavior
     private float _delayBeforeStrike = 0.5f;
     private float _intervalBetweenStrikes = 1.0f;
     private int _strikeCount = 3;
-    private float _strikeRadius = 2f;
+    private float _strikeRadius = 1f;
 
     private GameObject _thunderPrefab;
     private LayerMask _targetLayer;
@@ -41,13 +41,14 @@ public class AI_ThunderSkill : ISkillBehavior
         }
 
         _controller = controller;
+        _controller._animator.SetBool("Skill", true);
         _lastSkillTime = Time.time;
         _controller._isUsingSkill = true;
         _controller._aiPath.canMove = false;
-
         _skillCoroutine = _controller.StartCoroutine(SkillRoutine(onSkillComplete));
+        
     }
-     
+
 
     private IEnumerator SkillRoutine(System.Action onSkillComplete)
     {
@@ -69,6 +70,7 @@ public class AI_ThunderSkill : ISkillBehavior
         _controller._isUsingSkill = false;
         _controller._aiPath.canMove = true;
         onSkillComplete?.Invoke();
+        _controller._animator.SetBool("Skill", false);
     }
 
     public void StopSkill()

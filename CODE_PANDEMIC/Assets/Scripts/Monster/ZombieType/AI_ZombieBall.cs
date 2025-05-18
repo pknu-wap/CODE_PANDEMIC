@@ -35,13 +35,6 @@ public class AI_ZombieBall : AI_Controller
 
     protected void Update()
     {
-
-        if (!_isRushing && Input.GetKeyDown(KeyCode.R) && _player != null)
-    {
-        Debug.Log("Rush triggered");
-        Vector2 dir = (_player.transform.position - transform.position).normalized;
-        TriggerRush(dir);
-    }
         if (_isRushing)
         {
             _rb.velocity = _rushDirection * MoveSpeed;
@@ -73,8 +66,8 @@ public class AI_ZombieBall : AI_Controller
                 playerStatus.OnDamaged(gameObject, damage);
             }
         }
-        gameObject.SetActive(false);
         TrySummon();
+        Destroy(gameObject);
     }
 
     private void TrySummon()
@@ -107,9 +100,14 @@ public class AI_ZombieBall : AI_Controller
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
+        if (!_isRushing)
+        {
+            ForceDetectTarget(_player);
+            Vector2 dir = (_player.transform.position - transform.position).normalized;
+            TriggerRush(dir);
+        }
         if (Health <= 0)
         {
-            TrySummon();
             Explosion();
         }
     }
