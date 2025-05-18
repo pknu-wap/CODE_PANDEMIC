@@ -49,6 +49,22 @@
       ]
     },
     {
+      "TemplateID": 4,
+      "Name": "<color=#ff0000><sprite=0></color>버타 500",
+      "Description": "참고로 나는 오로나빈 C가 더 좋다. \n체력을 <color=#33fc2f>30</color> 회복한다.",
+      "IsStackable": true,
+      "MaxStackSize": 20,
+      "Sprite": "Portion_4",
+      "Type": 0,
+      "Weapon": 0,
+      "Parameters": [
+        {
+          "parameterName": "Health",
+          "value": 30
+        }
+      ]
+    },
+    {
       "TemplateID": 101,
       "Name": "R1895",
       "Description": "기본적인 권총이다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다\n탄창 : 6",
