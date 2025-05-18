@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2822465032211237992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4331132849040953552}
+  - component: {fileID: -7817239696064580093}
+  m_Layer: 0
+  m_Name: PZ_Fish_Puzzle_Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4331132849040953552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822465032211237992}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 94.48694, y: 57.83674, z: 0.19276157}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2115741984196779930}
+  - {fileID: 4811993529846113773}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7817239696064580093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822465032211237992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a505581819ce9524e81e1bf2cdb22b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &3252874712967398689
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4331132849040953552}
+    m_Modifications:
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -70.131
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 44.118
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.19276157
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8628923727945669639, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: _fishPuzzle
+      value: 
+      objectReference: {fileID: -7817239696064580093}
+    - target: {fileID: 8784036930245505120, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+      propertyPath: m_Name
+      value: PZ_Fish_Prefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+--- !u!4 &4811993529846113773 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8062334830407409868, guid: 0b0ff1366b4e461429a96b59f31f24ca, type: 3}
+  m_PrefabInstance: {fileID: 3252874712967398689}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8885561401510994723
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4331132849040953552}
+    m_Modifications:
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985957735397325748, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+      propertyPath: m_Name
+      value: PZ_Fish_Sign_Prefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+--- !u!4 &2115741984196779930 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7355357975182179513, guid: e2f1a5adb5b0a194b9b92f2181877b65, type: 3}
+  m_PrefabInstance: {fileID: 8885561401510994723}
+  m_PrefabAsset: {fileID: 0}
