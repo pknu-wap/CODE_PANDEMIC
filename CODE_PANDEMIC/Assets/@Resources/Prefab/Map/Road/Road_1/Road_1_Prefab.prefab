@@ -144096,6 +144096,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1510180193644303313, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
+      propertyPath: _spawnCount
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5185855958768816002, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
       propertyPath: m_Name
       value: PZ_Hydrant_Prefab (2)
@@ -145598,41 +145602,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1510180193644303313, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
+      propertyPath: _spawnCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5185855958768816002, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
       propertyPath: m_Name
       value: PZ_Hydrant_Prefab
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5185855958768816002, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6392086988016308873}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
---- !u!1 &1837276462119400714 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5185855958768816002, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
-  m_PrefabInstance: {fileID: 6811850231908547208}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6392086988016308873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1837276462119400714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ec64c7bf46f23442b3694b16c33178d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 6388174027899473746}
-  _defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  _highlightMaterial: {fileID: 2100000, guid: 51aba4524741e724b86599897bdd3bf3, type: 2}
-  _rigidbody: {fileID: 704159932762145937}
-  _explosionEffect: {fileID: 5536543239872179491, guid: 6a89baafe4aff8a40a59844c43a7d18d, type: 3}
 --- !u!4 &5924357944882592255 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 918454603281810295, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
@@ -146347,6 +146329,10 @@ PrefabInstance:
     - target: {fileID: 918454603281810295, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1510180193644303313, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
+      propertyPath: _spawnCount
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5185855958768816002, guid: a926815330afe3d4e938cb72b7c3131e, type: 3}
       propertyPath: m_Name
