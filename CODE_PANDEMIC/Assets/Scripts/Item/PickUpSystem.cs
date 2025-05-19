@@ -19,6 +19,7 @@ public class PickUpSystem : MonoBehaviour
         
         if (item != null)
         {
+            Managers.Game.AddItemCount();
             Managers.Event.InvokeEvent("ItemReward", item.InventoryItem);
             int reminder = _inventoryData.AddItem(item.InventoryItem, item.Quantity);
             if (reminder == 0) item.DestroyItem();

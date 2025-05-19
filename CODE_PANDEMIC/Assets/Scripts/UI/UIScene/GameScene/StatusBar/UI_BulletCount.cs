@@ -52,7 +52,8 @@ public class UI_BulletCount :UI_Base
     }
     private void ResetInfo()
     {
-        _bulletImage.gameObject?.SetActive(false);
+        if(_bulletImage)
+        _bulletImage.gameObject.SetActive(false);
         _text.text = " ";
     }
     private void OnShortWeaponEquipped(object obj)
