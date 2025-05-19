@@ -9,7 +9,7 @@ public class UI_ItemSlide : UI_Base
     enum Texts { ItemName }
 
     RectTransform _rect;
-
+   
     public override bool Init()
     {
         if (base.Init() == false) return false;
@@ -25,6 +25,7 @@ public class UI_ItemSlide : UI_Base
     }
     public void SettingImage(Sprite sprite, string name)
     {
+       
         GetImage((int)Images.ItemImage).sprite = sprite;
         GetText((int)Texts.ItemName).text = name;
         StartCoroutine(SlideInAndOut());

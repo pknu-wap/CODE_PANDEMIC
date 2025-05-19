@@ -7,12 +7,12 @@ public class UI_EnemyStatusBar : MonoBehaviour
     private float _originalScaleX;
     private int _maxHp;
     
-    public void Init(int maxHp)
+    public virtual void Init(MonsterData monsterData)
     {
-        _maxHp = maxHp;
+        _maxHp = monsterData.Hp;
         _originalScaleX = _hpBarTransform.localScale.x;
-        UpdateHpBar(maxHp);
-        gameObject.SetActive(false);
+        UpdateHpBar(monsterData.Hp);
+        
     }
 
     public void UpdateHpBar(int currentHp)
