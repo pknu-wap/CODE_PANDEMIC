@@ -26,12 +26,16 @@ public class RecordManager
         _recordData.ItemCount++;
         if (ItemCount == 1)
         {
-            //TODO : TUTORIAL UI 
+            Managers.UI.ShowPopupUI<UI_TutorialPopUp>("UI_ItemTutorialPopUp");
         }
     }
     public void AddZombieKillCount()
     {
-        _recordData.ZombieKillCount++;  
+        _recordData.ZombieKillCount++;
+        if (ZombieKillCount == 1)
+        {
+            Managers.UI.ShowPopupUI<UI_TutorialPopUp>("UI_ZombieTutorialPopUp");
+        }
     }
     public void AddClearPuzzleCount()
     {

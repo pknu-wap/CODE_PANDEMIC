@@ -64,7 +64,7 @@ public abstract class AI_Base : MonoBehaviour
     public virtual void Die()
     {
         _state = AI_State.Dead;
-
+        Managers.Game.AddZombieKillCount();
         Action callback = OnDie;
         if (callback != null)
             callback();
