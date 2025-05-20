@@ -63,7 +63,7 @@ public class Define
     public const int ArmorCount = 3;
 
     public const int None = 0;
-    public const int PlayerCamera = 11;
+    public const int PlayerCamera = 10;
     public const int PuzzleClear = 20;
     public const int BossSequence = 30;
 

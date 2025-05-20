@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PZ_FireExtinguisher : PZ_Interact_NonSpawn
 {
@@ -25,7 +25,7 @@ public class PZ_FireExtinguisher : PZ_Interact_NonSpawn
         {
             Vector3 _temp = _playerController.transform.position;
             _temp.x += _playerController._forwardVector.normalized.x * _distance;
-            _temp.y += _playerController._forwardVector.normalized.y * _distance + 0.5f;
+            _temp.y += _playerController._forwardVector.normalized.y * _distance;
 
             transform.position = _temp;
 

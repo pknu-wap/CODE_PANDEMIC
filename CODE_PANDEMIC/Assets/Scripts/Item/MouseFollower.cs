@@ -1,7 +1,7 @@
 using Inventory.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem; // Input System »ç¿ë
+using UnityEngine.InputSystem; // Input System ì‚¬ìš©
 
 public class MouseFollower : MonoBehaviour, IDragHandler
 {
@@ -13,6 +13,7 @@ public class MouseFollower : MonoBehaviour, IDragHandler
     public void Init()
     {
         _isFollowing = false;
+       
         Transform uiRoot = GameObject.Find("UI_Root")?.transform;
         if (uiRoot != null)
         {
@@ -28,7 +29,7 @@ public class MouseFollower : MonoBehaviour, IDragHandler
         _inventoryItem.Initialize();
         if (_inventoryItem == null)
         {
-            Debug.LogError("MouseFollower: UIInventoryItemÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù! ÀÎ½ºÆåÅÍ¿¡¼­ È®ÀÎÇÏ¼¼¿ä.");
+            Debug.LogError("MouseFollower: UIInventoryItemì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤! ì¸ìŠ¤í™í„°ì—ì„œ í™•ì¸í•˜ì„¸ìš”.");
 
         }
         StopFollowing();
@@ -36,8 +37,9 @@ public class MouseFollower : MonoBehaviour, IDragHandler
 
     void Update()
     {
-        Vector2 mousePos = Mouse.current.position.ReadValue(); // ¸¶¿ì½º ÁÂÇ¥ °¡Á®¿À±â
-        transform.position = mousePos; //  Á÷Á¢ À§Ä¡ ÇÒ´ç!
+        if (!_isFollowing) return;
+        Vector2 mousePos = Mouse.current.position.ReadValue(); // ë§ˆìš°ìŠ¤ ì¢Œí‘œ ê°€ì ¸ì˜¤ê¸°
+        transform.position = mousePos; //  ì§ì ‘ ìœ„ì¹˜ í• ë‹¹!
     }
 
 

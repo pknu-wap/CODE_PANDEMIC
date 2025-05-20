@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public enum CarMoveDirection
@@ -154,6 +154,8 @@ public class PZ_Car : PZ_Interact_NonSpawn
             Debug.Log("Car Puzzle Clear!!!");
 
             StartCoroutine(RushToBlockObject());
+
+            _Parking.ClearPuzzle();
         }
     }
 
