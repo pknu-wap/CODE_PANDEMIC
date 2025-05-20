@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
     public Vector2 _forwardVector;
     public bool IsFacingRight => transform.localScale.x < 0f;
 
+    [SerializeField] private AnimatorOverrideController withArmOverride;
+    [SerializeField] private AnimatorOverrideController noArmOverride;
+
+
 
     private void Awake()
     {
@@ -43,6 +47,8 @@ public class PlayerController : MonoBehaviour
         _runAction.Enable();
         _dashAction.Enable();
         Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
+        Managers.Event.Subscribe("OnBossCinematicStart", OnEnterCinematic);
+        Managers.Event.Subscribe("OnBossCinematicEnd", OnExitCinematic);
     }
 
     private void OnDisable()
@@ -51,7 +57,11 @@ public class PlayerController : MonoBehaviour
         _runAction.Disable();
         _dashAction.Disable();
         Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
+        Managers.Event.Unsubscribe("OnBossCinematicStart", OnEnterCinematic);
+        Managers.Event.Unsubscribe("OnBossCinematicEnd", OnExitCinematic);
     }
+
+    private bool _prevHasWeapon = false;
 
     private void Update()
     {
@@ -65,7 +75,12 @@ public class PlayerController : MonoBehaviour
         }
 
         bool hasWeapon = socket.childCount > 0;
-        _animator.SetBool("isHasArm", !hasWeapon);
+
+        if (hasWeapon != _prevHasWeapon)
+        {
+            _animator.runtimeAnimatorController = hasWeapon ? noArmOverride : withArmOverride;
+            _prevHasWeapon = hasWeapon;
+        }
 
         // 이동 입력
         Vector2 moveInput = _moveAction.ReadValue<Vector2>();
@@ -110,6 +125,25 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isDead", true);
         _playerMovement.StopImmediately();
         enabled = false;
+    }
+
+    private void OnEnterCinematic(object obj)
+    {
+        if (_currentState == PlayerState.Dead) return;
+
+        _currentState = PlayerState.BossCinematic;
+        _playerMovement.StopImmediately();
+
+        Debug.Log("보스 연출 상태 진입");
+    }
+
+    private void OnExitCinematic(object obj)
+    {
+        if (_currentState == PlayerState.BossCinematic)
+        {
+            _currentState = PlayerState.Idle;
+            Debug.Log("보스 연출 종료");
+        }
     }
 
     public void TakeDamage(GameObject attacker, float damageValue)

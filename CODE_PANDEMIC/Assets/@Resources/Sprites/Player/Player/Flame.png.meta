@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5c54824ba7cf4ad4bbc3a0ca9ccc7312
+guid: f614a1dbf5b01134c841f5cb9bad88c8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -46,10 +46,10 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  alignment: 9
+  spritePivot: {x: 0.072741345, y: 0.46777672}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 94, y: 299, z: 733, w: 306}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -97,127 +97,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerRunNoArm_0
+      name: Flame_5
       rect:
         serializedVersion: 2
-        x: 158
-        y: 69
-        width: 284
-        height: 502
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 92
+        y: 314
+        width: 708
+        height: 401
+      alignment: 9
+      pivot: {x: 0.020134846, y: 0.42380932}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4833c3dee1aca2b4299a0459044dce4a
-      internalID: -1022906576
+      spriteID: 1a957c74d733128478072ee014558b8f
+      internalID: 651302890
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerRunNoArm_1
+      name: Flame_17
       rect:
         serializedVersion: 2
-        x: 798
-        y: 69
-        width: 284
-        height: 502
+        x: 84
+        y: 89
+        width: 4
+        height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20fee28c25b28fb4382bc3b9940cffba
-      internalID: -43178778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRunNoArm_2
-      rect:
-        serializedVersion: 2
-        x: 1437
-        y: 69
-        width: 284
-        height: 502
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c59e3bca7e682224da469e9d4eaa4592
-      internalID: -553504354
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRunNoArm_3
-      rect:
-        serializedVersion: 2
-        x: 2078
-        y: 69
-        width: 284
-        height: 502
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 018466e0b14ee11488ec7bbf8875a345
-      internalID: 498039187
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRunNoArm_4
-      rect:
-        serializedVersion: 2
-        x: 2718
-        y: 69
-        width: 284
-        height: 502
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a2bde3792fdfe2d4ca9a1fdb2d7a110f
-      internalID: -843357986
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRunNoArm_5
-      rect:
-        serializedVersion: 2
-        x: 3357
-        y: 69
-        width: 284
-        height: 502
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 08a3ece3eb3211544b1e1914fb0bfafe
-      internalID: 1541478613
+      spriteID: f9720bba51ca7e1499a48bb60b733276
+      internalID: -1753655461
       vertices: []
       indices: 
       edges: []
@@ -226,19 +142,31 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerRunNoArm_0: -1022906576
-      PlayerRunNoArm_1: -43178778
-      PlayerRunNoArm_2: -553504354
-      PlayerRunNoArm_3: 498039187
-      PlayerRunNoArm_4: -843357986
-      PlayerRunNoArm_5: 1541478613
+      Flame_0: -1863261997
+      Flame_1: -2130885803
+      Flame_10: 2065486137
+      Flame_11: 1404406270
+      Flame_12: 515568104
+      Flame_13: -97222616
+      Flame_14: 1400915156
+      Flame_15: 614917731
+      Flame_16: -592839186
+      Flame_17: -1753655461
+      Flame_2: -221745966
+      Flame_3: 1038516324
+      Flame_4: -1799535832
+      Flame_5: 651302890
+      Flame_6: -255006846
+      Flame_7: 1488635272
+      Flame_8: 1800192160
+      Flame_9: 1363609263
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
