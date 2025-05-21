@@ -47,9 +47,9 @@ public class AI_SweepSkill : ISkillBehavior
     {
         return 1f; // 디폴트
     }
-    public virtual void SetSettings(SweepSkillData settings, LayerMask targetLayer, AI_Controller controller)
+    public virtual void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
     {
-        _settings = settings;
+        _settings = settings as SweepSkillData;
         _targetLayer = targetLayer;
         _controller = controller;
     }
@@ -99,10 +99,4 @@ public class AI_SweepSkill : ISkillBehavior
             }
         }
     }
-    public virtual void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
-{
-    _controller = controller;
-    _targetLayer = targetLayer;
-    _settings = settings as SweepSkillData;
-}
 }
