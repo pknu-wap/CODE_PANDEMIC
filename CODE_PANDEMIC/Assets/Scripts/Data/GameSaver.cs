@@ -6,6 +6,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 using static Define;
+using Pathfinding;
 
 #region GameSaver
 public class GameSaver
@@ -344,4 +345,31 @@ public class PlayerStatSaver
     {
         if (File.Exists(SavePath)) File.Delete(SavePath);
     }
+}
+public class RecordSaver
+{
+ 
+    public RecordSaver( )
+    {
+        
+    }
+    private static string SavePath => Application.persistentDataPath + "/record.json";
+    public void SaveRecord(RecordData recordData)
+    {
+        string json = JsonUtility.ToJson(recordData);
+        File.WriteAllText(SavePath, json);
+    }
+
+    public RecordData LoadRecord()
+    {
+        if (!File.Exists(SavePath)) return new RecordData();
+        string json = File.ReadAllText(SavePath);
+        return JsonUtility.FromJson<RecordData>(json);
+    }
+
+    public void ResetRecord()
+    {
+        if (File.Exists(SavePath)) File.Delete(SavePath);
+    }
+
 }

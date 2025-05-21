@@ -39,7 +39,7 @@ public class UI_EquipPopUp :  UI_Base
         {
             UI_EquipSlotItem slotItem = GetObject(i).GetComponent<UI_EquipSlotItem>();
             slotItem.Init();
-            int index = i;  // ≈¨∑Œ¿˙ ƒ∏√≥ πÊ¡ˆøÎ
+            int index = i;  // ÌÅ¥Î°úÏ†Ä Ï∫°Ï≤ò Î∞©ÏßÄÏö©
             slotItem.OnRightMouseButtonClick += (clickedSlot) => OnSlotRightClicked(index);
         }
     }
@@ -70,7 +70,7 @@ public class UI_EquipPopUp :  UI_Base
         }
         else
         {
-            Debug.LogWarning("OnEquipSlotUpdated: µ•¿Ã≈Õ ≈∏¿‘ ∫“¿œƒ°");
+            Debug.LogWarning("OnEquipSlotUpdated: Îç∞Ïù¥ÌÑ∞ ÌÉÄÏûÖ Î∂àÏùºÏπò");
         }
             
     }
@@ -112,7 +112,7 @@ public class UI_EquipPopUp :  UI_Base
     public void UpdateText()
     {
         PlayerStat playerStat= Managers.Game.PlayerStat;
-        GetText((int)Texts.HpText).text = $"{playerStat.CurrentHp}/{playerStat.MaxHp}";
+        GetText((int)Texts.HpText).text = $"{(int)playerStat.CurrentHp}/{playerStat.MaxHp}";
         GetText((int)Texts.ArmorText).text = $"{playerStat.Defend}";
         GetText((int)Texts.SpeedText).text = $"{playerStat.BaseSpeed}";
     }
