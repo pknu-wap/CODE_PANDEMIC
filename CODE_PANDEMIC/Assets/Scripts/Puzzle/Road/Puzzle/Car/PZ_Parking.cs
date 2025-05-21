@@ -8,6 +8,8 @@ public class PZ_Parking : PZ_Puzzle_Main
     [SerializeField] private GameObject _arrowDown;
     [SerializeField] private GameObject _arrowRight;
 
+    [SerializeField] private GameObject _roadBlock;
+
     private List<GameObject> _arrowList = new List<GameObject>();
 
     private bool[,] _emptyPlace = new bool[6, 6]; // 빈 장소 목록
@@ -287,6 +289,11 @@ public class PZ_Parking : PZ_Puzzle_Main
         }
 
         _arrowList.Clear();
+    }
+
+    public void BrokeBlocks()
+    {
+        Destroy(_roadBlock);
     }
 
     public void ClearPuzzle()
