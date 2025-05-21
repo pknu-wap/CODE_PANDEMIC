@@ -52,11 +52,9 @@ public class RecordManager
         _recordSaver = new RecordSaver();
     }
     public void LoadData()
-    {
-        
+    {        
        _recordData= _recordSaver.LoadRecord();
-        
-        
+
     }
     public void SaveData()
     {
