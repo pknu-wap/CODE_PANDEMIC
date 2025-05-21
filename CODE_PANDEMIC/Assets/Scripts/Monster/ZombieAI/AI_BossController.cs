@@ -20,12 +20,7 @@ public class AI_BossController : AI_Controller
         ChangeState(new AI_BossIdle(this));
         return true;
     }
-    private void Update()
-    {
-        Debug.Log($"Current State: {_currentState.GetType().Name}");
-        Debug.Log($"Player Position: {_player.position}");
-        Debug.Log($"Boss Position: {transform.position}");
-    }
+
 
     public override bool IsPlayerInSkillRange()
     {

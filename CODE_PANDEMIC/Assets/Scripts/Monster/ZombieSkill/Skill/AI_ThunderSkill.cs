@@ -46,7 +46,7 @@ public class AI_ThunderSkill : ISkillBehavior
         _controller._isUsingSkill = true;
         _controller._aiPath.canMove = false;
         _skillCoroutine = _controller.StartCoroutine(SkillRoutine(onSkillComplete));
-        
+
     }
 
 
@@ -80,4 +80,10 @@ public class AI_ThunderSkill : ISkillBehavior
             _controller.StopCoroutine(_skillCoroutine);
         }
     }
+    public virtual void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
+{
+    _controller = controller;
+    _targetLayer = targetLayer;
+    // _settings = settings as ThunderSkillData;
+}
 }

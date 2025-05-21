@@ -44,7 +44,7 @@ public class AI_ThunderZombie : AI_Controller
 
     protected override void Start()
     {
-         // if (_monsterData == null)
+        //  if (_monsterData == null)
         // {
         //     _monsterData = new MonsterData();
         //     _monsterData.NameID = "ThunderZombie";

@@ -33,10 +33,4 @@ public class ThunderStrike : MonoBehaviour
 
         Destroy(gameObject);
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _radius);
-    }
 }

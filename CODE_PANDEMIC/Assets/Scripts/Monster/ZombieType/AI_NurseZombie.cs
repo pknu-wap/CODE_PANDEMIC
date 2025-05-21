@@ -9,7 +9,7 @@ public class AI_NurseZombie : AI_Controller
     public float SyringeRange = 7f;
 
     public LayerMask TargetLayer;
-    public AI_ThrowVisualizer _syringeVisualizer;
+    public AI_LineVisualizer _visualizer;
 
     public override float AiDamage => _monsterData.AttackDamage;
     public string AIName => _monsterData.NameID;
