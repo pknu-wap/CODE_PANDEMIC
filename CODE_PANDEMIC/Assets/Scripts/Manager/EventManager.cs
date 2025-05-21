@@ -24,4 +24,6 @@ public class EventManager
         if (!eventDictionary.ContainsKey(eventName)) return;
         eventDictionary[eventName]?.Invoke(parameter);
     }
+
+   
 }

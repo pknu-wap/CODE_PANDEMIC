@@ -114,6 +114,31 @@ public class HybridBoomerangWeapon : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         Debug.Log("무기 복귀 완료");
+        
+        if (!CanFire() || isThrown) return;
+        SetNextFireTime();
+        _currentAmmo--;
+    
+        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, meleeRange, enemyLayer);
+
+        if (nearbyEnemies.Length > 0)
+        {
+            foreach (var enemyCollider in nearbyEnemies)
+            {
+                ApplyDamageWithKnockback(enemyCollider, _weaponData.Damage);
+            }
+            Debug.Log("근접 공격 실행됨.");
+        }
+        else
+        {
+            isThrown = true;
+            direction = firePoint.transform.right.normalized;
+            speed = _weaponData.BulletSpeed;
+            damage = _weaponData.Damage;
+
+            Debug.Log("투척체가 던져졌습니다.");
+            Destroy(gameObject, 3f);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

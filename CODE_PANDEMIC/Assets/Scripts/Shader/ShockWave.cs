@@ -49,6 +49,7 @@ public class ShockWave : MonoBehaviour
             yield return StartCoroutine(ShockWaveAction(0f, 1f));
             yield return CoroutineHelper.WaitForSeconds(delay);
         }
+        gameObject.SetActive(false);
     }
 
     IEnumerator ShockWaveAction(float startPos, float endPos)
@@ -64,5 +65,6 @@ public class ShockWave : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        
     }
 }

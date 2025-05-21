@@ -64,7 +64,7 @@ public abstract class WeaponBase : MonoBehaviour
     {
         RotateToMouse();
     }
-
+   
     public void SetInfo(WeaponData data)
     {
         _weaponData = data;
@@ -84,8 +84,11 @@ public abstract class WeaponBase : MonoBehaviour
 
     private IEnumerator ReloadRoutine()
     {
-        yield return new WaitForSeconds(_weaponData.ReloadTime);
+        
+        Managers.Event.InvokeEvent("Reload",_weaponData);
+        yield return CoroutineHelper.WaitForSeconds(_weaponData.ReloadTime);
         _currentAmmo = _weaponData.BulletCount;
+        Managers.Event.InvokeEvent("BulletUpdated", _currentAmmo);
         _isReloading = false;
         Debug.Log("Reload complete");
     }

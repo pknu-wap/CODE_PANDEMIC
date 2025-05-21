@@ -49,6 +49,22 @@
       ]
     },
     {
+      "TemplateID": 4,
+      "Name": "<color=#ff0000><sprite=0></color>버타 500",
+      "Description": "참고로 나는 오로나빈 C가 더 좋다. \n체력을 <color=#33fc2f>30</color> 회복한다.",
+      "IsStackable": true,
+      "MaxStackSize": 20,
+      "Sprite": "Portion_4",
+      "Type": 0,
+      "Weapon": 0,
+      "Parameters": [
+        {
+          "parameterName": "Health",
+          "value": 30
+        }
+      ]
+    },
+    {
       "TemplateID": 101,
       "Name": "R1895",
       "Description": "기본적인 권총이다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다\n탄창 : 6",
@@ -75,7 +91,7 @@
       "Description": "샷건이다. 맞으면 많이 아플것같다.\n한번에 <color=#fc2f2f>10</color>의 공격의 탄이 4개 나간다.",
       "IsStackable": false,
       "MaxStackSize": 1,
-      "Sprite": "Range_1",
+      "Sprite": "Range_2",
       "Type": 1,
       "Weapon": 3
     },
@@ -85,7 +101,7 @@
       "Description": "이 무기는 사용자 본인도 조심해야할것같다 \n적에게 <color=#fc2f2f>45</color>의 공격을 가한다.\n탄창 : 1",
       "IsStackable": false,
       "MaxStackSize": 1,
-      "Sprite": "Range_1",
+      "Sprite": "Range_3",
       "Type": 1,
       "Weapon": 3
     },
@@ -95,17 +111,37 @@
       "Description": "사람에게 방사하면 위험하다. \n1초당 <color=#fc2f2f>8</color>의 공격을 가한다.",
       "IsStackable": false,
       "MaxStackSize": 1,
-      "Sprite": "Range_1",
+      "Sprite": "Range_4",
       "Type": 1,
       "Weapon": 3
     },
     {
       "TemplateID": 301,
-      "Name": "쇠파이프",
-      "Description": "이거에 맞으면 아프다",
+      "Name": "Mes",
+      "Description": "수술용 도구인것으로 보인다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다.",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Short_1",
+      "Type": 1,
+      "Weapon": 1
+    },
+    {
+      "TemplateID": 302,
+      "Name": "소방도끼",
+      "Description": "소방용 도끼이다.\n적에게 <color=#fc2f2f>22</color>의 공격을 가한다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Short_2",
+      "Type": 1,
+      "Weapon": 1
+    },
+    {
+      "TemplateID": 303,
+      "Name": "후라이팬",
+      "Description": "이거에 맞으면 아프다.\n적에게 <color=#fc2f2f>20</color>의 공격을 가한다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Short_3",
       "Type": 1,
       "Weapon": 1
     },

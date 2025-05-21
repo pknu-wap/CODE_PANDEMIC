@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4026476304709541286}
   - component: {fileID: 2651399112585511126}
   - component: {fileID: 7386498265475683941}
-  - component: {fileID: 7769962209290690167}
+  - component: {fileID: 1510180193644303313}
   m_Layer: 8
   m_Name: PZ_Hydrant_Prefab
   m_TagString: Untagged
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7769962209290690167
+--- !u!114 &1510180193644303313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,11 +168,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5185855958768816002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ec64c7bf46f23442b3694b16c33178d, type: 3}
+  m_Script: {fileID: 11500000, guid: a3ecf61edf3321a42817a976cf59a612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 4026476304709541286}
   _defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  _highlightMaterial: {fileID: 2100000, guid: 51aba4524741e724b86599897bdd3bf3, type: 2}
-  _rigidbody: {fileID: 7386498265475683941}
-  _explosionEffect: {fileID: 725748389856807714, guid: 4bda94453d2ca7444a0fff05b2d425f5, type: 3}
+  _highlightMaterial: {fileID: 2100000, guid: 62c6a46b6579fc444b64a565285d3843, type: 2}
+  _water: {fileID: 5536543239872179491, guid: 6a89baafe4aff8a40a59844c43a7d18d, type: 3}

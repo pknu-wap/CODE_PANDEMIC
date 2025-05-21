@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
-public class PZ_Parking : MonoBehaviour
+public class PZ_Parking : PZ_Puzzle_Main
 {
     [SerializeField] private GameObject _arrowUp;
     [SerializeField] private GameObject _arrowLeft;
@@ -287,5 +287,15 @@ public class PZ_Parking : MonoBehaviour
         }
 
         _arrowList.Clear();
+    }
+
+    public void ClearPuzzle()
+    {
+        PuzzleClear();
+    }
+
+    protected override void PuzzleClear()
+    {
+        Destroy(gameObject);
     }
 }

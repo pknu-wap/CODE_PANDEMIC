@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 
 public class PZ_Soccer_Ball : PZ_Interact_NonSpawn
 {
+    [SerializeField] private PZ_Soccer _Soccer;
     [SerializeField] private Rigidbody2D _rigidbody;
 
     [SerializeField] private GameObject _clearObject;
@@ -108,6 +109,6 @@ public class PZ_Soccer_Ball : PZ_Interact_NonSpawn
 
         Instantiate(_clearObject, transform.position, transform.rotation);
 
-        Destroy(gameObject);
+        _Soccer.ClearPuzzle();
     }
 }

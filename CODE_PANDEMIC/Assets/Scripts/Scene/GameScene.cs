@@ -10,6 +10,7 @@ public class GameScene : BaseScene
     private int _prevStage;
     private int _prevChapter;
     private bool _uiLoad;
+
     protected override bool Init()
     {
         if (base.Init() == false) return false;
@@ -71,7 +72,7 @@ public class GameScene : BaseScene
     private IEnumerator CoChangeStage()
     {
         Managers.Object.ResetStage();
-        yield return null; // Destroy ¿Ï·áµÉ ¶§±îÁö 1ÇÁ·¹ÀÓ ´ë±â
+        yield return null; // Destroy ì™„ë£Œë  ë•Œê¹Œì§€ 1í”„ë ˆì„ ëŒ€ê¸°
         PrepareStage();
     }
   
