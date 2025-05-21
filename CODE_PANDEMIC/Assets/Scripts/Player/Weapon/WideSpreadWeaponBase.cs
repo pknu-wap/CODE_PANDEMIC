@@ -1,16 +1,15 @@
 using UnityEngine;
-using System.Collections;
 
 public class WideSpreadWeaponBase : WeaponBase
 {
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private GameObject firePoint;
-
-    [SerializeField] protected int pelletCount = 6;       // 총알 개수
-    [SerializeField] protected float spreadAngle = 15f;   // 퍼짐 각도
-    [SerializeField] protected float fireForce = 10f;     // 발사 속도
+    [SerializeField]
+    private GameObject bulletPrefab;
+    [SerializeField]
+    private GameObject firePoint;
 
     private Animator _animator;
+    private bool isPickedUp = false;
+
 
     void Start()
     {
@@ -23,39 +22,51 @@ public class WideSpreadWeaponBase : WeaponBase
         SetNextFireTime();
         _currentAmmo--;
 
+        if (_currentAmmo <= 0)
+        {
+            Reload();
+        }
+
+
         if (_animator != null)
         {
             _animator.SetBool("Fire", true);
         }
 
+        if (firePoint != null)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 direction = mousePos - firePoint.transform.position;
+            direction.z = 0f;
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            firePoint.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        }
+
         if (bulletPrefab != null && firePoint != null)
         {
-            for (int i = 0; i < pelletCount; i++)
+            Debug.Log("[WideSpreadWeaponBase] 총알 발사 시작");
+
+            GameObject bulletObject = BulletPool.Instance.GetBullet();
+            bulletObject.transform.position = firePoint.transform.position;
+            bulletObject.transform.rotation = firePoint.transform.rotation;
+
+            Bullet bullet = bulletObject.GetComponent<Bullet>();
+            if (bullet != null)
             {
-                float angleOffset = Random.Range(-spreadAngle, spreadAngle);
-                Quaternion rotation = Quaternion.Euler(0f, 0f, angleOffset) * firePoint.transform.rotation;
-
-                GameObject bulletObject = BulletPool.Instance.GetBullet();
-                bulletObject.transform.position = firePoint.transform.position;
-                bulletObject.transform.rotation = rotation;
-
-                Bullet bullet = bulletObject.GetComponent<Bullet>();
-                if (bullet != null)
-                {
-                    bullet.SetInfo(_weaponData.Damage);
-
-                    Vector2 fireDirection = rotation * Vector2.right;
-                    bullet.Fire(fireDirection.normalized * fireForce);
-                }
-
-                Debug.Log($"총알 발사됨 방향: {rotation * Vector2.right}");
+                bullet.SetInfo(_weaponData.Damage);
+                bullet.Fire(firePoint.transform.right);
             }
+
+            Debug.Log($"총알 발사됨 방향: {firePoint.transform.right}");
         }
+        
 
         StartCoroutine(ResetFireBool());
     }
 
-    private IEnumerator ResetFireBool()
+
+    private System.Collections.IEnumerator ResetFireBool()
     {
         yield return new WaitForSeconds(0.1f);
         if (_animator != null)

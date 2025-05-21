@@ -21,12 +21,11 @@ public class Bullet : MonoBehaviour
     {
         CancelInvoke();
         Invoke("ReturnToPool", _lifeTime);
-        Debug.Log($"�Ѿ� ������ at {transform.position}");
     }
 
     public void Fire(Vector2 direction)
     {
-        Debug.Log("�Ѿ� �߻�� ����: " + direction);
+        Debug.Log("발사되었습니다.: " + direction);
         rb.velocity = direction.normalized * _speed;
     }
 

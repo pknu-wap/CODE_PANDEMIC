@@ -5,11 +5,32 @@ public class PanzerfaustProjectile : MonoBehaviour
     [SerializeField] private float explosionRadius = 3f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private GameObject explosionEffect;
+
     private int damage;
+    private float maxRange;
+    private Vector3 startPosition;
 
     public void SetDamage(int dmg)
     {
         damage = dmg;
+    }
+
+    public void SetRange(float range)
+    {
+        maxRange = range;
+    }
+
+    private void Start()
+    {
+        startPosition = transform.position;
+    }
+
+    private void Update()
+    {
+        if (Vector3.Distance(startPosition, transform.position) >= maxRange)
+        {
+            Explode();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

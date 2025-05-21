@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
@@ -8,10 +8,7 @@ public enum PlayerState
     Move,
     Dead,
     Invincible,
-    IsIdleWithArm,
-    IsIdleNoArm,
-    IsRunningNoArm,
-    IsWalkingNoArm
+    BossCinematic
 }
 
 
@@ -172,5 +169,10 @@ public class PlayerStatus : MonoBehaviour
     {
         Managers.Event.InvokeEvent("OnPlayerDead");
         Managers.Event.InvokeEvent("ResetIntensity");
+    }
+
+    private void OnBossCinematicStart()
+    {
+        Managers.Event.InvokeEvent("OnBossCinematicStart");
     }
 }
