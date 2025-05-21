@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using System.Collections;
+using UnityEngine;
 
 public enum ElevatingMap
 {
@@ -33,7 +34,16 @@ public class PZ_Elevator : PZ_Interact_NonSpawn
 
         base.Interact(player);
 
+        StartCoroutine(ChangeStage());
+
         _animator.SetBool("IsOpened", true);
+
+        _elevatorScreen.Setting(_elevatingMap);
+    }
+
+    private IEnumerator ChangeStage()
+    {
+        yield return new WaitForSeconds(1f);
 
         if (_isNextElevator)
         {
@@ -43,7 +53,5 @@ public class PZ_Elevator : PZ_Interact_NonSpawn
         {
             Managers.Event.InvokeEvent("PrevStage");
         }
-
-        _elevatorScreen.Setting(_elevatingMap);
     }
 }
