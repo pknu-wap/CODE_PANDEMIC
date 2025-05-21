@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_ThrowVisualizer : MonoBehaviour
+public class AI_LineVisualizer : MonoBehaviour
 {
     [SerializeField] private GameObject tilePrefab;
     private float tileLength = 1f;
@@ -33,8 +33,8 @@ public class AI_ThrowVisualizer : MonoBehaviour
 
             Vector3 parentScale = transform.lossyScale;
             _tiles[i].transform.localScale = new Vector2(
-                1f / parentScale.x,
-                1f / parentScale.y
+                height / parentScale.x,
+                height / parentScale.y
          );
         }
 
