@@ -6,6 +6,7 @@ using Cinemachine;
 
 public class EquipWeapon : MonoBehaviour
 {
+
     [SerializeField]
     private WeaponBase _weapon;
 
@@ -16,10 +17,29 @@ public class EquipWeapon : MonoBehaviour
 
     public bool HasWeapon()
     {
-        return _socket.childCount >=1;
+        return _socket.childCount >= 1;
     }
 
     public Transform WeaponSocket => _socket;
+    public void Attack(PlayerController owner)
+    {
+        _weapon?.Attack(owner);
+    }
+
+    public void StartAttack(PlayerController owner)
+    {
+        _weapon?.StartAttack(owner);
+    }
+
+    public void StopAttack()
+    {
+        _weapon?.StopAttack();
+    }
+
+    public void Equip(WeaponBase weapon)
+    {
+        _weapon = weapon;
+    }
 
     private void Awake()
     {
@@ -46,58 +66,41 @@ public class EquipWeapon : MonoBehaviour
         _weaponInput.QuickSlot.Equip2.performed -= Equip2;
         _weaponInput.QuickSlot.Equip3.performed -= Equip3;
         _weaponInput.QuickSlot.Equip4.performed -= Equip4;
-        Managers.Event.InvokeEvent("EquipDisable");
         _weaponInput.Disable();
     }
 
     public void SetWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
     {
 
-       Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
+        Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
         if (data == null)
         {
             Debug.Log("None Data");
             return;
         }
-
-        if (!CheckSameWeapon(data, _weapon)) return;
-
         switch (data.Type)
         {
             case Define.WeaponType.ShortWeapon:
-                CallNotUsingBullet();
-                Equip(data, _socket); //TODO : SOCKET POS 
                 break;
             case Define.WeaponType.PistolWeapon:
-                CallUsingBullet(data.BulletCount);
-                Equip(data, _socket);
+                if (!CheckSameWeapon(data, _weapon)) return;
+
+                DestroyPrevWeapon();
+                Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
+                {
+                    _weapon = obj.GetComponent<WeaponBase>();
+                    _weapon.SetInfo(data);
+
+                });
                 break;
             case Define.WeaponType.RangeWeapon:
-                CallUsingBullet(data.BulletCount);
-
-                Equip(data, _socket);
-
                 break;
             default:
                 break;
-               
         }
 
     }
-    
-    private void Equip(WeaponData data ,Transform socket)
-    {
-        if (_weapon != null) DestroyPrevWeapon();
-
-        Managers.Resource.Instantiate(data.WeaponPrefab, socket.transform, (obj) =>
-        {
-            _weapon = obj.GetComponent<WeaponBase>();
-            _weapon.SetInfo(data);
-
-        });
-    }
-
-    private  bool CheckSameWeapon(WeaponData item , WeaponBase currentWeapon)
+    bool CheckSameWeapon(WeaponData item, WeaponBase currentWeapon)
     {
         if (currentWeapon == null) return true; //장착이 아무것도 안되어있음 
 
@@ -107,20 +110,16 @@ public class EquipWeapon : MonoBehaviour
 
     private void DestroyPrevWeapon()
     {
+        if (_weapon == null) return;
         Destroy(_weapon.gameObject);
         _weapon = null;
     }
-  
-    private void CallNotUsingBullet()
+    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState = null)
     {
-        Managers.Event.InvokeEvent("ShortWeaponEquipped");
+
+
     }
-    private void CallUsingBullet(int  bullet)
-    {
-          Managers.Event.InvokeEvent("GunWeaponEquipped",bullet);
-    }
-      
-    
+
     private bool EquipQuickSlot(int v)
     {
         Debug.Log(v);
@@ -130,13 +129,10 @@ public class EquipWeapon : MonoBehaviour
         _quickSlot.UseQuickSlot(v, gameObject);
         return true;
     }
-    public void Attack(PlayerController owner)
-    {
-        _weapon?.Attack(owner);
-    }
 
     private void Equip1(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(1);
     private void Equip2(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(2);
     private void Equip3(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(3);
     private void Equip4(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(4);
+
 }

@@ -21,6 +21,13 @@ public class PistolWeaponBase : WeaponBase
         if (!CanFire()) return;
         SetNextFireTime();
         _currentAmmo--;
+
+        if (_currentAmmo <= 0)
+        {
+            Reload();
+        }
+
+
         Managers.Event.InvokeEvent("BulletUpdated", _currentAmmo);
         if (_animator != null)
         {
@@ -49,8 +56,6 @@ public class PistolWeaponBase : WeaponBase
                 bullet.SetInfo(_weaponData.Damage);
                 bullet.Fire(firePoint.transform.right);
             }
-
-            Debug.Log($"총알 발사됨 방향: {firePoint.transform.right}");
         }
 
         StartCoroutine(ResetFireBool());

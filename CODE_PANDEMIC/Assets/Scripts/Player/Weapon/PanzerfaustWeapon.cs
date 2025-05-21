@@ -27,7 +27,9 @@ public class PanzerfaustWeapon : WeaponBase
         if (projectile != null)
         {
             projectile.SetDamage(_weaponData.Damage);
+            projectile.SetRange(_weaponData.Range); // Range 전달
         }
     }
+
 
 }
