@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
         _runAction.Enable();
         _dashAction.Enable();
         Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
+        Managers.Event.Subscribe("OnBossCinematicStart", OnEnterCinematic);
+        Managers.Event.Subscribe("OnBossCinematicEnd", OnExitCinematic);
     }
 
     private void OnDisable()
@@ -55,6 +57,8 @@ public class PlayerController : MonoBehaviour
         _runAction.Disable();
         _dashAction.Disable();
         Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
+        Managers.Event.Unsubscribe("OnBossCinematicStart", OnEnterCinematic);
+        Managers.Event.Unsubscribe("OnBossCinematicEnd", OnExitCinematic);
     }
 
     private bool _prevHasWeapon = false;
@@ -133,5 +137,24 @@ public class PlayerController : MonoBehaviour
         _playerStatus.OnHealed(healValue);
     }
     public bool IsDead() => _currentState == PlayerState.Dead;
+
+    private void OnEnterCinematic(object obj)
+    {
+        if (_currentState == PlayerState.Dead) return;
+
+        _currentState = PlayerState.BossCinematic;
+        _playerMovement.StopImmediately();
+
+        Debug.Log("보스 연출 상태 진입");
+    }
+
+    private void OnExitCinematic(object obj)
+    {
+        if (_currentState == PlayerState.BossCinematic)
+        {
+            _currentState = PlayerState.Idle;
+            Debug.Log("보스 연출 종료");
+        }
+    }
 
 }
