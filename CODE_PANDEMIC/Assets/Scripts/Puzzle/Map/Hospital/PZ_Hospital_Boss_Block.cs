@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PZ_Hospital_Boss_Block : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rd;
-    [SerializeField] ShockWave _shockWave;
+   
     public void StartMove()
     {
         StartCoroutine(DropTheCars());
@@ -33,9 +33,7 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
        
-            _shockWave.gameObject.SetActive(true);
-            _shockWave.CallShockWave(2);
-
+           
         
        
         currentTime = 0;

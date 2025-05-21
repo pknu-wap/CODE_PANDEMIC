@@ -16,9 +16,11 @@ public class PickUpSystem : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Item item = other.gameObject.GetComponent<Item>();
-       
+        
         if (item != null)
         {
+            Managers.Game.AddItemCount();
+            Managers.Event.InvokeEvent("ItemReward", item.InventoryItem);
             int reminder = _inventoryData.AddItem(item.InventoryItem, item.Quantity);
             if (reminder == 0) item.DestroyItem();
             else item.Quantity = reminder;
