@@ -71,7 +71,6 @@ public class AI_HospitalBoss : AI_Controller
             enabled = false;
             return;
         }
-        IsBerserk = true;
         _sweepSkill.SetSettings(_sweepSkillData, TargetLayer, this);
         _throwSkill.SetSettings(_throwSkillData, TargetLayer, this);
         _dashSkill.SetSettings(_dashSkillData, TargetLayer, this);
