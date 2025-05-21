@@ -23,8 +23,10 @@ public class FlamethrowerWeapon : WeaponBase
         // 마우스 좌클릭 중일 때만 공격 지속
         if (isHoldingFire)
         {
+            Debug.Log("isHoldingFire: true");
             if (!isFiring && CanFire())
             {
+                Debug.Log("조건 만족: StartFiring 호출 예정");
                 StartFiring();
             }
 
@@ -43,7 +45,14 @@ public class FlamethrowerWeapon : WeaponBase
 
     public override void Attack(PlayerController owner)
     {
-        isHoldingFire = true;
+        if (!CanFire()) return;
+        SetNextFireTime();
+        _currentAmmo--;
+
+        if (_currentAmmo <= 0)
+        {
+            Reload();
+        }
     }
 
     public override void StopAttack()
@@ -64,6 +73,7 @@ public class FlamethrowerWeapon : WeaponBase
 
     private void StartFiring()
     {
+        Debug.Log("🔥 StartFiring() 실행됨");
         if (!CanFire()) return;
 
         isFiring = true;

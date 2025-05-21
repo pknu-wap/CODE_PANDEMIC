@@ -11,12 +11,18 @@ public class EquipWeapon : MonoBehaviour
 
     private QuickSlot _quickSlot;
     private PlayerInput _weaponInput;
+    private int _currentSlotIndex = -1;
 
     [SerializeField] private Transform _socket;
 
     public bool HasWeapon()
     {
         return _socket.childCount >=1;
+    }
+
+    public bool CurrentSlotHasWeapon()
+    {
+        return _socket.childCount > 0;
     }
 
     public Transform WeaponSocket => _socket;
@@ -125,12 +131,24 @@ public class EquipWeapon : MonoBehaviour
         if (!_quickSlot.CheckSlot(v))
             return false;
 
+        _currentSlotIndex = v;
+
         _quickSlot.UseQuickSlot(v, gameObject);
+
+        Animator animator = GetComponent<Animator>();
+        bool isRunning = animator.GetBool("isRunning");
+        bool isWalking = animator.GetBool("isWalking");
+
+        PlayerController player = GetComponent<PlayerController>();
+        player.RefreshArmAnimation(isRunning, isWalking);
+
         return true;
     }
+
 
     private void Equip1(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(1);
     private void Equip2(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(2);
     private void Equip3(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(3);
     private void Equip4(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(4);
+
 }

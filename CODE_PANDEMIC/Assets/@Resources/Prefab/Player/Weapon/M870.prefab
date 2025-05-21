@@ -97,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 3415407600496169663}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 76ae23c2d0b991d42a9175f4d9cf01d4, type: 2}
+  m_Controller: {fileID: 9100000, guid: ca0c48bec8b40e847811a3b520aef087, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -121,11 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSpriteRenderer: {fileID: 0}
-  bulletPrefab: {fileID: 0}
-  firePoint: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
-  pelletCount: 6
-  spreadAngle: 15
-  fireForce: 10
+  bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
+  firePoint: {fileID: 4631523567560669746}
 --- !u!1 &4631523567560669746
 GameObject:
   m_ObjectHideFlags: 0

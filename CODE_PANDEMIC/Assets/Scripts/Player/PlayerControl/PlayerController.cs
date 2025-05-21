@@ -117,6 +117,18 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void RefreshArmAnimation(bool isRunning, bool isWalking)
+    {
+        bool hasWeapon = _equipWeapon.CurrentSlotHasWeapon(); // 소켓에 무기 있는지 확인
+
+        _animator.runtimeAnimatorController = hasWeapon ? noArmOverride : withArmOverride;
+
+        string nextState = isRunning ? "Run" : isWalking ? "Walk" : "Idle";
+        _animator.Play(nextState, 0, 0f);
+
+        _prevHasWeapon = hasWeapon;
+    }
+
     private void OnPlayerDead(object obj)
     {
         if (_currentState == PlayerState.Dead) return;

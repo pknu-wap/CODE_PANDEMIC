@@ -10,6 +10,7 @@ public class FlameHitbox : MonoBehaviour
     public void SetInfo(WeaponData data)
     {
         _damagePerSecond = data.Damage;
+        Debug.Log($"[FlameHitbox] SetInfo 호출됨 - DamagePerSecond: {_damagePerSecond}");//지금 호출 안됨
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -23,6 +24,7 @@ public class FlameHitbox : MonoBehaviour
             {
                 int damage = Mathf.CeilToInt(_damagePerSecond * damageInterval);
                 enemy.TakeDamage(damage);
+                Debug.Log($"[FlameHitbox] 적에게 데미지 줌: {damage}");//이건 됨
             }
 
             _damageTimer = 0f;

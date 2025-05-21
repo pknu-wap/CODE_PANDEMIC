@@ -55,8 +55,6 @@ public class PistolWeaponBase : WeaponBase
                 bullet.SetInfo(_weaponData.Damage);
                 bullet.Fire(firePoint.transform.right);
             }
-
-            Debug.Log($"총알 발사됨 방향: {firePoint.transform.right}");
         }
 
         StartCoroutine(ResetFireBool());
