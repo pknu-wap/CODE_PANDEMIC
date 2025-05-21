@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &424061655576091947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6777640833239284443}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6777640833239284443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424061655576091947}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3249219480943990357}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8714505746201804470
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,10 +60,11 @@ Transform:
   m_GameObject: {fileID: 8714505746201804470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 935.9304, y: 68.02465, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6777640833239284443}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7484304256371377554
@@ -99,12 +131,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72b61a58e79f4541a8a1152c54ca482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSpriteRenderer: {fileID: 0}
-  firePoint: {fileID: 0}
-  meleeRange: 1.5
+  firePoint: {fileID: 6777640833239284443}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
+  meleeCheckRadius: 5
+  throwSpeed: 10
+  returnSpeedMultiplier: 1.2
   shouldRotateWhileFlying: 1
 --- !u!50 &6560796896212039074
 Rigidbody2D:

@@ -47,8 +47,6 @@ public class PlayerController : MonoBehaviour
         _runAction.Enable();
         _dashAction.Enable();
         Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
-        Managers.Event.Subscribe("OnBossCinematicStart", OnEnterCinematic);
-        Managers.Event.Subscribe("OnBossCinematicEnd", OnExitCinematic);
     }
 
     private void OnDisable()
@@ -57,8 +55,6 @@ public class PlayerController : MonoBehaviour
         _runAction.Disable();
         _dashAction.Disable();
         Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
-        Managers.Event.Unsubscribe("OnBossCinematicStart", OnEnterCinematic);
-        Managers.Event.Unsubscribe("OnBossCinematicEnd", OnExitCinematic);
     }
 
     private bool _prevHasWeapon = false;
@@ -78,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
         if (hasWeapon != _prevHasWeapon)
         {
-            _animator.runtimeAnimatorController = hasWeapon ? noArmOverride : withArmOverride;
+            _animator.runtimeAnimatorController = hasWeapon ? withArmOverride : noArmOverride;
             _prevHasWeapon = hasWeapon;
         }
 
@@ -117,18 +113,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void RefreshArmAnimation(bool isRunning, bool isWalking)
-    {
-        bool hasWeapon = _equipWeapon.CurrentSlotHasWeapon(); // 소켓에 무기 있는지 확인
-
-        _animator.runtimeAnimatorController = hasWeapon ? noArmOverride : withArmOverride;
-
-        string nextState = isRunning ? "Run" : isWalking ? "Walk" : "Idle";
-        _animator.Play(nextState, 0, 0f);
-
-        _prevHasWeapon = hasWeapon;
-    }
-
     private void OnPlayerDead(object obj)
     {
         if (_currentState == PlayerState.Dead) return;
@@ -137,25 +121,6 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isDead", true);
         _playerMovement.StopImmediately();
         enabled = false;
-    }
-
-    private void OnEnterCinematic(object obj)
-    {
-        if (_currentState == PlayerState.Dead) return;
-
-        _currentState = PlayerState.BossCinematic;
-        _playerMovement.StopImmediately();
-
-        Debug.Log("보스 연출 상태 진입");
-    }
-
-    private void OnExitCinematic(object obj)
-    {
-        if (_currentState == PlayerState.BossCinematic)
-        {
-            _currentState = PlayerState.Idle;
-            Debug.Log("보스 연출 종료");
-        }
     }
 
     public void TakeDamage(GameObject attacker, float damageValue)
