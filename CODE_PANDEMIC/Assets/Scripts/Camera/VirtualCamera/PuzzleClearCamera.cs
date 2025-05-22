@@ -30,7 +30,7 @@ public class PuzzleClearCamera : MonoBehaviour
     IEnumerator CameraEffect(Action action)
     {
         Managers.UI.FadeAtOnce();
-        _camera.Priority = Define.PuzzleClear;
+        _camera.Priority = Define.Cinematic;
         yield return null;
         Managers.UI.FadeIn(action); ;
 
