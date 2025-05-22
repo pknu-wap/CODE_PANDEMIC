@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using UnityEngine;
+using System.Collections;
 
 public class PZ_NextStage : MonoBehaviour
 {
@@ -6,6 +7,18 @@ public class PZ_NextStage : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!collision.GetComponent<PlayerController>())
+        {
+            return;
+        }
+
+        StartCoroutine(ChangeStage());
+    }
+
+    private IEnumerator ChangeStage()
+    {
+        yield return new WaitForSeconds(1f);
+
         if (_isNextStage)
         {
             Managers.Event.InvokeEvent("NextStage");
