@@ -6,14 +6,13 @@ using UnityEngine.Rendering;
 public class AI_PatientZombie : AI_Controller
 {
     public LayerMask TargetLayer;
-    public GameObject patientAttack;
     public override float AiDamage => _monsterData.AttackDamage;
     public string AIName => _monsterData.NameID;
     public Transform Player => _player.transform;
     [SerializeField] private GameObject attackColliderPrefab;
     [SerializeField] private Transform hitboxSpawnPoint;
-    private float _skillCooldown = 5f;
-    private float _duration = 0.2f;
+    private float _skillCooldown = 2f;
+    private float _duration = 0.5f;
 
     private ISkillBehavior _skill;    
     public override ISkillBehavior Skill { get { return _skill; } }
@@ -52,6 +51,6 @@ public class AI_PatientZombie : AI_Controller
     {
         if (_player == null) return false;
         float distance = Vector2.Distance(transform.position, _player.position);
-        return distance <= _monsterData.AttackRange * 0.7f;
+        return distance <= _monsterData.AttackRange * 0.3f;
     }
 }
