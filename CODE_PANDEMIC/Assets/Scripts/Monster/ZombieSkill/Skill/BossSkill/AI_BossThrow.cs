@@ -3,53 +3,53 @@ using UnityEngine;
 public class AI_BossThrow : AI_ThrowSkill
 {
     private AI_HospitalBoss _bossController;
-
-    public void SetController(AI_HospitalBoss controller)
+    public void SetController(AI_BossController controller)
     {
-        _bossController = controller;
+        _bossController = controller as AI_HospitalBoss;
     }
 
-    public void SetSettings(ThrowSkillData settings, LayerMask targetLayer, AI_HospitalBoss controller)
-    {
-        _settings = settings;
-        _targetLayer = targetLayer;
-        _bossController = controller;
-    }
+    protected override float Cooldown => _bossController.ThrowCooldown;
+    protected override float ChargeDelay => _bossController.SkillChargeDelay;
 
     protected override void ThrowSyringe(Vector2 direction)
+{
+    if (_bossController == null) return;
+
+    int count = _bossController.IsBerserk ? 4 : 3;
+    float baseAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+    float[] angles = _bossController.IsBerserk
+        ? new float[] { +45f, +15f, -15f, -45f }
+        : new float[] { +45f, 0f, -45f };
+
+    foreach (float offset in angles)
     {
-        if (_bossController == null || _bossController._syringePrefab == null) return;
+        float angle = baseAngle + offset;
+        Vector2 dir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
 
-        float baseAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Vector2 shootPos = (Vector2)_bossController.transform.position + dir * 1.2f;
 
-        float[] angles = _bossController.IsBerserk
-            ? new float[] { +45f, +15f, -15f, -45f }
-            : new float[] { +45f, 0f, -45f };
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
 
-        foreach (float offset in angles)
+        GameObject syringe = GameObject.Instantiate(_bossController._syringePrefab, shootPos, rotation);
+
+        syringe.transform.localScale = new Vector3(
+            Mathf.Abs(syringe.transform.localScale.x),
+            syringe.transform.localScale.y,
+            syringe.transform.localScale.z
+        );
+        Projectile projectile = syringe.GetComponent<Projectile>();
+        projectile.SetOwner(_controller);
+        projectile.MaxDistance = _bossController._syringePrefab.GetComponent<Projectile>().MaxDistance;
+
+        Rigidbody2D rb = syringe.GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-            float angle = baseAngle + offset;
-            Vector2 dir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
-            Vector2 shootPos = (Vector2)_bossController.transform.position + dir;
-            Quaternion rotation = Quaternion.Euler(0, 0, angle);
-
-            GameObject syringe = Object.Instantiate(_bossController._syringePrefab, shootPos, rotation);
-            syringe.transform.localScale = new Vector3(
-                Mathf.Abs(syringe.transform.localScale.x),
-                syringe.transform.localScale.y,
-                syringe.transform.localScale.z
-            );
-
-            if (syringe.TryGetComponent(out Projectile projectile))
-            {
-                projectile.SetOwner(_controller);
-                projectile.MaxDistance = _settings.Range;
-            }
-
-            if (syringe.TryGetComponent(out Rigidbody2D rb))
-            {
-                rb.velocity = dir * _settings.SyringeSpeed;
-            }
+            rb.velocity = dir * _bossController.SyringeSpeed;
         }
     }
+}
+
+
+
 }

@@ -2,24 +2,38 @@ using UnityEngine;
 
 public class AI_BossSweep : AI_SweepSkill
 {
-    public void SetSettings(SweepSkillData settings, LayerMask targetLayer, AI_HospitalBoss controller)
-    {
-        _settings = settings;
-        _targetLayer = targetLayer;
-        _bossController = controller;
-    }
-
     private AI_HospitalBoss _bossController;
-
-    protected override float GetDamageMultiplier()
+    public void SetController(AI_BossController controller)
     {
-        return _bossController != null && _bossController.IsBerserk
-            ? 0.7f
-            : 0.5f;
+        _bossController = controller as AI_HospitalBoss;
     }
+    
+    protected override float Cooldown => _bossController.SweepCooldown;
+    protected override float ChargeDelay => _bossController.SkillChargeDelay;
+    protected override int SweepCount => _bossController.SweepCount;
+
+    protected override float SweepInterval => _bossController.SweepInterval;
+    protected override float SweepRange => _bossController.SweepRange;
+    protected override float SweepAngle => _bossController.SweepAngle;
+    protected override LayerMask TargetLayer => LayerMask.GetMask("Player");
     protected override void DoSweepAttack(Vector2 forward)
     {
-        _settings.Range = _bossController.IsBerserk ? 6f : 4f;
-        base.DoSweepAttack(forward);
+        Vector2 origin = _controller.transform.position;
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(origin, SweepRange, TargetLayer);
+
+        foreach (var hit in hits)
+        {
+            Vector2 toTarget = ((Vector2)hit.transform.position - origin).normalized;
+            if (Vector2.Angle(forward, toTarget) <= SweepAngle * 0.5f)
+            {
+                float damage = _bossController?.IsBerserk == true ? _controller.AiDamage * 0.7f : _controller.AiDamage * 0.5f;
+
+                if (hit.TryGetComponent<PlayerStatus>(out var player))
+                {
+                    player.OnDamaged(_controller.gameObject, damage);
+                }
+            }
+        }
     }
 }

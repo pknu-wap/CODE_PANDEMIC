@@ -6,7 +6,7 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
-#region GameData Íµ¨Ï°∞Ï≤¥ Ï†ïÏùò
+#region GameData ±∏¡∂√º ¡§¿«
 
 
 [Serializable]
@@ -55,7 +55,6 @@ public class GameManagerEx
     private PlayerStat _playerStat;
     private PlayerStatSaver _playerStatSaver;
 
-    private RecordManager _record;
     private HashSet<int> _clearPuzzleID;
     private HashSet<int> _obtainedItemIDs;
     private HashSet<int> _interactObjects;
@@ -84,13 +83,6 @@ public class GameManagerEx
         get => _gameData.LatestChapter;
         set => _gameData.LatestChapter = value;
     }
-
-    #region RecordData
-    public void AddItemCount() => _record.AddItemCount();
-    public void AddZombieKillCount()=>_record.AddZombieKillCount();
-    public void AddPlayerDeathCount() => _record.AddPlayerDeathCount();
-    public void AddClearPuzzleCount() => _record.AddClearPuzzleCount();
-    #endregion
     public int LatestStage
     {
         get => _gameData.LatestStage;
@@ -136,10 +128,8 @@ public class GameManagerEx
         _inventorySaver = new InventorySaver(_inventoryData);
 
         _stageProgressSaver = new StageProgressSaver();
+        
         _gameSaver = new GameSaver();
-
-        _record = new RecordManager();
-        _record.Init();
 
         _clearPuzzleID = new HashSet<int>();
         _obtainedItemIDs = new HashSet<int>();
@@ -258,7 +248,7 @@ public class GameManagerEx
         _inventorySaver.SaveInventory();
         _playerStatSaver.SaveStat();
         _equipSaver.SaveEquip();
-        _record.SaveData();
+
         _quickSlotSaver.SaveQuickSlot();
         _stageProgressSaver.Save(_stageProgressData);
 
@@ -275,7 +265,6 @@ public class GameManagerEx
         _equipSaver.LoadEquip();
         _quickSlotSaver.LoadQuickSlot();
 
-        _record.LoadData();
 
         _playerStat.LoadStatData(_playerStatSaver.LoadStat());
         _clearPuzzleID = new HashSet<int>(_stageProgressData.ClearedPuzzleIDs);
@@ -307,8 +296,6 @@ public class GameManagerEx
         _quickSlotSaver.DeleteData();
         _equipSaver.DeleteData();
         _playerStatSaver.DeleteData();
-        _record.ResetData();
-
         _gameData = new GameData();
         Init();
     }

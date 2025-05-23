@@ -17,7 +17,7 @@ public class AI_StateWalk : AI_IState
 
     public void OnUpdate()
     {
-        if (!_controller.IsPlayerDetected() && !_controller._attackedPlayer)
+        if (!_controller.IsPlayerDetected() && !_controller._foundPlayer)
         {
             _controller.ChangeState(new AI_StateIdle(_controller));
             _controller._animator.SetBool("Walk", false);

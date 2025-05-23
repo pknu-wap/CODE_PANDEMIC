@@ -2,7 +2,7 @@
   "items": [
     {
       "TemplateID": 1,
-      "Name": "붕대",
+      "Name": "<color=#ff0000><sprite=0></color>붕대",
       "Description": "응급처치할 때 사용하는 붕대이다.\n체력을 <color=#33fc2f>20</color> 회복한다.",
       "IsStackable": true,
       "MaxStackSize": 50,
@@ -18,7 +18,7 @@
     },
     {
       "TemplateID": 2,
-      "Name": "혈액 팩",
+      "Name": "<color=#ff0000><sprite=0></color>혈액 팩",
       "Description": "위급할때 사용하는 혈액팩인듯하다.\n체력을 <color=#33fc2f>50</color> 회복한다.",
       "IsStackable": true,
       "MaxStackSize": 30,
@@ -34,7 +34,7 @@
     },
     {
       "TemplateID": 3,
-      "Name": "구급상자",
+      "Name": "<color=#ff0000><sprite=0></color>구급상자",
       "Description": "왠만한 심각한 상처들도 치료할 수있을 것 같다. \n체력을 <color=#33fc2f>100</color> 회복한다.",
       "IsStackable": true,
       "MaxStackSize": 20,
@@ -50,24 +50,24 @@
     },
     {
       "TemplateID": 4,
-      "Name": "<sprite=0>버타 500",
-      "Description": "마시면 상쾌한 느낌이든다. \n체력을 <color=#33fc2f>45</color> 회복한다.",
+      "Name": "<color=#ff0000><sprite=0></color>버타 500",
+      "Description": "참고로 나는 오로나빈 C가 더 좋다. \n체력을 <color=#33fc2f>30</color> 회복한다.",
       "IsStackable": true,
-      "MaxStackSize": 50,
+      "MaxStackSize": 20,
       "Sprite": "Portion_4",
       "Type": 0,
       "Weapon": 0,
       "Parameters": [
         {
           "parameterName": "Health",
-          "value": 45
+          "value": 30
         }
       ]
     },
     {
       "TemplateID": 101,
       "Name": "R1895",
-      "Description": "기본적인 권총이다.\n적에게 <color=#fc2f2f>20</color>의 공격을 가한다\n탄창 : 6",
+      "Description": "기본적인 권총이다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다\n탄창 : 6",
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Pistol_1",
@@ -117,7 +117,7 @@
     },
     {
       "TemplateID": 301,
-      "Name": "메스",
+      "Name": "Mes",
       "Description": "수술용 도구인것으로 보인다.\n적에게 <color=#fc2f2f>15</color>의 공격을 가한다.",
       "IsStackable": false,
       "MaxStackSize": 1,

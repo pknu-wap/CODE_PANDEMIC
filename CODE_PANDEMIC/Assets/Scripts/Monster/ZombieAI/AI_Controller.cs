@@ -24,11 +24,10 @@ public class AI_Controller : AI_Base
     protected AI_IState _currentState;
     protected bool _isAttacking;
     public bool _isUsingSkill;
-    public bool _attackedPlayer;
+    public bool _foundPlayer;
 
     private const float SkillRange = 7.5f;
     public virtual ISkillBehavior Skill => null;
-    
     public virtual float AiDamage => 0f;
 
     protected virtual void Awake()
@@ -72,11 +71,9 @@ public class AI_Controller : AI_Base
 
         bool inRange = IsPlayerInSkillRange();
         bool skillReady = Skill.IsReady(this);
-        bool inFov = IsPlayerDetected();
-        if (!_isAttacking && inRange && skillReady && inFov)
-        {
+
+        if (!_isAttacking && inRange && skillReady)
             StartAttack();
-        }
         else if (_isAttacking && (!inRange || !skillReady))
             StopAttack();
     }
@@ -84,6 +81,7 @@ public class AI_Controller : AI_Base
     private void FixedUpdate()
     {
         if (_player == null) return;
+
         UpdateDirection();
         UpdateFovDirection();
         _currentState?.OnFixedUpdate();
@@ -104,7 +102,7 @@ public class AI_Controller : AI_Base
         }
     }
 
-    if (!_attackedPlayer && !playerFound)
+    if (!_foundPlayer && !playerFound)
     {
         _destinationSetter.target = null;
         StopMoving();
@@ -134,6 +132,7 @@ public class AI_Controller : AI_Base
     public void ChangeState(AI_IState newState)
     {
         if (_currentState?.GetType() == newState.GetType()) return;
+
         _currentState?.OnExit();
         _currentState = newState;
         _currentState?.OnEnter();
@@ -144,19 +143,18 @@ public class AI_Controller : AI_Base
         base.TakeDamage(amount);
         if (Health > 0)
             _damageEffect.CallDamageFlash();
-
+        
         if (!_isUsingSkill && _currentState is not AI_StateDie)
-        {
             _player = FindObjectOfType<PlayerStatus>().transform;
             ForceDetectTarget(_player);
-        }
+
         if (Health <= 0f && _currentState is not AI_StateDie)
             ChangeState(new AI_StateDie(this));
     }
 
 
     public bool IsPlayerDetected() =>
-        _attackedPlayer || (_player != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject));
+        _foundPlayer || (_player != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject));
 
     public virtual bool IsPlayerInSkillRange() =>
         _player != null && Vector2.Distance(transform.position, _player.position) <= SkillRange;
@@ -165,7 +163,7 @@ public class AI_Controller : AI_Base
     {
         _player = player;
         _destinationSetter.target = player;
-        _attackedPlayer = true;
+        _foundPlayer = true;
         _aiPath.destination = player.position;
         ChangeState(new AI_StateWalk(this));
     }
@@ -189,9 +187,19 @@ public class AI_Controller : AI_Base
         ChasePlayer();
         ChangeState(new AI_StateIdle(this));
     }
-    public virtual void TryUseSkill(System.Action onSkillComplete)
+
+    public void DoSkill()
     {
-        onSkillComplete?.Invoke();
+        if (Skill == null || !Skill.IsReady(this)) return;
+
+        _isUsingSkill = true;
+        StopMoving();
+
+        Skill.StartSkill(this, () =>
+        {
+            _isUsingSkill = false;
+            ChasePlayer();
+        });
     }
 
     private void ConfigurePathfinding()

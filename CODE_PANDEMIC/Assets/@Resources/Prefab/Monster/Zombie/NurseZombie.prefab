@@ -111,7 +111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8769496702747110074}
-  - component: {fileID: 6704087028828894919}
+  - component: {fileID: 912510998787067245}
   m_Layer: 0
   m_Name: N_Visualizer
   m_TagString: Untagged
@@ -134,7 +134,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8971457870779691340}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6704087028828894919
+--- !u!114 &912510998787067245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1581368628654613828}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 008a46a1d431e9e40a49d5e6b7a91171, type: 3}
+  m_Script: {fileID: 11500000, guid: c8b0abf61c42f2e43bc75389a65e1e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 5215403631231249133, guid: a3752a84a747a9043a7cd4e7e144c743, type: 3}
@@ -229,8 +229,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 459735487
+  m_SortingLayer: 4
   m_SortingOrder: 15
   m_Sprite: {fileID: 1061766669, guid: 82fd57ccc8268cc4882464119a8a36ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -261,7 +261,7 @@ MonoBehaviour:
   _aiFov: {fileID: 6530414335077700310}
   _aiPath: {fileID: 3720851884296316083}
   _isUsingSkill: 0
-  _attackedPlayer: 0
+  _foundPlayer: 0
   _syringePrefab: {fileID: 4688839435082273960, guid: 2d431244ffcb9844aa8d3231bbc23504, type: 3}
   SkillCooldown: 8
   SkillChargeDelay: 1
@@ -270,7 +270,8 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
-  _visualizer: {fileID: 6704087028828894919}
+  _syringeVisualizer: {fileID: 912510998787067245}
+  _throwVisualizer: {fileID: 912510998787067245}
 --- !u!114 &3741103931331856670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,10 +607,6 @@ PrefabInstance:
     - target: {fileID: 5956874867005877003, guid: 419cbdeae069b7c4c942ecb94e6a2b9a, type: 3}
       propertyPath: m_Name
       value: StatusBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 5956874867005877003, guid: 419cbdeae069b7c4c942ecb94e6a2b9a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

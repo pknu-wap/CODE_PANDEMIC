@@ -18,7 +18,7 @@ public abstract class AI_Base : MonoBehaviour
     {
         _monsterData = monsterData;
         _currentHp = monsterData.Hp;
-        _statusBar.Init(monsterData);
+        _statusBar.Init(_currentHp);
     }
     public virtual bool Init()
     {
@@ -51,8 +51,8 @@ public abstract class AI_Base : MonoBehaviour
     public virtual void TakeDamage(int amount)
     {
         _currentHp -= amount;
-        if(_statusBar.gameObject?.activeSelf==false)
-            _statusBar.gameObject?.SetActive(true);
+        if(_statusBar.gameObject.activeSelf==false)
+            _statusBar.gameObject.SetActive(true);
         _statusBar?.UpdateHpBar(Mathf.RoundToInt(_currentHp));
         
         if (_currentHp<= 0f)
@@ -64,7 +64,7 @@ public abstract class AI_Base : MonoBehaviour
     public virtual void Die()
     {
         _state = AI_State.Dead;
-        Managers.Game.AddZombieKillCount();
+
         Action callback = OnDie;
         if (callback != null)
             callback();

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class AI_ZombieBall : AI_Controller
 {
-    [SerializeField] private GameObject zombiePrefab;
-    [SerializeField] private GameObject explosionEffectPrefab;
+    public GameObject zombiePrefab;
+    public GameObject explosionEffectPrefab;
     public float summonRadius = 1.5f;
     public float rushDuration = 5f;
     public float explosionRadius = 2.5f;
@@ -17,24 +17,31 @@ public class AI_ZombieBall : AI_Controller
     protected override void Start()
     {
     
-    // if (_monsterData == null)
-    // {
-    //     _monsterData = new MonsterData();
-    //     _monsterData.NameID = "ZombieBall";
-    //     _monsterData.Hp = 300;
-    //     _monsterData.AttackDelay = 0;
-    //     _monsterData.DetectionRange = 0;
-    //     _monsterData.DetectionAngle = 0;
-    //     _monsterData.MoveSpeed = 7f;
-    //     _monsterData.AttackRange = 0;
-    //     _monsterData.AttackDamage = 50;
-    // }      
+    if (_monsterData == null)
+    {
+        _monsterData = new MonsterData();
+        _monsterData.NameID = "ZombieBall";
+        _monsterData.Hp = 300;
+        _monsterData.AttackDelay = 0;
+        _monsterData.DetectionRange = 0;
+        _monsterData.DetectionAngle = 0;
+        _monsterData.MoveSpeed = 7f;
+        _monsterData.AttackRange = 0;
+        _monsterData.AttackDamage = 50;
+    }      
         base.Start();   
         ChangeState(new AI_StateIdle(this));
     }
 
     protected void Update()
     {
+
+        if (!_isRushing && Input.GetKeyDown(KeyCode.R) && _player != null)
+    {
+        Debug.Log("Rush triggered");
+        Vector2 dir = (_player.transform.position - transform.position).normalized;
+        TriggerRush(dir);
+    }
         if (_isRushing)
         {
             _rb.velocity = _rushDirection * MoveSpeed;
@@ -66,8 +73,8 @@ public class AI_ZombieBall : AI_Controller
                 playerStatus.OnDamaged(gameObject, damage);
             }
         }
+        gameObject.SetActive(false);
         TrySummon();
-        Destroy(gameObject);
     }
 
     private void TrySummon()
@@ -100,20 +107,27 @@ public class AI_ZombieBall : AI_Controller
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        if (!_isRushing)
-        {
-            ForceDetectTarget(_player);
-            Vector2 dir = (_player.transform.position - transform.position).normalized;
-            TriggerRush(dir);
-        }
         if (Health <= 0)
         {
+            TrySummon();
             Explosion();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Bullet bullet = other.GetComponent<Bullet>();
+        if (bullet != null)
+        {
+            PlayerController shooter = bullet.GetOwner();
+            if (shooter != null)
+            {
+                Vector2 dir = (shooter.transform.position - transform.position).normalized;
+                TriggerRush(dir);
+            }
+            return;
+        }
+
         int otherLayer = other.gameObject.layer;
         LayerMask playerMask = LayerMask.GetMask("Player");
         LayerMask wallMask = LayerMask.GetMask("Wall");
