@@ -212,13 +212,13 @@ MonoBehaviour:
   _aiFov: {fileID: 5030598014024440797}
   _aiPath: {fileID: 3116256864094936936}
   _isUsingSkill: 0
-  zombiePrefab: {fileID: 7932018542185672789, guid: 5b8fcd8e3f1fd944fb77340bb1c37469, type: 3}
-  maxSummonedZombies: 3
-  summonCooldown: 8
+  _attackedPlayer: 0
+  zombiePrefab: {fileID: 6117609622689961263, guid: 35be60d419c823f4a8ba23bccc8dd639, type: 3}
+  explosionEffectPrefab: {fileID: 4509841408478016183, guid: c5980dee78a5a464dba045d1e66147d8, type: 3}
   summonRadius: 1.5
-  rushSpeed: 12
   rushDuration: 2
-  rushCooldown: 5
+  explosionRadius: 2.5
+  explosionDamageMultiplier: 1.1
 --- !u!114 &8111326292182301419
 MonoBehaviour:
   m_ObjectHideFlags: 0

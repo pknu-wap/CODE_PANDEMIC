@@ -11,7 +11,7 @@ public class AttackCollider : MonoBehaviour
         _damage = damage;
         _lifetime = duration;
         _targetLayer = targetLayer;
-        Invoke(nameof(DestroySelf), _lifetime);
+        Invoke(nameof(SetActiveSelf), _lifetime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -25,8 +25,8 @@ public class AttackCollider : MonoBehaviour
         }
     }
 
-    private void DestroySelf()
+    private void SetActiveSelf()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
