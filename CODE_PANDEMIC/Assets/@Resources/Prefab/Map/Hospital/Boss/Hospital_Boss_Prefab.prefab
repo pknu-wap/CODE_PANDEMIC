@@ -29368,6 +29368,7 @@ Transform:
   - {fileID: 6154149249882431317}
   - {fileID: 5878928109920425459}
   - {fileID: 2845340577046305858}
+  - {fileID: 2324552119230267785}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2743448810333156189
@@ -29384,7 +29385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _light: {fileID: 1759915435457471507}
   _cameraLimit: {fileID: 5826497339780139234}
-  _mapCamera: {fileID: 0}
+  _mapCamera: {fileID: 9055878563984961368}
   _spawnerParent: {fileID: 1784971804583818819}
   _puzzlesParent: {fileID: 6120223014603042418}
   _ItemsParent: {fileID: 8528678084787739189}
@@ -47425,5 +47426,10 @@ PrefabInstance:
 --- !u!4 &8849676740174964553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 441371645738060243, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
+  m_PrefabInstance: {fileID: 9002782756330008218}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &9055878563984961368 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 98162908619997634, guid: db27043ed6b23f74f898fa9564c747e5, type: 3}
   m_PrefabInstance: {fileID: 9002782756330008218}
   m_PrefabAsset: {fileID: 0}
