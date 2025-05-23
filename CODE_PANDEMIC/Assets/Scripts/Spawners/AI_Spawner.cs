@@ -21,7 +21,6 @@ public class AI_Spawner : SpawnBase
         List<MonsterPosData> list = _spawnerData.Monsters;
         for (int i = 0; i < list.Count; i++)
         {
-            
             MonsterPosData monster = list[i];
             Managers.Data.Monsters.TryGetValue(monster.ID, out MonsterData data);
             if(data!=null)
@@ -33,9 +32,7 @@ public class AI_Spawner : SpawnBase
                     if (ai != null) ai.SetInfo(data);
                     
                 });
-
             }
-
         }
     }
 
