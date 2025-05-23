@@ -35,6 +35,7 @@ public class CinematicCamera :VirtualCameraBase
             }
        }
     }
+    
     IEnumerator EndPuzzleCinematic()
     {
         Managers.UI.FadeAtOnce();
