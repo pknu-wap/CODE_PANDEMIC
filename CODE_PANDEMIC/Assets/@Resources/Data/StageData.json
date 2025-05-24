@@ -84,7 +84,7 @@
 
       ],
       "Puzzles": [ 1, 2 ],
-      "FieldItems": [ 1, 2, 3, 4, 5, 6, 1001,20001,20002,20003,20004,20005 ],
+      "FieldItems": [ 1, 2, 3, 4, 5, 6, 1001,20001,20002,20003,20004,20005,20006 ],
       "InteractableObjects":[1,2,8]
     },
 
@@ -356,7 +356,7 @@
       "TemplateID": 5,
       "ChapterID": 2,
       "StageID": 1,
-      "BossTemplateID": 0,
+      "BossTemplateID":4,
       "MapAddress": "Map2_1",
       "MapName": "도로 1",
       "Spawners": [
@@ -504,7 +504,9 @@
             "y": 96.88
           }
         }
-      ]
+      ],
+      "Puzzles": [ 8,9,10 ],
+      "FieldItems": [ 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 ]
     }
   ]
 }
