@@ -17,7 +17,7 @@ public class PZ_NextStage : MonoBehaviour
 
     private IEnumerator ChangeStage()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
 
         if (_isNextStage)
         {
