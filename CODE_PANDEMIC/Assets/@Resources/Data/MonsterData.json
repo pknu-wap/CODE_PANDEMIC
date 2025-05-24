@@ -37,6 +37,18 @@
       "AttackRange": 1
     },
     {
+      "TemplateID": 4,
+      "NameID": "의사 좀비",
+      "Prefab": "B_004",
+      "Hp": 1000,
+      "AttackDamage": 20,
+      "AttackDelay": 5.0,
+      "DetectionRange": 7.5,
+      "DetectionAngle": 360,
+      "MoveSpeed": 2,
+      "AttackRange": 2
+    },
+    {
       "TemplateID": 5,
       "NameID": "노멀 좀비",
       "Prefab": "M_001",
@@ -56,7 +68,7 @@
       "AttackDamage": 50,
       "AttackDelay": 0,
       "DetectionRange": 0,
-      "DetectionAngle": 0, 
+      "DetectionAngle": 0,
       "MoveSpeed": 2,
       "AttackRange": 2
     },

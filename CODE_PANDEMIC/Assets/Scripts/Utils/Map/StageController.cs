@@ -54,7 +54,10 @@ public class StageController : MonoBehaviour
         Managers.Event.Unsubscribe("OffMapCamera", OffMapCamera);
 
     }
+    public void BossSpawner()
+    {
 
+    }
     public void CreateSpawners()
     {
         List<SpawnerInfoData> spawners = _stageData.Spawners;

@@ -1,10 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 public class AI_HospitalBoss : AI_Controller
 {
+    [SerializeField] 
+    private CinematicCamera _camera;
     public LayerMask TargetLayer;
     public bool IsBerserk { get; private set; }
-
     public GameObject _syringePrefab;
     public ThrowSkillData _throwSkillData;
     public SweepSkillData _sweepSkillData;
@@ -45,7 +47,18 @@ public class AI_HospitalBoss : AI_Controller
             return null;
         }
     }
+    private void BossCinematic()
+    {
 
+    }
+    private IEnumerator BossSequence()
+    {
+        Managers.Event.InvokeEvent("Cinematic");
+        //TODO : boss SEQUENCE 
+        yield return null;
+        Managers.Event.InvokeEvent("EndCinematic",Define.CinematicType.BossSequence);
+    }
+  
     protected override void Start()
     {
         ChangeState(new AI_StateIdle(this));
@@ -84,7 +97,10 @@ public class AI_HospitalBoss : AI_Controller
             EnterBerserkMode();
         }
         if (Health <= 0f && _currentState is not AI_StateDie)
+        {
+            Managers.Event.InvokeEvent("OnBossClear");
             ChangeState(new AI_StateDie(this));
+        }
     }
     protected override void Awake()
     {

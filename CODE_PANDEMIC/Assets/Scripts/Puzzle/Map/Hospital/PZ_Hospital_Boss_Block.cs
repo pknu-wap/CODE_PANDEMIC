@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class PZ_Hospital_Boss_Block : MonoBehaviour
 {
@@ -8,6 +9,19 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
     public void StartMove()
     {
         StartCoroutine(DropTheCars());
+    }
+    private void OnEnable()
+    {
+        Managers.Event.Subscribe("OnBossClear", OnBossClear);
+    }
+    private void OnDisable()
+    {
+        Managers.Event.Unsubscribe("OnBossClear", OnBossClear);
+    }
+
+    private void OnBossClear(object obj)
+    {
+        Destroy(gameObject);
     }
 
     private IEnumerator DropTheCars()
@@ -32,9 +46,6 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-       
-           
-        
        
         currentTime = 0;
         currentPercent = 0;
@@ -113,9 +124,6 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-        
-
-        
-
+        Managers.Event.InvokeEvent("SpawnBossMonster");
     }
 }
