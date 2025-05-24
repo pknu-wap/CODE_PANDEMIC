@@ -19,6 +19,7 @@ public class CloseRangeWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
         SetNextFireTime();
+        Managers.Event.InvokeEvent("BulletUpdated", _currentAmmo);
 
 
         if (_animator != null)
@@ -39,7 +40,7 @@ public class CloseRangeWeaponBase : WeaponBase
                 bullet.Fire(firePoint.transform.right);
             }
 
-            Debug.Log($"√—æÀ πﬂªÁµ  πÊ«‚: {firePoint.transform.right}");
+            Debug.Log($"Ï¥ùÏïå Î∞úÏÇ¨Îê® Î∞©Ìñ•: {firePoint.transform.right}");
         }
 
         StartCoroutine(ResetFireBool());
