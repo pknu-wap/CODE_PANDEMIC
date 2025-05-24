@@ -273,7 +273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9061830639736788029}
   - component: {fileID: 422852920967331986}
-  - component: {fileID: 2520442493359103339}
+  - component: {fileID: 7615082415706313660}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 2
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 14609464894489480}
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
@@ -336,7 +336,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 5192109977543796480}
---- !u!114 &2520442493359103339
+--- !u!114 &7615082415706313660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -580,7 +580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8b123943eefae4b901d624e71276f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clearCamera: {fileID: 2520442493359103339}
+  _clearCamera: {fileID: 7615082415706313660}
   _light: {fileID: 0}
 --- !u!1 &8769601051687306671
 GameObject:

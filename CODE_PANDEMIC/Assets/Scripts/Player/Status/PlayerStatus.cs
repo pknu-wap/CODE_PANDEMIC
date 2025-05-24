@@ -84,9 +84,21 @@ public class PlayerStatus : MonoBehaviour
       
         if (obj is PlayerStat stat)
         {
+            int tempHp = _maxHp;
             _maxHp= stat.MaxHp;
-            _defend=stat.Defend;
+            if (_maxHp > tempHp)
+            {
+                int increaseHp = _maxHp-tempHp;
+                _currentHp += increaseHp;
+                Managers.Game.PlayerStat.SetCurrentHp(_currentHp);
+            }
+            if (_currentHp > _maxHp)
+            {
+                _currentHp = _maxHp;
+                Managers.Game.PlayerStat.SetCurrentHp(_currentHp);
+            }
             
+            _defend=stat.Defend;
             _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
         }
 

@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 5670034637811134636}
   - component: {fileID: 5058445921826871396}
   - component: {fileID: 7343720785181734316}
-  - component: {fileID: 8287285127082691500}
   - component: {fileID: 4057090920099184391}
+  - component: {fileID: 9155733756494228091}
   m_Layer: 8
   m_Name: PZ_StreetLamp_R_Prefab
   m_TagString: Untagged
@@ -110,7 +110,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7448706199135650910}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.53, y: 9.01, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
@@ -191,7 +191,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &8287285127082691500
+--- !u!114 &4057090920099184391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7448706199135650910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf31e9a5380fb5b46816e4bf36e0e4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 5058445921826871396}
+  _defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  _highlightMaterial: {fileID: 2100000, guid: bfc385c37cbf30f468363b2257f47d20, type: 2}
+  _animator: {fileID: 7343720785181734316}
+  _pointLight: {fileID: 2796671589770107853}
+--- !u!60 &9155733756494228091
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,21 +274,3 @@ PolygonCollider2D:
       - {x: 0.56, y: 0.58}
       - {x: 0.62, y: 0.58}
   m_UseDelaunayMesh: 0
---- !u!114 &4057090920099184391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7448706199135650910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf31e9a5380fb5b46816e4bf36e0e4b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 5058445921826871396}
-  _defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  _highlightMaterial: {fileID: 2100000, guid: bfc385c37cbf30f468363b2257f47d20, type: 2}
-  _animator: {fileID: 7343720785181734316}
-  _isLeft: 0
-  _pointLight: {fileID: 2796671589770107853}

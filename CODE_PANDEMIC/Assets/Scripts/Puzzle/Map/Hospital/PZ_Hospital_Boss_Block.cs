@@ -1,13 +1,27 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using System;
 
 public class PZ_Hospital_Boss_Block : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rd;
-    [SerializeField] ShockWave _shockWave;
+   
     public void StartMove()
     {
         StartCoroutine(DropTheCars());
+    }
+    private void OnEnable()
+    {
+        Managers.Event.Subscribe("OnBossClear", OnBossClear);
+    }
+    private void OnDisable()
+    {
+        Managers.Event.Unsubscribe("OnBossClear", OnBossClear);
+    }
+
+    private void OnBossClear(object obj)
+    {
+        Destroy(gameObject);
     }
 
     private IEnumerator DropTheCars()
@@ -32,11 +46,6 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-       
-            _shockWave.gameObject.SetActive(true);
-            _shockWave.CallShockWave(2);
-
-        
        
         currentTime = 0;
         currentPercent = 0;
@@ -115,9 +124,6 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-        
-
-        
-
+        Managers.Event.InvokeEvent("SpawnBossMonster");
     }
 }
