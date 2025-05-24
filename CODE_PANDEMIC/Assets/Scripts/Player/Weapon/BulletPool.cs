@@ -22,7 +22,6 @@ public class BulletPool : MonoBehaviour
 
         if (bulletPrefab == null)
         {
-            Debug.LogError("Bullet Prefab 할당되지 않음");
             return;
         }
 

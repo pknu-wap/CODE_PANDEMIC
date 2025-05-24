@@ -2,66 +2,95 @@ using UnityEngine;
 
 public class PanzerfaustProjectile : MonoBehaviour
 {
-    [SerializeField] private float explosionRadius = 3f;
-    [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private GameObject explosionEffect;
+    private float _speed;
+    private float _range;
+    private int _damage;
+    private PlayerController _owner;
+    private Rigidbody2D rb;
 
-    private int damage;
-    private float maxRange;
-    private Vector3 startPosition;
+    [SerializeField] private float _explosionRadius = 2.5f; // 폭발 범위
+    [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private GameObject _explosionEffect;
 
-    public void SetDamage(int dmg)
+    private Vector3 _startPos;
+    private bool _isExploded = false;
+
+    private void Awake()
     {
-        damage = dmg;
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    public void SetRange(float range)
+    public void Init(int damage, float speed, float range, PlayerController owner, Vector2 direction)
     {
-        maxRange = range;
+        _damage = damage;
+        _speed = speed;
+        _range = range;
+        _owner = owner;
+        _startPos = transform.position;
+        _isExploded = false;
+
+        rb.velocity = direction.normalized * _speed;
+        CancelInvoke();
+        Invoke("CheckRangeAndExplode", 0.05f); // 반복적으로 사거리 체크
     }
 
-    private void Start()
+    // 일정 거리 초과 체크용
+    private void CheckRangeAndExplode()
     {
-        startPosition = transform.position;
+        if (_isExploded) return;
+
+        float dist = Vector3.Distance(_startPos, transform.position);
+        if (dist >= _range)
+        {
+            Explode();
+            return;
+        }
+        Invoke("CheckRangeAndExplode", 0.02f); // 계속 체크
     }
 
-    private void Update()
+    private void Explode()
     {
-        if (Vector3.Distance(startPosition, transform.position) >= maxRange)
+        if (_isExploded) return;
+        _isExploded = true;
+
+        // 폭발 이펙트
+        if (_explosionEffect != null)
+            Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+
+        // 범위 내 적 탐지 및 데미지
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, _explosionRadius, _enemyLayer);
+        foreach (var enemyCol in enemies)
+        {
+            AI_Base enemy = enemyCol.GetComponent<AI_Base>();
+            if (enemy != null)
+                enemy.TakeDamage(_damage);
+        }
+
+        // 상태 초기화 및 풀로 반환
+        _damage = 0;
+        _owner = null;
+        rb.velocity = Vector2.zero;
+        BulletPool.Instance.ReturnBullet(gameObject);
+    }
+
+    // 벽(지형) 충돌 시 폭발
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (_isExploded) return;
+        // Enemy 레이어가 아니라면(벽 등), 폭발
+        if (((1 << collision.gameObject.layer) & _enemyLayer) == 0)
         {
             Explode();
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    // 적 트리거 충돌 시도 폭발 (옵션)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Explode();
-    }
-
-    private void Explode()
-    {
-        if (explosionEffect != null)
+        AI_Base enemy = other.GetComponent<AI_Base>();
+        if (enemy != null)
         {
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            Explode();
         }
-
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, enemyLayer);
-        foreach (var enemyCol in enemies)
-        {
-            AI_Base enemy = enemyCol.GetComponent<AI_Base>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage);
-            }
-        }
-
-        Debug.Log("판처파우스트 폭발!!");
-        Destroy(gameObject);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }

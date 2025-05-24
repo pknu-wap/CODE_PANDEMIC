@@ -39,10 +39,18 @@ public class PistolWeaponBase : WeaponBase
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 direction = mousePos - firePoint.transform.position;
             direction.z = 0f;
-
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
             firePoint.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+            if (weaponSpriteRenderer != null)
+            {
+                // flipY: 마우스가 firePoint(총구)보다 왼쪽에 있으면 true, 아니면 false
+                weaponSpriteRenderer.flipY = (mousePos.x < firePoint.transform.position.x);
+                // flipX는 사용하지 마
+            }
         }
+
 
         if (bulletPrefab != null && firePoint != null)
         {

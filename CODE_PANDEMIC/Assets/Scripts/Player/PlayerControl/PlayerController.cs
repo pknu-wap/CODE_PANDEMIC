@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private AnimatorOverrideController withArmOverride;
     [SerializeField] private AnimatorOverrideController noArmOverride;
-
+    [SerializeField] private SpriteRenderer playerSpriteRenderer;
 
 
     private void Awake()
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         Managers.Event.Unsubscribe("OnBossCinematicEnd", OnExitCinematic);
     }
 
+
     private bool _prevHasWeapon = false;
 
     private void Update()
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
         if (hasWeapon != _prevHasWeapon)
         {
-            _animator.runtimeAnimatorController = hasWeapon ? withArmOverride : noArmOverride;
+            _animator.runtimeAnimatorController = hasWeapon ? noArmOverride : withArmOverride;
             _prevHasWeapon = hasWeapon;
         }
 
@@ -114,7 +115,6 @@ public class PlayerController : MonoBehaviour
         {
             _equipWeapon?.StopAttack();
         }
-
     }
 
     private void OnPlayerDead(object obj)
@@ -142,19 +142,26 @@ public class PlayerController : MonoBehaviour
     {
         if (_currentState == PlayerState.Dead) return;
 
-        _currentState = PlayerState.BossCinematic;
+        _currentState = PlayerState.Cinematic;
         _playerMovement.StopImmediately();
 
-        Debug.Log("보스 연출 상태 진입");
+        Debug.Log("연출 상태 진입");
     }
 
     private void OnExitCinematic(object obj)
     {
-        if (_currentState == PlayerState.BossCinematic)
+        if (_currentState == PlayerState.Cinematic)
         {
             _currentState = PlayerState.Idle;
-            Debug.Log("보스 연출 종료");
+            Debug.Log("연출 상태 종료");
         }
+    }
+
+    public void Move(Vector2 moveInput, bool isRunning)
+    {
+        // ... 이동 처리 ...
+        if (moveInput.x != 0)
+            playerSpriteRenderer.flipX = moveInput.x < 0;
     }
 
 }
