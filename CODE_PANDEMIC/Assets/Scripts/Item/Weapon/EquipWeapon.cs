@@ -81,23 +81,20 @@ public class EquipWeapon : MonoBehaviour
         switch (data.Type)
         {
             case Define.WeaponType.ShortWeapon:
-                break;
             case Define.WeaponType.PistolWeapon:
+            case Define.WeaponType.RangeWeapon:
                 if (!CheckSameWeapon(data, _weapon)) return;
-
                 DestroyPrevWeapon();
                 Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
                 {
                     _weapon = obj.GetComponent<WeaponBase>();
                     _weapon.SetInfo(data);
-
                 });
-                break;
-            case Define.WeaponType.RangeWeapon:
                 break;
             default:
                 break;
         }
+
 
     }
     bool CheckSameWeapon(WeaponData item, WeaponBase currentWeapon)
