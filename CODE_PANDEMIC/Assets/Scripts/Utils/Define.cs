@@ -58,14 +58,19 @@ public class Define
         Speed,
         Attack
     }
+    public enum CinematicType
+    {
+        PuzzleClear,
+        BossSequence
+    }
     public const int STAGES_PER_CHAPTER = 4; //3 normal 1 boss
 
     public const int ArmorCount = 3;
 
     public const int None = 0;
     public const int PlayerCamera = 10;
-    public const int PuzzleClear = 20;
-    public const int BossSequence = 30;
+    public const int Cinematic = 20;
+  
 
 }
 public static class QuickSlotIndex

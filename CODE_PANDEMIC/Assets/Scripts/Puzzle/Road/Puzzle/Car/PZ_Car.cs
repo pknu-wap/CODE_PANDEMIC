@@ -162,6 +162,8 @@ public class PZ_Car : PZ_Interact_NonSpawn
     // 길막 오브젝트에게 달려가 붐
     private IEnumerator RushToBlockObject()
     {
+        Managers.Event.InvokeEvent("Cinematic", Define.CinematicType.PuzzleClear);
+        yield return CoroutineHelper.WaitForSeconds(1.0f); //wait for  camera 
         Vector2 currentPos = _rigidbody.position; // 시작점
         Vector2 destinationPos = _rigidbody.position; // 도착점
 
@@ -203,6 +205,8 @@ public class PZ_Car : PZ_Interact_NonSpawn
         }
 
         // 여기에 폭발 이펙트 및 길막는 오브젝트 파괴 구현
+        Managers.Event.InvokeEvent("EndCinematic", Define.CinematicType.PuzzleClear);
+        yield return CoroutineHelper.WaitForSeconds(1.0f);
 
         Destroy(gameObject);
     }

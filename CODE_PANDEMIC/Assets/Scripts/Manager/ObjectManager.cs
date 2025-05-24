@@ -21,7 +21,7 @@ public class ObjectManager : MonoBehaviour
         _leftPuzzles = 0;
 
         
-        // ¸Ê »ý¼º
+        // ë§µ ìƒì„±
         bool mapLoaded = false;
         Managers.Resource.Instantiate(stageData.MapAddress, null, (obj) =>
         {
@@ -44,7 +44,6 @@ public class ObjectManager : MonoBehaviour
             playerCam.Setup(Player.transform, MapObject.CameraLimit);
             cameraLoaded = true;
 
-           
             playerCam.SnapToTargetImmediately();
         });
 

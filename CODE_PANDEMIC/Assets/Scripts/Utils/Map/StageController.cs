@@ -54,7 +54,10 @@ public class StageController : MonoBehaviour
         Managers.Event.Unsubscribe("OffMapCamera", OffMapCamera);
 
     }
+    public void BossSpawner()
+    {
 
+    }
     public void CreateSpawners()
     {
         List<SpawnerInfoData> spawners = _stageData.Spawners;
@@ -105,7 +108,7 @@ public class StageController : MonoBehaviour
                 }
                 else if (generatorItem != null)
                 {
-                    Color color = new Color(0.00784f, 0.00784f, 0.00784f, 0);
+                    Color color = new Color(0.02f, 0.02f, 0.02f, 0);
                     
                     _light?.SettingLight(color);
                     generatorItem.SetInfo(data);
