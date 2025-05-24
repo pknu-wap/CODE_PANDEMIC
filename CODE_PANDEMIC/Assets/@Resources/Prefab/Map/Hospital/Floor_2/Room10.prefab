@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4213821680251242548}
   - component: {fileID: 106938541622153302}
   - component: {fileID: 1493178697094011414}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_79
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,9 +141,9 @@ GameObject:
   - component: {fileID: 8399002899222679830}
   - component: {fileID: 4789299102412006097}
   - component: {fileID: 2619306494612532381}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_23 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,9 +271,9 @@ GameObject:
   - component: {fileID: 1327253622975911252}
   - component: {fileID: 723337778004891929}
   - component: {fileID: 2767722193698743239}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_79 (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -401,9 +401,9 @@ GameObject:
   - component: {fileID: 4978357822354241516}
   - component: {fileID: 4141593908183138252}
   - component: {fileID: 1529881746393130827}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_8 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -463,7 +463,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 1568211945, guid: 77af7b329dd882b4799a179446095b81, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -531,9 +531,9 @@ GameObject:
   - component: {fileID: 5427521370390778264}
   - component: {fileID: 1920899056746837521}
   - component: {fileID: 2207342411180899175}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_23
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -650,136 +650,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.72, y: 0.51}
   m_EdgeRadius: 0
---- !u!1 &1705893978798973202
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 33396567452085358}
-  - component: {fileID: 4035753394588538039}
-  - component: {fileID: 5257173705200009037}
-  m_Layer: 0
-  m_Name: TileC_PHC_Interior-Hospital-Alt Ace_12
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &33396567452085358
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1705893978798973202}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 361.18, y: 112.15001, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4516212105169747276}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4035753394588538039
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1705893978798973202}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 1012697339, guid: 77af7b329dd882b4799a179446095b81, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.36, y: 0.6}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!61 &5257173705200009037
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1705893978798973202}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.44, y: 0.67}
-    newSize: {x: 0.36, y: 0.6}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.36, y: 0.6}
-  m_EdgeRadius: 0
 --- !u!1 &1716467162176728483
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,9 +661,9 @@ GameObject:
   - component: {fileID: 2287518077285989792}
   - component: {fileID: 5391096388759977686}
   - component: {fileID: 6419633931432128243}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_86 (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -921,9 +791,9 @@ GameObject:
   - component: {fileID: 2087808400343697038}
   - component: {fileID: 3802866987438859120}
   - component: {fileID: 4422966515081956808}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_86 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1051,9 +921,9 @@ GameObject:
   - component: {fileID: 679326534883370901}
   - component: {fileID: 2035847528070807859}
   - component: {fileID: 3824710857142425530}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_86
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1181,9 +1051,9 @@ GameObject:
   - component: {fileID: 6106327645535348110}
   - component: {fileID: 4181125960514572093}
   - component: {fileID: 3566092267125631473}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_86 (5)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1311,9 +1181,9 @@ GameObject:
   - component: {fileID: 7491457786251517054}
   - component: {fileID: 6184676405862907407}
   - component: {fileID: 77434970908679682}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_17
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1461,7 +1331,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 33396567452085358}
   - {fileID: 679326534883370901}
   - {fileID: 6106327645535348110}
   - {fileID: 3492291187476524619}
@@ -1481,7 +1350,8 @@ Transform:
   - {fileID: 1551047665702094777}
   - {fileID: 4978357822354241516}
   - {fileID: 1067166462537223955}
-  - {fileID: 5047690749716133919}
+  - {fileID: 3013136514124640565}
+  - {fileID: 2524858306558280686}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &7851435940661481835
@@ -2574,9 +2444,9 @@ GameObject:
   - component: {fileID: 2513311891284791819}
   - component: {fileID: 2860100039482247066}
   - component: {fileID: 3584338593107191555}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_86 (4)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2704,9 +2574,9 @@ GameObject:
   - component: {fileID: 1551047665702094777}
   - component: {fileID: 3699333251386090772}
   - component: {fileID: 2622559114012285476}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_8 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2766,7 +2636,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1568211945, guid: 77af7b329dd882b4799a179446095b81, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2834,9 +2704,9 @@ GameObject:
   - component: {fileID: 1067166462537223955}
   - component: {fileID: 7529699098961300298}
   - component: {fileID: 5701562314328674071}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_8 (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2896,7 +2766,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 4
   m_Sprite: {fileID: 1568211945, guid: 77af7b329dd882b4799a179446095b81, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2964,9 +2834,9 @@ GameObject:
   - component: {fileID: 2722333595269711447}
   - component: {fileID: 1288115628774033919}
   - component: {fileID: 7652878150641845326}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_79 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3094,9 +2964,9 @@ GameObject:
   - component: {fileID: 7718058945967442199}
   - component: {fileID: 5993305524824366043}
   - component: {fileID: 9110915220383278391}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_16
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3213,90 +3083,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.42, y: 0.36}
   m_EdgeRadius: 0
---- !u!1 &7231567789424003021
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5047690749716133919}
-  - component: {fileID: 88990739815464798}
-  m_Layer: 0
-  m_Name: TileC_PHC_Interior-Hospital-Alt Ace_44 (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5047690749716133919
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7231567789424003021}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 364.12994, y: 108.240005, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4516212105169747276}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &88990739815464798
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7231567789424003021}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 546094771, guid: 77af7b329dd882b4799a179446095b81, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.42, y: 0.33}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &7495565011327943011
 GameObject:
   m_ObjectHideFlags: 0
@@ -3308,9 +3094,9 @@ GameObject:
   - component: {fileID: 4238952927490425900}
   - component: {fileID: 4805161148316895796}
   - component: {fileID: 2436809869983478680}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_8
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3438,9 +3224,9 @@ GameObject:
   - component: {fileID: 3492291187476524619}
   - component: {fileID: 3879478169874805701}
   - component: {fileID: 6762181831203165386}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_86 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3568,9 +3354,9 @@ GameObject:
   - component: {fileID: 4849739122023044345}
   - component: {fileID: 6410916655261794741}
   - component: {fileID: 7998551786609776957}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_23 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3698,9 +3484,9 @@ GameObject:
   - component: {fileID: 3048473453247352193}
   - component: {fileID: 6460404268115601870}
   - component: {fileID: 6500891149613791372}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TileC_PHC_Interior-Hospital-Alt Ace_79 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3817,3 +3603,139 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48, y: 1.08}
   m_EdgeRadius: 0
+--- !u!1001 &339734930261896063
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4516212105169747276}
+    m_Modifications:
+    - target: {fileID: 2184642420346358735, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184642420346358735, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 363.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 108.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3702539628829023398, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_Name
+      value: PZ_Blood_Prefab (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778677444660940591, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 546094771, guid: 77af7b329dd882b4799a179446095b81, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+--- !u!4 &2524858306558280686 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2863412360122771601, guid: 39d757c4ef30ea349bff9a18478f87c3, type: 3}
+  m_PrefabInstance: {fileID: 339734930261896063}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1450697235246415112
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4516212105169747276}
+    m_Modifications:
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 361.06134
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 112.12074
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7850076356040815322, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+      propertyPath: m_Name
+      value: PZ_FireExtinguisher_Prefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+--- !u!4 &3013136514124640565 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4463391316199902269, guid: 671f46175726bdf4a97d9caaf021efb1, type: 3}
+  m_PrefabInstance: {fileID: 1450697235246415112}
+  m_PrefabAsset: {fileID: 0}

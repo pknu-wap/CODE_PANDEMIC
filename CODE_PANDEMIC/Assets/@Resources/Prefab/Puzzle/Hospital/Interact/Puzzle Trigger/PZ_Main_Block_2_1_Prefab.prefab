@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2626599880079809801}
   - component: {fileID: 4963006075550855099}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_Sprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2159561066712165009}
   - component: {fileID: 8662892832831276779}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_Sprite (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4378993842615916789}
   - component: {fileID: 6444382151082260926}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_Sprite (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,9 +264,9 @@ GameObject:
   - component: {fileID: 4589067023715171247}
   - component: {fileID: 6648466805033934640}
   - component: {fileID: 7692023881522290184}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_2_1_Prefab
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -415,7 +415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2728207748611507401}
   - component: {fileID: 7667459640049348884}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_Sprite (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,7 +499,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6737940018537005984}
   - component: {fileID: 9204770551764809333}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -583,7 +583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5679876466904674514}
   - component: {fileID: 8695507142740036006}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_Sprite (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,6 +665,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 412036603758660841}
     m_Modifications:
+    - target: {fileID: 605162929482365484, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1252163241099101565, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -708,6 +712,10 @@ PrefabInstance:
     - target: {fileID: 4970408151456916397, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
       propertyPath: m_Name
       value: PuzzleClearCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970408151456916397, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7311814975631630200, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
       propertyPath: m_Priority
@@ -789,6 +797,10 @@ PrefabInstance:
     - target: {fileID: 8173485693187016965, guid: 718db2474f2e103468213ab5b5ad9a1e, type: 3}
       propertyPath: m_Name
       value: BlockLight2D
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173485693187016965, guid: 718db2474f2e103468213ab5b5ad9a1e, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
