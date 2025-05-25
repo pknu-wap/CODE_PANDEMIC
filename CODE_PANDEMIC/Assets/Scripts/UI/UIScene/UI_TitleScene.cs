@@ -17,29 +17,25 @@ public class UI_TitleScene : UI_Scene
     {
         StartButton,
         OptionButton,
-        ExitButton
+        ExitButton,
+        HelpButton
     }
-    GameObject _startButton;
-    GameObject _optionButton;
-    GameObject _exitButton;
-
-    
+  
     public override bool Init()
     {
         if (base.Init() == false) return false;
         BindText(typeof(Texts));
         BindButton(typeof(Buttons));
 
-       _startButton= GetButton((int)Buttons.StartButton).gameObject;
-       _optionButton=GetButton((int)Buttons.OptionButton).gameObject;
-       _exitButton=GetButton((int)Buttons.ExitButton).gameObject;
-
-        BindEvent(_startButton, OnClickStartButton);
-        BindEvent(_optionButton, OnClickOptionButton);
-        BindEvent(_exitButton, OnClickExitButton);
+        BindEvent(GetButton((int)Buttons.StartButton).gameObject, OnClickStartButton);
+        BindEvent(GetButton((int)Buttons.OptionButton).gameObject, OnClickOptionButton);
+        BindEvent(GetButton((int)Buttons.ExitButton).gameObject, OnClickExitButton);
+        BindEvent(GetButton((int)Buttons.HelpButton).gameObject, OnClickHelpButton);
 
         return true;
     }
+
+
 
     #region EventHandler
     private void OnClickExitButton()
@@ -55,8 +51,11 @@ public class UI_TitleScene : UI_Scene
     {
         Managers.UI.ShowPopupUI<UI_GameStartPopUp>();
     }
-        
-        
-     
+
+    private void OnClickHelpButton()
+    {
+        Managers.UI.ShowPopupUI<UI_TutorialPopUp>("UI_KeyboardTutorialPopUp");
+    }
+
     #endregion
 }
