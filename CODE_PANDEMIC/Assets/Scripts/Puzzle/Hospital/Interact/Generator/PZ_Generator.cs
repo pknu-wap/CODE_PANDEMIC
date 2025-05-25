@@ -8,7 +8,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     private Animator _animator;
 
     private bool _isInteracted = false;
-    private PuzzleData _data;
+    protected PuzzleData _data;
     private int _rememberCount = 5;
 
     public static event Action TurnOnGenerator;
@@ -18,10 +18,11 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     [SerializeField] private Material _defaultMaterial;
     [SerializeField] private Material _highlightMaterial;
 
-    public void SetInfo(PuzzleData data)
+    public override void SetInfo(PuzzleData data)
     {
-        _data = data;
+        base.SetInfo(data);
         _rememberCount = data.RememberCount;
+      
     }
 
     private void Start()

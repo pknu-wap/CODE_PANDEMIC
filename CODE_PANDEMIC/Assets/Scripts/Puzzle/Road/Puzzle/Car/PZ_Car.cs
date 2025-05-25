@@ -14,7 +14,7 @@ public class PZ_Car : PZ_Interact_NonSpawn
 {
     private PZ_Parking _Parking;
     private Rigidbody2D _rigidbody;
-
+    [SerializeField] CinematicCamera _camera;
     [SerializeField] private bool _isMainCar = false; // 꺼내야 하는 차인가
     [SerializeField] private bool _isVerticalCar = false; // 세로로 배치된 차인가
 
@@ -162,7 +162,11 @@ public class PZ_Car : PZ_Interact_NonSpawn
     // 길막 오브젝트에게 달려가 붐
     private IEnumerator RushToBlockObject()
     {
-        Managers.Event.InvokeEvent("Cinematic", Define.CinematicType.PuzzleClear);
+        if (_camera)
+        {
+            _camera.gameObject.SetActive(true);
+            _camera.OnCinematic();
+        }
         yield return CoroutineHelper.WaitForSeconds(1.0f); //wait for  camera 
         Vector2 currentPos = _rigidbody.position; // 시작점
         Vector2 destinationPos = _rigidbody.position; // 도착점
@@ -206,10 +210,10 @@ public class PZ_Car : PZ_Interact_NonSpawn
 
         Instantiate(_explosionEffect, transform.position, Quaternion.identity);
         // 여기에 폭발 이펙트 및 길막는 오브젝트 파괴 구현
-        Managers.Event.InvokeEvent("EndCinematic", Define.CinematicType.PuzzleClear);
-        yield return CoroutineHelper.WaitForSeconds(1.0f);
-
         _Parking.BrokeBlocks();
+
+        _camera?.OnEndCinematic(Define.CinematicType.PuzzleClear);
+        yield return CoroutineHelper.WaitForSeconds(1.0f);
 
         _Parking.ClearPuzzle();
     }

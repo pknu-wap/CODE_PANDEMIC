@@ -96,22 +96,27 @@ public class StageController : MonoBehaviour
             {
                 obj.transform.position = data.Pos;
                 PZ_Puzzle_Item puzzleItem = obj.GetComponent<PZ_Puzzle_Item>();
-                PZ_Generator generatorItem = obj.GetComponent<PZ_Generator>();
+                PZ_Puzzle_Base puzzle=  obj.GetComponent<PZ_Puzzle_Base>();  
                 if (data.IsMain)
                 {
+                    if (data.LinkedBlock.Prefab!=null)
                     CreateBlock(data.ID,data.LinkedBlock);
                 }
+
                 if (puzzleItem != null)
                 {
                     puzzleItem.SetInfo(data);
                     puzzleItem.SettingPuzzle();
                 }
-                else if (generatorItem != null)
+                else if (puzzle != null)
                 {
-                    Color color = new Color(0.02f, 0.02f, 0.02f, 0);
-                    
-                    _light?.SettingLight(color);
-                    generatorItem.SetInfo(data);
+                    puzzle.SetInfo(data); //원래 이렇게 하면 안되긴하는데 퍼즐 코드가 너무어지러워서 임시 
+                    if (obj.GetComponent<PZ_Generator>() != null)
+                    {
+                        Color color = new Color(0.02f, 0.02f, 0.02f, 0);
+                        _light?.SettingLight(color);
+                    }
+
                 }
 
             });

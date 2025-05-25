@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         _playerInput = new PlayerInput();
+
         _moveAction = _playerInput.Player.Move;
         _runAction = _playerInput.Player.Run;
         _dashAction = _playerInput.Player.Dash;
@@ -46,9 +47,10 @@ public class PlayerController : MonoBehaviour
         _moveAction.Enable();
         _runAction.Enable();
         _dashAction.Enable();
+
         Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
-        Managers.Event.Subscribe("OnBossCinematicStart", OnEnterCinematic);
-        Managers.Event.Subscribe("OnBossCinematicEnd", OnExitCinematic);
+        Managers.Event.Subscribe("OnCinematicStart", OnEnterCinematic);
+        Managers.Event.Subscribe("OnCinematicEnd", OnExitCinematic);
     }
 
     private void OnDisable()
@@ -56,9 +58,10 @@ public class PlayerController : MonoBehaviour
         _moveAction.Disable();
         _runAction.Disable();
         _dashAction.Disable();
+
         Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
-        Managers.Event.Unsubscribe("OnBossCinematicStart", OnEnterCinematic);
-        Managers.Event.Unsubscribe("OnBossCinematicEnd", OnExitCinematic);
+        Managers.Event.Unsubscribe("OnCinematicStart", OnEnterCinematic);
+        Managers.Event.Unsubscribe("OnCinematicEnd", OnExitCinematic);
     }
 
     private bool _prevHasWeapon = false;
@@ -145,7 +148,7 @@ public class PlayerController : MonoBehaviour
         _currentState = PlayerState.BossCinematic;
         _playerMovement.StopImmediately();
 
-        Debug.Log("보스 연출 상태 진입");
+     
     }
 
     private void OnExitCinematic(object obj)
@@ -153,7 +156,7 @@ public class PlayerController : MonoBehaviour
         if (_currentState == PlayerState.BossCinematic)
         {
             _currentState = PlayerState.Idle;
-            Debug.Log("보스 연출 종료");
+            
         }
     }
 

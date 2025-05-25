@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class UI_TutorialPopUp :UI_PopUp
 {
+    [SerializeField] GameObject _nextPopUp;
+
     enum Buttons
     {
         ExitButton
@@ -25,6 +27,10 @@ public class UI_TutorialPopUp :UI_PopUp
     private void OnDisable()
     {
         Managers.Game.ResumeGame();
+        if(_nextPopUp!=null)
+        {
+            Managers.UI.ShowPopupUI<UI_TutorialPopUp>(_nextPopUp.name);
+        }
     }
     private void OnClickExitButton()
     {
