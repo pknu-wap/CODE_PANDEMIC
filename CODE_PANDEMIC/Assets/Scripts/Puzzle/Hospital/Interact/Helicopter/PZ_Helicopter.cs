@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PZ_Helicopter : PZ_Interact_NonSpawn
 {
@@ -8,7 +8,7 @@ public class PZ_Helicopter : PZ_Interact_NonSpawn
         {
             return;
         }
-
+        
         base.Interact(player);
 
         Managers.Event.InvokeEvent("NextStage");

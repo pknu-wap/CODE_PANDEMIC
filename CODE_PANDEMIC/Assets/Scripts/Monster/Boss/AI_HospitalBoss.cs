@@ -47,18 +47,21 @@ public class AI_HospitalBoss : AI_Controller
             return null;
         }
     }
-    private void BossCinematic()
-    {
-
-    }
+   
     private IEnumerator BossSequence()
     {
-        Managers.Event.InvokeEvent("Cinematic");
-        //TODO : boss SEQUENCE 
-        yield return null;
-        Managers.Event.InvokeEvent("EndCinematic",Define.CinematicType.BossSequence);
+        if (_camera == null) yield break;
+        _camera.gameObject.SetActive(true);
+        _camera.OnCinematic();
+        //TODO: BOSSSEQUENCE
+        yield return CoroutineHelper.WaitForSeconds(2.0f);
+        _camera.OnEndCinematic(Define.CinematicType.BossSequence);
     }
-  
+    public override void SetInfo(MonsterData monsterData)
+    {
+        base.SetInfo(monsterData);
+        StartCoroutine(BossSequence());
+    }
     protected override void Start()
     {
         ChangeState(new AI_StateIdle(this));
@@ -107,6 +110,7 @@ public class AI_HospitalBoss : AI_Controller
         TargetLayer = LayerMask.GetMask("Player");
         base.Awake();
     }
+  
     private void EnterBerserkMode()
     {
         IsBerserk = true;

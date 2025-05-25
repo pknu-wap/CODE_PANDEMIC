@@ -60,6 +60,11 @@ public class StageController : MonoBehaviour
     }
     public void CreateSpawners()
     {
+        if (_stageData.BossTemplateID == 0) CreateNormalMapSpawner();
+        else CreateBossMapSpawner();
+    }   
+    private  void CreateNormalMapSpawner()
+    {
         List<SpawnerInfoData> spawners = _stageData.Spawners;
         for (int i = 0; i < spawners.Count; i++)
         {
@@ -69,9 +74,31 @@ public class StageController : MonoBehaviour
                 obj.transform.position = new Vector3(spawnerData.Pos.x, spawnerData.Pos.y, 0);
                 AI_Spawner monsterSpawner = obj.GetComponent<AI_Spawner>();
                 if (monsterSpawner != null)
-                { 
+                {
                     monsterSpawner.SetInfo(spawnerData.ID);
                     monsterSpawner.SpawnObjects();
+                }
+                else
+                {
+                    obj.GetComponent<SpawnBase>().SpawnObjects();
+                }
+
+            });
+        }
+    }
+    public void CreateBossMapSpawner()
+    {
+        List<SpawnerInfoData> spawners = _stageData.Spawners;
+        for (int i = 0; i < spawners.Count; i++)
+        {
+            SpawnerInfoData spawnerData = spawners[i];
+            Managers.Resource.Instantiate(spawnerData.Name, _spawnerParent, (obj) =>
+            {
+                obj.transform.localPosition = new Vector3(spawnerData.Pos.x, spawnerData.Pos.y, 0);
+                BossSpawner bossSpawner = obj.GetComponent<BossSpawner>();
+                if (bossSpawner != null)
+                {
+                    bossSpawner.SetInfo(spawnerData.ID);
                 }
                 else
                 {
