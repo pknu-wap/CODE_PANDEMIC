@@ -14,33 +14,6 @@ public class EquipWeapon : MonoBehaviour
     private PlayerInput _weaponInput;
 
     [SerializeField] private Transform _socket;
-
-    public bool HasWeapon()
-    {
-        return _socket.childCount >= 1;
-    }
-
-    public Transform WeaponSocket => _socket;
-    public void Attack(PlayerController owner)
-    {
-        _weapon?.Attack(owner);
-    }
-
-    public void StartAttack(PlayerController owner)
-    {
-        _weapon?.StartAttack(owner);
-    }
-
-    public void StopAttack()
-    {
-        _weapon?.StopAttack();
-    }
-
-    public void Equip(WeaponBase weapon)
-    {
-        _weapon = weapon;
-    }
-
     private void Awake()
     {
         _weaponInput = new PlayerInput();
@@ -69,27 +42,77 @@ public class EquipWeapon : MonoBehaviour
         _weaponInput.Disable();
     }
 
+    public bool HasWeapon()
+    {
+        return _weapon!=null;
+    }
+
+    public Transform WeaponSocket => _socket;
+    public void Attack(PlayerController owner)
+    {
+        _weapon?.Attack(owner);
+    }
+
+    public void StartAttack(PlayerController owner)
+    {
+        _weapon?.StartAttack(owner);
+    }
+
+    public void StopAttack()
+    {
+        _weapon?.StopAttack();
+    }
+
+    public void Equip(WeaponBase weapon)
+    {
+        _weapon = weapon;
+    }
+
+   
+
     public void SetWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
     {
-
+        if (CheckReloading()==false) return;
         Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
         if (data == null)
         {
             Debug.Log("None Data");
             return;
         }
-        switch (data.Type)
+        switch (data.Type) //for various of sockets  if just one socket remove switch 
         {
             case Define.WeaponType.ShortWeapon:
-            case Define.WeaponType.PistolWeapon:
-            case Define.WeaponType.RangeWeapon:
-                if (!CheckSameWeapon(data, _weapon)) return;
-                DestroyPrevWeapon();
-                Managers.Resource.Instantiate(data.WeaponPrefab, _socket.transform, (obj) =>
+                if (!CheckDifferentWeapon(data, _weapon))
                 {
-                    _weapon = obj.GetComponent<WeaponBase>();
-                    _weapon.SetInfo(data);
-                });
+                    UnEquipWeapon();
+                }
+                else
+                {
+                    SwapWeapon(data,_socket);
+                    Managers.Event.InvokeEvent("ShortWeaponEquipped");
+                }
+                break;
+            case Define.WeaponType.PistolWeapon:
+                if (!CheckDifferentWeapon(data, _weapon))
+                {
+                    UnEquipWeapon();
+                }
+                else
+                {
+                    SwapWeapon(data, _socket);
+                    Managers.Event.InvokeEvent("GunWeaponEquipped", data.BulletCount);
+                }
+                    break;
+            case Define.WeaponType.RangeWeapon:
+                if (!CheckDifferentWeapon(data, _weapon))
+                {
+                    UnEquipWeapon();
+                }
+                else
+                {
+                    SwapWeapon(data, _socket);
+                    Managers.Event.InvokeEvent("GunWeaponEquipped", data.BulletCount);
+                }
                 break;
             default:
                 break;
@@ -97,23 +120,42 @@ public class EquipWeapon : MonoBehaviour
 
         }
     }
-    bool CheckSameWeapon(WeaponData item, WeaponBase currentWeapon)
+    bool CheckDifferentWeapon(WeaponData item, WeaponBase currentWeapon)
     {
         if (currentWeapon == null) return true; //장착이 아무것도 안되어있음 
 
         if (item.TemplateID == currentWeapon.ID) return false; //현재 장착되
         else return true;
     }
-
+    bool CheckReloading()
+    {
+        if (_weapon == null) return true;
+        else
+        {
+            if (_weapon.IsReloading) return false;
+        }
+        return true;
+    }
     private void DestroyPrevWeapon()
     {
         if (_weapon == null) return;
         Destroy(_weapon.gameObject);
         _weapon = null;
     }
-    public void SwapWeapon(WeaponItem weaponItem, List<ItemParameter> itemState = null)
+    private void UnEquipWeapon()
     {
+        DestroyPrevWeapon();
+    }
 
+    public void SwapWeapon(WeaponData data,Transform socket)
+    {
+        DestroyPrevWeapon();
+        Managers.Resource.Instantiate(data.WeaponPrefab, socket, (obj) =>
+        {
+            _weapon = obj.GetComponent<WeaponBase>();
+            _weapon.SetInfo(data);
+
+        });
 
     }
 

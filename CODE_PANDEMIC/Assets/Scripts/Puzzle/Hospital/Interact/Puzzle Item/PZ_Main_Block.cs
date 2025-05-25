@@ -25,6 +25,7 @@ public class PZ_Main_Block : MonoBehaviour
 
     public void Disappear()
     {
+        Managers.Event.InvokeEvent("OnCinematicStart");
         _clearCamera?.gameObject.SetActive(true);
         _light?.gameObject.SetActive(true);
        
@@ -62,6 +63,7 @@ public class PZ_Main_Block : MonoBehaviour
         }
 
         yield return CoroutineHelper.WaitForSeconds(0.5f);
+        Managers.Event.InvokeEvent("OnCinematicEnd");
 
         Destroy(gameObject);
     }

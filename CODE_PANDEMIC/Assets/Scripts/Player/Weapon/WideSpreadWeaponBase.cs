@@ -20,9 +20,9 @@ public class WideSpreadWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
         SetNextFireTime();
-        _currentBullet--;
-
-        if (_currentBullet <= 0)
+        _currentAmmo--;
+        Managers.Event.InvokeEvent("BulletUpdated", _currentAmmo);
+        if (_currentAmmo <= 0)
         {
             Reload();
         }
