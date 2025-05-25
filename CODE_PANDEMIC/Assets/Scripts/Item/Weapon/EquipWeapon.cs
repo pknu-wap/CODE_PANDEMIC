@@ -93,9 +93,9 @@ public class EquipWeapon : MonoBehaviour
                 break;
             default:
                 break;
+
+
         }
-
-
     }
     bool CheckSameWeapon(WeaponData item, WeaponBase currentWeapon)
     {

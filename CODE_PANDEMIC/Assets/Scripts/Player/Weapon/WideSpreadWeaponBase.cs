@@ -20,9 +20,9 @@ public class WideSpreadWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
         SetNextFireTime();
-        _currentAmmo--;
+        _currentBullet--;
 
-        if (_currentAmmo <= 0)
+        if (_currentBullet <= 0)
         {
             Reload();
         }

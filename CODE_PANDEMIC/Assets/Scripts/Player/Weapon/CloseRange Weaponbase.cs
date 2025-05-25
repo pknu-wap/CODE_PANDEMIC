@@ -9,7 +9,7 @@ public class CloseRangeWeaponBase : WeaponBase
 
     private Animator _animator;
     private bool isPickedUp = false;
-
+    public GameObject originPrefab;
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -39,7 +39,7 @@ public class CloseRangeWeaponBase : WeaponBase
                 bullet.Fire(firePoint.transform.right);
             }
 
-            Debug.Log($"√—æÀ πﬂªÁµ  πÊ«‚: {firePoint.transform.right}");
+            Debug.Log($"Ï¥ùÏïå Î∞úÏÇ¨Îê® Î∞©Ìñ•: {firePoint.transform.right}");
         }
 
         StartCoroutine(ResetFireBool());

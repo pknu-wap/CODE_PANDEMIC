@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class PistolWeaponBase : WeaponBase
 {
-    [SerializeField]
-    private GameObject bulletPrefab;
-    [SerializeField]
-    private GameObject firePoint;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject firePoint;
 
     private Animator _animator;
     private bool isPickedUp = false;
@@ -20,15 +18,15 @@ public class PistolWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
         SetNextFireTime();
-        _currentAmmo--;
+        _currentBullet--;
 
-        if (_currentAmmo <= 0)
+        if (_currentBullet <= 0)
         {
             Reload();
         }
 
 
-        Managers.Event.InvokeEvent("BulletUpdated", _currentAmmo);
+        Managers.Event.InvokeEvent("BulletUpdated", _currentBullet);
         if (_animator != null)
         {
             _animator.SetBool("Fire", true);

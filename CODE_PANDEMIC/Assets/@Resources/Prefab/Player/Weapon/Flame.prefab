@@ -222,10 +222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ec3de798f93be4b86224d666701ac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSpriteRenderer: {fileID: 0}
-  flameEffect: {fileID: 0}
-  hitboxObject: {fileID: 2736463273520271058}
-  firePoint: {fileID: 3464724573218115221}
+  weaponSpriteRenderer: {fileID: 9037739729156354088}
+  flameHitboxPrefab: {fileID: 2736463273520271058}
+  firePoint: {fileID: 7519477452299909009}
 --- !u!212 &9037739729156354088
 SpriteRenderer:
   m_ObjectHideFlags: 0
