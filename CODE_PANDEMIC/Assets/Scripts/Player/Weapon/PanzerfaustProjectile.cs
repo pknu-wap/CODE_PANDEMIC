@@ -42,7 +42,7 @@ public class PanzerfaustProjectile : MonoBehaviour
     public void Init(int damage, float speed, float range, PlayerController owner, Vector2 direction)
     {
         _damage = damage;
-        _speed = speed*1.5f;
+        _speed = speed*2f;
         _currentSpeed = speed;
         _range = range;
         _owner = owner;

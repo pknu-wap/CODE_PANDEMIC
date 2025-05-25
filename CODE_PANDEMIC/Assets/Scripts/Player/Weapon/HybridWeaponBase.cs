@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class HybridWeaponBaseWeaponBase : WeaponBase
+public class HybridWeaponBase : WeaponBase
 {
     [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackRadius = 1.2f;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private float attackRadius = 1.2f; // 공격 범위
+    [SerializeField] private LayerMask enemyLayer;     // 적 Layer
 
     private Animator _animator;
 
@@ -21,6 +21,23 @@ public class HybridWeaponBaseWeaponBase : WeaponBase
         if (_animator != null)
             _animator.SetTrigger("Attack");
 
+        if (attackPoint != null)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 direction = mousePos - attackPoint.transform.position;
+            direction.z = 0f;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            attackPoint.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+            if (weaponSpriteRenderer != null)
+            {
+                // flipY: 마우스가 attackPoint(총구)보다 왼쪽에 있으면 true, 아니면 false
+                weaponSpriteRenderer.flipY = (mousePos.x < attackPoint.transform.position.x);
+                // flipX는 사용하지 마
+            }
+        }
+
         // 공격 판정
         Collider2D[] hits = Physics2D.OverlapCircleAll(
             attackPoint.position,
@@ -30,108 +47,15 @@ public class HybridWeaponBaseWeaponBase : WeaponBase
         foreach (var hit in hits)
         {
             AI_Base enemy = hit.GetComponent<AI_Base>();
-            Vector2 toTarget = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
-            float angle = Vector2.Angle(attackDir, toTarget);
-
-            if (angle <= 15f) // 30도 부채꼴 (±15도)
-            {
-                AI_Base ai = hit.GetComponent<AI_Base>();
-                if (ai != null)
-                {
-                    ai.TakeDamage(_weaponData.Damage);
-                    hitAny = true;
-                }
-            }
-        }
-
-        if (hitAny)
-        {
-            Debug.Log("부채꼴 근접 공격 성공");
-        }
-        else
-        {
-            StartThrow();
-        }
-    }
-
-
-    private void Update()
-    {
-        if (_isThrown)
-        {
-            transform.position += _direction * throwSpeed * Time.deltaTime;
-
-            if (shouldRotateWhileFlying)
-                transform.Rotate(0, 0, 720 * Time.deltaTime);
-
-            if (Vector3.Distance(_startPos, transform.position) >= _weaponData.Range)
-            {
-                _isThrown = false;
-                _isReturning = true;
-            }
-        }
-        else if (_isReturning)
-        {
-            Vector3 backDir = (_player.position - transform.position).normalized;
-            transform.position += backDir * throwSpeed * returnSpeedMultiplier * Time.deltaTime;
-
-            if (shouldRotateWhileFlying)
-                transform.Rotate(0, 0, 720 * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, _player.position) < 0.3f)
-            {
-                _isReturning = false;
-                _isFlying = false;
-                AttachToPlayer();
-            }
-        }
-    }
-
-    private void AttachToPlayer()
-    {
-        //transform.parent = _player;
-        //transform.localPosition = Vector3.zero;
-        //transform.localRotation = Quaternion.identity;
-        //Debug.Log("무기 복귀 완료");
-        
-        //if (!CanFire() || isThrown) return;
-        //SetNextFireTime();
-        //_currentAmmo--;
-    
-        //Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, meleeRange, enemyLayer);
-
-        //if (nearbyEnemies.Length > 0)
-        //{
-        //    foreach (var enemyCollider in nearbyEnemies)
-        //    {
-        //        ApplyDamageWithKnockback(enemyCollider, _weaponData.Damage);
-        //    }
-        //    Debug.Log("근접 공격 실행됨.");
-        //}
-        //else
-        //{
-        //    isThrown = true;
-        //    direction = firePoint.transform.right.normalized;
-        //    speed = _weaponData.BulletSpeed;
-        //    damage = _weaponData.Damage;
-
-        //    Debug.Log("투척체가 던져졌습니다.");
-        //    Destroy(gameObject, 3f);
-        //}
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (_isFlying)
-        {
-            AI_Base enemy = other.GetComponent<AI_Base>();
             if (enemy != null)
             {
                 enemy.TakeDamage(_weaponData.Damage);
+                // 이펙트, 넉백 등 추가 가능
             }
         }
     }
 
+    // 에디터에서 공격 범위 확인용 Gizmo
     private void OnDrawGizmosSelected()
     {
         if (attackPoint != null)
