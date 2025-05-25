@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4823832506981599948}
   - component: {fileID: 8607920258024198901}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,9 +96,9 @@ GameObject:
   - component: {fileID: 6102641375833318044}
   - component: {fileID: 4725098402653296558}
   - component: {fileID: 8114675913129763196}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_2_2_Prefab
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -244,7 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6999235543106446261}
   - component: {fileID: 1757220665379548555}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_Sprite (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3307505183469473091}
   - component: {fileID: 1341713369550499949}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PZ_Main_Block_Sprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,6 +410,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3854608250362896157}
     m_Modifications:
+    - target: {fileID: 605162929482365484, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1252163241099101565, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -453,6 +457,10 @@ PrefabInstance:
     - target: {fileID: 4970408151456916397, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
       propertyPath: m_Name
       value: PuzzleClearCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970408151456916397, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7311814975631630200, guid: 6ea020f92281e38419565aa206229bb2, type: 3}
       propertyPath: m_Priority
@@ -534,6 +542,10 @@ PrefabInstance:
     - target: {fileID: 8173485693187016965, guid: 718db2474f2e103468213ab5b5ad9a1e, type: 3}
       propertyPath: m_Name
       value: BlockLight2D
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173485693187016965, guid: 718db2474f2e103468213ab5b5ad9a1e, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

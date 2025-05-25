@@ -18,6 +18,8 @@ public class PZ_Car : PZ_Interact_NonSpawn
     [SerializeField] private bool _isMainCar = false; // 꺼내야 하는 차인가
     [SerializeField] private bool _isVerticalCar = false; // 세로로 배치된 차인가
 
+    [SerializeField] private GameObject _explosionEffect;
+
     public int[] _body1Index = new int[2]; // 첫번째 몸통 인덱스 (가로의 경우 왼쪽, 세로의 경우 위쪽)
     public int[] _body2Index = new int[2]; // 두번째 몸통 인덱스 (가로의 경우 오른쪽, 세로의 경우 아래쪽)
 
@@ -154,8 +156,6 @@ public class PZ_Car : PZ_Interact_NonSpawn
             Debug.Log("Car Puzzle Clear!!!");
 
             StartCoroutine(RushToBlockObject());
-
-            _Parking.ClearPuzzle();
         }
     }
 
@@ -204,10 +204,13 @@ public class PZ_Car : PZ_Interact_NonSpawn
             yield return new WaitForFixedUpdate();
         }
 
+        Instantiate(_explosionEffect, transform.position, Quaternion.identity);
         // 여기에 폭발 이펙트 및 길막는 오브젝트 파괴 구현
         Managers.Event.InvokeEvent("EndCinematic", Define.CinematicType.PuzzleClear);
         yield return CoroutineHelper.WaitForSeconds(1.0f);
 
-        Destroy(gameObject);
+        _Parking.BrokeBlocks();
+
+        _Parking.ClearPuzzle();
     }
 }
