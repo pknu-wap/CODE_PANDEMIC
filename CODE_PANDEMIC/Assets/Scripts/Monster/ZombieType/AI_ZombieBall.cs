@@ -16,7 +16,6 @@ public class AI_ZombieBall : AI_Controller
 
     protected override void Start()
     {
-    
     // if (_monsterData == null)
     // {
     //     _monsterData = new MonsterData();

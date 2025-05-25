@@ -134,6 +134,7 @@ public class AI_Controller : AI_Base
     public void ChangeState(AI_IState newState)
     {
         if (_currentState?.GetType() == newState.GetType()) return;
+        if (_state == AI_State.Dead) return;
         _currentState?.OnExit();
         _currentState = newState;
         _currentState?.OnEnter();
@@ -151,7 +152,12 @@ public class AI_Controller : AI_Base
             ForceDetectTarget(_player);
         }
         if (Health <= 0f && _currentState is not AI_StateDie)
+        {
+            StopMoving();
+            _animator.SetTrigger("Die");
             ChangeState(new AI_StateDie(this));
+        }
+            
     }
 
 
@@ -189,14 +195,9 @@ public class AI_Controller : AI_Base
         ChasePlayer();
         ChangeState(new AI_StateIdle(this));
     }
-    public virtual void TryUseSkill(System.Action onSkillComplete)
-    {
-        onSkillComplete?.Invoke();
-    }
 
     private void ConfigurePathfinding()
     {
-        _aiPath.radius = 0.41f;
         _aiPath.height = 0.01f;
         _aiPath.maxSpeed = MoveSpeed;
         _aiPath.pickNextWaypointDist = 1.2f;
