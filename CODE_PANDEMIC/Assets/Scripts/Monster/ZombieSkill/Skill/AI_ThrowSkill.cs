@@ -37,7 +37,7 @@ public class AI_ThrowSkill : ISkillBehavior
         _lastSkillTime = Time.time;
         _controller._isUsingSkill = true;
         _controller._aiPath.canMove = false;
-
+        _controller._animator.SetBool("Attack", true);
         _skillCoroutine = _controller.StartCoroutine(ThrowRoutine(onSkillComplete));
     }
 

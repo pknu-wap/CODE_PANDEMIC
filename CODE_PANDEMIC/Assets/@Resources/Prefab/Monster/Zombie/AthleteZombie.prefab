@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.5
+  radius: 0.41
   height: 2
   canMove: 1
   maxSpeed: 1
@@ -271,11 +271,12 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
-  SkillCooldown: 8
-  SkillChargeDelay: 0.5
-  DashSpeed: 5
-  DashWidth: 2
   _visualizer: {fileID: 3666780639554816551}
+  _dashSkillData:
+    Cooldown: 0
+    Width: 0
+    Speed: 0
+    ChargeDelay: 0
 --- !u!95 &6903362446902183446
 Animator:
   serializedVersion: 5

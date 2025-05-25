@@ -4,7 +4,7 @@ public class AI_DoctorZombie : AI_Controller
 {
     public LayerMask TargetLayer;
     public override float AiDamage => _monsterData.AttackDamage;
-    public AI_SweepVisualizer _sweepVisualizer;
+    // public AI_SweepVisualizer _sweepVisualizer;
     public SweepSkillData _sweepSkillData;
 
     private ISkillBehavior _skill;
@@ -50,10 +50,10 @@ public class AI_DoctorZombie : AI_Controller
             return;
         }
 
-        if (_sweepVisualizer != null)
-        {
-            _sweepVisualizer.Hide();
-        }
+        // if (_sweepVisualizer != null)
+        // {
+        //     _sweepVisualizer.Hide();
+        // }
 
         _skill = new AI_SweepSkill();
         _skill.SetSettings(_sweepSkillData, TargetLayer, this);
