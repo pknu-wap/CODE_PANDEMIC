@@ -57,24 +57,15 @@ public class AI_SweepSkill : ISkillBehavior
 
     protected virtual IEnumerator SweepRoutine(System.Action onSkillComplete)
     {
-        AI_SweepVisualizer visualizer = (_controller as AI_DoctorZombie)?._sweepVisualizer;
         Vector2 attackDirection = ((Vector2)_controller._player.position - (Vector2)_controller.transform.position).normalized;
-
-        if (visualizer != null)
-        {
-            visualizer.transform.position = _controller.transform.position;
-            visualizer.Show(attackDirection, _settings.Angle, _settings.Range, _settings.ChargeDelay);
-        }
-
         yield return new WaitForSeconds(_settings.ChargeDelay);
-
+        _controller._animator.SetBool("Attack", true);
         for (int i = 0; i < _settings.Count; i++)
         {
             DoSweepAttack(attackDirection);
             yield return new WaitForSeconds(_settings.Interval);
         }
 
-        visualizer?.Hide();
         _controller._aiPath.canMove = true;
         _controller._isUsingSkill = false;
         onSkillComplete?.Invoke();

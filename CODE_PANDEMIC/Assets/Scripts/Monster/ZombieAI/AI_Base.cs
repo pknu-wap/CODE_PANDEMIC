@@ -68,7 +68,10 @@ public abstract class AI_Base : MonoBehaviour
         Action callback = OnDie;
         if (callback != null)
             callback();
-
+        // gameObject.SetActive(false);
+    }
+    public void DieAnimationEnd()
+    {
         gameObject.SetActive(false);
     }
 
