@@ -26,12 +26,25 @@ public class RecordManager
     PlayerRecordData _recordData;
     RecordSaver _recordSaver;
 
+    InteractTutorialMapSO _interactTutorialMap;
+    InteractRecordData _interactRecordData = new();
+
     public int ItemCount => _recordData.ItemCount;
     public int ZombieKillCount => _recordData.ZombieKillCount;
     public int ClearPuzzleCount => _recordData.ClearPuzzleCount;
     public int PlayerDeathCount =>_recordData.PlayerDeathCount;
-   
-
+    public void Init()
+    {
+        _recordData = new PlayerRecordData();
+        _recordSaver = new RecordSaver();
+        if (_interactTutorialMap == null)
+        {
+            Managers.Resource.LoadAsync<InteractTutorialMapSO>("InteractTutorialData", (obj) =>
+            {
+                _interactTutorialMap = obj;
+            });
+        }
+    }
     public void AddItemCount()
     {
         _recordData.ItemCount++;
@@ -57,12 +70,12 @@ public class RecordManager
     {
         _recordData.PlayerDeathCount++;
     }
-
-    public void Init()
+    public void AddInteractCount(InteractType type)
     {
-        _recordData = new PlayerRecordData();
-        _recordSaver = new RecordSaver();
+
     }
+
+   
     public void LoadData()
     {        
        _recordData= _recordSaver.LoadRecord();
