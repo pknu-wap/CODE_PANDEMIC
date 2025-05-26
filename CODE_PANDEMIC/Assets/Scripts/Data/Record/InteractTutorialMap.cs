@@ -16,7 +16,7 @@ public class InteractTutorialMapSO : ScriptableObject
 
     public string GetPopupName(InteractType type)
     {
-        var entry = Entries.Find(e => e.Type == type);
+        var entry = Entries.Find(e=>e.Type==type);
         return entry?.PopupPrefabName;
     }
 }

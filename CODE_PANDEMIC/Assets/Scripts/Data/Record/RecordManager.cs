@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 
 [Serializable]
@@ -72,10 +74,29 @@ public class RecordManager
     }
     public void AddInteractCount(InteractType type)
     {
+        _interactRecordData.Add(type);
 
+        if (_interactRecordData.Get(type) == 1)
+        {
+            if (_interactTutorialMap != null)
+            {
+                string popupName = _interactTutorialMap.GetPopupName(type);
+
+                if (!string.IsNullOrEmpty(popupName))
+                {
+                    Managers.UI.ShowPopupUI<UI_TutorialPopUp>(popupName);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("InteractTutorialMapSO is not yet loaded. Popup skipped.");
+            }
+        }
     }
 
-   
+
+
+
     public void LoadData()
     {        
        _recordData= _recordSaver.LoadRecord();
