@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class PistolWeaponBase : WeaponBase
 {
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private GameObject firePoint;
+    [SerializeField]
+    private GameObject bulletPrefab;
+    [SerializeField]
+    private GameObject firePoint;
 
     private Animator _animator;
     private bool isPickedUp = false;
@@ -18,7 +20,7 @@ public class PistolWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
         SetNextFireTime();
-        _currentBullet--;
+        _currentBullet --;
 
         if (_currentBullet <= 0)
         {
@@ -41,14 +43,13 @@ public class PistolWeaponBase : WeaponBase
 
             firePoint.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
-            if (weaponSpriteRenderer != null)
-            {
-                // flipY: 마우스가 firePoint(총구)보다 왼쪽에 있으면 true, 아니면 false
-                weaponSpriteRenderer.flipY = (mousePos.x < firePoint.transform.position.x);
-                // flipX는 사용하지 마
-            }
+            //if (weaponSpriteRenderer != null)
+            //{
+            //    bool isLeft = mousePos.x < firePoint.transform.position.x;
+            //    weaponSpriteRenderer.flipY = isLeft;
+            //    Debug.Log($"angle: {angle}, isLeft: {isLeft}, flipY: {weaponSpriteRenderer.flipY}");
+            //}
         }
-
 
         if (bulletPrefab != null && firePoint != null)
         {

@@ -110,11 +110,11 @@ public class PlayerController : MonoBehaviour
             _playerMovement.TryDash(_forwardVector);
         }
 
-        if (Mouse.current.leftButton.isPressed)
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             _equipWeapon?.StartAttack(this);
         }
-        else
+        else if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             _equipWeapon?.StopAttack();
         }
