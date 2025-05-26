@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: 5.482971, y: -1.3580933, z: 0}
   m_ShapePathHash: -1582462315
   m_Mesh: {fileID: 0}
-  m_InstanceId: 102880
+  m_InstanceId: 74258
   m_LocalBounds:
     m_Center: {x: 2.4951172, y: -0.42152023, z: 0}
     m_Extent: {x: 2.987854, y: 0.936573, z: 0}
@@ -403,7 +403,7 @@ MonoBehaviour:
   - {x: -4.878174, y: -3.4979553, z: 0}
   m_ShapePathHash: -111521873
   m_Mesh: {fileID: 0}
-  m_InstanceId: 102886
+  m_InstanceId: 74264
   m_LocalBounds:
     m_Center: {x: 22.419434, y: 6.6103706, z: 0}
     m_Extent: {x: 32.947327, y: 19.848103, z: 0}
@@ -1071,6 +1071,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9198502002361008264}
     m_Modifications:
+    - target: {fileID: -3331334216113907513, guid: 48c1cb4506c4af244acc331d96584731, type: 3}
+      propertyPath: _popup
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6024073196996071257, guid: 48c1cb4506c4af244acc331d96584731, type: 3}
       propertyPath: m_LocalPosition.x
       value: 935.65
@@ -1608,6 +1612,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9198502002361008264}
     m_Modifications:
+    - target: {fileID: -3331334216113907513, guid: 48c1cb4506c4af244acc331d96584731, type: 3}
+      propertyPath: _popup
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -3331334216113907513, guid: 48c1cb4506c4af244acc331d96584731, type: 3}
       propertyPath: _popupAddressable
       value: PZ_MainPuzzle_Tutorial_UI_Prefab

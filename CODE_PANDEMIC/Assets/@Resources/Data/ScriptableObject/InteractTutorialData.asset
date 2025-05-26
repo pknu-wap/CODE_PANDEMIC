@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: InteractTutorialData
   m_EditorClassIdentifier: 
   Entries:
-  - Type: 0
-    PopupPrefabName: PZ_Generator_Tutorial_UI_PopUp
   - Type: 1
-    PopupPrefabName: PZ_Fire_Tutorial_UI_PopUp
+    PopupPrefabName: PZ_Fire_Tutorial_UI_Prefab
+  - Type: 0
+    PopupPrefabName: PZ_Generator_Tutorial_UI_Prefab
+  - Type: 2
+    PopupPrefabName: PZ_MainPuzzle_Tutorial_UI_Prefab
+  - Type: 3
+    PopupPrefabName: PZ_Safe&Key_Tutorial_UI_Prefab
+  - Type: 4
+    PopupPrefabName: PZ_Container_Tutorial_UI_Prefab
+  - Type: 5
+    PopupPrefabName: PZ_Traffic_Tutorial_UI_Prefab
