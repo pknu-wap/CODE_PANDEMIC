@@ -11,7 +11,7 @@ public class PZ_Puzzle_Tutorial : MonoBehaviour
             return;
         }
 
-        Managers.UI.ShowPopupUI<UI_TutorialPopUp>(_popupAddressable);
+       // Managers.UI.ShowPopupUI<UI_TutorialPopUp>(_popupAddressable);
 
         Destroy(gameObject);
     }

@@ -14,7 +14,7 @@ public abstract class AI_Base : MonoBehaviour
     public event Action OnDie;
 
     
-    public void SetInfo(MonsterData monsterData)
+    public virtual void SetInfo(MonsterData monsterData)
     {
         _monsterData = monsterData;
         _currentHp = monsterData.Hp;

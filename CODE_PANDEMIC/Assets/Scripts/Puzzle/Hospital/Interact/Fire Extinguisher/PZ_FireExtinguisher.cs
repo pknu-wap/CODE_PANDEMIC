@@ -47,7 +47,7 @@ public class PZ_FireExtinguisher : PZ_Interact_NonSpawn
         }
 
         base.Interact(player);
-
+        Managers.Game.AddInteractCount(Define.InteractType.Extinguisher);
         _playerController = player.GetComponent<PlayerController>();
     }
 

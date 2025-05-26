@@ -354,17 +354,17 @@ public class RecordSaver
         
     }
     private static string SavePath => Application.persistentDataPath + "/record.json";
-    public void SaveRecord(RecordData recordData)
+    public void SaveRecord(PlayerRecordData recordData)
     {
         string json = JsonUtility.ToJson(recordData);
         File.WriteAllText(SavePath, json);
     }
 
-    public RecordData LoadRecord()
+    public PlayerRecordData LoadRecord()
     {
-        if (!File.Exists(SavePath)) return new RecordData();
+        if (!File.Exists(SavePath)) return new PlayerRecordData();
         string json = File.ReadAllText(SavePath);
-        return JsonUtility.FromJson<RecordData>(json);
+        return JsonUtility.FromJson<PlayerRecordData>(json);
     }
 
     public void ResetRecord()
