@@ -1,29 +1,34 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
-public enum InteractType
+
+[Serializable]
+public class InteractEntry
 {
-    Generator,
-    Extinguisher,
-    WaterPump,
-    // Add more as needed
+    public Define.InteractType Type;
+    public int Count;
 }
 
 [Serializable]
 public class InteractRecordData
 {
-    public Dictionary<InteractType, int> InteractCounts = new();
+    public List<InteractEntry> Entries = new();
 
-    public void Add(InteractType type)
+    public void Add(Define.InteractType type)
     {
-        if (!InteractCounts.ContainsKey(type))
-            InteractCounts[type] = 0;
-
-        InteractCounts[type]++;
+        var entry = Entries.Find(e => e.Type == type);
+        if (entry == null)
+        {
+            entry = new InteractEntry { Type = type, Count = 0 };
+            Entries.Add(entry);
+        }
+        entry.Count++;
     }
 
-    public int Get(InteractType type)
+    public int Get(Define.InteractType type)
     {
-        return InteractCounts.TryGetValue(type, out int value) ? value : 0;
+        var entry = Entries.Find(e => e.Type == type);
+        return entry?.Count ?? 0;
     }
 }

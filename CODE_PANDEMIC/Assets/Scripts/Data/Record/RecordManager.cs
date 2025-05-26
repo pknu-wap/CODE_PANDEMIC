@@ -21,6 +21,7 @@ public class PlayerRecordData
     public int ZombieKillCount = 0;
     public int ClearPuzzleCount = 0;
     public int PlayerDeathCount = 0;
+    public InteractRecordData InteractData = new();
 }
 
 public class RecordManager 
@@ -29,8 +30,7 @@ public class RecordManager
     RecordSaver _recordSaver;
 
     InteractTutorialMapSO _interactTutorialMap;
-    InteractRecordData _interactRecordData = new();
-
+    
     public int ItemCount => _recordData.ItemCount;
     public int ZombieKillCount => _recordData.ZombieKillCount;
     public int ClearPuzzleCount => _recordData.ClearPuzzleCount;
@@ -72,11 +72,11 @@ public class RecordManager
     {
         _recordData.PlayerDeathCount++;
     }
-    public void AddInteractCount(InteractType type)
+    public void AddInteractCount(Define.InteractType type)
     {
-        _interactRecordData.Add(type);
+        _recordData.InteractData.Add(type);
 
-        if (_interactRecordData.Get(type) == 1)
+        if (_recordData.InteractData.Get(type) == 1)
         {
             if (_interactTutorialMap != null)
             {

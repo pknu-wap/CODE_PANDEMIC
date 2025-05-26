@@ -44,6 +44,7 @@ public class PZ_Generator_Light : MonoBehaviour
         yield return CoroutineHelper.WaitForSeconds(0.2f);
 
         _light.color = targetColor;
+        Managers.Game.AddInteractCount(Define.InteractType.Generator);
     }
 
     private void OnDestroy()

@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05cad1015b10b5642a40703d869cee4a, type: 3}
   m_Name: InteractTutorialData
   m_EditorClassIdentifier: 
-  Entries: []
+  Entries:
+  - Type: 0
+    PopupPrefabName: PZ_Generator_Tutorial_UI_PopUp
+  - Type: 1
+    PopupPrefabName: PZ_Fire_Tutorial_UI_PopUp

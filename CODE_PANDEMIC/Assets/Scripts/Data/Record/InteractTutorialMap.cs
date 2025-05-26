@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
+
 [CreateAssetMenu(menuName = "Data/InteractTutorialData")]
 public class InteractTutorialMapSO : ScriptableObject
 {
