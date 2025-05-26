@@ -8,7 +8,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     private Animator _animator;
 
     private bool _isInteracted = false;
-    protected PuzzleData _data;
+
     private int _rememberCount = 5;
 
     public static event Action TurnOnGenerator;
@@ -68,6 +68,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
 
         _isInteracted = true;
         Managers.Game.ClearPuzzle(_data.ID);
+        Managers.Game.AddClearPuzzleCount();
         TurnOnGenerator?.Invoke();
     }
 

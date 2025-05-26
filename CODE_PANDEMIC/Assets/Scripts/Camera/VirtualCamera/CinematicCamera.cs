@@ -18,8 +18,6 @@ public class CinematicCamera :VirtualCameraBase
 
     public void OnEndCinematic(Define.CinematicType type)
     {
-        _camera.Priority = Define.None;
-       
         switch (type)
         {
             case Define.CinematicType.PuzzleClear:
