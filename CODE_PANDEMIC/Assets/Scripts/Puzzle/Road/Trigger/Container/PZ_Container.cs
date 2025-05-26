@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class PZ_Container : MonoBehaviour
@@ -8,6 +8,8 @@ public class PZ_Container : MonoBehaviour
     [SerializeField] private GameObject _zombiePrefab;
     [SerializeField] private Transform _spawnTransform;
     [SerializeField] private int _zombieCount = 3;
+
+    [SerializeField] private MonsterData _monsterData;
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,11 +30,14 @@ public class PZ_Container : MonoBehaviour
         Vector3 spawnPos = _spawnTransform.position;
         spawnPos.y -= 1f;
 
-        Vector2 forceVec = new Vector2(0, -3);
-
         while (_zombieCount-- > 0)
         {
+            int randomForce = Random.Range(0, 4);
+            Vector2 forceVec = new Vector2(0, -randomForce);
+
             GameObject zombie = Instantiate(_zombiePrefab, spawnPos, Quaternion.identity);
+            zombie.GetComponent<AI_Base>().SetInfo(_monsterData);
+
             Rigidbody2D rigidbody2D = zombie.GetComponent<Rigidbody2D>();
 
             yield return new WaitForSeconds(0.1f);

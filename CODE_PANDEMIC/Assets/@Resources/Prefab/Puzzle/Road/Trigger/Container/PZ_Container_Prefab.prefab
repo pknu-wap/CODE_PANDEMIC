@@ -200,6 +200,17 @@ MonoBehaviour:
   _zombiePrefab: {fileID: 6117609622689961263, guid: 35be60d419c823f4a8ba23bccc8dd639, type: 3}
   _spawnTransform: {fileID: 5139236731887057839}
   _zombieCount: 5
+  _monsterData:
+    TemplateID: 5
+    NameID: "\uB178\uBA40 \uC880\uBE44"
+    Prefab: M_001
+    Hp: 130
+    AttackDamage: 20
+    AttackDelay: 5
+    DetectionRange: 7.5
+    DetectionAngle: 120
+    MoveSpeed: 2
+    AttackRange: 2
 --- !u!1 &7255273436241557276
 GameObject:
   m_ObjectHideFlags: 0
