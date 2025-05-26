@@ -78,6 +78,7 @@ public class AI_ZombieBall : AI_Controller
         {
             Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * summonRadius;
             GameObject zombie = Instantiate(zombiePrefab, spawnPos, Quaternion.identity);
+            zombie.transform.SetParent(transform.parent, worldPositionStays: true);
 
             AI_Controller summonZombie = zombie.GetComponent<AI_PatientZombie>();
             if (summonZombie != null)

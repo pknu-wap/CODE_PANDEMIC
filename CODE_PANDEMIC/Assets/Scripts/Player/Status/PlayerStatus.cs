@@ -37,10 +37,10 @@ public class PlayerStatus : MonoBehaviour
     // 초기화
     public void SetInfo()
     {
-        
         _maxHp = Managers.Game.PlayerStat.MaxHp;
         _defend=Managers.Game.PlayerStat.Defend;
         int hp = _maxHp;
+        
         _currentHp = hp;
         _effectHp = hp;
        
@@ -131,7 +131,7 @@ public class PlayerStatus : MonoBehaviour
 
         _currentHp = Mathf.Clamp(_currentHp - damageValue, 0, _maxHp);
         Managers.Game.PlayerStat.SetCurrentHp(_currentHp);
-        if(_currentHp<=_maxHp*0.5f) Managers.Event.InvokeEvent("RiskDamage", _currentHp/_maxHp);
+         Managers.Event.InvokeEvent("RiskDamage" );
 
         if (_currentHp <= 0)
         {
@@ -148,7 +148,7 @@ public class PlayerStatus : MonoBehaviour
     // 체력 회복
     public void OnHealed(float healValue)
     {
-        if (_currentHp/_maxHp<=0.5f && (_currentHp+healValue / _maxHp) >  0.5f) Managers.Event.InvokeEvent("ResetIntensity");
+        if (_currentHp/_maxHp<=0.5f && (_currentHp+healValue / _maxHp) >  0.5f) 
         _currentHp = Mathf.Clamp(_currentHp + healValue, 0, _maxHp);
         _effectHp = Mathf.Max(_effectHp, _currentHp);
 

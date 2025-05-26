@@ -230,6 +230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5452821431902402742}
   - component: {fileID: 6648342692652172798}
+  - component: {fileID: 2315384885786267999}
   - component: {fileID: 8438667725603313099}
   - component: {fileID: 7197484425491187524}
   - component: {fileID: 7898138850909265605}
@@ -237,7 +238,6 @@ GameObject:
   - component: {fileID: 1636276900785312649}
   - component: {fileID: 3494032296960899194}
   - component: {fileID: 1863234384322654565}
-  - component: {fileID: 2315384885786267999}
   m_Layer: 12
   m_Name: PatientZombie
   m_TagString: Enemy
@@ -317,6 +317,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2315384885786267999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117609622689961263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f46cc28fbf5370d4da86a386b6cd57bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashColor: {r: 2.297397, g: 0, b: 0, a: 1}
+  _flashSpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -4
+      outSlope: -4
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25
+      value: 0
+      inSlope: -2.1484594
+      outSlope: -2.1484594
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041731894
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &8438667725603313099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,43 +555,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3296821, y: 0.7883849}
   m_EdgeRadius: 0
---- !u!114 &2315384885786267999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6117609622689961263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f46cc28fbf5370d4da86a386b6cd57bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _flashColor: {r: 2.297397, g: 0, b: 0, a: 1}
-  _flashSpeedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -4
-      outSlope: -4
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.25
-      value: 0
-      inSlope: -2.1484594
-      outSlope: -2.1484594
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.041731894
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &6621425797572705371
 GameObject:
   m_ObjectHideFlags: 0
