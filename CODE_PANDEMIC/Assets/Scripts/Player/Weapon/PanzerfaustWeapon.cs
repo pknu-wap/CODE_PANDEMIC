@@ -1,35 +1,69 @@
 using UnityEngine;
 
-public class PanzerfaustWeapon : WeaponBase
+public class PanzerFaustWeapon : WeaponBase
 {
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private GameObject panzerfaustProjectilePrefab;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float fireForce = 10f;
+    private Animator _animator;
+    private bool isPickedUp = false;
+
+    void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     public override void Attack(PlayerController owner)
     {
         if (!CanFire()) return;
         SetNextFireTime();
+        _currentBullet--;
 
-        GameObject proj = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-        Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
-        if (rb != null)
+        if (_currentBullet <= 0)
+            Reload();
+
+        if (firePoint != null)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 dir = (mousePos - firePoint.position);
-            dir.z = 0f;
-            dir.Normalize();
+            Vector3 direction = mousePos - firePoint.position;
+            direction.z = 0f;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            firePoint.rotation = Quaternion.Euler(0f, 0f, angle);
 
-            rb.velocity = dir * fireForce;
+            if (weaponSpriteRenderer != null)
+                weaponSpriteRenderer.flipY = (mousePos.x < firePoint.position.x);
         }
 
-        var projectile = proj.GetComponent<PanzerfaustProjectile>();
-        if (projectile != null)
+        if (panzerfaustProjectilePrefab != null && firePoint != null)
         {
-            projectile.SetDamage(_weaponData.Damage);
-            projectile.SetRange(_weaponData.Range); // Range 전달
+            GameObject rocketObject = PanzerfaustPool.Instance.GetRocket();
+            if (rocketObject == null) return;
+
+            rocketObject.transform.position = firePoint.position;
+            rocketObject.transform.rotation = firePoint.rotation;
+
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0f;
+            Vector3 direction = mousePos - firePoint.position;
+
+            PanzerfaustProjectile proj = rocketObject.GetComponent<PanzerfaustProjectile>();
+            if (proj != null)
+            {
+                proj.Init(_weaponData.Damage, _weaponData.BulletSpeed, _weaponData.Range, owner, direction);
+            }
         }
+
+
+        Managers.Event.InvokeEvent("BulletUpdated", _currentBullet);
+        if (_animator != null)
+            _animator.SetBool("Fire", true);
+
+        StartCoroutine(ResetFireBool());
     }
 
-
+    private System.Collections.IEnumerator ResetFireBool()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (_animator != null)
+            _animator.SetBool("Fire", false);
+    }
 }

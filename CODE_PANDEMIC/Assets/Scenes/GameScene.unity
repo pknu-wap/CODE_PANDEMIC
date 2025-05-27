@@ -306,6 +306,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82d59f89ee597f4a8458e0134363bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1957921831
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.3370982
+      objectReference: {fileID: 0}
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.8095664
+      objectReference: {fileID: 0}
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0791014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4845035349848468831, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6517539927437397908, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
+      propertyPath: m_Name
+      value: PanzerBulletPool
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 422e3759ec3d59c4cadbac7c86114ece, type: 3}
 --- !u!1 &2088042615
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,3 +484,4 @@ SceneRoots:
   - {fileID: 953983378}
   - {fileID: 587401046}
   - {fileID: 8078890859747286564}
+  - {fileID: 1957921831}

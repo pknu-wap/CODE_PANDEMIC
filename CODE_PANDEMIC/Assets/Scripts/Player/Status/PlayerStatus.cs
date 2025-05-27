@@ -8,7 +8,7 @@ public enum PlayerState
     Move,
     Dead,
     Invincible,
-    BossCinematic
+    Cinematic
 }
 
 

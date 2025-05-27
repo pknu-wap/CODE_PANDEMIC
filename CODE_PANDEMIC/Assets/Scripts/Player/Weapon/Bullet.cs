@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
     public void SetInfo(int damage)
     {
         _damage = damage;
-         
+
     }
     private void OnEnable()
     {
@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        AI_Base enemy= other.GetComponent<AI_Base>();
+        AI_Base enemy = other.GetComponent<AI_Base>();
         if (enemy != null)
         {
             enemy.TakeDamage(_damage);

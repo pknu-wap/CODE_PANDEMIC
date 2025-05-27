@@ -1,162 +1,113 @@
 using UnityEngine;
 
-public class HybridBoomerangWeapon : MonoBehaviour
+public class HybridWeaponBase : WeaponBase
 {
-    [Header("References")]
+    [Header("Hybrid Weapon Settings")]
     [SerializeField] private Transform firePoint;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private float meleeCheckRadius = 3f; // 근접공격 범위
+    [SerializeField] private float returnSpeed = 15f;      // 돌아올 때 속도
 
-    [Header("Settings")]
-    [SerializeField] private float meleeCheckRadius = 5f;
-    [SerializeField] private float throwSpeed = 10f;
-    [SerializeField] private float returnSpeedMultiplier = 1.2f;
-    [SerializeField] private bool shouldRotateWhileFlying = true;
-
-    private WeaponData _weaponData;
-    private Transform _player;
-    private Vector3 _startPos;
-    private Vector3 _direction;
     private bool _isThrown = false;
     private bool _isReturning = false;
-    private bool _isFlying = false;
+    private Vector3 _startPosition;
+    private Vector3 _throwDirection;
+    private float _throwDistance;
+    private Transform _playerTransform;
+    private Transform _weaponSocket;
+    private Rigidbody2D _rb;
 
-    public void SetInfo(WeaponData data, Transform player)
-    {
-        _weaponData = data;
-        _player = player;
-        AttachToPlayer(); // 처음엔 항상 붙어 있어야 함
-    }
-
-    private void StartThrow()
-    {
-        _isFlying = true;
-        _isThrown = true;
-        _startPos = transform.position;
-
-        // 방향 계산
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _direction = (mousePos - firePoint.position).normalized;
-        _direction.z = 0;
-
-        transform.parent = null; // 플레이어로부터 분리
-    }
-
-    public void Attack()
-    {
-        if (_isFlying) return;
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, meleeCheckRadius, enemyLayer);
-        Vector2 attackDir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-
-        bool hitAny = false;
-        foreach (var hit in hits)
-        {
-            Vector2 toTarget = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
-            float angle = Vector2.Angle(attackDir, toTarget);
-
-            if (angle <= 15f) // 30도 부채꼴 (±15도)
-            {
-                AI_Base ai = hit.GetComponent<AI_Base>();
-                if (ai != null)
-                {
-                    ai.TakeDamage(_weaponData.Damage);
-                    hitAny = true;
-                }
-            }
-        }
-
-        if (hitAny)
-        {
-            Debug.Log("부채꼴 근접 공격 성공");
-        }
-        else
-        {
-            StartThrow();
-        }
-    }
-
-
-    private void Update()
+    void Update()
     {
         if (_isThrown)
         {
-            transform.position += _direction * throwSpeed * Time.deltaTime;
-
-            if (shouldRotateWhileFlying)
-                transform.Rotate(0, 0, 720 * Time.deltaTime);
-
-            if (Vector3.Distance(_startPos, transform.position) >= _weaponData.Range)
+            if (!_isReturning)
             {
-                _isThrown = false;
-                _isReturning = true;
+                float traveled = Vector3.Distance(_startPosition, transform.position);
+                if (traveled >= _throwDistance)
+                {
+                    _isReturning = true;
+                    if (_rb != null) _rb.velocity = Vector2.zero;
+                }
+            }
+            else
+            {
+                if (_rb != null) Destroy(_rb);
+
+                Vector3 toPlayer = (_weaponSocket.position - transform.position).normalized;
+                transform.position += toPlayer * returnSpeed * Time.deltaTime;
+
+                if (Vector3.Distance(transform.position, _weaponSocket.position) < 0.3f)
+                {
+                    _isThrown = false;
+                    _isReturning = false;
+                    transform.SetParent(_weaponSocket);
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = Quaternion.identity;
+                }
             }
         }
-        else if (_isReturning)
+    }
+
+    public override void Attack(PlayerController owner)
+    {
+        Debug.Log("[HybridWeaponBase] Attack 호출됨");
+        if (_weaponSocket == null)
+            _weaponSocket = owner.transform.Find("WeaponSocket") ?? owner.transform;
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(owner.transform.position, meleeCheckRadius, enemyLayer);
+
+        float minDist = float.MaxValue;
+        Transform nearestEnemy = null;
+        foreach (var hit in hits)
         {
-            Vector3 backDir = (_player.position - transform.position).normalized;
-            transform.position += backDir * throwSpeed * returnSpeedMultiplier * Time.deltaTime;
-
-            if (shouldRotateWhileFlying)
-                transform.Rotate(0, 0, 720 * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, _player.position) < 0.3f)
+            float dist = Vector3.Distance(owner.transform.position, hit.transform.position);
+            if (dist < minDist)
             {
-                _isReturning = false;
-                _isFlying = false;
-                AttachToPlayer();
+                minDist = dist;
+                nearestEnemy = hit.transform;
             }
         }
-    }
 
-    private void AttachToPlayer()
-    {
-        //transform.parent = _player;
-        //transform.localPosition = Vector3.zero;
-        //transform.localRotation = Quaternion.identity;
-        //Debug.Log("무기 복귀 완료");
-        
-        //if (!CanFire() || isThrown) return;
-        //SetNextFireTime();
-        //_currentAmmo--;
-    
-        //Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, meleeRange, enemyLayer);
-
-        //if (nearbyEnemies.Length > 0)
-        //{
-        //    foreach (var enemyCollider in nearbyEnemies)
-        //    {
-        //        ApplyDamageWithKnockback(enemyCollider, _weaponData.Damage);
-        //    }
-        //    Debug.Log("근접 공격 실행됨.");
-        //}
-        //else
-        //{
-        //    isThrown = true;
-        //    direction = firePoint.transform.right.normalized;
-        //    speed = _weaponData.BulletSpeed;
-        //    damage = _weaponData.Damage;
-
-        //    Debug.Log("투척체가 던져졌습니다.");
-        //    Destroy(gameObject, 3f);
-        //}
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (_isFlying)
+        if (nearestEnemy != null && minDist <= meleeCheckRadius)
         {
-            AI_Base enemy = other.GetComponent<AI_Base>();
-            if (enemy != null)
+            if (_rb != null)
             {
-                enemy.TakeDamage(_weaponData.Damage);
-                Debug.Log("날아가는 중 적 타격");
+                Destroy(_rb);
+                _rb = null;
             }
+            transform.SetParent(_weaponSocket);
+            transform.localPosition = Vector3.zero;
+            Debug.Log("근접 공격!");
+        }
+        else
+        {
+            ThrowWeapon(owner);
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void ThrowWeapon(PlayerController owner)
     {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, meleeCheckRadius);
+        _playerTransform = owner.transform;
+        if (_weaponSocket == null)
+            _weaponSocket = _playerTransform.Find("WeaponSocket") ?? _playerTransform;
+
+        _isThrown = true;
+        _isReturning = false;
+        _startPosition = transform.position;
+
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorld.z = 0;
+        _throwDirection = (mouseWorld - transform.position).normalized;
+
+        _throwDistance = Mathf.Min(_weaponData.Range, Vector3.Distance(transform.position, mouseWorld));
+        transform.SetParent(null);
+
+        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null) _rb = gameObject.AddComponent<Rigidbody2D>();
+        _rb.isKinematic = false;
+        _rb.gravityScale = 0;
+        _rb.velocity = _throwDirection * _weaponData.Range;
+        _rb.angularVelocity = 720f;
     }
 }

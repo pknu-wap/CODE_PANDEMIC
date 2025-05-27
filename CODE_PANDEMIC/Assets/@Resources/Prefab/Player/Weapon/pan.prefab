@@ -41,9 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3249219480943990357}
   - component: {fileID: 7484304256371377554}
-  - component: {fileID: 6821888252713288198}
-  - component: {fileID: 6560796896212039074}
-  - component: {fileID: 368961105875849340}
+  - component: {fileID: 8346901835711531018}
+  - component: {fileID: 1855445987600277662}
   m_Layer: 0
   m_Name: pan
   m_TagString: Untagged
@@ -107,66 +106,19 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 31
-  m_Sprite: {fileID: 21300000, guid: b8cc3f3cb0b77474293a7183bb66ab08, type: 3}
+  m_SortingOrder: 32
+  m_Sprite: {fileID: 106059944, guid: 8bc6eb695f285734ba0ffb7f972d44a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.4, y: 6.4}
+  m_Size: {x: 2.6, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6821888252713288198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8714505746201804470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a72b61a58e79f4541a8a1152c54ca482, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 6777640833239284443}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  meleeCheckRadius: 5
-  throwSpeed: 10
-  returnSpeedMultiplier: 1.2
-  shouldRotateWhileFlying: 1
---- !u!50 &6560796896212039074
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8714505746201804470}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!61 &368961105875849340
+--- !u!61 &8346901835711531018
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,16 +150,34 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.39, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.4, y: 6.4}
-    newSize: {x: 6.4, y: 6.4}
+    pivot: {x: 0.65, y: 0.5}
+    oldSize: {x: 2.6, y: 1}
+    newSize: {x: 2.6, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.4, y: 6.4}
+  m_Size: {x: 2.6, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1855445987600277662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8714505746201804470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72b61a58e79f4541a8a1152c54ca482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSpriteRenderer: {fileID: 0}
+  attackPoint: {fileID: 6777640833239284443}
+  attackRadius: 1.2
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
