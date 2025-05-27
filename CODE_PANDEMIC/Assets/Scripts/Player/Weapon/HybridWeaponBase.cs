@@ -2,66 +2,112 @@ using UnityEngine;
 
 public class HybridWeaponBase : WeaponBase
 {
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackRadius = 1.2f; // 공격 범위
-    [SerializeField] private LayerMask enemyLayer;     // 적 Layer
+    [Header("Hybrid Weapon Settings")]
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private float meleeCheckRadius = 3f; // 근접공격 범위
+    [SerializeField] private float returnSpeed = 15f;      // 돌아올 때 속도
 
-    private Animator _animator;
+    private bool _isThrown = false;
+    private bool _isReturning = false;
+    private Vector3 _startPosition;
+    private Vector3 _throwDirection;
+    private float _throwDistance;
+    private Transform _playerTransform;
+    private Transform _weaponSocket;
+    private Rigidbody2D _rb;
 
-    private void Start()
+    void Update()
     {
-        _animator = GetComponent<Animator>();
+        if (_isThrown)
+        {
+            if (!_isReturning)
+            {
+                float traveled = Vector3.Distance(_startPosition, transform.position);
+                if (traveled >= _throwDistance)
+                {
+                    _isReturning = true;
+                    if (_rb != null) _rb.velocity = Vector2.zero;
+                }
+            }
+            else
+            {
+                if (_rb != null) Destroy(_rb);
+
+                Vector3 toPlayer = (_weaponSocket.position - transform.position).normalized;
+                transform.position += toPlayer * returnSpeed * Time.deltaTime;
+
+                if (Vector3.Distance(transform.position, _weaponSocket.position) < 0.3f)
+                {
+                    _isThrown = false;
+                    _isReturning = false;
+                    transform.SetParent(_weaponSocket);
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = Quaternion.identity;
+                }
+            }
+        }
     }
 
     public override void Attack(PlayerController owner)
     {
-        if (!CanFire()) return;
-        SetNextFireTime();
+        Debug.Log("[HybridWeaponBase] Attack 호출됨");
+        if (_weaponSocket == null)
+            _weaponSocket = owner.transform.Find("WeaponSocket") ?? owner.transform;
 
-        if (_animator != null)
-            _animator.SetTrigger("Attack");
+        Collider2D[] hits = Physics2D.OverlapCircleAll(owner.transform.position, meleeCheckRadius, enemyLayer);
 
-        if (attackPoint != null)
+        float minDist = float.MaxValue;
+        Transform nearestEnemy = null;
+        foreach (var hit in hits)
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 direction = mousePos - attackPoint.transform.position;
-            direction.z = 0f;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-            attackPoint.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-
-            if (weaponSpriteRenderer != null)
+            float dist = Vector3.Distance(owner.transform.position, hit.transform.position);
+            if (dist < minDist)
             {
-                // flipY: 마우스가 attackPoint(총구)보다 왼쪽에 있으면 true, 아니면 false
-                weaponSpriteRenderer.flipY = (mousePos.x < attackPoint.transform.position.x);
-                // flipX는 사용하지 마
+                minDist = dist;
+                nearestEnemy = hit.transform;
             }
         }
 
-        // 공격 판정
-        Collider2D[] hits = Physics2D.OverlapCircleAll(
-            attackPoint.position,
-            attackRadius,
-            enemyLayer
-        );
-        foreach (var hit in hits)
+        if (nearestEnemy != null && minDist <= meleeCheckRadius)
         {
-            AI_Base enemy = hit.GetComponent<AI_Base>();
-            if (enemy != null)
+            if (_rb != null)
             {
-                enemy.TakeDamage(_weaponData.Damage);
-                // 이펙트, 넉백 등 추가 가능
+                Destroy(_rb);
+                _rb = null;
             }
+            transform.SetParent(_weaponSocket);
+            transform.localPosition = Vector3.zero;
+            Debug.Log("근접 공격!");
+        }
+        else
+        {
+            ThrowWeapon(owner);
         }
     }
 
-    // 에디터에서 공격 범위 확인용 Gizmo
-    private void OnDrawGizmosSelected()
+    private void ThrowWeapon(PlayerController owner)
     {
-        if (attackPoint != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
-        }
+        _playerTransform = owner.transform;
+        if (_weaponSocket == null)
+            _weaponSocket = _playerTransform.Find("WeaponSocket") ?? _playerTransform;
+
+        _isThrown = true;
+        _isReturning = false;
+        _startPosition = transform.position;
+
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorld.z = 0;
+        _throwDirection = (mouseWorld - transform.position).normalized;
+
+        _throwDistance = Mathf.Min(_weaponData.Range, Vector3.Distance(transform.position, mouseWorld));
+        transform.SetParent(null);
+
+        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null) _rb = gameObject.AddComponent<Rigidbody2D>();
+        _rb.isKinematic = false;
+        _rb.gravityScale = 0;
+        _rb.velocity = _throwDirection * _weaponData.Range;
+        _rb.angularVelocity = 720f;
     }
 }

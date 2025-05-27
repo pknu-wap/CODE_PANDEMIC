@@ -6,6 +6,8 @@ public class FlameHitbox : MonoBehaviour
     private float _damageTimer = 0f;
     private int _damagePerSecond = 0;
 
+
+
     public void SetInfo(WeaponData data)
     {
         _damagePerSecond = data.Damage;

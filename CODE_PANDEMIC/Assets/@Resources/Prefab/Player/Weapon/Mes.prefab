@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6051566922022171289}
   - component: {fileID: 6374645385192086941}
   - component: {fileID: 484627726693318852}
+  - component: {fileID: 6405329221140081599}
   m_Layer: 0
   m_Name: Mes
   m_TagString: Untagged
@@ -145,11 +146,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSpriteRenderer: {fileID: 0}
-  attackPoint: {fileID: 7963354309609057239}
-  attackRadius: 1.2
+  firePoint: {fileID: 7963354309609057239}
   enemyLayer:
     serializedVersion: 2
+    m_Bits: 4096
+  meleeCheckRadius: 3
+  returnSpeed: 15
+--- !u!50 &6405329221140081599
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496594360884719396}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
     m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &4850009736075967771
 GameObject:
   m_ObjectHideFlags: 0

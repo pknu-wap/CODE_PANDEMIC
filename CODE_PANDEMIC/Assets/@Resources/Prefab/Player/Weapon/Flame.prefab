@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 32
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_Size: {x: 0.2, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &2693140603808651195
@@ -224,8 +224,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSpriteRenderer: {fileID: 9037739729156354088}
   flameHitboxPrefab: {fileID: 2736463273520271058}
+  flameEffectPrefab: {fileID: 5398833854564920194, guid: 020ea136d7f71ac478d5e2ded2400c69, type: 3}
   firePoint: {fileID: 7519477452299909009}
-  flameEffectPrefab: {fileID: 0}
 --- !u!212 &9037739729156354088
 SpriteRenderer:
   m_ObjectHideFlags: 0
