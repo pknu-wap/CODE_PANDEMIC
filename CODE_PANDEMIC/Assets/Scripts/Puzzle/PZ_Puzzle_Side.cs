@@ -1,8 +1,15 @@
 using Inventory.Model;
+using UnityEngine;
 
-public class PZ_Puzzle_Side : PZ_Puzzle_Base
+public abstract class PZ_Puzzle_Side : MonoBehaviour
 {
     private ItemData _itemData;
+    protected PuzzleData _data;
+
+    public void SetInfo(PuzzleData data)
+    {
+        _data = data;
+    }
 
     protected void RewardSetting(ItemData rewardData)
     {
@@ -16,8 +23,5 @@ public class PZ_Puzzle_Side : PZ_Puzzle_Base
         Managers.Game.Inventory.AddItem(_itemData, quantity);
     }
 
-    protected override void PuzzleClear()
-    {
-
-    }
+    protected abstract void PuzzleClear();
 }

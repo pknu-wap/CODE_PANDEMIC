@@ -12,7 +12,7 @@ public class StageController : MonoBehaviour
 
     [Header("CameraSetting")]
     [SerializeField]
-    private  PolygonCollider2D _cameraLimit;
+    private PolygonCollider2D _cameraLimit;
     [SerializeField]
     private Camera _mapCamera;
 
@@ -23,26 +23,26 @@ public class StageController : MonoBehaviour
     public Transform _blockParent;
 
     public PolygonCollider2D CameraLimit { get { return _cameraLimit; } private set { _cameraLimit = value; } }
-   
+
     public void SetInfo(StageData stageData)
     {
         LinkedBlocks = new Dictionary<int, PZ_Main_Block>();
         _stageData = stageData;
-       
+
         CreateSpawners();
         CreatePuzzles();
         CreateItems();
         CreateInteracts();
     }
     private void Start()
-    {   
-        if(_mapCamera!=null)
-        _mapCamera.gameObject.SetActive(false);
-        
+    {
+        if (_mapCamera != null)
+            _mapCamera.gameObject.SetActive(false);
+
     }
     public void OnEnable()
     {
-        Managers.Event.Subscribe("MainPuzzleClear",OnPuzzleCleared);
+        Managers.Event.Subscribe("MainPuzzleClear", OnPuzzleCleared);
         Managers.Event.Subscribe("OnMapCamera", OnMapCamera);
         Managers.Event.Subscribe("OffMapCamera", OffMapCamera);
 
@@ -62,8 +62,8 @@ public class StageController : MonoBehaviour
     {
         if (_stageData.BossTemplateID == 0) CreateNormalMapSpawner();
         else CreateBossMapSpawner();
-    }   
-    private  void CreateNormalMapSpawner()
+    }
+    private void CreateNormalMapSpawner()
     {
         List<SpawnerInfoData> spawners = _stageData.Spawners;
         for (int i = 0; i < spawners.Count; i++)
@@ -118,16 +118,17 @@ public class StageController : MonoBehaviour
                 Debug.LogError($"Puzzle ID {puzzles[i]} not found in data.");
                 continue;
             }
-            if (Managers.Game.ClearPuzzleID.Contains(puzzles[i])) continue; 
+            if (Managers.Game.ClearPuzzleID.Contains(puzzles[i])) continue;
             Managers.Resource.Instantiate(data.Prefab, _puzzlesParent, (obj) =>
             {
                 obj.transform.position = data.Pos;
                 PZ_Puzzle_Item puzzleItem = obj.GetComponent<PZ_Puzzle_Item>();
-                PZ_Puzzle_Base puzzle=  obj.GetComponent<PZ_Puzzle_Base>();  
+                PZ_Puzzle_Base puzzle = obj.GetComponent<PZ_Puzzle_Base>();
+                PZ_Puzzle_Side puzzleSide = obj.GetComponent<PZ_Puzzle_Side>();
                 if (data.IsMain)
                 {
-                    if (data.LinkedBlock.Prefab!=null)
-                    CreateBlock(data.ID,data.LinkedBlock);
+                    if (data.LinkedBlock.Prefab != null)
+                        CreateBlock(data.ID, data.LinkedBlock);
                 }
 
                 if (puzzleItem != null)
@@ -145,6 +146,10 @@ public class StageController : MonoBehaviour
                     }
 
                 }
+                else if (puzzleSide != null)
+                {
+                    puzzleSide.SetInfo(data);
+                }
 
             });
         }
@@ -155,7 +160,7 @@ public class StageController : MonoBehaviour
         Debug.Log(Managers.Data.Interacts);
         for (int i = 0; i < interacts.Count; i++)
         {
-            if (!Managers.Data.Interacts.TryGetValue(interacts[i],out InteractObjectData data))
+            if (!Managers.Data.Interacts.TryGetValue(interacts[i], out InteractObjectData data))
             {
                 Debug.LogError($"Interact ID :  {interacts[i]} not found in data.");
                 continue;
@@ -172,14 +177,14 @@ public class StageController : MonoBehaviour
     {
         Managers.Resource.Instantiate(blockData.Prefab, _blockParent.transform, (obj) =>
         {
-            PZ_Main_Block linkedBlock =obj.GetComponent<PZ_Main_Block>();
+            PZ_Main_Block linkedBlock = obj.GetComponent<PZ_Main_Block>();
             linkedBlock.SetInfo(blockData);
             LinkedBlocks.Add(id, linkedBlock);
         });
     }
     private void DestroyLinkedBlock(int id)
     {
-        if(LinkedBlocks.ContainsKey(id))
+        if (LinkedBlocks.ContainsKey(id))
         {
             //Destroy(LinkedBlocks[id].gameObject);
 
@@ -189,21 +194,21 @@ public class StageController : MonoBehaviour
     }
     private void CreateItems()
     {
-        
-       List <int> FieldItems = _stageData.FieldItems;
-       
+
+        List<int> FieldItems = _stageData.FieldItems;
+
         for (int i = 0; i < FieldItems.Count; i++)
-        {   
+        {
             int dataId = FieldItems[i];
             if (Managers.Game.ObtainedItemIDs.Contains(dataId))
             {
                 Debug.Log(FieldItems[i]);
                 continue;
             }
-            if (Managers.Data.FieldItems.TryGetValue(dataId, out FieldItemData data) == false) continue;    
+            if (Managers.Data.FieldItems.TryGetValue(dataId, out FieldItemData data) == false) continue;
             Managers.Resource.Instantiate("Item", _ItemsParent, (obj) =>
             {
-                Item item=obj.GetComponent<Item>();
+                Item item = obj.GetComponent<Item>();
                 obj.transform.position = data.Pos;
                 item.SetInfo(data);
             });
@@ -215,14 +220,14 @@ public class StageController : MonoBehaviour
 
         if (puzzle != null)
         {
-           DestroyLinkedBlock(puzzle.ID);
+            DestroyLinkedBlock(puzzle.ID);
         }
     }
     private void OnMapCamera(object obj)
     {
         _mapCamera.gameObject.SetActive(true);
     }
-    private void OffMapCamera(object  obj)
+    private void OffMapCamera(object obj)
     {
         _mapCamera.gameObject.SetActive(false);
     }
