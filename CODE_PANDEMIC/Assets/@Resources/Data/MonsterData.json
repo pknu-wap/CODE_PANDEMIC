@@ -7,9 +7,9 @@
       "Hp": 60,
       "AttackDamage": 10,
       "AttackDelay": 5.0,
-      "DetectionRange": 7.5,
+      "DetectionRange": 5,
       "DetectionAngle": 120,
-      "MoveSpeed": 3.5,
+      "MoveSpeed": 3.0,
       "AttackRange": 2
     },
     {
@@ -21,32 +21,32 @@
       "AttackDelay": 5.0,
       "DetectionRange": 7.5,
       "DetectionAngle": 120,
-      "MoveSpeed": 3.5,
+      "MoveSpeed": 3.0,
       "AttackRange": 2
     },
     {
       "TemplateID": 3,
       "NameID": "의사 좀비",
       "Prefab": "M_003",
-      "Hp": 120,
-      "AttackDamage": 15,
-      "AttackDelay": 5.0,
-      "DetectionRange": 7.5,
+      "Hp": 160,
+      "AttackDamage": 20,
+      "AttackDelay": 2.0,
+      "DetectionRange": 10,
       "DetectionAngle": 120,
-      "MoveSpeed": 2,
+      "MoveSpeed": 3.8,
       "AttackRange": 1
     },
     {
       "TemplateID": 4,
-      "NameID": "의사 좀비",
+      "NameID": "원장 좀비",
       "Prefab": "B_004",
       "Hp": 1000,
       "AttackDamage": 20,
       "AttackDelay": 5.0,
-      "DetectionRange": 7.5,
+      "DetectionRange": 20,
       "DetectionAngle": 360,
-      "MoveSpeed": 2,
-      "AttackRange": 2
+      "MoveSpeed": 3.5,
+      "AttackRange": 3
     },
     {
       "TemplateID": 5,
@@ -57,7 +57,7 @@
       "AttackDelay": 5.0,
       "DetectionRange": 7.5,
       "DetectionAngle": 120,
-      "MoveSpeed": 2,
+      "MoveSpeed": 3.5,
       "AttackRange": 2
     },
     {
@@ -69,7 +69,7 @@
       "AttackDelay": 0,
       "DetectionRange": 0,
       "DetectionAngle": 0,
-      "MoveSpeed": 2,
+      "MoveSpeed": 5,
       "AttackRange": 2
     },
     {
@@ -78,6 +78,18 @@
       "Prefab": "M_005",
       "Hp": 150,
       "AttackDamage": 20,
+      "AttackDelay": 8.0,
+      "DetectionRange": 3.5,
+      "DetectionAngle": 120,
+      "MoveSpeed": 3.5,
+      "AttackRange": 2
+    },
+    {
+      "TemplateID": 8,
+      "NameID": "번개 좀비",
+      "Prefab": "M_006",
+      "Hp": 500,
+      "AttackDamage": 50,
       "AttackDelay": 8.0,
       "DetectionRange": 3.5,
       "DetectionAngle": 120,

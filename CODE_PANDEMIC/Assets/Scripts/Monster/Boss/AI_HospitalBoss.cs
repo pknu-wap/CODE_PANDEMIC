@@ -47,36 +47,39 @@ public class AI_HospitalBoss : AI_Controller
             return null;
         }
     }
-    private void BossCinematic()
-    {
-
-    }
+   
     private IEnumerator BossSequence()
     {
-        Managers.Event.InvokeEvent("Cinematic");
-        //TODO : boss SEQUENCE 
-        yield return null;
-        Managers.Event.InvokeEvent("EndCinematic",Define.CinematicType.BossSequence);
+        if (_camera == null) yield break;
+        _camera.gameObject.SetActive(true);
+        _camera.OnCinematic();
+        //TODO: BOSSSEQUENCE
+        yield return CoroutineHelper.WaitForSeconds(2.0f);
+        _camera.OnEndCinematic(Define.CinematicType.BossSequence);
     }
-  
+    public override void SetInfo(MonsterData monsterData)
+    {
+        base.SetInfo(monsterData);
+        StartCoroutine(BossSequence());
+    }
     protected override void Start()
     {
         ChangeState(new AI_StateIdle(this));
         _throwSkill.SetController(this);
         _sweepSkill.SetController(this);
         _dashSkill.SetController(this);
-        if (_monsterData == null)
-        {
-            _monsterData = new MonsterData();
-            _monsterData.NameID = "HospitalBoss";
-            _monsterData.Hp = 1000;
-            _monsterData.AttackDelay = 5.0f;
-            _monsterData.DetectionRange = 7.5f;
-            _monsterData.DetectionAngle = 360;
-            _monsterData.MoveSpeed = 3.5f;
-            _monsterData.AttackRange = 2f;
-            _monsterData.AttackDamage = 20;
-        }
+        // if (_monsterData == null)
+        // {
+        //     _monsterData = new MonsterData();
+        //     _monsterData.NameID = "HospitalBoss";
+        //     _monsterData.Hp = 1000;
+        //     _monsterData.AttackDelay = 5.0f;
+        //     _monsterData.DetectionRange = 7.5f;
+        //     _monsterData.DetectionAngle = 360;
+        //     _monsterData.MoveSpeed = 3.5f;
+        //     _monsterData.AttackRange = 2f;
+        //     _monsterData.AttackDamage = 20;
+        // }
         SettingData();
         base.Start();
         if (!Init())
@@ -107,6 +110,7 @@ public class AI_HospitalBoss : AI_Controller
         TargetLayer = LayerMask.GetMask("Player");
         base.Awake();
     }
+  
     private void EnterBerserkMode()
     {
         IsBerserk = true;

@@ -70,8 +70,15 @@ public class Define
     public const int None = 0;
     public const int PlayerCamera = 10;
     public const int Cinematic = 20;
-  
 
+
+    public enum InteractType
+    {
+        Generator,
+        Extinguisher,
+        WaterPump,
+        // Add more as needed
+    }
 }
 public static class QuickSlotIndex
 {

@@ -343,20 +343,28 @@
           }
         },
         {
-          "ID": 1004,
-          "Name": "PlayerBackSpawner",
+          "ID": 301,
+          "Name": "BossSpawner",
           "Pos": {
-            "x": 20.7,
-            "y": -5.5
+            "x": 25.0,
+            "y": -42.0
           }
-        }
+          },
+          {
+            "ID": 1004,
+            "Name": "PlayerBackSpawner",
+            "Pos": {
+              "x": 20.7,
+              "y": -5.5
+            }
+          }
       ]
     },
     {
       "TemplateID": 5,
       "ChapterID": 2,
       "StageID": 1,
-      "BossTemplateID":4,
+      "BossTemplateID":0,
       "MapAddress": "Map2_1",
       "MapName": "도로 1",
       "Spawners": [

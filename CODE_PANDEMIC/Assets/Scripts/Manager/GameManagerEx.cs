@@ -90,7 +90,9 @@ public class GameManagerEx
     public void AddZombieKillCount()=>_record.AddZombieKillCount();
     public void AddPlayerDeathCount() => _record.AddPlayerDeathCount();
     public void AddClearPuzzleCount() => _record.AddClearPuzzleCount();
+    public void AddInteractCount(Define.InteractType type) => _record.AddInteractCount(type);
     #endregion
+
     public int LatestStage
     {
         get => _gameData.LatestStage;

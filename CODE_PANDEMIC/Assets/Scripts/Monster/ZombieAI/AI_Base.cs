@@ -14,7 +14,7 @@ public abstract class AI_Base : MonoBehaviour
     public event Action OnDie;
 
     
-    public void SetInfo(MonsterData monsterData)
+    public virtual void SetInfo(MonsterData monsterData)
     {
         _monsterData = monsterData;
         _currentHp = monsterData.Hp;
@@ -68,7 +68,10 @@ public abstract class AI_Base : MonoBehaviour
         Action callback = OnDie;
         if (callback != null)
             callback();
-
+        // gameObject.SetActive(false);
+    }
+    public void DieAnimationEnd()
+    {
         gameObject.SetActive(false);
     }
 

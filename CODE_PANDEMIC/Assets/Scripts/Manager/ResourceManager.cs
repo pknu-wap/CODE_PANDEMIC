@@ -69,13 +69,11 @@ public class ResourceManager : MonoBehaviour
             callback?.Invoke(obj);
         });
     }
-
+   
 
     public void Destroy(GameObject obj, float seconds = 0.0f)
     {
         Object.Destroy(obj, seconds);
-       
-
     }
 }
 

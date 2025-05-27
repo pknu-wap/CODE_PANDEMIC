@@ -31,6 +31,7 @@ public class BossSpawner : SpawnBase
 
     private void OnSpawnBossMonster(object obj)
     {
+        if ((Managers.Game.HighestChapter > Managers.Game.Chapter)) return;
         SpawnObjects();
     }
 
@@ -48,6 +49,8 @@ public class BossSpawner : SpawnBase
                     obj.transform.localPosition = monster.Pos;
                     AI_Base ai = obj.GetComponent<AI_Base>();
                     if (ai != null) ai.SetInfo(data);
+                    AI_HospitalBoss boss = obj.GetComponent<AI_HospitalBoss>();
+                    //if (boss != null) boss.BossCinematic();
                 });
             }
         }
