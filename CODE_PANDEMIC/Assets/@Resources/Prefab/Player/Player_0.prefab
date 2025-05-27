@@ -154,7 +154,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6620689810424979695}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -423,7 +423,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5232568, y: 4.982687}
+  m_Size: {x: 2.7, y: 5.6}
   m_EdgeRadius: 0
 --- !u!50 &8741614795324971763
 Rigidbody2D:
@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipWeapon: {fileID: 0}
-  _weaponHolder: {fileID: 0}
+  _weaponHolder: {fileID: 139337128564268983}
   _currentState: 0
   _forwardVector: {x: 0, y: 0}
   withArmOverride: {fileID: 22100000, guid: cfa74da12db09544c9d1a6dd09f919c6, type: 2}
