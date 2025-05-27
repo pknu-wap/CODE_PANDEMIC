@@ -116,8 +116,9 @@ public class EquipWeapon : MonoBehaviour
                 break;
             default:
                 break;
-        }
 
+
+        }
     }
     bool CheckDifferentWeapon(WeaponData item, WeaponBase currentWeapon)
     {

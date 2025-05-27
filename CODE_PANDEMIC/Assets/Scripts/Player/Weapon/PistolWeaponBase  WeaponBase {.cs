@@ -20,15 +20,15 @@ public class PistolWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
         SetNextFireTime();
-        _currentAmmo--;
+        _currentBullet --;
 
-        if (_currentAmmo <= 0)
+        if (_currentBullet <= 0)
         {
             Reload();
         }
 
 
-        Managers.Event.InvokeEvent("BulletUpdated", _currentAmmo);
+        Managers.Event.InvokeEvent("BulletUpdated", _currentBullet);
         if (_animator != null)
         {
             _animator.SetBool("Fire", true);
@@ -39,9 +39,16 @@ public class PistolWeaponBase : WeaponBase
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 direction = mousePos - firePoint.transform.position;
             direction.z = 0f;
-
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
             firePoint.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+            //if (weaponSpriteRenderer != null)
+            //{
+            //    bool isLeft = mousePos.x < firePoint.transform.position.x;
+            //    weaponSpriteRenderer.flipY = isLeft;
+            //    Debug.Log($"angle: {angle}, isLeft: {isLeft}, flipY: {weaponSpriteRenderer.flipY}");
+            //}
         }
 
         if (bulletPrefab != null && firePoint != null)
