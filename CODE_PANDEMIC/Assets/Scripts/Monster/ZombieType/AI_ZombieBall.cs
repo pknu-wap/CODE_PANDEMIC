@@ -74,16 +74,23 @@ public class AI_ZombieBall : AI_Controller
         if (_player == null)
             return;
         int summonCount = Random.Range(3,6);
-        for (int i = 0; i < summonCount; i++)
+        if (Managers.Data.Monsters.TryGetValue(5, out MonsterData data))
         {
-            Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * summonRadius;
-            GameObject zombie = Instantiate(zombiePrefab, spawnPos, Quaternion.identity);
-            zombie.transform.SetParent(transform.parent, worldPositionStays: true);
-
-            AI_Controller summonZombie = zombie.GetComponent<AI_PatientZombie>();
-            if (summonZombie != null)
+            for (int i = 0; i < summonCount; i++)
             {
-                summonZombie.ForceDetectTarget(_player);
+                Managers.Resource.Instantiate(data.Prefab, null, (obj) =>
+                {
+                    Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * summonRadius;
+                    obj.transform.position = spawnPos;
+                    obj.transform.SetParent(transform.parent, worldPositionStays: true);
+                    obj.GetComponent<AI_Base>()?.SetInfo(data);
+                    AI_Controller summonZombie = obj.GetComponent<AI_PatientZombie>();
+                    if (summonZombie != null)
+                    {
+                        summonZombie.ForceDetectTarget(_player);
+                    }
+                });
+               
             }
         }
     }

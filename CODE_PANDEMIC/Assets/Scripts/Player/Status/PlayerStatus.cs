@@ -148,7 +148,7 @@ public class PlayerStatus : MonoBehaviour
     // 체력 회복
     public void OnHealed(float healValue)
     {
-        if (_currentHp/_maxHp<=0.5f && (_currentHp+healValue / _maxHp) >  0.5f) 
+        
         _currentHp = Mathf.Clamp(_currentHp + healValue, 0, _maxHp);
         _effectHp = Mathf.Max(_effectHp, _currentHp);
 
