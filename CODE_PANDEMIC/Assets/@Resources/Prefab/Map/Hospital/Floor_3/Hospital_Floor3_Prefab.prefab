@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: 5.482971, y: -1.3580933, z: 0}
   m_ShapePathHash: -1582462315
   m_Mesh: {fileID: 0}
-  m_InstanceId: 74258
+  m_InstanceId: 42892
   m_LocalBounds:
     m_Center: {x: 2.4951172, y: -0.42152023, z: 0}
     m_Extent: {x: 2.987854, y: 0.936573, z: 0}
@@ -403,7 +403,7 @@ MonoBehaviour:
   - {x: -4.878174, y: -3.4979553, z: 0}
   m_ShapePathHash: -111521873
   m_Mesh: {fileID: 0}
-  m_InstanceId: 74264
+  m_InstanceId: 42898
   m_LocalBounds:
     m_Center: {x: 22.419434, y: 6.6103706, z: 0}
     m_Extent: {x: 32.947327, y: 19.848103, z: 0}
@@ -1593,6 +1593,22 @@ PrefabInstance:
     - target: {fileID: 6401842270670583842, guid: 7070caa7cfd1e4a44bc2c25951b3ce72, type: 3}
       propertyPath: m_Name
       value: Room5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9166920339110725131, guid: 7070caa7cfd1e4a44bc2c25951b3ce72, type: 3}
+      propertyPath: m_Size.x
+      value: 0.34442505
+      objectReference: {fileID: 0}
+    - target: {fileID: 9166920339110725131, guid: 7070caa7cfd1e4a44bc2c25951b3ce72, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6915087
+      objectReference: {fileID: 0}
+    - target: {fileID: 9166920339110725131, guid: 7070caa7cfd1e4a44bc2c25951b3ce72, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.042787477
+      objectReference: {fileID: 0}
+    - target: {fileID: 9166920339110725131, guid: 7070caa7cfd1e4a44bc2c25951b3ce72, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.014245689
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
