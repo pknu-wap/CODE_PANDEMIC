@@ -167,7 +167,7 @@ public class PZ_Car : PZ_Interact_NonSpawn
             _camera.gameObject.SetActive(true);
             _camera.OnCinematic();
         }
-        yield return CoroutineHelper.WaitForSeconds(1.0f); //wait for  camera 
+        yield return CoroutineHelper.WaitForSeconds(1.5f); //wait for  camera 
         Vector2 currentPos = _rigidbody.position; // 시작점
         Vector2 destinationPos = _rigidbody.position; // 도착점
 
@@ -213,7 +213,7 @@ public class PZ_Car : PZ_Interact_NonSpawn
         _Parking.BrokeBlocks();
 
         _camera?.OnEndCinematic(Define.CinematicType.PuzzleClear);
-        yield return CoroutineHelper.WaitForSeconds(1.0f);
+        yield return CoroutineHelper.WaitForSeconds(0.5f);
 
         _Parking.ClearPuzzle();
     }
