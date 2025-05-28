@@ -123,11 +123,11 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452426865207516835}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 7d96d5b6bd358624fbf7c2fb077b1402, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 3c319b6e31ebe0b4eae82a08da95488e, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: 939722a7ba8d1374fab3f6fe9fb6db97, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 44d78b23eaab82445b7f4cc53815e730, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9730e202727665f4ba936ea2401bc819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextPopUp: {fileID: 5441321057361819137, guid: 64b299b7f93bc3f41bd8ae87fb2f4bcd, type: 3}
+  _nextPopUp: {fileID: 0}
 --- !u!1 &5715503609000732139
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 939722a7ba8d1374fab3f6fe9fb6db97, type: 2}
+  m_Texture: {fileID: 8400000, guid: 44d78b23eaab82445b7f4cc53815e730, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -809,13 +809,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC778\uBCA4\uD1A0\uB9AC\uB294 \uD0A4\uBCF4\uB4DC\uC758  \\nI \uD0A4\uB97C
-    \uD1B5\uD574 \uC5F4\uC218 \uC788\uC2B5\uB2C8\uB2E4.\\n\\n\uC778\uBCA4\uD1A0\uB9AC\uB97C
-    \uC5F4\uC5B4 \uB9C8\uC6B0\uC2A4\uC758 \\n\uC67C\uCABD \uD074\uB9AD\uC73C\uB85C
-    \uC544\uC774\uD15C\uC758 \uC815\uBCF4\uB97C \\n\uD655\uC778 \uD560 \uC218 \uC788\uC73C\uBA70,
-    \\n\uC6B0\uD074\uB9AD\uC744 \uD1B5\uD574  \uC544\uC774\uD15C\uC744  \\n\uC0AC\uC6A9\uD558\uAC70\uB098
-    \uBC84\uB9B4 \uC218\uAC00 \uC788\uC2B5\uB2C8\uB2E4.\\n\\n<color=#fc2f2f>\uC77C\uBD80
-    \uC544\uC774\uD15C</color>\uC740 \uBC84\uB9B4\uC218\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."
+  m_text: "\uB9CC\uC57D \uD035\uC2AC\uB86F\uC744 \uD1B5\uD574 \uBB34\uAE30\uB97C
+    \uC7A5\uCC29\uC744 \uD558\uC600\uB2E4\uBA74 <color=#fc2f2f>\uB9C8\uC6B0\uC2A4\uC758
+    \uC67C\uCABD \uD074\uB9AD</color>\uC744 \uD1B5\uD574 \uBB34\uAE30\uB97C \uC0AC\uC6A9\uD560
+    \uC218 \uC788\uC2B5\uB2C8\uB2E4.\\n\\n\uAC01 \uBB34\uAE30\uB9C8\uB2E4 \uACF5\uACA9\uB825\uACFC
+    \uACF5\uACA9 \uBC29\uC2DD \uB4F1\uC774 \uB2E4\uB985\uB2C8\uB2E4.\\n\\n\uBB34\uAE30\uB97C
+    \uB9AC\uB85C\uB4DC \uD558\uACE0 \uC788\uC744 \uB54C\uB294 \uD50C\uB808\uC774\uC5B4\uB294
+    \uB2E4\uB978 \uBB34\uAE30\uB85C \uAD50\uCCB4\uB97C \uD55C\uB2E4\uAC70\uB098 \uD560
+    \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0b115e7670c196849ac4a1cf8c10df06, type: 2}
   m_sharedMaterial: {fileID: -1204964562890094762, guid: 0b115e7670c196849ac4a1cf8c10df06, type: 2}
@@ -949,7 +950,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ( Item )
+  m_text: ( Attack )
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0b115e7670c196849ac4a1cf8c10df06, type: 2}
   m_sharedMaterial: {fileID: -1204964562890094762, guid: 0b115e7670c196849ac4a1cf8c10df06, type: 2}
