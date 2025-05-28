@@ -76,8 +76,11 @@ public class Define
     {
         Generator,
         Extinguisher,
-        WaterPump,
-        // Add more as needed
+        MainPuzzle,
+        Safe,
+        Container,
+        Traffic,
+        ArmorHouse
     }
 }
 public static class QuickSlotIndex

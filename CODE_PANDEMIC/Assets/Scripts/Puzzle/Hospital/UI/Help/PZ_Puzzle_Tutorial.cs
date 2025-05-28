@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PZ_Puzzle_Tutorial : MonoBehaviour
 {
-    [SerializeField] private string _popupAddressable;
+    [SerializeField] private Define.InteractType _popup;
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -11,7 +11,7 @@ public class PZ_Puzzle_Tutorial : MonoBehaviour
             return;
         }
 
-       // Managers.UI.ShowPopupUI<UI_TutorialPopUp>(_popupAddressable);
+        Managers.Game.AddInteractCount(_popup);
 
         Destroy(gameObject);
     }
