@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeHeal(float healValue)
     {
-        _playerStatus.OnHealed(healValue);
+        _playerStatus.ApplyHealChange(healValue);
     }
     public bool IsDead() => _currentState == PlayerState.Dead;
 

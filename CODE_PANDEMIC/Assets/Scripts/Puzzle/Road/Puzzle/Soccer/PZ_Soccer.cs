@@ -10,9 +10,13 @@ public class PZ_Soccer : PZ_Puzzle_Side
 
     protected override void PuzzleClear()
     {
-       
+        base.PuzzleClear();
         GiveRewardItem();
-
+     
         Destroy(gameObject);
     }
+
+       
+
+       
 }

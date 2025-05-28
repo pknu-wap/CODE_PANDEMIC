@@ -22,11 +22,11 @@ namespace Inventory.Model
                 switch (param.parameterName)
                 {
                     case "Health":
-                       PlayerStatus obj= Managers.Object.Player.GetComponent<PlayerStatus>();
-                        obj.OnHealed(param.value);
+                       PlayerController obj= Managers.Object.Player.GetComponent<PlayerController>();
+                        obj.TakeHeal(param.value);
                         break;
 
-                        // 추후 Stamina, Mana, Buff 등 확장 가능
+                      
                 }
             }
 
