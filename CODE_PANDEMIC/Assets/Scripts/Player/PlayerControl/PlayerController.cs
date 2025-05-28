@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Inventory.Model;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -69,9 +70,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+  
         if (_currentState == PlayerState.Dead ||
             _currentState==PlayerState.Cinematic) return;
-
         Transform socket = _equipWeapon.WeaponSocket;
         if (socket == null)
         {
@@ -110,8 +111,8 @@ public class PlayerController : MonoBehaviour
         {
             _playerMovement.TryDash(_forwardVector);
         }
-
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        
+        if (EventSystem.current.IsPointerOverGameObject()==false&&Mouse.current.leftButton.wasPressedThisFrame)
         {
             _equipWeapon?.StartAttack(this);
         }
