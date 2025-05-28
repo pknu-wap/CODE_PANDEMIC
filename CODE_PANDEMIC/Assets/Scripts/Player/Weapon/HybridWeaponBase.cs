@@ -5,8 +5,8 @@ public class HybridWeaponBase : WeaponBase
     [Header("Hybrid Weapon Settings")]
     [SerializeField] private Transform firePoint;
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private float meleeCheckRadius = 3f; // 근접공격 범위
-    [SerializeField] private float returnSpeed = 15f;      // 돌아올 때 속도
+    [SerializeField] private float meleeCheckRadius = 3f;
+    [SerializeField] private float returnSpeed = 15f;
 
     private bool _isThrown = false;
     private bool _isReturning = false;
@@ -21,29 +21,35 @@ public class HybridWeaponBase : WeaponBase
     {
         if (_isThrown)
         {
+            Debug.Log($"[Update] Thrown: {_isThrown}, Returning: {_isReturning}, Pos: {transform.position}");
             if (!_isReturning)
             {
                 float traveled = Vector3.Distance(_startPosition, transform.position);
+                Debug.Log($"[Update] Traveled: {traveled} / ThrowDistance: {_throwDistance}");
                 if (traveled >= _throwDistance)
                 {
+                    Debug.Log("[Update] 리턴 상태 진입");
                     _isReturning = true;
                     if (_rb != null) _rb.velocity = Vector2.zero;
+                    if (_rb != null) _rb.isKinematic = true;
                 }
             }
             else
             {
                 if (_rb != null) Destroy(_rb);
-
                 Vector3 toPlayer = (_weaponSocket.position - transform.position).normalized;
                 transform.position += toPlayer * returnSpeed * Time.deltaTime;
-
+                Debug.Log($"[Update] 리턴중. PlayerDist: {Vector3.Distance(transform.position, _weaponSocket.position)}");
                 if (Vector3.Distance(transform.position, _weaponSocket.position) < 0.3f)
                 {
+                    Debug.Log("[Update] 플레이어 도착, 무기 재장착");
                     _isThrown = false;
                     _isReturning = false;
                     transform.SetParent(_weaponSocket);
                     transform.localPosition = Vector3.zero;
                     transform.localRotation = Quaternion.identity;
+                    Collider2D col = GetComponent<Collider2D>();
+                    if (col != null) col.enabled = true;
                 }
             }
         }
@@ -51,43 +57,51 @@ public class HybridWeaponBase : WeaponBase
 
     public override void Attack(PlayerController owner)
     {
-        Debug.Log("[HybridWeaponBase] Attack 호출됨");
+        Debug.Log("[Attack] 호출됨");
         if (_weaponSocket == null)
             _weaponSocket = owner.transform.Find("WeaponSocket") ?? owner.transform;
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(owner.transform.position, meleeCheckRadius, enemyLayer);
+        Debug.Log("[Attack] 근접 타겟 탐색: " + hits.Length);
 
-        float minDist = float.MaxValue;
-        Transform nearestEnemy = null;
-        foreach (var hit in hits)
+        if (hits.Length > 0)
         {
-            float dist = Vector3.Distance(owner.transform.position, hit.transform.position);
-            if (dist < minDist)
+            float minDist = float.MaxValue;
+            Transform nearestEnemy = null;
+            Collider2D nearestCol = null;
+            foreach (var hit in hits)
             {
-                minDist = dist;
-                nearestEnemy = hit.transform;
+                float dist = Vector3.Distance(owner.transform.position, hit.transform.position);
+                Debug.Log($"[Attack] 근접 후보: {hit.name}, Dist: {dist}");
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    nearestEnemy = hit.transform;
+                    nearestCol = hit;
+                }
+            }
+
+            if (nearestEnemy != null && minDist <= meleeCheckRadius)
+            {
+                Debug.Log("[Attack] 근접 공격!");
+                AI_Base enemy = nearestCol.GetComponent<AI_Base>();
+                if (enemy != null)
+                {
+                    Debug.Log($"[Attack] 근접 적 타격: {enemy.name}, Damage: {_weaponData.Damage}");
+                    enemy.TakeDamage(_weaponData.Damage);
+                }
+                return; // 근접 공격 시 투척 분기 안 타게 반드시 return
             }
         }
 
-        if (nearestEnemy != null && minDist <= meleeCheckRadius)
-        {
-            if (_rb != null)
-            {
-                Destroy(_rb);
-                _rb = null;
-            }
-            transform.SetParent(_weaponSocket);
-            transform.localPosition = Vector3.zero;
-            Debug.Log("근접 공격!");
-        }
-        else
-        {
-            ThrowWeapon(owner);
-        }
+        Debug.Log("[Attack] 근접 대상 없음 or 범위 밖. 투척 공격 실행!");
+        ThrowWeapon(owner);
     }
+
 
     private void ThrowWeapon(PlayerController owner)
     {
+        Debug.Log("[ThrowWeapon] 호출");
         _playerTransform = owner.transform;
         if (_weaponSocket == null)
             _weaponSocket = _playerTransform.Find("WeaponSocket") ?? _playerTransform;
@@ -99,7 +113,6 @@ public class HybridWeaponBase : WeaponBase
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorld.z = 0;
         _throwDirection = (mouseWorld - transform.position).normalized;
-
         _throwDistance = Mathf.Min(_weaponData.Range, Vector3.Distance(transform.position, mouseWorld));
         transform.SetParent(null);
 
@@ -109,5 +122,26 @@ public class HybridWeaponBase : WeaponBase
         _rb.gravityScale = 0;
         _rb.velocity = _throwDirection * _weaponData.Range;
         _rb.angularVelocity = 720f;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
+        Debug.Log($"[ThrowWeapon] 던짐! Dir: {_throwDirection}, Dist: {_throwDistance}, Velocity: {_rb.velocity}");
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("[OnTriggerEnter2D] " + other.gameObject.name + $" Thrown:{_isThrown}, Returning:{_isReturning}");
+        if (!_isThrown || _isReturning) return;
+
+        AI_Base enemy = other.GetComponent<AI_Base>();
+        if (enemy != null)
+        {
+            Debug.Log($"[OnTriggerEnter2D] 투척 적 피격! 대상:{enemy.name}, Damage:{_weaponData.Damage}");
+            enemy.TakeDamage(_weaponData.Damage);
+            _isReturning = true;
+            if (_rb != null) _rb.velocity = Vector2.zero;
+            if (_rb != null) _rb.isKinematic = true;
+        }
     }
 }
