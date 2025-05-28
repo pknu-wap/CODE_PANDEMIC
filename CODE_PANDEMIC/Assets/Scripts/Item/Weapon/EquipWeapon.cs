@@ -47,7 +47,12 @@ public class EquipWeapon : MonoBehaviour
     {
         return _weapon!=null;
     }
+    public void Reload()
+    {
+        if (_weapon.Data.Type==Define.WeaponType.ShortWeapon||_weapon==null) return;
 
+        _weapon.Reload();
+    }
     public Transform WeaponSocket => _socket;
     public void Attack(PlayerController owner)
     {
@@ -147,7 +152,7 @@ public class EquipWeapon : MonoBehaviour
     {
         DestroyPrevWeapon();
     }
-
+  
     public void SwapWeapon(WeaponData data,Transform socket)
     {
         DestroyPrevWeapon();

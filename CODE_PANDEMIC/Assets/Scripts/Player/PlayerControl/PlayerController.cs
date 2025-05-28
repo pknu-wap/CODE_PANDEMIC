@@ -3,10 +3,11 @@ using UnityEngine.InputSystem;
 using Inventory.Model;
 using System.Collections;
 using UnityEngine.EventSystems;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private EquipWeapon _equipWeapon;
+    private EquipWeapon _equipWeapon;
     [SerializeField] private Transform _weaponHolder;
 
     private PlayerStatus _playerStatus;
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private InputAction _moveAction;
     private InputAction _runAction;
     private InputAction _dashAction;
-
+   
     public PlayerState _currentState = PlayerState.Idle;
     public Vector2 _forwardVector;
     public bool IsFacingRight => transform.localScale.x < 0f;
@@ -45,20 +46,26 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        _playerInput.Enable();
         _moveAction.Enable();
         _runAction.Enable();
         _dashAction.Enable();
+
+        _playerInput.Player.Reload.performed += PerformReload;
 
         Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
         Managers.Event.Subscribe("OnCinematicStart", OnEnterCinematic);
         Managers.Event.Subscribe("OnCinematicEnd", OnExitCinematic);
     }
 
+
     private void OnDisable()
     {
         _moveAction.Disable();
         _runAction.Disable();
         _dashAction.Disable();
+
+        _playerInput.Player.Reload.performed -= PerformReload;
 
         Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
         Managers.Event.Unsubscribe("OnCinematicStart", OnEnterCinematic);
@@ -168,6 +175,11 @@ public class PlayerController : MonoBehaviour
         // ... 이동 처리 ...
         if (moveInput.x != 0)
             playerSpriteRenderer.flipX = moveInput.x < 0;
+    }
+    private void PerformReload(InputAction.CallbackContext context)
+    {
+        Debug.LogWarning("Reload");
+        _equipWeapon?.Reload();
     }
 
 }

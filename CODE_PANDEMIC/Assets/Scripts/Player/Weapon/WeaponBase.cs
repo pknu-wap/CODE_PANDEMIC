@@ -14,7 +14,11 @@ public abstract class WeaponBase : MonoBehaviour
     public bool IsReloading => _isReloading;
 
     public SpriteRenderer weaponSpriteRenderer;
-
+    public WeaponData Data
+    {
+        get { return _weaponData; }
+        private set { _weaponData = value; }
+    }
     public void SetWeaponFlip(bool isFacingLeft)
     {
         // x축만 플립: 왼쪽 바라볼 때 -1, 오른쪽 바라볼 때 1
@@ -57,15 +61,7 @@ public abstract class WeaponBase : MonoBehaviour
      
     }
 
-    //void Awake()
-    //{
-    //    Vector3 parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
-    //    _originalScale = new Vector3(
-    //        transform.localScale.x * parentScale.x,
-    //        transform.localScale.y * parentScale.y,
-    //        transform.localScale.z * parentScale.z
-    //    );
-    //}
+  
     void Update()
     {
         RotateToMouse();
@@ -138,22 +134,5 @@ public abstract class WeaponBase : MonoBehaviour
         _nextFireTime = Time.time + _weaponData.FireRate;
     }
 
-    //public void SetFacingDirection(bool facingRight)
-    //{
-    //    isFacingRight = facingRight;
-
-    //    float direction = facingRight ? 1f : -1f;
-
-    //    Vector3 parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
-    //    transform.localScale = new Vector3(
-    //        (_originalScale.x * direction) / parentScale.x,
-    //        _originalScale.y / parentScale.y,
-    //        _originalScale.z / parentScale.z
-    //    );
-    //}
-
-    //public void SetWeaponFlip(bool isFacingLeft)
-    //{
-    //    transform.localScale = new Vector3(isFacingLeft ? -1 : 1, 1, 1);
-    //}
+  
 }

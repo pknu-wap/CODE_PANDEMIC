@@ -4,15 +4,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 
-[Serializable]
-public class RecordData
-{
-    public int ItemCount = 0;
-    public int ZombieKillCount = 0;
-    public int ClearPuzzleCount = 0;
-    public int PlayerDeathCount = 0;
-    public InteractRecordData InteractData = new();
-}
 
 [Serializable]
 public class PlayerRecordData
