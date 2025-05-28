@@ -2,7 +2,7 @@
   "weapons": [
     {
       "TemplateID": 101,
-      "Damage": 20,
+      "Damage": 15,
       "FireRate": 0.5,
       "BulletSpeed": 20,
       "Range": 10,
@@ -16,8 +16,8 @@
     {
       "TemplateID": 201,
       "Damage": 10,
-      "FireRate": 0.3,
-      "BulletSpeed": 25,
+      "FireRate": 0.2,
+      "BulletSpeed": 20,
       "Range": 15,
       "ReloadTime": 3,
       "SpreadAngle": 0,
@@ -41,11 +41,11 @@
     },
     {
       "TemplateID": 203,
-      "Damage": 45,
+      "Damage": 80,
       "FireRate": 1.5,
       "BulletSpeed": 8,
-      "Range": 5,
-      "ReloadTime": 3,
+      "Range": 20,
+      "ReloadTime": 8,
       "SpreadAngle": 0,
       "WeaponPrefab": "C_004",
       "BulletID": 2,
@@ -54,10 +54,10 @@
     },
     {
       "TemplateID": 204,
-      "Damage": 5,
+      "Damage": 30,
       "FireRate": 0.1,
       "BulletSpeed": 0,
-      "Range": 4,
+      "Range": 40,
       "ReloadTime": 5.0,
       "SpreadAngle": 60,
       "WeaponPrefab": "C_005",

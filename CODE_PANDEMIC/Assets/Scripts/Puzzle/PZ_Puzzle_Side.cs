@@ -1,19 +1,21 @@
+using System.Collections.Generic;
 using Inventory.Model;
 
 public class PZ_Puzzle_Side : PZ_Puzzle_Base
 {
-    private ItemData _itemData;
 
-    protected void RewardSetting(ItemData rewardData)
+    protected void GiveRewardItem()
     {
-        _itemData = rewardData;
-    }
+        if(Managers.Data.Puzzles.TryGetValue(_data.ID,out PuzzleData data))
+        {
+            RewardData reward = data.RewardItem;
+            if (Managers.Data.Items.TryGetValue(_data.ID, out ItemData items))
+            {
+                Managers.Game.Inventory.AddItem(items, reward.Quantity);
+            }
 
-    protected void GiveRewardItem(int quantity)
-    {
-        Managers.Event.InvokeEvent("ItemReward", _itemData);
-
-        Managers.Game.Inventory.AddItem(_itemData, quantity);
+        }
+       
     }
 
     protected override void PuzzleClear()
