@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PZ_Safe : PZ_Interact_Spawn
@@ -30,7 +30,6 @@ public class PZ_Safe : PZ_Interact_Spawn
     {
         if (_isInteracted || _key == -1)
         {
-            Debug.Log("열쇠가 없음");
             return;
         }
 

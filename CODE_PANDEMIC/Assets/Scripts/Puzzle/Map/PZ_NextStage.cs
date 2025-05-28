@@ -4,6 +4,7 @@ using System.Collections;
 public class PZ_NextStage : MonoBehaviour
 {
     [SerializeField] private bool _isNextStage = true;
+    private bool _isTriggered = false;
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,7 +13,14 @@ public class PZ_NextStage : MonoBehaviour
             return;
         }
 
+        if (_isTriggered)
+        {
+            return;
+        }
+
         StartCoroutine(ChangeStage());
+
+        _isTriggered = true;
     }
 
     private IEnumerator ChangeStage()

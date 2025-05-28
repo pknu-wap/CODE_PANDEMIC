@@ -29,10 +29,12 @@ public class PZ_Parking : PZ_Puzzle_Main
         _emptyPlace[3, 5] = true;
         _emptyPlace[5, 5] = true;
     }
+
     public override void SetInfo(PuzzleData data)
     {
         base.SetInfo(data);
     }
+
     // 해당 방향으로 차를 움직일 수 있는 지 체크
     public bool CanMoveCar(PZ_Car moveCar, CarMoveDirection direction, bool isVerticalCar, int[] body1Index, int[] body2Index)
     {
