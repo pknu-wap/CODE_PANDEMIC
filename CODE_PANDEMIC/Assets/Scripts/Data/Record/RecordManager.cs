@@ -26,6 +26,8 @@ public class RecordManager
     public int ZombieKillCount => _recordData.ZombieKillCount;
     public int ClearPuzzleCount => _recordData.ClearPuzzleCount;
     public int PlayerDeathCount =>_recordData.PlayerDeathCount;
+    public InteractRecordData Interacts => _recordData.InteractData;
+
     public void Init()
     {
         _recordData = new PlayerRecordData();

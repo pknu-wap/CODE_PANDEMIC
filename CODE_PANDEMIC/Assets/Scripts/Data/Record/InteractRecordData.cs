@@ -31,4 +31,13 @@ public class InteractRecordData
         var entry = Entries.Find(e => e.Type == type);
         return entry?.Count ?? 0;
     }
+    public int GetAllCount()
+    {
+        int count = 0;
+        for (int i = 0; i < Entries.Count; i++)
+        {
+            count += Entries[i].Count;
+        }
+        return count;
+    }
 }

@@ -86,6 +86,7 @@ public class GameManagerEx
     }
 
     #region RecordData
+    public RecordManager Record => _record; 
     public void AddItemCount() => _record.AddItemCount();
     public void AddZombieKillCount()=>_record.AddZombieKillCount();
     public void AddPlayerDeathCount() => _record.AddPlayerDeathCount();
