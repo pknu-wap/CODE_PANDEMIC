@@ -26,8 +26,6 @@ public class AI_Controller : AI_Base
     public bool _isUsingSkill;
     public bool _attackedPlayer;
     private bool _isDead = false;
-
-
     private const float SkillRange = 7.5f;
     public virtual ISkillBehavior Skill => null;
     
@@ -157,6 +155,7 @@ public class AI_Controller : AI_Base
         if (Health <= 0f && _currentState is not AI_StateDie)
         {
             _isDead = true;
+            Skill?.StopSkill();
             StopMoving();
             ChangeState(new AI_StateDie(this));
             _animator.SetTrigger("Die");
