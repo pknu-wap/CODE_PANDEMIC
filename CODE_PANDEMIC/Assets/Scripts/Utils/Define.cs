@@ -79,7 +79,8 @@ public class Define
         MainPuzzle,
         Safe,
         Container,
-        Traffic
+        Traffic,
+        ArmorHouse
     }
 }
 public static class QuickSlotIndex
