@@ -65,6 +65,70 @@
       ]
     },
     {
+      "TemplateID": 5,
+      "Name": "루왁 커피",
+      "Description": "똥으로 만든다는 소문이 있다고 한다. \n나는 그 소문을 무척 싫어한다. \n체력을 <color=#33fc2f>10</color> 회복한다.",
+      "IsStackable": true,
+      "MaxStackSize": 50,
+      "Sprite": "Portion_5",
+      "Type": 0,
+      "Weapon": 0,
+      "Parameters": [
+        {
+          "parameterName": "Health",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "TemplateID": 6,
+      "Name": "아이스크림",
+      "Description": "많이 먹으면 머리 아프다. \n체력을 <color=#33fc2f>5</color> 회복한다.",
+      "IsStackable": true,
+      "MaxStackSize": 50,
+      "Sprite": "Portion_6",
+      "Type": 0,
+      "Weapon": 0,
+      "Parameters": [
+        {
+          "parameterName": "Health",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "TemplateID": 7,
+      "Name": "갈색 버섯",
+      "Description": "누가봐도 독 버섯이다. \n체력이 <color=#33fc2f>50</color> 감소한다.",
+      "IsStackable": true,
+      "MaxStackSize": 50,
+      "Sprite": "Portion_7",
+      "Type": 0,
+      "Weapon": 0,
+      "Parameters": [
+        {
+          "parameterName": "Health",
+          "value": 50
+        }
+      ]
+    },
+    {
+      "TemplateID": 8,
+      "Name": "화려한 버섯",
+      "Description": "누가봐도 좋은 버섯이다. \n체력을 <color=#33fc2f>50</color> 회복한다.",
+      "IsStackable": true,
+      "MaxStackSize": 50,
+      "Sprite": "Portion_8",
+      "Type": 0,
+      "Weapon": 0,
+      "Parameters": [
+        {
+          "parameterName": "Health",
+          "value": -50
+        }
+      ]
+    },
+    {
       "TemplateID": 101,
       "Name": "R1895",
       "Description": "기본적인 권총이다.\n적에게 <color=#fc2f2f>20</color>의 공격을 가한다\n탄창 : 6",
