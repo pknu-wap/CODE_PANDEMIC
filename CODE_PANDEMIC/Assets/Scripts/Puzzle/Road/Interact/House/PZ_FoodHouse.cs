@@ -11,6 +11,7 @@ public class PZ_FoodHouse : PZ_Interact_Spawn
 
         base.Interact(player);
 
+        Managers.Game.InteractedObjects(_interactData.ID);
         RewardItem();
     }
 }
