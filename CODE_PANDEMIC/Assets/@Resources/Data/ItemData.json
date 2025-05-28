@@ -228,6 +228,15 @@
       "Type": 3
     },
     {
+      "TemplateID": 502,
+      "Name": "무적의 박스 갑옷",
+      "Description": "부산가는 기차에서 덩치 큰 사람이 쓰던 것이다.\n방어력을 <color=#cbfc07>5</color>,체력을 <color=#cbfc07>10</color>을 올려주지만,\n이동속도가 감소하지 않는다",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Armor_4",
+      "Type": 3
+    },
+    {
       "TemplateID": 601,
       "Name": "선수용 러닝화",
       "Description": "신어도 안 신은것과 같이 가벼운느낌이 든다.\n이동속도를<color=#cbfc07>0.3</color> 올려준다.",
@@ -270,6 +279,24 @@
       "IsStackable": false,
       "MaxStackSize": 1,
       "Sprite": "Key_1",
+      "Type": 2
+    },
+    {
+      "TemplateID": 1004,
+      "Name": "골판지 박스",
+      "Description": "<color=#df01f8>철물점</color>에서 사용할 수 있는 재료이다.\n 이 아이템은 버릴 수 없다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Box_1",
+      "Type": 2
+    },
+    {
+      "TemplateID": 1005,
+      "Name": "박스 테이프",
+      "Description": "<color=#df01f8>철물점</color>에서 사용할 수 있는 재료이다.\n 이 아이템은 버릴 수 없다.",
+      "IsStackable": false,
+      "MaxStackSize": 1,
+      "Sprite": "Box_2",
       "Type": 2
     }
   ]
