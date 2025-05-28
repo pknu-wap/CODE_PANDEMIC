@@ -36,7 +36,6 @@ public class AI_StateAttack : AI_IState
 
     private IEnumerator ChargeAndExecuteSkill()
     {
-        yield return new WaitForSeconds(_chargeDelay);
         if (_controller.Skill != null && _controller.Skill.IsReady(_controller))
         {
             _controller.Skill.StartSkill(_controller, OnSkillComplete);
@@ -45,6 +44,7 @@ public class AI_StateAttack : AI_IState
         {
             OnSkillComplete();
         }
+        yield break;
     }
 
     private void OnSkillComplete()

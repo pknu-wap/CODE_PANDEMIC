@@ -25,6 +25,8 @@ public class AI_Controller : AI_Base
     protected bool _isAttacking;
     public bool _isUsingSkill;
     public bool _attackedPlayer;
+    private bool _isDead = false;
+
 
     private const float SkillRange = 7.5f;
     public virtual ISkillBehavior Skill => null;
@@ -142,6 +144,7 @@ public class AI_Controller : AI_Base
 
     public override void TakeDamage(int amount)
     {
+        if (_isDead) return;
         base.TakeDamage(amount);
         if (Health > 0)
             _damageEffect.CallDamageFlash();
@@ -153,9 +156,10 @@ public class AI_Controller : AI_Base
         }
         if (Health <= 0f && _currentState is not AI_StateDie)
         {
+            _isDead = true;
             StopMoving();
-            _animator.SetTrigger("Die");
             ChangeState(new AI_StateDie(this));
+            _animator.SetTrigger("Die");
         }
             
     }
