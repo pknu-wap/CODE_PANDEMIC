@@ -49,7 +49,7 @@ public class AI_HospitalBoss : AI_Controller
         }
     }
    
-    private IEnumerator BossSequence()
+    private IEnumerator BossStartSequence()
     {
         if (_camera == null) yield break;
         _camera.gameObject.SetActive(true);
@@ -61,7 +61,7 @@ public class AI_HospitalBoss : AI_Controller
     public override void SetInfo(MonsterData monsterData)
     {
         base.SetInfo(monsterData);
-        StartCoroutine(BossSequence());
+        StartCoroutine(BossStartSequence());
     }
     protected override void Start()
     {
@@ -91,6 +91,7 @@ public class AI_HospitalBoss : AI_Controller
         }
         if (Health <= 0f && _currentState is not AI_StateDie)
         {
+            Managers.Game.ClearBoss(_monsterData.TemplateID);
             StartCoroutine(BossDeathSequence()); 
            
            
