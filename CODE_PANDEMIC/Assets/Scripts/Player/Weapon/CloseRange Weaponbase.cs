@@ -19,8 +19,12 @@ public class CloseRangeWeaponBase : WeaponBase
     {
         if (!CanFire()) return;
         SetNextFireTime();
+        _currentBullet--;
         Managers.Event.InvokeEvent("BulletUpdated", _currentBullet);
-
+        if (_currentBullet <= 0)
+        {
+            Reload();
+        }
 
         if (_animator != null)
         {

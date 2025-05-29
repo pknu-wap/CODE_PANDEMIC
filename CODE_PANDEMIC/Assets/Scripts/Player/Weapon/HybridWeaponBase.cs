@@ -1,62 +1,49 @@
 using UnityEngine;
+using System.Collections;
 
-public class HybridWeaponBase : WeaponBase
+public class HybridWeapon : WeaponBase
 {
-    [Header("Hybrid Weapon Settings")]
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private float meleeCheckRadius = 3f;
-    [SerializeField] private float returnSpeed = 15f;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private float attackAngle = 15f;
+    [SerializeField] private float attackDuration = 0.1f;
 
-    private bool isRangedMode = false;
-    private bool _isThrown = false;
-    private bool _isReturning = false;
-    private Vector3 _startPosition;
-    private Vector3 _throwDirection;
-    private float _throwDistance;
-    private Transform _playerTransform;
-    private Transform _weaponSocket;
-    private Rigidbody2D _rb;
+    private bool _isAttacking = false;
+
+    private enum HybridMode { Melee, Ranged }
+    private HybridMode _currentMode = HybridMode.Melee;
 
     void Update()
     {
-
+        // 모드 전환
         if (Input.GetKeyDown(KeyCode.T))
         {
-            isRangedMode = !isRangedMode;
-            Debug.Log(isRangedMode ? "[모드] 원거리" : "[모드] 근거리");
+            _currentMode = _currentMode == HybridMode.Melee ? HybridMode.Ranged : HybridMode.Melee;
+            Debug.Log("[HybridWeapon] Mode Changed: " + _currentMode);
         }
-        if (_isThrown)
+
+        var rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-            Debug.Log($"[Update] Thrown: {_isThrown}, Returning: {_isReturning}, Pos: {transform.position}");
-            if (!_isReturning)
+            if (_currentMode == HybridMode.Melee)
             {
-                float traveled = Vector3.Distance(_startPosition, transform.position);
-                Debug.Log($"[Update] Traveled: {traveled} / ThrowDistance: {_throwDistance}");
-                if (traveled >= _throwDistance)
+                rb.isKinematic = true;      // 물리 해제(직접 위치 제어)
+                rb.velocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+                if (Input.GetMouseButtonDown(0) && !_isAttacking)
                 {
-                    Debug.Log("[Update] 리턴 상태 진입");
-                    _isReturning = true;
-                    if (_rb != null) _rb.velocity = Vector2.zero;
-                    if (_rb != null) _rb.isKinematic = true;
+                    PlayerController owner = GetComponentInParent<PlayerController>();
+                    Attack(owner);
                 }
             }
-            else
+            else if (_currentMode == HybridMode.Ranged)
             {
-                if (_rb != null) Destroy(_rb);
-                Vector3 toPlayer = (_weaponSocket.position - transform.position).normalized;
-                transform.position += toPlayer * returnSpeed * Time.deltaTime;
-                Debug.Log($"[Update] 리턴중. PlayerDist: {Vector3.Distance(transform.position, _weaponSocket.position)}");
-                if (Vector3.Distance(transform.position, _weaponSocket.position) < 0.3f)
+                rb.isKinematic = false;     // 물리 적용(던지기/충돌)
+                rb.gravityScale = 0f;
+                if (Input.GetMouseButtonDown(0) && !_isAttacking)
                 {
-                    Debug.Log("[Update] 플레이어 도착, 무기 재장착");
-                    _isThrown = false;
-                    _isReturning = false;
-                    transform.SetParent(_weaponSocket);
-                    transform.localPosition = Vector3.zero;
-                    transform.localRotation = Quaternion.identity;
-                    Collider2D col = GetComponent<Collider2D>();
-                    if (col != null) col.enabled = true;
+                    Throw();
                 }
             }
         }
@@ -64,100 +51,133 @@ public class HybridWeaponBase : WeaponBase
 
     public override void Attack(PlayerController owner)
     {
-        Debug.Log("[Attack] 호출됨: isRangedMode=" + isRangedMode);
-        if (_weaponSocket == null)
-            _weaponSocket = owner.transform.Find("WeaponSocket") ?? owner.transform;
+        if (_isAttacking) return;
+        _isAttacking = true;
 
-        if (!isRangedMode)
+        // 근접 공격
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 attackDir = (mouseWorldPos - attackPoint.position).normalized;
+        float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
+        Quaternion attackRotation = Quaternion.Euler(0, 0, angle + attackAngle);
+
+        StartCoroutine(RotateDuringAttack(attackRotation));
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        foreach (var hit in hits)
         {
-            // ===== 근접 공격 =====
-            Collider2D[] hits = Physics2D.OverlapCircleAll(owner.transform.position, meleeCheckRadius, enemyLayer);
-            Debug.Log("[Attack] 근접 타겟 탐색: " + hits.Length);
-
-            if (hits.Length > 0)
+            AI_Base enemy = hit.GetComponent<AI_Base>();
+            if (enemy != null)
             {
-                float minDist = float.MaxValue;
-                Transform nearestEnemy = null;
-                Collider2D nearestCol = null;
-                foreach (var hit in hits)
-                {
-                    float dist = Vector3.Distance(owner.transform.position, hit.transform.position);
-                    Debug.Log($"[Attack] 근접 후보: {hit.name}, Dist: {dist}");
-                    if (dist < minDist)
-                    {
-                        minDist = dist;
-                        nearestEnemy = hit.transform;
-                        nearestCol = hit;
-                    }
-                }
-
-                if (nearestEnemy != null && minDist <= meleeCheckRadius)
-                {
-                    Debug.Log("[Attack] 근접 공격!");
-                    AI_Base enemy = nearestCol.GetComponent<AI_Base>();
-                    if (enemy != null)
-                    {
-                        Debug.Log($"[Attack] 근접 적 타격: {enemy.name}, Damage: {_weaponData.Damage}");
-                        enemy.TakeDamage(_weaponData.Damage);
-                    }
-                    return; // 근접 공격시 종료
-                }
+                enemy.TakeDamage(_weaponData.Damage);
+                Debug.Log("[HybridWeapon] Melee Hit: " + hit.name + " / Damage: " + _weaponData.Damage);
             }
-            Debug.Log("[Attack] 근접 대상 없음. 아무 일도 안 함.");
         }
-        else
+
+        Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
+        Invoke(nameof(ResetAttack), attackDuration);
+    }
+
+    private void Throw()
+    {
+        _isAttacking = true;
+        Debug.Log("[HybridWeapon] Throw (Ranged mode) 시작!");
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-            // ===== 원거리 투척 =====
-            Debug.Log("[Attack] 투척 공격 실행!");
-            ThrowWeapon(owner);
+            // 마우스 방향으로 투척
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 throwDir = ((Vector2)(mouseWorldPos - transform.position)).normalized;
+
+            float throwPower = 10f; // 던지는 힘
+            rb.isKinematic = false;
+            rb.gravityScale = 0f;
+            rb.velocity = throwDir * throwPower;
+        }
+
+        Invoke(nameof(ResetAttack), 0.2f);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (_currentMode == HybridMode.Ranged)
+        {
+            AI_Base enemy = collision.gameObject.GetComponent<AI_Base>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(_weaponData.Damage);
+                Debug.Log("[HybridWeapon] Ranged Hit (Collision): " + collision.gameObject.name + " / Damage: " + _weaponData.Damage);
+            }
+
+            // 벽이든 적이든 부딪혔으면 무기 파괴
+            int colLayer = collision.gameObject.layer;
+            if (colLayer == LayerMask.NameToLayer("Wall") ||
+                colLayer == LayerMask.NameToLayer("AttackObj") ||
+                colLayer == LayerMask.NameToLayer("Interact") ||
+                colLayer == LayerMask.NameToLayer("Default"))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
-
-
-    private void ThrowWeapon(PlayerController owner)
+    private IEnumerator RotateDuringAttack(Quaternion attackRotation)
     {
-        Debug.Log("[ThrowWeapon] 호출");
-        _playerTransform = owner.transform;
-        if (_weaponSocket == null)
-            _weaponSocket = _playerTransform.Find("WeaponSocket") ?? _playerTransform;
-
-        _isThrown = true;
-        _isReturning = false;
-        _startPosition = transform.position;
-
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorld.z = 0;
-        _throwDirection = (mouseWorld - transform.position).normalized;
-        _throwDistance = Mathf.Min(_weaponData.Range, Vector3.Distance(transform.position, mouseWorld));
-        transform.SetParent(null);
-
-        _rb = GetComponent<Rigidbody2D>();
-        if (_rb == null) _rb = gameObject.AddComponent<Rigidbody2D>();
-        _rb.isKinematic = false;
-        _rb.gravityScale = 0;
-        _rb.velocity = _throwDirection * _weaponData.Range;
-        _rb.angularVelocity = 720f;
-
-        Collider2D col = GetComponent<Collider2D>();
-        if (col != null) col.enabled = true;
-
-        Debug.Log($"[ThrowWeapon] 던짐! Dir: {_throwDirection}, Dist: {_throwDistance}, Velocity: {_rb.velocity}");
+        Quaternion originalRotation = transform.rotation;
+        transform.rotation = attackRotation;
+        yield return new WaitForSeconds(attackDuration);
+        transform.rotation = originalRotation;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("[OnTriggerEnter2D] " + other.gameObject.name + $" Thrown:{_isThrown}, Returning:{_isReturning}");
-        if (!_isThrown || _isReturning) return;
 
-        AI_Base enemy = other.GetComponent<AI_Base>();
-        if (enemy != null)
+    private void DetachFromPlayer()
+    {
+        transform.SetParent(null, true); // true: 월드 좌표 보존
+
+        // Rigidbody2D 물리적 설정
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-            Debug.Log($"[OnTriggerEnter2D] 투척 적 피격! 대상:{enemy.name}, Damage:{_weaponData.Damage}");
-            enemy.TakeDamage(_weaponData.Damage);
-            _isReturning = true;
-            if (_rb != null) _rb.velocity = Vector2.zero;
-            if (_rb != null) _rb.isKinematic = true;
+            rb.isKinematic = false;
+            rb.gravityScale = 0f;
         }
+
+        var player = GetComponentInParent<PlayerController>();
+        if (player != null)
+        {
+            var equip = player.GetComponent<EquipWeapon>();
+            if (equip != null)
+            {
+                equip.UnEquipWeapon(); // 내부에서 _weapon = null, DestroyPrevWeapon() 등 호출
+            }
+
+            Debug.Log("부모 분리 전: " + transform.parent);
+            transform.SetParent(null, true);
+            Debug.Log("부모 분리 후: " + transform.parent);
+
+        }
+        transform.SetParent(null, true);
+
+        rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = true;
+        }
+
+        _isAttacking = false;
+    }
+
+
+    private void ResetAttack()
+    {
+        _isAttacking = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
