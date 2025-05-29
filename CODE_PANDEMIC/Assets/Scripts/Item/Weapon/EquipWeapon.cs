@@ -36,6 +36,7 @@ public class EquipWeapon : MonoBehaviour
 
     private void OnDisable()
     {
+        Managers.Event.InvokeEvent("CancelReload");
         _weaponInput.QuickSlot.Equip1.performed -= Equip1;
         _weaponInput.QuickSlot.Equip2.performed -= Equip2;
         _weaponInput.QuickSlot.Equip3.performed -= Equip3;
