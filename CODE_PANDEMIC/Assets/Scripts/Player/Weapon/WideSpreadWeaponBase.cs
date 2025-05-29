@@ -65,6 +65,7 @@ public class WideSpreadWeaponBase : WeaponBase
             }
         }
 
+
         StartCoroutine(ResetFireBool());
     }
 

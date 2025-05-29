@@ -8,6 +8,7 @@ public class HybridWeaponBase : WeaponBase
     [SerializeField] private float meleeCheckRadius = 3f;
     [SerializeField] private float returnSpeed = 15f;
 
+    private bool isRangedMode = false;
     private bool _isThrown = false;
     private bool _isReturning = false;
     private Vector3 _startPosition;
@@ -19,6 +20,12 @@ public class HybridWeaponBase : WeaponBase
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            isRangedMode = !isRangedMode;
+            Debug.Log(isRangedMode ? "[모드] 원거리" : "[모드] 근거리");
+        }
         if (_isThrown)
         {
             Debug.Log($"[Update] Thrown: {_isThrown}, Returning: {_isReturning}, Pos: {transform.position}");
@@ -57,46 +64,55 @@ public class HybridWeaponBase : WeaponBase
 
     public override void Attack(PlayerController owner)
     {
-        Debug.Log("[Attack] 호출됨");
+        Debug.Log("[Attack] 호출됨: isRangedMode=" + isRangedMode);
         if (_weaponSocket == null)
             _weaponSocket = owner.transform.Find("WeaponSocket") ?? owner.transform;
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(owner.transform.position, meleeCheckRadius, enemyLayer);
-        Debug.Log("[Attack] 근접 타겟 탐색: " + hits.Length);
-
-        if (hits.Length > 0)
+        if (!isRangedMode)
         {
-            float minDist = float.MaxValue;
-            Transform nearestEnemy = null;
-            Collider2D nearestCol = null;
-            foreach (var hit in hits)
-            {
-                float dist = Vector3.Distance(owner.transform.position, hit.transform.position);
-                Debug.Log($"[Attack] 근접 후보: {hit.name}, Dist: {dist}");
-                if (dist < minDist)
-                {
-                    minDist = dist;
-                    nearestEnemy = hit.transform;
-                    nearestCol = hit;
-                }
-            }
+            // ===== 근접 공격 =====
+            Collider2D[] hits = Physics2D.OverlapCircleAll(owner.transform.position, meleeCheckRadius, enemyLayer);
+            Debug.Log("[Attack] 근접 타겟 탐색: " + hits.Length);
 
-            if (nearestEnemy != null && minDist <= meleeCheckRadius)
+            if (hits.Length > 0)
             {
-                Debug.Log("[Attack] 근접 공격!");
-                AI_Base enemy = nearestCol.GetComponent<AI_Base>();
-                if (enemy != null)
+                float minDist = float.MaxValue;
+                Transform nearestEnemy = null;
+                Collider2D nearestCol = null;
+                foreach (var hit in hits)
                 {
-                    Debug.Log($"[Attack] 근접 적 타격: {enemy.name}, Damage: {_weaponData.Damage}");
-                    enemy.TakeDamage(_weaponData.Damage);
+                    float dist = Vector3.Distance(owner.transform.position, hit.transform.position);
+                    Debug.Log($"[Attack] 근접 후보: {hit.name}, Dist: {dist}");
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearestEnemy = hit.transform;
+                        nearestCol = hit;
+                    }
                 }
-                return; // 근접 공격 시 투척 분기 안 타게 반드시 return
+
+                if (nearestEnemy != null && minDist <= meleeCheckRadius)
+                {
+                    Debug.Log("[Attack] 근접 공격!");
+                    AI_Base enemy = nearestCol.GetComponent<AI_Base>();
+                    if (enemy != null)
+                    {
+                        Debug.Log($"[Attack] 근접 적 타격: {enemy.name}, Damage: {_weaponData.Damage}");
+                        enemy.TakeDamage(_weaponData.Damage);
+                    }
+                    return; // 근접 공격시 종료
+                }
             }
+            Debug.Log("[Attack] 근접 대상 없음. 아무 일도 안 함.");
         }
-
-        Debug.Log("[Attack] 근접 대상 없음 or 범위 밖. 투척 공격 실행!");
-        ThrowWeapon(owner);
+        else
+        {
+            // ===== 원거리 투척 =====
+            Debug.Log("[Attack] 투척 공격 실행!");
+            ThrowWeapon(owner);
+        }
     }
+
 
 
     private void ThrowWeapon(PlayerController owner)
