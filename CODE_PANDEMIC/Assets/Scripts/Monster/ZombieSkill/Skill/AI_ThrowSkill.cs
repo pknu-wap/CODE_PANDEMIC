@@ -8,7 +8,14 @@ public class AI_ThrowSkill : ISkillBehavior
     private float _lastSkillTime = -Mathf.Infinity;
     protected ThrowSkillData _settings;
     protected LayerMask _targetLayer;
-
+    protected AI_LineVisualizer Visualizer
+    {
+        get
+        {
+            return (_controller as AI_NurseZombie)?._visualizer
+                ?? (_controller as AI_HospitalBoss)?._syringeVisualizer;
+        }
+    }
     public void SetController(AI_Controller controller)
     {
         _controller = controller;
@@ -46,6 +53,7 @@ public class AI_ThrowSkill : ISkillBehavior
         if (_skillCoroutine != null && _controller != null)
         {
             _controller.StopCoroutine(_skillCoroutine);
+            Visualizer?.Hide();
         }
     }
 
@@ -53,16 +61,13 @@ public class AI_ThrowSkill : ISkillBehavior
     {
         if (_controller._player == null) yield break;
 
-        var visualizer = (_controller as AI_NurseZombie)?._visualizer 
-                         ?? (_controller as AI_HospitalBoss)?._syringeVisualizer;
-
         Vector2 origin = _controller.transform.position;
         Vector2 target = _controller._player.position;
         float width = _settings.Range;
 
-        visualizer?.Show(origin, target, width);
+        Visualizer?.Show(origin, target, width);
         yield return new WaitForSeconds(_settings.ChargeDelay);
-        visualizer?.Hide();
+        Visualizer?.Hide();
 
         ThrowSyringe((target - origin).normalized);
 
