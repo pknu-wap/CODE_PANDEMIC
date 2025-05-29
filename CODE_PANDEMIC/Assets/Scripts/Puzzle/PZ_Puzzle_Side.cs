@@ -1,23 +1,27 @@
+using System.Collections.Generic;
 using Inventory.Model;
+using UnityEngine;
 
-public class PZ_Puzzle_Side : PZ_Puzzle_Base
+public abstract class PZ_Puzzle_Side : MonoBehaviour
 {
-    private ItemData _itemData;
+    protected PuzzleData _data;
 
-    protected void RewardSetting(ItemData rewardData)
+    public void SetInfo(PuzzleData data)
     {
-        _itemData = rewardData;
+        _data = data;
     }
 
-    protected void GiveRewardItem(int quantity)
+    protected void GiveRewardItem()
     {
-        Managers.Event.InvokeEvent("ItemReward", _itemData);
-
-        Managers.Game.Inventory.AddItem(_itemData, quantity);
+        if(Managers.Data.Puzzles.TryGetValue(_data.ID,out PuzzleData data))
+        {
+            RewardData reward = data.RewardItem;
+            if (Managers.Data.Items.TryGetValue(_data.ID, out ItemData items))
+            {
+                Managers.Game.Inventory.AddItem(items, reward.Quantity);
+            }
+        }
     }
 
-    protected override void PuzzleClear()
-    {
-
-    }
+    protected abstract void PuzzleClear();
 }

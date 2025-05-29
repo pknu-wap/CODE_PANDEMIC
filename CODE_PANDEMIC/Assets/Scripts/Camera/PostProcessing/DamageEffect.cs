@@ -1,22 +1,29 @@
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEngine;
+using System.Collections;
 
 public class DamageEffect : MonoBehaviour
 {
     Volume _volume;
     Vignette _vignette;
 
+    Coroutine _fadeCoroutine;
+    float _fadeDuration = 0.5f;
+    float _startIntensity = 0.5f;
+
     private void Start()
     {
+        
         _volume = GetComponent<Volume>();
         if (_volume.profile.TryGet(out _vignette))
         {
             _vignette.active = false;
+            _vignette.intensity.value = 0f;
         }
         else
         {
-            Debug.LogError("Error, Vignette not found in Volume Profile");
+            Debug.LogError("Vignette not found in Volume Profile");
         }
     }
 
@@ -29,30 +36,43 @@ public class DamageEffect : MonoBehaviour
     private void OnDisable()
     {
         Managers.Event.Unsubscribe("RiskDamage", CallEffect);
-        Managers.Event.Subscribe("ResetIntensity", ResetIntensity);
-
+        Managers.Event.Unsubscribe("ResetIntensity", ResetIntensity);
     }
+
     private void ResetIntensity(object obj)
     {
-        _vignette.active = true;
-        _vignette.intensity.value = 0;
-        _vignette.active = false;
+        if (_fadeCoroutine != null)
+            StopCoroutine(_fadeCoroutine);
 
+        _vignette.intensity.value = 0f;
+        _vignette.active = false;
     }
+
     private void CallEffect(object obj)
     {
-        float hpPercent = (float)obj;
+        if (_fadeCoroutine != null)
+            return;
 
-        if (hpPercent <= 0.7f)
+        _fadeCoroutine = StartCoroutine(FadeOut(_startIntensity));
+    }
+
+    private IEnumerator FadeOut(float startIntensity)
+    {
+        _vignette.intensity.value = startIntensity;
+        _vignette.active = true;
+
+        float elapsed = 0f;
+
+        while (elapsed < _fadeDuration)
         {
-            float t = Mathf.InverseLerp(0.5f, 0f, hpPercent);
-            float intensity = Mathf.Lerp(0.3f, 0.7f, t);
-            _vignette.intensity.value = intensity;
-            _vignette.active = true;
+            elapsed += Time.deltaTime;
+            float t = elapsed / _fadeDuration;
+            _vignette.intensity.value = Mathf.Lerp(startIntensity, 0f, t);
+            yield return null;
         }
-        else
-        {
-            _vignette.active = false;
-        }
+
+        _vignette.intensity.value = 0f;
+        _vignette.active = false;
+        _fadeCoroutine = null;
     }
 }

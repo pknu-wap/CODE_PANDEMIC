@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingOrder: 32
   m_Sprite: {fileID: 1655646564, guid: 7fab467178944734496ab46bb7bd4a7c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 4.571116, y: 1.6700001}
@@ -123,6 +123,7 @@ MonoBehaviour:
   weaponSpriteRenderer: {fileID: 0}
   bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
   firePoint: {fileID: 8536330896334085753}
+  originPrefab: {fileID: 0}
 --- !u!1 &8536330896334085753
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 8536330896334085753}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2, y: 0, z: 0}
+  m_LocalPosition: {x: 2.8, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

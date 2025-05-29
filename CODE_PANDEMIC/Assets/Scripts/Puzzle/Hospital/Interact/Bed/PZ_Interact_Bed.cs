@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PZ_Interact_Bed : PZ_Interact_Spawn
 {
@@ -12,6 +12,7 @@ public class PZ_Interact_Bed : PZ_Interact_Spawn
 
         base.Interact(player);
 
+        Managers.Game.InteractedObjects(_interactData.ID);
         RewardItem();
     }
 }

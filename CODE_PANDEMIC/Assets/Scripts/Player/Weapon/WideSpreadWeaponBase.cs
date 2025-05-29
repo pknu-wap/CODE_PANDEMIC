@@ -61,9 +61,10 @@ public class WideSpreadWeaponBase : WeaponBase
                     bullet.SetInfo(_weaponData.Damage);
                     bullet.Fire(bulletObject.transform.right);
                 }
-                Debug.Log($"[WideSpreadWeaponBase] {i + 1}번째 총알, 방향: {bulletObject.transform.right}");
+                //Debug.Log($"[WideSpreadWeaponBase] {i + 1}번째 총알, 방향: {bulletObject.transform.right}");
             }
         }
+
 
         StartCoroutine(ResetFireBool());
     }

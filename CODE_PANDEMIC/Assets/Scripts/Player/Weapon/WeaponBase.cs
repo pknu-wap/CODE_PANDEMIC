@@ -15,13 +15,6 @@ public abstract class WeaponBase : MonoBehaviour
 
     public SpriteRenderer weaponSpriteRenderer;
 
-    public void SetWeaponFlip(bool isFacingLeft)
-    {
-        // x축만 플립: 왼쪽 바라볼 때 -1, 오른쪽 바라볼 때 1
-        Vector3 scale = transform.localScale;
-        scale.x = Mathf.Abs(scale.x) * (isFacingLeft ? -1 : 1);
-        transform.localScale = scale;
-    }
     public virtual void StopAttack()
     {
         _isAttacking = false;
@@ -54,23 +47,36 @@ public abstract class WeaponBase : MonoBehaviour
     public int ID
     {
         get { return _weaponData.TemplateID; }
-     
+
     }
 
-    //void Awake()
-    //{
-    //    Vector3 parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
-    //    _originalScale = new Vector3(
-    //        transform.localScale.x * parentScale.x,
-    //        transform.localScale.y * parentScale.y,
-    //        transform.localScale.z * parentScale.z
-    //    );
-    //}
+    void Awake()
+    {
+        // prefab의 원래 localScale만 저장
+        _originalScale = transform.localScale;
+    }
+
+
+    void LateUpdate()
+    {
+        // 부모 scale.x 영향 상쇄
+        if (transform.parent != null)
+        {
+            Vector3 parentScale = transform.parent.lossyScale;
+            Vector3 desiredScale = transform.localScale;
+
+            // 부모가 x축 음수(flip)면 자식 x축도 반대로 뒤집어 상쇄
+            float xSign = parentScale.x < 0 ? -1 : 1;
+
+            transform.localScale = new Vector3(xSign * Mathf.Abs(desiredScale.x), desiredScale.y, desiredScale.z);
+        }
+    }
+
+
     void Update()
     {
         RotateToMouse();
     }
-
     private void RotateToMouse()
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -78,19 +84,21 @@ public abstract class WeaponBase : MonoBehaviour
         direction.z = 0f;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        bool shouldFaceRight = direction.x >= 0;
-
-        if (shouldFaceRight != isFacingRight)
+        // y축 반전 (아래쪽 바라볼 때)
+        if (angle > 90f || angle < -90f)
         {
-            isFacingRight = shouldFaceRight;
-
-            Vector3 localScale = transform.localScale;
-            localScale.y *= -1;
-            transform.localScale = localScale;
+            // 아래 방향이면 y축 -1 (스프라이트 반전)
+            transform.localScale = new Vector3(_originalScale.x, -Mathf.Abs(_originalScale.y), _originalScale.z);
+        }
+        else
+        {
+            // 위쪽 방향이면 원래대로
+            transform.localScale = new Vector3(_originalScale.x, Mathf.Abs(_originalScale.y), _originalScale.z);
         }
     }
+
 
     public void SetInfo(WeaponData data)
     {
@@ -111,8 +119,8 @@ public abstract class WeaponBase : MonoBehaviour
 
     private IEnumerator ReloadRoutine()
     {
-        
-        Managers.Event.InvokeEvent("Reload",_weaponData);
+
+        Managers.Event.InvokeEvent("Reload", _weaponData);
         yield return CoroutineHelper.WaitForSeconds(_weaponData.ReloadTime);
         _currentBullet = _weaponData.BulletCount;
         Managers.Event.InvokeEvent("BulletUpdated", _currentBullet);
@@ -138,22 +146,4 @@ public abstract class WeaponBase : MonoBehaviour
         _nextFireTime = Time.time + _weaponData.FireRate;
     }
 
-    //public void SetFacingDirection(bool facingRight)
-    //{
-    //    isFacingRight = facingRight;
-
-    //    float direction = facingRight ? 1f : -1f;
-
-    //    Vector3 parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
-    //    transform.localScale = new Vector3(
-    //        (_originalScale.x * direction) / parentScale.x,
-    //        _originalScale.y / parentScale.y,
-    //        _originalScale.z / parentScale.z
-    //    );
-    //}
-
-    //public void SetWeaponFlip(bool isFacingLeft)
-    //{
-    //    transform.localScale = new Vector3(isFacingLeft ? -1 : 1, 1, 1);
-    //}
 }

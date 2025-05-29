@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private AnimatorOverrideController withArmOverride;
     [SerializeField] private AnimatorOverrideController noArmOverride;
-    [SerializeField] private SpriteRenderer playerSpriteRenderer;
+    [SerializeField] public SpriteRenderer playerSpriteRenderer;
 
 
     private void Awake()
@@ -69,7 +69,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (_currentState == PlayerState.Dead) return;
+        if (_currentState == PlayerState.Dead ||
+            _currentState==PlayerState.Cinematic) return;
 
         Transform socket = _equipWeapon.WeaponSocket;
         if (socket == null)
@@ -132,6 +133,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(GameObject attacker, float damageValue)
     {
+        if(_currentState == PlayerState.Dead|| _currentState==PlayerState.Cinematic) return;   
         _playerStatus.OnDamaged(attacker, damageValue);
     }
 

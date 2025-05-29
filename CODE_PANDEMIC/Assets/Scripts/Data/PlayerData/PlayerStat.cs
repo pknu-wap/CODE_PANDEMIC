@@ -7,7 +7,7 @@ using UnityEngine;
 public class StatData
 {
     public int MaxHp= 100;
-    public float CurrentHp=100;
+    public float CurrentHp=-1;
     public int Defendence = 0;
     public float BaseSpeed = 3.5f;
     public float RunSpeed = 4.5f;

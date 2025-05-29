@@ -7,7 +7,8 @@ public abstract class PZ_Puzzle_Base : UI_PopUp
 
     protected RectTransform _rectTransform;
     protected Image _image;
-   [SerializeField] protected PuzzleData _data;
+
+    protected PuzzleData _data;
 
     public override bool Init()
     {
@@ -19,10 +20,12 @@ public abstract class PZ_Puzzle_Base : UI_PopUp
         _rectTransform = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
     }
+
     public virtual void SetInfo(PuzzleData data)
     {
         _data = data;
     }
+
     // 퍼즐 오너 세팅
     public void SetPuzzleOwnerItem(PZ_Puzzle_Item owner)
     {
