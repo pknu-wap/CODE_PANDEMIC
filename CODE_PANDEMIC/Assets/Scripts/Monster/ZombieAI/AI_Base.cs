@@ -50,6 +50,8 @@ public abstract class AI_Base : MonoBehaviour
 
     public virtual void TakeDamage(int amount)
     {
+        if (_currentHp <= 0f)
+            return;
         _currentHp -= amount;
         if(_statusBar.gameObject?.activeSelf==false)
             _statusBar.gameObject?.SetActive(true);
@@ -68,7 +70,6 @@ public abstract class AI_Base : MonoBehaviour
         Action callback = OnDie;
         if (callback != null)
             callback();
-        // gameObject.SetActive(false);
     }
     public void DieAnimationEnd()
     {

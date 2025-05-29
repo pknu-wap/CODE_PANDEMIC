@@ -45,7 +45,7 @@ public class AI_SweepSkill : ISkillBehavior
 
     protected virtual float GetDamageMultiplier()
     {
-        return 1f; // 디폴트
+        return 0.5f; // 디폴트
     }
     public virtual void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
     {
@@ -58,7 +58,6 @@ public class AI_SweepSkill : ISkillBehavior
     protected virtual IEnumerator SweepRoutine(System.Action onSkillComplete)
     {
         Vector2 attackDirection = ((Vector2)_controller._player.position - (Vector2)_controller.transform.position).normalized;
-        yield return new WaitForSeconds(_settings.ChargeDelay);
         _controller._animator.SetBool("Attack", true);
         for (int i = 0; i < _settings.Count; i++)
         {

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 632177515085607111}
-  - component: {fileID: 5717035281996712873}
   - component: {fileID: 6356949016520741947}
   m_Layer: 0
   m_Name: Visualizer
@@ -33,19 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7891205480170759343}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5717035281996712873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1886168674486104924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 008a46a1d431e9e40a49d5e6b7a91171, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 5215403631231249133, guid: a3752a84a747a9043a7cd4e7e144c743, type: 3}
 --- !u!114 &6356949016520741947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +444,7 @@ MonoBehaviour:
     Width: 0
     Speed: 0
     ChargeDelay: 0
-  _syringeVisualizer: {fileID: 5717035281996712873}
+  _syringeVisualizer: {fileID: 0}
 --- !u!95 &8412234891018398290
 Animator:
   serializedVersion: 5
