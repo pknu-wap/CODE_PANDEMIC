@@ -28,7 +28,7 @@ public class HybridWeapon : WeaponBase
         {
             if (_currentMode == HybridMode.Melee)
             {
-                rb.isKinematic = true;      // 물리 해제(직접 위치 제어)
+                rb.isKinematic = true;
                 rb.velocity = Vector2.zero;
                 rb.angularVelocity = 0f;
                 if (Input.GetMouseButtonDown(0) && !_isAttacking)
@@ -39,7 +39,7 @@ public class HybridWeapon : WeaponBase
             }
             else if (_currentMode == HybridMode.Ranged)
             {
-                rb.isKinematic = false;     // 물리 적용(던지기/충돌)
+                rb.isKinematic = false;
                 rb.gravityScale = 0f;
                 if (Input.GetMouseButtonDown(0) && !_isAttacking)
                 {
@@ -85,11 +85,10 @@ public class HybridWeapon : WeaponBase
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            // 마우스 방향으로 투척
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 throwDir = ((Vector2)(mouseWorldPos - transform.position)).normalized;
 
-            float throwPower = 10f; // 던지는 힘
+            float throwPower = 10f;
             rb.isKinematic = false;
             rb.gravityScale = 0f;
             rb.velocity = throwDir * throwPower;
@@ -98,19 +97,19 @@ public class HybridWeapon : WeaponBase
         Invoke(nameof(ResetAttack), 0.2f);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D trigger)
     {
         if (_currentMode == HybridMode.Ranged)
         {
-            AI_Base enemy = collision.gameObject.GetComponent<AI_Base>();
+            AI_Base enemy = trigger.gameObject.GetComponent<AI_Base>();
             if (enemy != null)
             {
                 enemy.TakeDamage(_weaponData.Damage);
-                Debug.Log("[HybridWeapon] Ranged Hit (Collision): " + collision.gameObject.name + " / Damage: " + _weaponData.Damage);
+                Debug.Log("[HybridWeapon] Ranged Hit (Trigger): " + trigger.gameObject.name + " / Damage: " + _weaponData.Damage);
             }
 
-            // 벽이든 적이든 부딪혔으면 무기 파괴
-            int colLayer = collision.gameObject.layer;
+            // 무기 파괴
+            int colLayer = trigger.gameObject.layer;
             if (colLayer == LayerMask.NameToLayer("Wall") ||
                 colLayer == LayerMask.NameToLayer("AttackObj") ||
                 colLayer == LayerMask.NameToLayer("Interact") ||
@@ -121,20 +120,20 @@ public class HybridWeapon : WeaponBase
         }
     }
 
+
     private IEnumerator RotateDuringAttack(Quaternion attackRotation)
     {
         Quaternion originalRotation = transform.rotation;
         transform.rotation = attackRotation;
         yield return new WaitForSeconds(attackDuration);
-        transform.rotation = originalRotation;
+        //transform.rotation = originalRotation;
     }
 
 
     private void DetachFromPlayer()
     {
-        transform.SetParent(null, true); // true: 월드 좌표 보존
+        transform.SetParent(null, true);
 
-        // Rigidbody2D 물리적 설정
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -148,13 +147,8 @@ public class HybridWeapon : WeaponBase
             var equip = player.GetComponent<EquipWeapon>();
             if (equip != null)
             {
-                equip.UnEquipWeapon(); // 내부에서 _weapon = null, DestroyPrevWeapon() 등 호출
+                equip.UnEquipWeapon();
             }
-
-            Debug.Log("부모 분리 전: " + transform.parent);
-            transform.SetParent(null, true);
-            Debug.Log("부모 분리 후: " + transform.parent);
-
         }
         transform.SetParent(null, true);
 
