@@ -49,7 +49,7 @@ public class EquipWeapon : MonoBehaviour
     }
     public void Reload()
     {
-        if (_weapon.Data.Type==Define.WeaponType.ShortWeapon||_weapon==null) return;
+        if (_weapon.WeaponInfo.Type==Define.WeaponType.ShortWeapon||_weapon==null) return;
 
         _weapon.Reload();
     }
