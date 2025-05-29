@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PZ_Puzzle_Item : PZ_Interact_Spawn
@@ -36,7 +36,6 @@ public class PZ_Puzzle_Item : PZ_Interact_Spawn
         _original = transform.position;
         _dongdong = _original;
         _dongdong.y += 0.2f;
-
 
         StartCoroutine(MoveUp());
     }
