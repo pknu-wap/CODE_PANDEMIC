@@ -55,7 +55,7 @@ public class PanzerfaustProjectile : MonoBehaviour
         _isExploded = false;
 
         _moveDir = direction.normalized;
-        rb.velocity = _moveDir * speed;
+        rb.velocity = _moveDir * speed*1.5f;
 
         CancelInvoke();
         Invoke("CheckRangeAndExplode", 0.2f);

@@ -143,7 +143,7 @@ public class EquipWeapon : MonoBehaviour
         Destroy(_weapon.gameObject);
         _weapon = null;
     }
-    private void UnEquipWeapon()
+    public void UnEquipWeapon()
     {
         DestroyPrevWeapon();
     }

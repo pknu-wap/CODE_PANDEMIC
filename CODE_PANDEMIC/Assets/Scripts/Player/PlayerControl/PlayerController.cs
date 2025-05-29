@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private AnimatorOverrideController withArmOverride;
     [SerializeField] private AnimatorOverrideController noArmOverride;
-    [SerializeField] private SpriteRenderer playerSpriteRenderer;
+    [SerializeField] public SpriteRenderer playerSpriteRenderer;
 
 
     private void Awake()
