@@ -6,8 +6,11 @@ public class HybridWeapon : WeaponBase
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackAngle = 15f;
+    [SerializeField] private float attackAngle = 30f;
     [SerializeField] private float attackDuration = 0.1f;
+
+    [Header("Effect")]
+    [SerializeField] private GameObject swingEffectPrefab;
 
     private bool _isAttacking = false;
 
@@ -58,9 +61,14 @@ public class HybridWeapon : WeaponBase
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 attackDir = (mouseWorldPos - attackPoint.position).normalized;
         float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
-        Quaternion attackRotation = Quaternion.Euler(0, 0, angle + attackAngle);
+        float swingAngle = angle + attackAngle;
 
-        StartCoroutine(RotateDuringAttack(attackRotation));
+        transform.rotation = Quaternion.Euler(0, 0, swingAngle);
+
+        if (swingEffectPrefab != null)
+        {
+            Instantiate(swingEffectPrefab, attackPoint.position, Quaternion.Euler(0, 0, swingAngle));
+        }
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         foreach (var hit in hits)
