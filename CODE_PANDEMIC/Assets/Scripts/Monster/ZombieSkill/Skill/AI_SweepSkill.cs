@@ -82,9 +82,9 @@ public class AI_SweepSkill : ISkillBehavior
             {
                 float damage = _controller.AiDamage * GetDamageMultiplier();
 
-                if (hit.TryGetComponent<PlayerStatus>(out var player))
+                if (hit.TryGetComponent<PlayerController>(out var player))
                 {
-                    player.OnDamaged(_controller.gameObject, damage);
+                    player.TakeDamage(_controller.gameObject, damage);
                 }
             }
         }

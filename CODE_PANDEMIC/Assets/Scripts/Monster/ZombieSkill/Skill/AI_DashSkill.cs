@@ -88,10 +88,10 @@ public class AI_DashSkill : ISkillBehavior
                 if (Vector2.Distance(_controller.transform.position, playerTransform.position) <= dashCheckRadius)
                 {
                     _hasHitPlayer = true;
-                    if (playerTransform.TryGetComponent<PlayerStatus>(out var playerStatus))
+                    if (playerTransform.TryGetComponent<PlayerController>(out var player))
                     {
                         int damage = Mathf.RoundToInt(_controller.AiDamage * 0.8f);
-                        playerStatus.OnDamaged(_controller.gameObject, damage);
+                        player.TakeDamage(_controller.gameObject, damage);
                     }
                 }
             }

@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour
     private Vector2 _startPos;
     private Rigidbody2D _rb;
     private bool _hasTriggered = false;
-    private PlayerStatus player;
+    private PlayerController player;
     private AI_Controller _owner;
     private float _safeTime = 0.05f; // 발사 직후 0.05초 동안 충돌 무시
     private float _spawnTime;
@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        player = FindObjectOfType<PlayerStatus>();
+        player = FindObjectOfType<PlayerController>();
     }
 
     private void OnEnable()
@@ -50,7 +50,7 @@ public class Projectile : MonoBehaviour
 
             if (((1 << collision.gameObject.layer) & LayerMask.GetMask("Player")) != 0)
             {
-                player.OnDamaged(gameObject, _owner.AiDamage);
+                player.TakeDamage(gameObject, _owner.AiDamage);
                 spawnPos = transform.position;
             }
             else
