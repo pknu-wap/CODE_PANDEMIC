@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System;
 
 public class PZ_Hospital_Boss_Block : MonoBehaviour
 {
@@ -10,10 +9,12 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
     {
         StartCoroutine(DropTheCars());
     }
+
     private void OnEnable()
     {
         Managers.Event.Subscribe("OnBossClear", OnBossClear);
     }
+
     private void OnDisable()
     {
         Managers.Event.Unsubscribe("OnBossClear", OnBossClear);
@@ -124,6 +125,7 @@ public class PZ_Hospital_Boss_Block : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
+
         Managers.Event.InvokeEvent("SpawnBossMonster");
     }
 }
