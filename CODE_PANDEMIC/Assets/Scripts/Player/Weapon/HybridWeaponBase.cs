@@ -7,7 +7,7 @@ public class HybridWeapon : WeaponBase
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackAngle = 90f;
-    [SerializeField] private float attackDuration = 120f;
+     private float attackDuration = 0.3f;
     [SerializeField] private GameObject swingEffectPrefab;
 
     private bool _isThrown = false;
