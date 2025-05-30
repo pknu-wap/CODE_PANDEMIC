@@ -6,31 +6,36 @@ public class HybridWeapon : WeaponBase
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackAngle = 15f;
-    [SerializeField] private float attackDuration = 0.1f;
+    [SerializeField] private float attackAngle = 90f;
+    [SerializeField] private float attackDuration = 120f;
+    [SerializeField] private GameObject swingEffectPrefab;
 
+    private bool _isThrown = false;
     private bool _isAttacking = false;
+    private float _currentAngle = 0f;
 
     private enum HybridMode { Melee, Ranged }
     private HybridMode _currentMode = HybridMode.Melee;
 
     void Update()
     {
-        // 모드 전환
         if (Input.GetKeyDown(KeyCode.T))
         {
             _currentMode = _currentMode == HybridMode.Melee ? HybridMode.Ranged : HybridMode.Melee;
             Debug.Log("[HybridWeapon] Mode Changed: " + _currentMode);
         }
 
+        if (_isThrown) return;
+
         var rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+
             if (_currentMode == HybridMode.Melee)
             {
-                rb.isKinematic = true;      // 물리 해제(직접 위치 제어)
-                rb.velocity = Vector2.zero;
-                rb.angularVelocity = 0f;
                 if (Input.GetMouseButtonDown(0) && !_isAttacking)
                 {
                     PlayerController owner = GetComponentInParent<PlayerController>();
@@ -39,28 +44,53 @@ public class HybridWeapon : WeaponBase
             }
             else if (_currentMode == HybridMode.Ranged)
             {
-                rb.isKinematic = false;     // 물리 적용(던지기/충돌)
-                rb.gravityScale = 0f;
                 if (Input.GetMouseButtonDown(0) && !_isAttacking)
                 {
                     Throw();
                 }
             }
+
+            if (!_isAttacking && transform.parent != null)
+            {
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 dir = (mouseWorldPos - attackPoint.position).normalized;
+                _currentAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0, 0, _currentAngle);
+
+                // flipY
+                SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+                if (sr != null)
+                    sr.flipY = (_currentAngle > 90f || _currentAngle < -90f);
+            }
         }
     }
+
 
     public override void Attack(PlayerController owner)
     {
         if (_isAttacking) return;
         _isAttacking = true;
 
-        // 근접 공격
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 attackDir = (mouseWorldPos - attackPoint.position).normalized;
-        float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
-        Quaternion attackRotation = Quaternion.Euler(0, 0, angle + attackAngle);
 
-        StartCoroutine(RotateDuringAttack(attackRotation));
+        float swingAngle = _currentAngle + attackAngle;
+        transform.rotation = Quaternion.Euler(0, 0, swingAngle);
+
+        //Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector2 attackDir = (mouseWorldPos - attackPoint.position).normalized;
+        //float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
+        //float swingAngle = angle + attackAngle;
+
+
+        // 이펙트 생성
+        if (swingEffectPrefab != null)
+        {
+            GameObject effect = Instantiate(swingEffectPrefab, attackPoint.position, Quaternion.Euler(0, 0, swingAngle));
+            Destroy(effect, 0.3f);  // 이펙트의 실제 애니메이션 길이에 맞춰 0.2f를 조절하세요
+        }
+
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null)
+            sr.flipY = (swingAngle > 90f || swingAngle < -90f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         foreach (var hit in hits)
@@ -80,37 +110,37 @@ public class HybridWeapon : WeaponBase
     private void Throw()
     {
         _isAttacking = true;
+        _isThrown = true; // 던진 상태로 표시
+
         Debug.Log("[HybridWeapon] Throw (Ranged mode) 시작!");
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            // 마우스 방향으로 투척
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 throwDir = ((Vector2)(mouseWorldPos - transform.position)).normalized;
-
-            float throwPower = 10f; // 던지는 힘
             rb.isKinematic = false;
             rb.gravityScale = 0f;
+
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 throwDir = ((Vector2)(mouseWorldPos - transform.position)).normalized;
+            float throwPower = 10f;
             rb.velocity = throwDir * throwPower;
         }
 
         Invoke(nameof(ResetAttack), 0.2f);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D trigger)
     {
         if (_currentMode == HybridMode.Ranged)
         {
-            AI_Base enemy = collision.gameObject.GetComponent<AI_Base>();
+            AI_Base enemy = trigger.gameObject.GetComponent<AI_Base>();
             if (enemy != null)
             {
                 enemy.TakeDamage(_weaponData.Damage);
-                Debug.Log("[HybridWeapon] Ranged Hit (Collision): " + collision.gameObject.name + " / Damage: " + _weaponData.Damage);
+                Debug.Log("[HybridWeapon] Ranged Hit (Trigger): " + trigger.gameObject.name + " / Damage: " + _weaponData.Damage);
             }
 
-            // 벽이든 적이든 부딪혔으면 무기 파괴
-            int colLayer = collision.gameObject.layer;
+            int colLayer = trigger.gameObject.layer;
             if (colLayer == LayerMask.NameToLayer("Wall") ||
                 colLayer == LayerMask.NameToLayer("AttackObj") ||
                 colLayer == LayerMask.NameToLayer("Interact") ||
@@ -128,50 +158,14 @@ public class HybridWeapon : WeaponBase
         yield return new WaitForSeconds(attackDuration);
         transform.rotation = originalRotation;
     }
-
-
-    private void DetachFromPlayer()
-    {
-        transform.SetParent(null, true); // true: 월드 좌표 보존
-
-        // Rigidbody2D 물리적 설정
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.gravityScale = 0f;
-        }
-
-        var player = GetComponentInParent<PlayerController>();
-        if (player != null)
-        {
-            var equip = player.GetComponent<EquipWeapon>();
-            if (equip != null)
-            {
-                equip.UnEquipWeapon(); // 내부에서 _weapon = null, DestroyPrevWeapon() 등 호출
-            }
-
-            Debug.Log("부모 분리 전: " + transform.parent);
-            transform.SetParent(null, true);
-            Debug.Log("부모 분리 후: " + transform.parent);
-
-        }
-        transform.SetParent(null, true);
-
-        rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.velocity = Vector2.zero;
-            rb.isKinematic = true;
-        }
-
-        _isAttacking = false;
-    }
-
-
     private void ResetAttack()
     {
         _isAttacking = false;
+        transform.rotation = Quaternion.Euler(0, 0, _currentAngle);
+
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null)
+            sr.flipY = (_currentAngle > 90f || _currentAngle < -90f);
     }
 
     private void OnDrawGizmosSelected()
