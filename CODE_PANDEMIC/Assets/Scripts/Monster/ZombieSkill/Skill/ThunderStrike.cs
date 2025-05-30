@@ -25,9 +25,9 @@ public class ThunderStrike : MonoBehaviour
         Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, _radius, _targetLayer);
         foreach (Collider2D target in targets)
         {
-            if (target.TryGetComponent<PlayerStatus>(out var damageable))
+            if (target.TryGetComponent<PlayerController>(out var damageable))
             {
-                damageable.OnDamaged(gameObject, _damage);
+                damageable.TakeDamage(gameObject, _damage);
             }
         }
 

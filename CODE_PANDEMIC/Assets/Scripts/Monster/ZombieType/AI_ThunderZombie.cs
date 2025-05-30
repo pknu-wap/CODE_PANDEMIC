@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AI_ThunderZombie : AI_Controller
 {
@@ -44,7 +45,7 @@ public class AI_ThunderZombie : AI_Controller
 
     protected override void Start()
     {
-        //  if (_monsterData == null)
+        // if (_monsterData == null)
         // {
         //     _monsterData = new MonsterData();
         //     _monsterData.NameID = "ThunderZombie";
@@ -85,5 +86,15 @@ public class AI_ThunderZombie : AI_Controller
     public void AttackHit()
     {
         _patientAttack?.StartSkill(this, null);
+    }
+    public override void Die() // 여기에다가 번개좀비 작업하면 됩니다.
+    {
+        base.Die();
+        Skill?.StopSkill();
+        StopMoving();
+        ChangeState(new AI_StateDie(this));
+        _animator.SetTrigger("Die");
+
+        Debug.Log($"{AIName} has died.");
     }
 }
