@@ -18,7 +18,7 @@ public class UI_CoolTime : UI_Base
   
     Image _disable;
     TextMeshProUGUI _timer;
-
+    Coroutine _coolTime;
     public override bool Init()
     {
         if (base.Init() == false) return false;
@@ -38,9 +38,19 @@ public class UI_CoolTime : UI_Base
 
     public void StartCoolTime(float maxTime)
     {
-        StartCoroutine(CoolTimeRoutine(maxTime));
+        _coolTime = StartCoroutine(CoolTimeRoutine(maxTime));
     }
-
+     public void ResetCoolTime()
+    {
+        if (_coolTime != null)
+        {
+            StopCoroutine(_coolTime);
+            _coolTime = null;
+            _disable.fillAmount = 0f;
+            _timer.text = "";
+        }
+       
+    }
     IEnumerator CoolTimeRoutine(float maxTime)
     {
         float time = maxTime;

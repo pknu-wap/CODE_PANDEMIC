@@ -14,7 +14,11 @@ public abstract class WeaponBase : MonoBehaviour
     public bool IsReloading => _isReloading;
 
     public SpriteRenderer weaponSpriteRenderer;
-
+    public WeaponData WeaponInfo
+    {
+        get { return _weaponData; }
+        private set { _weaponData = value; }
+    }
     public virtual void StopAttack()
     {
         _isAttacking = false;

@@ -23,7 +23,7 @@ public class UI_InventoryButtonContents : UI_Base
 
     private void OnClickWeaponTutorialButton()
     {
-        Debug.Log("TODO");
+        Managers.UI.ShowPopupUI<UI_TutorialPopUp>("UI_AttackTutorialPopUp");
     }
 
     private void OnClickInventoryTutorialButton()

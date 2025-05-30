@@ -34,13 +34,23 @@ public class UI_InGameSlot : UI_Base
         _RangeCoolTime=GetObject((int)GameObjects.RangeCoolTime).GetComponent<UI_CoolTime>();       
 
         Managers.Event.Subscribe("OnQuickSlotUpdated", OnQuickSlotUpdated);
+        
+
         Managers.Game.QuickSlot.InitializeAllSlots();
         return true;
     }
     private void OnEnable()
     {
         Managers.Event.Subscribe("Reload", OnReload);
+        Managers.Event.Subscribe("CancelReload", OnCancelCoolTime);
     }
+
+    private void OnCancelCoolTime(object obj)
+    {
+        _pistolCoolTime.ResetCoolTime();
+        _RangeCoolTime.ResetCoolTime();
+    }
+
     private void OnDisable()
     {
         Managers.Event.Unsubscribe("OnQuickSlotUpdated", OnQuickSlotUpdated);

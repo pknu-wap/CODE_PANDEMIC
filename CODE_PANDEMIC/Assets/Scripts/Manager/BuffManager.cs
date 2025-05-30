@@ -46,7 +46,12 @@ public class Buff
         }
 
     }
-
+    public void ClearBuff()
+    {
+        if (_timeRemaining <= 0f) return;
+        _timeRemaining = 0f;
+        Expire();
+    }
     private void Expire()
     {
         Managers.Event.InvokeEvent("OnBuffEnded", _data);
@@ -70,9 +75,12 @@ public class BuffManager : MonoBehaviour
                 expiredBuffs.Add(pair.Key);
         }
 
-        foreach (int id in expiredBuffs)
+        if (expiredBuffs.Count > 0)
         {
-            _activeBuffs.Remove(id);
+            foreach (int id in expiredBuffs)
+            {
+                _activeBuffs.Remove(id);
+            }
             Managers.Event.InvokeEvent("StatUpdated");
         }
     }
@@ -89,6 +97,15 @@ public class BuffManager : MonoBehaviour
             _activeBuffs.Add(ID, newBuff);
         }
 
+        Managers.Event.InvokeEvent("StatUpdated");
+    }
+    public void ClearAllBuffs()
+    {
+        foreach (var buff in _activeBuffs.Values)
+        {
+            buff.ClearBuff();
+        }
+        _activeBuffs.Clear();
         Managers.Event.InvokeEvent("StatUpdated");
     }
 }

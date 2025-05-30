@@ -65,6 +65,7 @@ public class UI_PausePopUp :UI_PopUp
     private void OnClickTitleButton()
     {
         Managers.UI.ClosePopupUI(this);
+        Managers.Buffs.ClearAllBuffs();
         Managers.Game.SaveGame();
         Managers.UI.FadeOut(() => { Managers.Scene.ChangeScene(Define.SceneType.TitleScene); });
      

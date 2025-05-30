@@ -141,6 +141,7 @@ public class StageProgressData
     public List<int> ObtainedItemIDs = new();
     public List<int> ClearedPuzzleIDs = new();
     public List<int> InteractObjectIDS = new();
+    public int ClearBossID = 0;
 }
 
 public class StageProgressSaver

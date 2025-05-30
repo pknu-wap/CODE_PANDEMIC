@@ -58,7 +58,7 @@ public class EnvironmentController : MonoBehaviour
             Managers.Resource.Instantiate("Fog", transform, (obj) =>
             {
                 _fog = obj;
-                _fog.transform.position = Vector3.zero;
+                _fog.transform.localPosition=new Vector3(0,0,1);
             });
         }
     }
