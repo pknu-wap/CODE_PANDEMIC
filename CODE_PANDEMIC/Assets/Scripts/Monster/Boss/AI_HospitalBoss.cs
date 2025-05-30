@@ -14,7 +14,7 @@ public class AI_HospitalBoss : AI_Controller
     public DashSkillData _dashSkillData;
     private bool _shortAttack;
 
-    public AI_LineVisualizer _syringeVisualizer;
+    public AI_BossThrowVisualizer _syringeVisualizer;
     public override float AiDamage => _monsterData.AttackDamage;
     public int MaxHealth => _monsterData.Hp;
 
@@ -69,7 +69,19 @@ public class AI_HospitalBoss : AI_Controller
         _throwSkill.SetController(this);
         _sweepSkill.SetController(this);
         _dashSkill.SetController(this);
-       
+        _syringeVisualizer.SetController(this);
+        if (_monsterData == null)
+        {
+            _monsterData = new MonsterData();
+            _monsterData.NameID = "HospitalBoss";
+            _monsterData.Hp = 1000;
+            _monsterData.AttackDelay = 5.0f;
+            _monsterData.DetectionRange = 7.5f;
+            _monsterData.DetectionAngle = 360;
+            _monsterData.MoveSpeed = 3.5f;
+            _monsterData.AttackRange = 2f;
+            _monsterData.AttackDamage = 20;
+        }
         SettingData();
         base.Start();
         if (!Init())
