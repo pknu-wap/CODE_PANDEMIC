@@ -18,9 +18,9 @@ public class AttackCollider : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & _targetLayer) != 0)
         {
-            if (other.TryGetComponent<PlayerStatus>(out var playerStatus))
+            if (other.TryGetComponent<PlayerController>(out var player))
             {
-                playerStatus.OnDamaged(gameObject, _damage);
+                player.TakeDamage(gameObject, _damage);
             }
         }
     }
