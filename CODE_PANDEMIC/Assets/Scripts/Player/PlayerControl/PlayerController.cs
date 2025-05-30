@@ -152,6 +152,7 @@ public class PlayerController : MonoBehaviour
         _currentState = PlayerState.Cinematic;
         _playerMovement.StopImmediately();
 
+        _equipWeapon?.StopAttack();
     }
 
     private void OnExitCinematic(object obj)
