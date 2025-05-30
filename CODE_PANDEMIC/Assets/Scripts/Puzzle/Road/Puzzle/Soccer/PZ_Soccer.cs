@@ -7,6 +7,8 @@ public class PZ_Soccer : PZ_Puzzle_Side
 
     protected override void PuzzleClear()
     {
+        Managers.Game.ClearPuzzle(_data.ID);
+
         GiveRewardItem();
 
         Destroy(gameObject);

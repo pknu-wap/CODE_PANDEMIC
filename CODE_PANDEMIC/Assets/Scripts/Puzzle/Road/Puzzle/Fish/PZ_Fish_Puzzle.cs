@@ -7,6 +7,8 @@ public class PZ_Fish_Puzzle : PZ_Puzzle_Side
 
     protected override void PuzzleClear()
     {
+        Managers.Game.ClearPuzzle(_data.ID);
+
         GiveRewardItem();
 
         Destroy(gameObject);
