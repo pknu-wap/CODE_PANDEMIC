@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     public PlayerState _currentState = PlayerState.Idle;
     public Vector2 _forwardVector;
     public bool IsFacingRight => transform.localScale.x < 0f;
+    private bool _isInvincible = false;
+
 
     [SerializeField] private AnimatorOverrideController withArmOverride;
     [SerializeField] private AnimatorOverrideController noArmOverride;
@@ -133,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(GameObject attacker, float damageValue)
     {
-        if(_currentState == PlayerState.Dead|| _currentState==PlayerState.Cinematic) return;   
+        if(_currentState == PlayerState.Dead|| _currentState==PlayerState.Cinematic || _isInvincible) return;   
         _playerStatus.OnDamaged(attacker, damageValue);
     }
 
@@ -150,7 +152,7 @@ public class PlayerController : MonoBehaviour
         _currentState = PlayerState.Cinematic;
         _playerMovement.StopImmediately();
 
-        Debug.Log("연출 상태 진입");
+        _equipWeapon?.StopAttack();
     }
 
     private void OnExitCinematic(object obj)
@@ -158,13 +160,18 @@ public class PlayerController : MonoBehaviour
         if (_currentState == PlayerState.Cinematic)
         {
             _currentState = PlayerState.Idle;
-            Debug.Log("연출 상태 종료");
+            StartCoroutine(InvincibilityCoroutine(0.5f));
         }
+    }
+    private IEnumerator InvincibilityCoroutine(float duration)
+    {
+        _isInvincible = true;
+        yield return new WaitForSeconds(duration);
+        _isInvincible = false;
     }
 
     public void Move(Vector2 moveInput, bool isRunning)
     {
-        // ... 이동 처리 ...
         if (moveInput.x != 0)
             playerSpriteRenderer.flipX = moveInput.x < 0;
     }

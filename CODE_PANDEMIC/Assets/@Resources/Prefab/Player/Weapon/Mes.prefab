@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2439239661341223288}
   - component: {fileID: 6051566922022171289}
   - component: {fileID: 484627726693318852}
-  - component: {fileID: 881394003730518373}
-  - component: {fileID: 1406733736963632075}
+  - component: {fileID: 934573385541538651}
+  - component: {fileID: 5895560467336243387}
   m_Layer: 0
   m_Name: Mes
   m_TagString: Untagged
@@ -28,14 +28,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496594360884719396}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.9063079, w: 0.42261827}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7963354309609057239}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 130}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6051566922022171289
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -106,9 +106,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   attackPoint: {fileID: 7963354309609057239}
-  attackAngle: 15
+  attackAngle: 60
   attackDuration: 0.1
---- !u!61 &881394003730518373
+  swingEffectPrefab: {fileID: 5905154299436410758, guid: d419a50937d5d544b900d896447a3b71, type: 3}
+--- !u!61 &934573385541538651
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,13 +138,13 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 1.2709222, y: -0.0075653046}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.97071195, y: 0.51891327}
     oldSize: {x: 2.7, y: 0.4}
     newSize: {x: 2.7, y: 0.4}
     adaptiveTilingThreshold: 0.5
@@ -151,9 +152,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.7, y: 0.4}
+  m_Size: {x: 2.6999998, y: 0.4}
   m_EdgeRadius: 0
---- !u!50 &1406733736963632075
+--- !u!50 &5895560467336243387
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
