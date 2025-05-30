@@ -105,8 +105,7 @@ public class PZ_Soccer_Ball : PZ_Interact_NonSpawn
             return;
         }
 
-        // 여기에 축구화(장비:신발)를 주는 로직 구현 예정
-
+       
         Instantiate(_clearObject, transform.position, transform.rotation);
 
         _Soccer.ClearPuzzle();
