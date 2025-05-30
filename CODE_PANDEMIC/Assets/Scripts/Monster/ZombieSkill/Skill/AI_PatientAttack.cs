@@ -41,7 +41,8 @@ public class AI_PatientAttack : ISkillBehavior
             onSkillComplete?.Invoke();
             return;
         }
-        _controller = controller;
+        _controller = controller;        
+        _controller._animator.SetBool("Attack", true);
         _lastUsedTime = Time.time;
         _controller._isUsingSkill = true;
         _controller._aiPath.canMove = false;
