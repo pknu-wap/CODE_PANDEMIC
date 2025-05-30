@@ -116,7 +116,7 @@ public class HybridWeapon : WeaponBase
 
         transform.rotation = endRot;
 
-        // 🎯 타격은 휘두른 후 즉시 (더 현실감 있게 만들고 싶으면 중간에 넣을 수도 있음)
+        //  타격은 휘두른 후 즉시 (더 현실감 있게 만들고 싶으면 중간에 넣을 수도 있음)
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         foreach (var hit in hits)
         {
@@ -128,7 +128,7 @@ public class HybridWeapon : WeaponBase
             }
         }
 
-        // 🔁 복귀는 굳이 코루틴으로 천천히 안 해도 괜찮음
+        //  복귀는 굳이 코루틴으로 천천히 안 해도 괜찮음
         yield return new WaitForSeconds(0.05f); // 딜레이 약간
         ResetAttack(); // 내부에서 _currentAngle 기준으로 원래 회전값으로 복귀함
     }
