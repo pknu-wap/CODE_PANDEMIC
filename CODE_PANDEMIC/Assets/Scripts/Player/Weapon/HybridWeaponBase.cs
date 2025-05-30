@@ -6,8 +6,8 @@ public class HybridWeapon : WeaponBase
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackAngle = 90f;
-    [SerializeField] private float attackDuration = 120f;
+    [SerializeField] private float attackAngle = 120f;
+    [SerializeField] private float FireRate = 0.3f;
     [SerializeField] private GameObject swingEffectPrefab;
 
     private bool _isThrown = false;
@@ -71,26 +71,21 @@ public class HybridWeapon : WeaponBase
         if (_isAttacking) return;
         _isAttacking = true;
 
+        float baseAngle = _currentAngle;
+        float effectAngle = baseAngle + 20f;
+
+        float effectOffset = 1.0f;
+        Vector3 effectDir = new Vector3(Mathf.Cos(effectAngle * Mathf.Deg2Rad), Mathf.Sin(effectAngle * Mathf.Deg2Rad), 0);
+        Vector3 effectPos = attackPoint.position + effectDir * effectOffset;
+
+        if (swingEffectPrefab != null)
+        {
+            GameObject effect = Instantiate(swingEffectPrefab, effectPos, Quaternion.Euler(0, 0, _currentAngle));
+            Destroy(effect, 0.3f);
+        }
 
         float swingAngle = _currentAngle + attackAngle;
         transform.rotation = Quaternion.Euler(0, 0, swingAngle);
-
-        //Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Vector2 attackDir = (mouseWorldPos - attackPoint.position).normalized;
-        //float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
-        //float swingAngle = angle + attackAngle;
-
-
-        // 이펙트 생성
-        if (swingEffectPrefab != null)
-        {
-            GameObject effect = Instantiate(swingEffectPrefab, attackPoint.position, Quaternion.Euler(0, 0, swingAngle));
-            Destroy(effect, 0.3f);  // 이펙트의 실제 애니메이션 길이에 맞춰 0.2f를 조절하세요
-        }
-
-        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
-        if (sr != null)
-            sr.flipY = (swingAngle > 90f || swingAngle < -90f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         foreach (var hit in hits)
@@ -104,7 +99,7 @@ public class HybridWeapon : WeaponBase
         }
 
         Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
-        Invoke(nameof(ResetAttack), attackDuration);
+        Invoke(nameof(ResetAttack), FireRate);
     }
 
     private void Throw()
@@ -155,7 +150,7 @@ public class HybridWeapon : WeaponBase
     {
         Quaternion originalRotation = transform.rotation;
         transform.rotation = attackRotation;
-        yield return new WaitForSeconds(attackDuration);
+        yield return new WaitForSeconds(FireRate);
         transform.rotation = originalRotation;
     }
     private void ResetAttack()
