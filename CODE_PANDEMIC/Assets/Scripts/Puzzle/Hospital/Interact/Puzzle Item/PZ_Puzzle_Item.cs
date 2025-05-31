@@ -47,6 +47,7 @@ public class PZ_Puzzle_Item : PZ_Interact_Spawn
     // 퍼즐 띄우기
     public override void Interact(GameObject player)
     {
+        if (_popupPuzzle != null) return;
         Managers.UI.ShowPopupUI<PZ_Puzzle_Base>(_puzzleAddressable, null, (popupPuzzle) =>
         {
             _popupPuzzle = popupPuzzle;

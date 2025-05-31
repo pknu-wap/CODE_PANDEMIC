@@ -151,8 +151,8 @@ public class HybridWeapon : WeaponBase
         }
 
         Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
-        Invoke(nameof(ResetAttack), _weaponData.FireRate);
-        yield return new WaitForSeconds(0.05f);
+        
+        yield return CoroutineHelper.WaitForSeconds(_weaponData.FireRate);
         ResetAttack();
     }
 
