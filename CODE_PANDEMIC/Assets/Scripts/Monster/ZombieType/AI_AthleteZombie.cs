@@ -55,7 +55,7 @@ public class AI_AthleteZombie : AI_Controller
             if (_player == null) return false;
 
             float distance = Vector2.Distance(transform.position, _player.position);
-            return distance <= _monsterData.AttackRange;
+            return distance <= _monsterData.AttackRange * 2f;
         }
 
 }

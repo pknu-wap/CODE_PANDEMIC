@@ -6,9 +6,10 @@ public class HybridWeapon : WeaponBase
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackAngle = 90f;
-    [SerializeField] private float attackDuration = 120f;
+    [SerializeField] private float attackAngle = 120f;
+    [SerializeField] private float FireRate = 0.2f;
     [SerializeField] private GameObject swingEffectPrefab;
+    [SerializeField] private float _rotationSpeed = 720f;
 
     private bool _isThrown = false;
     private bool _isAttacking = false;
@@ -54,44 +55,68 @@ public class HybridWeapon : WeaponBase
             {
                 Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 dir = (mouseWorldPos - attackPoint.position).normalized;
-                _currentAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0, 0, _currentAngle);
+                float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+                Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
+                transform.rotation = Quaternion.RotateTowards(
+                    transform.rotation,
+                    targetRotation,
+                    _rotationSpeed * Time.deltaTime
+                );
 
                 // flipY
                 SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
                 if (sr != null)
-                    sr.flipY = (_currentAngle > 90f || _currentAngle < -90f);
+                {
+                    float currentZ = transform.eulerAngles.z;
+                    sr.flipY = (currentZ > 90f && currentZ < 270f);
+                }
+
+                _currentAngle = transform.eulerAngles.z;
             }
         }
     }
-
 
     public override void Attack(PlayerController owner)
     {
         if (_isAttacking) return;
         _isAttacking = true;
 
-
-        float swingAngle = _currentAngle + attackAngle;
-        transform.rotation = Quaternion.Euler(0, 0, swingAngle);
-
-        //Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Vector2 attackDir = (mouseWorldPos - attackPoint.position).normalized;
-        //float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
-        //float swingAngle = angle + attackAngle;
-
-
-        // 이펙트 생성
         if (swingEffectPrefab != null)
         {
-            GameObject effect = Instantiate(swingEffectPrefab, attackPoint.position, Quaternion.Euler(0, 0, swingAngle));
-            Destroy(effect, 0.3f);  // 이펙트의 실제 애니메이션 길이에 맞춰 0.2f를 조절하세요
+            float effectOffset = 1.0f;
+            float effectAngle = _currentAngle + 20f;
+            Vector3 effectDir = new Vector3(Mathf.Cos(effectAngle * Mathf.Deg2Rad), Mathf.Sin(effectAngle * Mathf.Deg2Rad), 0);
+            Vector3 effectPos = attackPoint.position + effectDir * effectOffset;
+
+            GameObject effect = Instantiate(swingEffectPrefab, effectPos, Quaternion.Euler(0, 0, _currentAngle));
+            Destroy(effect, 0.3f);
         }
 
-        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
-        if (sr != null)
-            sr.flipY = (swingAngle > 90f || swingAngle < -90f);
+        StartCoroutine(SmoothSwingAttack());
+    }
+    private IEnumerator SmoothSwingAttack()
+    {
+        float swingDuration = 0.1f; // 휘두르기 시간: 빠르게
+        float elapsed = 0f;
 
+        float swingStart = _currentAngle;
+        float swingEnd = _currentAngle + attackAngle;
+
+        Quaternion startRot = Quaternion.Euler(0, 0, swingStart);
+        Quaternion endRot = Quaternion.Euler(0, 0, swingEnd);
+
+        while (elapsed < swingDuration)
+        {
+            float t = elapsed / swingDuration;
+            transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = endRot;
+
+        //  타격은 휘두른 후 즉시 (더 현실감 있게 만들고 싶으면 중간에 넣을 수도 있음)
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         foreach (var hit in hits)
         {
@@ -103,14 +128,15 @@ public class HybridWeapon : WeaponBase
             }
         }
 
-        Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
-        Invoke(nameof(ResetAttack), attackDuration);
+        //  복귀는 굳이 코루틴으로 천천히 안 해도 괜찮음
+        yield return new WaitForSeconds(0.05f); // 딜레이 약간
+        ResetAttack(); // 내부에서 _currentAngle 기준으로 원래 회전값으로 복귀함
     }
 
     private void Throw()
     {
         _isAttacking = true;
-        _isThrown = true; // 던진 상태로 표시
+        _isThrown = true;
 
         Debug.Log("[HybridWeapon] Throw (Ranged mode) 시작!");
 
@@ -155,9 +181,10 @@ public class HybridWeapon : WeaponBase
     {
         Quaternion originalRotation = transform.rotation;
         transform.rotation = attackRotation;
-        yield return new WaitForSeconds(attackDuration);
+        yield return new WaitForSeconds(FireRate);
         transform.rotation = originalRotation;
     }
+
     private void ResetAttack()
     {
         _isAttacking = false;

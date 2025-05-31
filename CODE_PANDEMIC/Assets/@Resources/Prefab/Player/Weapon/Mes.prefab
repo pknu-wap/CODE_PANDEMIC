@@ -106,9 +106,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   attackPoint: {fileID: 7963354309609057239}
-  attackAngle: 60
-  attackDuration: 0.1
-  swingEffectPrefab: {fileID: 5905154299436410758, guid: d419a50937d5d544b900d896447a3b71, type: 3}
+  attackAngle: 90
+  FireRate: 0.3
+  swingEffectPrefab: {fileID: 9202961498843298442, guid: f0f5b08db41bcaf43957dc2c907c5fa8, type: 3}
+  rotationSpeed: 720
 --- !u!61 &934573385541538651
 BoxCollider2D:
   m_ObjectHideFlags: 0

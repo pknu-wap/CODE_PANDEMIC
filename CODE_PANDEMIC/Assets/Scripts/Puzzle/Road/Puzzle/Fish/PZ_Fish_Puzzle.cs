@@ -9,6 +9,7 @@ public class PZ_Fish_Puzzle : PZ_Puzzle_Side
     {
         Managers.Game.ClearPuzzle(_data.ID);
 
+        base.PuzzleClear();
         GiveRewardItem();
 
         Destroy(gameObject);

@@ -9,8 +9,9 @@ public class PZ_Soccer : PZ_Puzzle_Side
     {
         Managers.Game.ClearPuzzle(_data.ID);
 
+        base.PuzzleClear();
         GiveRewardItem();
-
+     
         Destroy(gameObject);
     }
 }
