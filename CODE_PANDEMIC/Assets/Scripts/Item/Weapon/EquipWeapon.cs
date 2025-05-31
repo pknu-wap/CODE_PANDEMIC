@@ -36,6 +36,7 @@ public class EquipWeapon : MonoBehaviour
 
     private void OnDisable()
     {
+        Managers.Event.InvokeEvent("CancelReload");
         _weaponInput.QuickSlot.Equip1.performed -= Equip1;
         _weaponInput.QuickSlot.Equip2.performed -= Equip2;
         _weaponInput.QuickSlot.Equip3.performed -= Equip3;
@@ -47,7 +48,12 @@ public class EquipWeapon : MonoBehaviour
     {
         return _weapon!=null;
     }
+    public void Reload()
+    {
+        if (_weapon.WeaponInfo.Type==Define.WeaponType.ShortWeapon||_weapon==null) return;
 
+        _weapon.Reload();
+    }
     public Transform WeaponSocket => _socket;
     public void Attack(PlayerController owner)
     {
@@ -147,7 +153,7 @@ public class EquipWeapon : MonoBehaviour
     {
         DestroyPrevWeapon();
     }
-
+  
     public void SwapWeapon(WeaponData data,Transform socket)
     {
         DestroyPrevWeapon();

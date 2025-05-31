@@ -86,6 +86,7 @@ public class GameManagerEx
     }
 
     #region RecordData
+    public RecordManager Record => _record; 
     public void AddItemCount() => _record.AddItemCount();
     public void AddZombieKillCount()=>_record.AddZombieKillCount();
     public void AddPlayerDeathCount() => _record.AddPlayerDeathCount();
@@ -162,7 +163,24 @@ public class GameManagerEx
         SaveData.IsFullScreen = value;
        
     }
-
+    public void ClearBoss(int id)
+    {
+        _stageProgressData.ClearBossID = id;
+    }
+    public bool IsClearStage()
+    {
+        if (Managers.Game.HighestChapter > Managers.Game.Chapter) return true;
+        if (Managers.Game.HighestStage > Managers.Game.HighestStage) return true;
+        int id = Managers.Game.Chapter * Define.STAGES_PER_CHAPTER;
+        if (Managers.Data.Stages.TryGetValue(id, out StageData data)) 
+        {
+            if (_stageProgressData.ClearBossID >= data.BossTemplateID)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public void PauseGame()
     {
         if (!_isPaused)

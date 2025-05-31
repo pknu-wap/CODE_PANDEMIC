@@ -145,16 +145,27 @@ public class PlayerStatus : MonoBehaviour
         _damageEffectCoroutine = StartCoroutine(OnDamagedEffect());
     }
 
-    // 체력 회복
-    public void OnHealed(float healValue)
+    private void OnHealed(float healValue)
     {
-        
         _currentHp = Mathf.Clamp(_currentHp + healValue, 0, _maxHp);
         _effectHp = Mathf.Max(_effectHp, _currentHp);
 
         _onHpEffectUpdated?.Invoke(_currentHp / _maxHp, _effectHp / _maxHp);
-        Managers.Game.PlayerStat.SetCurrentHp( _currentHp); 
+        Managers.Game.PlayerStat.SetCurrentHp(_currentHp);
     }
+    // 체력 회복
+    public void ApplyHealChange(float healValue)
+    {
+        if(healValue < 0)
+        {
+            OnDamaged(null, -healValue);
+        }
+        else
+        {
+            OnHealed(healValue);
+        }
+    }
+        
 
     // 데미지 효과
     private IEnumerator OnDamagedEffect()
@@ -183,8 +194,5 @@ public class PlayerStatus : MonoBehaviour
         Managers.Event.InvokeEvent("ResetIntensity");
     }
 
-    private void OnBossCinematicStart()
-    {
-        Managers.Event.InvokeEvent("OnBossCinematicStart");
-    }
+    
 }

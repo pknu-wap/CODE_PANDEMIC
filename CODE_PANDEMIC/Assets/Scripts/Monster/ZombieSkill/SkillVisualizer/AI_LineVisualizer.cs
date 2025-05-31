@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class AI_LineVisualizer : MonoBehaviour
 {
-    [SerializeField] private GameObject tilePrefab;
-    private float tileLength = 1f;
+    [SerializeField] protected GameObject tilePrefab;
+    protected float tileLength = 1f;
 
-    private List<GameObject> _tiles = new List<GameObject>();
+    protected List<GameObject> _tiles = new List<GameObject>();
 
-    public void Show(Vector2 origin, Vector2 target, float totalLength, float height = 1f)
+    public virtual void Show(Vector2 origin, Vector2 target, float totalLength, float height = 1f)
     {
         Vector2 direction = (target - origin).normalized;
         int tileCount = Mathf.CeilToInt(totalLength / tileLength);
@@ -40,7 +40,7 @@ public class AI_LineVisualizer : MonoBehaviour
 
     }
 
-    public void Hide()
+    public virtual void Hide()
     {
         foreach (var tile in _tiles)
             tile.SetActive(false);

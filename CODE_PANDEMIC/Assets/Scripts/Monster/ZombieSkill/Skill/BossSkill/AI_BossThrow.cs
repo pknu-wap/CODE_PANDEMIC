@@ -25,7 +25,7 @@ public class AI_BossThrow : AI_ThrowSkill
         float[] angles = _bossController.IsBerserk
             ? new float[] { +45f, +15f, -15f, -45f }
             : new float[] { +45f, 0f, -45f };
-
+    
         foreach (float offset in angles)
         {
             float angle = baseAngle + offset;

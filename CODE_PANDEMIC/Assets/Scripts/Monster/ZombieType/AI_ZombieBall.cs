@@ -37,6 +37,9 @@ public class AI_ZombieBall : AI_Controller
         if (_isRushing)
         {
             _rb.velocity = _rushDirection * MoveSpeed;
+            float rotationSpeed = MoveSpeed * 30f;
+            float direction = Mathf.Sign(_rushDirection.x);
+            transform.Rotate(Vector3.forward, -direction * rotationSpeed * Time.deltaTime);
 
             if (Time.time >= _rushEndTime)
             {
@@ -44,6 +47,7 @@ public class AI_ZombieBall : AI_Controller
             }
         }
     }
+
 
     private void Explosion()
     {
@@ -60,13 +64,16 @@ public class AI_ZombieBall : AI_Controller
 
         foreach (var target in targets)
         {
-            if (target.TryGetComponent<PlayerStatus>(out var playerStatus))
+            if (target.TryGetComponent<PlayerController>(out var playerStatus))
             {
-                playerStatus.OnDamaged(gameObject, damage);
+                playerStatus.TakeDamage(gameObject, damage);
             }
         }
         TrySummon();
-        Destroy(gameObject);
+        base.Die();
+        StopMoving();
+        ChangeState(new AI_StateDie(this));
+        _animator.SetTrigger("Die");
     }
 
     private void TrySummon()

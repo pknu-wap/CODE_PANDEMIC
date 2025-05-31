@@ -63,6 +63,6 @@ public class AI_DoctorZombie : AI_Controller
     {
         if (_player == null) return false;
         float distance = Vector2.Distance(transform.position, _player.position);
-        return distance <= _sweepSkillData.Range * 0.7f;
+        return distance <= _sweepSkillData.Range * 0.9f;
     }
 }
