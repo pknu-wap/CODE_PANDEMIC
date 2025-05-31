@@ -131,8 +131,8 @@ public class PlayerStatus : MonoBehaviour
 
         _currentHp = Mathf.Clamp(_currentHp - damageValue, 0, _maxHp);
         Managers.Game.PlayerStat.SetCurrentHp(_currentHp);
-         Managers.Event.InvokeEvent("RiskDamage" );
-
+        Managers.Event.InvokeEvent("RiskDamage" );
+        Managers.Event.InvokeEvent("StatUpdated");
         if (_currentHp <= 0)
         {
             OnPlayerDead();
