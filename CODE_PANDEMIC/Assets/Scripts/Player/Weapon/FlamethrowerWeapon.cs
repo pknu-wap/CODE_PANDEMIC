@@ -66,7 +66,6 @@ public class FlamethrowerWeapon : WeaponBase
 
     public override void StopAttack()
     {
-        //Debug.Log("[FlamethrowerWeapon] StopAttack 호출");
         _isFiring = false;
         if (_currentFlame != null)
             _currentFlame.SetActive(false);
