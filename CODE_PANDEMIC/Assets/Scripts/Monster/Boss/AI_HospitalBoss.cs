@@ -70,7 +70,7 @@ public class AI_HospitalBoss : AI_Controller
         _sweepSkill.SetController(this);
         _dashSkill.SetController(this);
         _syringeVisualizer.SetController(this);
-        if (_monsterData == null)
+        // if (_monsterData == null)
         // {
         //     _monsterData = new MonsterData();
         //     _monsterData.NameID = "HospitalBoss";
