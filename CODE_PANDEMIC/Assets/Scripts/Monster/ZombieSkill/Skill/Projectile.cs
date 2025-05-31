@@ -65,7 +65,8 @@ public class Projectile : MonoBehaviour
     private void TriggerContamination(Vector2 spawnPosition)
     {
         _hasTriggered = true;
-        Instantiate(contaminatedAreaPrefab, spawnPosition, Quaternion.identity);
+        Transform parent = _owner?.transform.parent;
+        Instantiate(contaminatedAreaPrefab, spawnPosition, Quaternion.identity , parent);
         Destroy(gameObject);
     }
 }
