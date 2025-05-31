@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: 24.760345, y: -0.6614685, z: 0}
   m_ShapePathHash: -1906007371
   m_Mesh: {fileID: 0}
-  m_InstanceId: 61926
+  m_InstanceId: 69446
   m_LocalBounds:
     m_Center: {x: 11.417221, y: 0.12110138, z: 0}
     m_Extent: {x: 13.343124, y: 0.90366364, z: 0}
@@ -333,7 +333,7 @@ MonoBehaviour:
   - {x: -32.771484, y: -16.532295, z: 0}
   m_ShapePathHash: -1831850987
   m_Mesh: {fileID: 0}
-  m_InstanceId: 61980
+  m_InstanceId: 69500
   m_LocalBounds:
     m_Center: {x: 8.992264, y: 8.162888, z: 0}
     m_Extent: {x: 45.805008, y: 29.048347, z: 0}
@@ -1373,6 +1373,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room7
       objectReference: {fileID: 0}
+    - target: {fileID: 5016954324388096666, guid: ed2d50c49b041d443b21267f73d8a0a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 98.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900635751695578894, guid: ed2d50c49b041d443b21267f73d8a0a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 104.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 8294429539058212784, guid: ed2d50c49b041d443b21267f73d8a0a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 92.14
+      objectReference: {fileID: 0}
     - target: {fileID: 8788232025787135993, guid: ed2d50c49b041d443b21267f73d8a0a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1621,6 +1633,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4691941943280161308}
     m_Modifications:
+    - target: {fileID: 1874790021186169629, guid: 01f301cbc884d004e9fc797d5e7c65db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 382.89
+      objectReference: {fileID: 0}
     - target: {fileID: 2430574168521704254, guid: 01f301cbc884d004e9fc797d5e7c65db, type: 3}
       propertyPath: m_Name
       value: Room1
@@ -1665,8 +1681,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4823600857697206353, guid: 01f301cbc884d004e9fc797d5e7c65db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 389.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 4959725346856099283, guid: 01f301cbc884d004e9fc797d5e7c65db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 386.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 9042359930947813111, guid: 01f301cbc884d004e9fc797d5e7c65db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 400.06
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8213806599708468170, guid: 01f301cbc884d004e9fc797d5e7c65db, type: 3}
+    - {fileID: 3141511144090373055, guid: 01f301cbc884d004e9fc797d5e7c65db, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01f301cbc884d004e9fc797d5e7c65db, type: 3}
