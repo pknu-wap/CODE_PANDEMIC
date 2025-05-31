@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AI_AstarControl : MonoBehaviour
 {
-    private float _collisionDiameter = 0.85f;
+    private float _collisionDiameter = 0.6f;
     private string _obstacleLayerName = "Wall";
 
     private void Awake()
