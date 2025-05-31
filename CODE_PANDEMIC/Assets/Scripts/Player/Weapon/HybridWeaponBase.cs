@@ -114,22 +114,48 @@ public class HybridWeapon : WeaponBase
             Destroy(effect, 0.3f);
         }
 
+        StartCoroutine(SmoothSwingAttack(swingAngle));
+    }
 
 
-        transform.rotation = Quaternion.Euler(0, 0, swingAngle);
-        if (swingEffectPrefab != null)
+    private IEnumerator SmoothSwingAttack(float swingAngle)
+    {
+        float swingDuration = 0.1f;
+        float elapsed = 0f;
+
+        float swingStart = _currentAngle;
+        float swingEnd = swingAngle;
+
+        Quaternion startRot = Quaternion.Euler(0, 0, swingStart);
+        Quaternion endRot = Quaternion.Euler(0, 0, swingEnd);
+
+        while (elapsed < swingDuration)
         {
-            float effectOffset = 1.0f;
-            float effectAngle = _currentAngle + 20f;
-            Vector3 effectDir = new Vector3(Mathf.Cos(effectAngle * Mathf.Deg2Rad), Mathf.Sin(effectAngle * Mathf.Deg2Rad), 0);
-            Vector3 effectPos = attackPoint.position + effectDir * effectOffset;
-
-            GameObject effect = Instantiate(swingEffectPrefab, effectPos, Quaternion.Euler(0, 0, _currentAngle));
-            Destroy(effect, 0.3f);
+            float t = elapsed / swingDuration;
+            transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
-        StartCoroutine(SmoothSwingAttack());
+        transform.rotation = endRot;
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        foreach (var hit in hits)
+        {
+            AI_Base enemy = hit.GetComponent<AI_Base>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(_weaponData.Damage);
+                Debug.Log("[HybridWeapon] Melee Hit: " + hit.name + " / Damage: " + _weaponData.Damage);
+            }
+        }
+
+        Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
+        Invoke(nameof(ResetAttack), _weaponData.FireRate);
+        yield return new WaitForSeconds(0.05f);
+        ResetAttack();
     }
+
     private IEnumerator SmoothSwingAttack()
     {
         float swingDuration = 0.1f; // 휘두르기 시간: 빠르게
