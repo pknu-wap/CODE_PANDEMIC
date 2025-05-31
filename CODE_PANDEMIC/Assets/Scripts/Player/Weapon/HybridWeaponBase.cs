@@ -7,7 +7,6 @@ public class HybridWeapon : WeaponBase
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackAngle = 120f;
-    [SerializeField] private float FireRate = 0.3f;
     [SerializeField] private GameObject swingEffectPrefab;
 
     private bool _isThrown = false;
@@ -57,7 +56,6 @@ public class HybridWeapon : WeaponBase
                 _currentAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(0, 0, _currentAngle);
 
-                // flipY
                 SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
                 if (sr != null)
                     sr.flipY = (_currentAngle > 90f || _currentAngle < -90f);
@@ -71,20 +69,42 @@ public class HybridWeapon : WeaponBase
         if (_isAttacking) return;
         _isAttacking = true;
 
-        float baseAngle = _currentAngle;
-        float effectAngle = baseAngle + 20f;
-
         float effectOffset = 1.0f;
-        Vector3 effectDir = new Vector3(Mathf.Cos(effectAngle * Mathf.Deg2Rad), Mathf.Sin(effectAngle * Mathf.Deg2Rad), 0);
-        Vector3 effectPos = attackPoint.position + effectDir * effectOffset;
+        float effectOffsetAngle = 20f;
+
+        float swingAngle, effectAngle;
+        Vector3 effectDir, effectPos;
+
+        if (_currentAngle > -90f && _currentAngle < 90f)
+        {
+            swingAngle = _currentAngle - attackAngle;
+            effectAngle = _currentAngle - effectOffsetAngle;
+        }
+        else
+        {
+            swingAngle = _currentAngle + attackAngle;
+            effectAngle = _currentAngle + effectOffsetAngle;
+        }
+
+        effectDir = new Vector3(Mathf.Cos(effectAngle * Mathf.Deg2Rad), Mathf.Sin(effectAngle * Mathf.Deg2Rad), 0);
+        effectPos = attackPoint.position + effectDir * effectOffset;
 
         if (swingEffectPrefab != null)
         {
-            GameObject effect = Instantiate(swingEffectPrefab, effectPos, Quaternion.Euler(0, 0, _currentAngle));
+            GameObject effect = Instantiate(swingEffectPrefab, effectPos, Quaternion.Euler(0, 0, effectAngle));
+
+            SpriteRenderer sr = effect.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.flipY = false;
+                sr.flipX = false;
+            }
+
             Destroy(effect, 0.3f);
         }
 
-        float swingAngle = _currentAngle + attackAngle;
+
+
         transform.rotation = Quaternion.Euler(0, 0, swingAngle);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
@@ -99,13 +119,15 @@ public class HybridWeapon : WeaponBase
         }
 
         Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
-        Invoke(nameof(ResetAttack), FireRate);
+        Invoke(nameof(ResetAttack), _weaponData.FireRate);
     }
 
     private void Throw()
     {
         _isAttacking = true;
-        _isThrown = true; // 던진 상태로 표시
+        _isThrown = true;
+
+        transform.SetParent(null);
 
         Debug.Log("[HybridWeapon] Throw (Ranged mode) 시작!");
 
@@ -123,6 +145,7 @@ public class HybridWeapon : WeaponBase
 
         Invoke(nameof(ResetAttack), 0.2f);
     }
+
 
     private void OnTriggerEnter2D(Collider2D trigger)
     {
@@ -150,7 +173,7 @@ public class HybridWeapon : WeaponBase
     {
         Quaternion originalRotation = transform.rotation;
         transform.rotation = attackRotation;
-        yield return new WaitForSeconds(FireRate);
+        yield return new WaitForSeconds(_weaponData.FireRate);
         transform.rotation = originalRotation;
     }
     private void ResetAttack()

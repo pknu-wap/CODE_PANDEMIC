@@ -6,7 +6,7 @@ public class FlameHitbox : MonoBehaviour
     private float _damageTimer = 0f;
     private int _damagePerSecond = 0;
 
-
+    private Animator _animator;
 
     public void SetInfo(WeaponData data)
     {
@@ -37,6 +37,9 @@ public class FlameHitbox : MonoBehaviour
         _damageTimer = 0f;
         _damagePerSecond = 0;
         Debug.Log("[FlameHitbox] OnDisable 호출 – 타이머 리셋, 데미지 0");
+
+        if (_animator != null)
+            _animator.SetBool("isFiring", false);
     }
 
 }
