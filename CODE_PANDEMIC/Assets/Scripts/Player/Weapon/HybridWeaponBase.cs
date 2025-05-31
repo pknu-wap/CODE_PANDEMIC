@@ -7,7 +7,6 @@ public class HybridWeapon : WeaponBase
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackAngle = 120f;
-    [SerializeField] private float FireRate = 0.2f;
     [SerializeField] private GameObject swingEffectPrefab;
     [SerializeField] private float _rotationSpeed = 720f;
 
@@ -64,7 +63,6 @@ public class HybridWeapon : WeaponBase
                     _rotationSpeed * Time.deltaTime
                 );
 
-                // flipY
                 SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
                 if (sr != null)
                 {
@@ -82,19 +80,82 @@ public class HybridWeapon : WeaponBase
         if (_isAttacking) return;
         _isAttacking = true;
 
+        float effectOffset = 1.0f;
+        float effectOffsetAngle = 20f;
+
+        float swingAngle, effectAngle;
+        Vector3 effectDir, effectPos;
+
+        if (_currentAngle > -90f && _currentAngle < 90f)
+        {
+            swingAngle = _currentAngle - attackAngle;
+            effectAngle = _currentAngle - effectOffsetAngle;
+        }
+        else
+        {
+            swingAngle = _currentAngle + attackAngle;
+            effectAngle = _currentAngle + effectOffsetAngle;
+        }
+
+        effectDir = new Vector3(Mathf.Cos(effectAngle * Mathf.Deg2Rad), Mathf.Sin(effectAngle * Mathf.Deg2Rad), 0);
+        effectPos = attackPoint.position + effectDir * effectOffset;
+
         if (swingEffectPrefab != null)
         {
-            float effectOffset = 1.0f;
-            float effectAngle = _currentAngle + 20f;
-            Vector3 effectDir = new Vector3(Mathf.Cos(effectAngle * Mathf.Deg2Rad), Mathf.Sin(effectAngle * Mathf.Deg2Rad), 0);
-            Vector3 effectPos = attackPoint.position + effectDir * effectOffset;
+            GameObject effect = Instantiate(swingEffectPrefab, effectPos, Quaternion.Euler(0, 0, effectAngle));
 
-            GameObject effect = Instantiate(swingEffectPrefab, effectPos, Quaternion.Euler(0, 0, _currentAngle));
+            SpriteRenderer sr = effect.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.flipY = false;
+                sr.flipX = false;
+            }
+
             Destroy(effect, 0.3f);
         }
 
-        StartCoroutine(SmoothSwingAttack());
+        StartCoroutine(SmoothSwingAttack(swingAngle));
     }
+
+
+    private IEnumerator SmoothSwingAttack(float swingAngle)
+    {
+        float swingDuration = 0.1f;
+        float elapsed = 0f;
+
+        float swingStart = _currentAngle;
+        float swingEnd = swingAngle;
+
+        Quaternion startRot = Quaternion.Euler(0, 0, swingStart);
+        Quaternion endRot = Quaternion.Euler(0, 0, swingEnd);
+
+        while (elapsed < swingDuration)
+        {
+            float t = elapsed / swingDuration;
+            transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = endRot;
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        foreach (var hit in hits)
+        {
+            AI_Base enemy = hit.GetComponent<AI_Base>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(_weaponData.Damage);
+                Debug.Log("[HybridWeapon] Melee Hit: " + hit.name + " / Damage: " + _weaponData.Damage);
+            }
+        }
+
+        Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
+        Invoke(nameof(ResetAttack), _weaponData.FireRate);
+        yield return new WaitForSeconds(0.05f);
+        ResetAttack();
+    }
+
     private IEnumerator SmoothSwingAttack()
     {
         float swingDuration = 0.1f; // 휘두르기 시간: 빠르게
@@ -128,6 +189,8 @@ public class HybridWeapon : WeaponBase
             }
         }
 
+        Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
+        Invoke(nameof(ResetAttack), _weaponData.FireRate);
         //  복귀는 굳이 코루틴으로 천천히 안 해도 괜찮음
         yield return new WaitForSeconds(0.05f); // 딜레이 약간
         ResetAttack(); // 내부에서 _currentAngle 기준으로 원래 회전값으로 복귀함
@@ -137,6 +200,8 @@ public class HybridWeapon : WeaponBase
     {
         _isAttacking = true;
         _isThrown = true;
+
+        transform.SetParent(null);
 
         Debug.Log("[HybridWeapon] Throw (Ranged mode) 시작!");
 
@@ -154,6 +219,7 @@ public class HybridWeapon : WeaponBase
 
         Invoke(nameof(ResetAttack), 0.2f);
     }
+
 
     private void OnTriggerEnter2D(Collider2D trigger)
     {
@@ -181,7 +247,7 @@ public class HybridWeapon : WeaponBase
     {
         Quaternion originalRotation = transform.rotation;
         transform.rotation = attackRotation;
-        yield return new WaitForSeconds(FireRate);
+        yield return new WaitForSeconds(_weaponData.FireRate);
         transform.rotation = originalRotation;
     }
 
