@@ -7,7 +7,6 @@ public class AI_ContaminatedArea : MonoBehaviour
     private float _damagePerSecond = 5f;
     private float _radius = 1f;
     private float _interval = 1f;
-
     private void Start()
     {
         StartCoroutine(DamageOverTime());

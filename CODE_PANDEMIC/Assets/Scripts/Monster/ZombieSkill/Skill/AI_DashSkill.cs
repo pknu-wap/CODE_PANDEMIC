@@ -71,6 +71,7 @@ public class AI_DashSkill : ISkillBehavior
         float dashCheckRadius = 1f;
 
         yield return new WaitForSeconds(_settings.ChargeDelay);
+        _controller._animator.SetBool("Attack", true);
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
