@@ -7,6 +7,8 @@ public class AI_HospitalBoss : AI_Controller
     [SerializeField] 
     private CinematicCamera _camera;
     public LayerMask TargetLayer;
+    [SerializeField]
+    ShockWave _wave;
     public bool IsBerserk { get; private set; }
     public GameObject _syringePrefab;
     public ThrowSkillData _throwSkillData;
@@ -52,9 +54,14 @@ public class AI_HospitalBoss : AI_Controller
         if (_camera == null) yield break;
         _camera.gameObject.SetActive(true);
         _camera.OnCinematic();
+        Managers.Event.InvokeEvent("OnCinematicStart");
         //TODO: BOSSSEQUENCE
-        yield return CoroutineHelper.WaitForSeconds(3.0f);
+        yield return CoroutineHelper.WaitForSeconds(2.0f);
+        _wave.gameObject.SetActive(true);
+        _wave.CallShockWave();
+        yield return CoroutineHelper.WaitForSeconds(1.0f);
         _camera.OnEndCinematic(Define.CinematicType.BossSequence);
+        Managers.Event.InvokeEvent("OnCinematicEnd");
     }
     public override void SetInfo(MonsterData monsterData)
     {
