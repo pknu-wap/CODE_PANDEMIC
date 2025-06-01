@@ -18,7 +18,10 @@ public abstract class AI_Base : MonoBehaviour
     {
         _monsterData = monsterData;
         _currentHp = monsterData.Hp;
-        _statusBar.Init(monsterData);
+        if (_statusBar != null)
+        {
+            _statusBar.Init(monsterData);
+        }
     }
     public virtual bool Init()
     {
@@ -53,10 +56,12 @@ public abstract class AI_Base : MonoBehaviour
         if (_currentHp <= 0f)
             return;
         _currentHp -= amount;
-        if(_statusBar.gameObject?.activeSelf==false)
-            _statusBar.gameObject?.SetActive(true);
-        _statusBar?.UpdateHpBar(Mathf.RoundToInt(_currentHp));
-        
+        if (_statusBar != null)
+        {
+            if (_statusBar.gameObject?.activeSelf == false)
+                _statusBar.gameObject?.SetActive(true);
+            _statusBar?.UpdateHpBar(Mathf.RoundToInt(_currentHp));
+        }
         if (_currentHp<= 0f)
         {
             Die();

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bfe007f39ecff1c4aa3c7f6dcab73a05
+guid: debd6e56f542c7d4f9d5fa34219c9750
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 640
+  spritePixelsToUnits: 800
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,12 +97,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HospitalBossWalk_0
+      name: HospitalBossDie_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 640
+        width: 800
         height: 960
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -111,19 +111,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 364e586879b19d64fb31cd411a2bd19d
-      internalID: -366305406
+      spriteID: 56daf4d4398f4d941a4eb7fa21fd1104
+      internalID: -1151884355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HospitalBossWalk_1
+      name: HospitalBossDie_1
       rect:
         serializedVersion: 2
-        x: 640
+        x: 800
         y: 0
-        width: 640
+        width: 800
         height: 960
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -132,19 +132,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4298687604f15e45a79963d17341efe
-      internalID: 1027428385
+      spriteID: aed529de3239d4b40823bbac71eff526
+      internalID: -1664176898
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HospitalBossWalk_2
+      name: HospitalBossDie_2
       rect:
         serializedVersion: 2
-        x: 1280
+        x: 1600
         y: 0
-        width: 640
+        width: 800
         height: 960
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -153,19 +153,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4bd74b3f7fbf1143b6aacde57ed9681
-      internalID: 1683984402
+      spriteID: 60fecd852a671674781b73d5f96e22c7
+      internalID: 1591726624
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HospitalBossWalk_3
+      name: HospitalBossDie_3
       rect:
         serializedVersion: 2
-        x: 1920
+        x: 2400
         y: 0
-        width: 640
+        width: 800
         height: 960
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -174,40 +174,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a871440d4e4d10d4a84480768b8de93f
-      internalID: -669537172
+      spriteID: 05df6d773981943419a4260eaf582a13
+      internalID: -1345288764
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HospitalBossWalk_4
-      rect:
-        serializedVersion: 2
-        x: 2560
-        y: 0
-        width: 640
-        height: 960
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d12537e639db5e449ae68a0eb5129a60
-      internalID: -430558572
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HospitalBossWalk_5
+      name: HospitalBossDie_4
       rect:
         serializedVersion: 2
         x: 3200
         y: 0
-        width: 640
+        width: 800
         height: 960
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -216,19 +195,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a3ea103856403b419d659253ce1dc88
-      internalID: 1168376352
+      spriteID: 16990976e75061549be6ad44c8c61e23
+      internalID: -30472966
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HospitalBossWalk_6
+      name: HospitalBossDie_5
       rect:
         serializedVersion: 2
-        x: 3840
+        x: 4000
         y: 0
-        width: 640
+        width: 800
         height: 960
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -237,19 +216,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f3aedba3f76ec61459caab6be8b934a1
-      internalID: 1210658619
+      spriteID: 962efb5916176ff4bb5368de157352f2
+      internalID: 1826402498
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HospitalBossWalk_7
+      name: HospitalBossDie_6
       rect:
         serializedVersion: 2
-        x: 4480
+        x: 4800
         y: 0
-        width: 640
+        width: 800
         height: 960
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -258,8 +237,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35a31224433a415449c75314378b4449
-      internalID: 1725440484
+      spriteID: 1f795967614eeff4796d4f8878c927e9
+      internalID: -372715297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HospitalBossDie_7
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 0
+        width: 800
+        height: 960
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 163a0518941108d469c9a1bd036639ec
+      internalID: -1626583190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HospitalBossDie_8
+      rect:
+        serializedVersion: 2
+        x: 6400
+        y: 0
+        width: 800
+        height: 960
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc587b40e8df9024bb9b56ad56931765
+      internalID: 1372506725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HospitalBossDie_9
+      rect:
+        serializedVersion: 2
+        x: 7200
+        y: 0
+        width: 800
+        height: 960
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d3899481f5a3194294f3dda9f2dd233
+      internalID: 1007012432
       vertices: []
       indices: 
       edges: []
@@ -275,14 +317,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      HospitalBossWalk_0: -366305406
-      HospitalBossWalk_1: 1027428385
-      HospitalBossWalk_2: 1683984402
-      HospitalBossWalk_3: -669537172
-      HospitalBossWalk_4: -430558572
-      HospitalBossWalk_5: 1168376352
-      HospitalBossWalk_6: 1210658619
-      HospitalBossWalk_7: 1725440484
+      HospitalBossDie_0: -1151884355
+      HospitalBossDie_1: -1664176898
+      HospitalBossDie_2: 1591726624
+      HospitalBossDie_3: -1345288764
+      HospitalBossDie_4: -30472966
+      HospitalBossDie_5: 1826402498
+      HospitalBossDie_6: -372715297
+      HospitalBossDie_7: -1626583190
+      HospitalBossDie_8: 1372506725
+      HospitalBossDie_9: 1007012432
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
