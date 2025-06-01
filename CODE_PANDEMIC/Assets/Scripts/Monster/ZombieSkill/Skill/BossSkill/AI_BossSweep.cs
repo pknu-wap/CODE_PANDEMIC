@@ -19,6 +19,7 @@ public class AI_BossSweep : AI_SweepSkill
     }
     protected override void DoSweepAttack(Vector2 forward)
     {
+        _bossController._animator.SetTrigger("Sweep");
         _settings.Range = _bossController.IsBerserk ? 6f : 4f;
         base.DoSweepAttack(forward);
     }

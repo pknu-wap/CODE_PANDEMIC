@@ -15,17 +15,19 @@ public class AI_BossThrow : AI_ThrowSkill
         _targetLayer = targetLayer;
         _bossController = controller;
     }
-
+    public override void StartSkill(AI_Controller controller, System.Action onSkillComplete)
+    {
+        _bossController._animator.SetTrigger("Throw");
+        base.StartSkill(controller, onSkillComplete);
+    }
     protected override void ThrowSyringe(Vector2 direction)
     {
         if (_bossController == null || _bossController._syringePrefab == null) return;
-
         float baseAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         float[] angles = _bossController.IsBerserk
             ? new float[] { +45f, +15f, -15f, -45f }
             : new float[] { +45f, 0f, -45f };
-    
         foreach (float offset in angles)
         {
             float angle = baseAngle + offset;
@@ -39,7 +41,6 @@ public class AI_BossThrow : AI_ThrowSkill
                 syringe.transform.localScale.y,
                 syringe.transform.localScale.z
             );
-
             if (syringe.TryGetComponent(out Projectile projectile))
             {
                 projectile.SetOwner(_controller);
