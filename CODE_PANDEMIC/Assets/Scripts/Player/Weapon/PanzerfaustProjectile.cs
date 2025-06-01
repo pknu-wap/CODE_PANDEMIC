@@ -7,12 +7,13 @@ public class PanzerfaustProjectile : MonoBehaviour
     private PlayerController _owner;
     private Rigidbody2D rb;
 
+    private float _maxSpeed = 200.0f;
     [SerializeField] private ShockWave _shockWave;
     [SerializeField] private float _explosionRadius = 1.5f;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private GameObject _explosionEffect;
     [SerializeField] private float _boostDistance = 5f;
-    [SerializeField] private float _maxSpeed = 20f;
+    [SerializeField] private float _handleSpeed = 20f;
     [SerializeField] private AnimationCurve _accelerationCurve;
     [SerializeField] private LayerMask obstacleLayer;
 
@@ -30,17 +31,26 @@ public class PanzerfaustProjectile : MonoBehaviour
         if (_isExploded) return;
 
         float dist = Vector3.Distance(_startPos, transform.position);
+        Debug.Log($"[Projectile] Distance: {dist}, Speed: {rb.velocity.magnitude}");
 
         if (dist >= _boostDistance)
         {
             if (_shockWave != null)
             {
                 _shockWave.gameObject.SetActive(true);
-                _shockWave?.CallShockWave(1,0.05f);
+                _shockWave?.CallShockWave(1);
             }
-            float t = Mathf.InverseLerp(_boostDistance, _range, dist); // Normalize 0 ~ 1
+
+            float t = Mathf.InverseLerp(_boostDistance, _range, dist);
             float speedMultiplier = _accelerationCurve.Evaluate(t);
-            float currentSpeed = _maxSpeed * speedMultiplier;
+            float currentSpeed = _handleSpeed * speedMultiplier;
+            Debug.Log($"[Projectile] t: {t}, SpeedMultiplier: {speedMultiplier}, CurrentSpeed: {currentSpeed}");
+
+            if (currentSpeed > _maxSpeed)
+            {
+                rb.velocity = _moveDir * _maxSpeed;
+            }
+            else
             rb.velocity = _moveDir * currentSpeed;
         }
     }

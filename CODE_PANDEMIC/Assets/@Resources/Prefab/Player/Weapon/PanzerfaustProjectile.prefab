@@ -140,7 +140,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -148,23 +148,14 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.09058367
-      value: 5.695652
-      inSlope: 167.73773
-      outSlope: 167.73773
+      time: 0.22
+      value: 1
+      inSlope: -9.008713
+      outSlope: -9.008713
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.15499547
-      value: 8.954277
-      inSlope: 252.92926
-      outSlope: 252.92926
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.28113073
     - serializedVersion: 3
       time: 0.25
       value: 50
@@ -233,6 +224,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5167921285459300360}
     m_Modifications:
+    - target: {fileID: 1171293534823949557, guid: e3ed8e986bd20ef47b82cb75a20bae84, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1171293534823949557, guid: e3ed8e986bd20ef47b82cb75a20bae84, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1171293534823949557, guid: e3ed8e986bd20ef47b82cb75a20bae84, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1171293534823949557, guid: e3ed8e986bd20ef47b82cb75a20bae84, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
