@@ -12,6 +12,16 @@ public class PZ_Fish : PZ_Interact_NonSpawn
         PZ_Fish_UI.FishTimeOver += FishTimeOver;
     }
 
+    private void OnEnable()
+    {
+        Managers.Event.Subscribe("OnPlayerDead", PlayerDie);
+    }
+
+    private void OnDisable()
+    {
+        Managers.Event.Unsubscribe("OnPlayerDead", PlayerDie);
+    }
+
     private void StartFishFind()
     {
         _isDelayed = false;
@@ -24,8 +34,6 @@ public class PZ_Fish : PZ_Interact_NonSpawn
             return;
         }
 
-        Debug.Log("Fish Clear!!!");
-
         FishTimeOver();
 
         _fishPuzzle.ClearPuzzle();
@@ -36,6 +44,11 @@ public class PZ_Fish : PZ_Interact_NonSpawn
         _isDelayed = true;
         _isInteracted = true;
 
+        Managers.UI.ClosePopupUI();
+    }
+
+    private void PlayerDie(object obj)
+    {
         Managers.UI.ClosePopupUI();
     }
 }

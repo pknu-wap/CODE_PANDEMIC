@@ -1,14 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
-using TMPro;
 
 public class PZ_Parking : PZ_Puzzle_Main
 {
-    [SerializeField] private GameObject _arrowUp;
-    [SerializeField] private GameObject _arrowLeft;
-    [SerializeField] private GameObject _arrowDown;
-    [SerializeField] private GameObject _arrowRight;
-
     [SerializeField] private GameObject _roadBlock;
 
     private List<GameObject> _arrowList = new List<GameObject>();
@@ -186,6 +180,8 @@ public class PZ_Parking : PZ_Puzzle_Main
 
     public void SpawnArrows(Transform carTransform, CarMoveDirection direction, bool isVerticalCar, int[] body1Index, int[] body2Index)
     {
+        Vector3 arrowScale = new Vector3(0.1f, 0.1f, 1);
+
         if (isVerticalCar) // 세로로 배치된 차의 경우
         {
             switch (direction)
@@ -196,7 +192,13 @@ public class PZ_Parking : PZ_Puzzle_Main
                     {
                         Vector3 targetPos = carTransform.position;
                         targetPos.y += 0.5f;
-                        _arrowList.Add(Instantiate(_arrowUp, targetPos, new Quaternion(0, 0, 0, 0)));
+
+                        Managers.Resource.Instantiate("PZ_Arrow_Up_Prefab", transform, (arrow) =>
+                        {
+                            arrow.transform.position = targetPos;
+                            arrow.transform.localScale = arrowScale;
+                            _arrowList.Add(arrow);
+                        });
                     }
 
                     break;
@@ -207,7 +209,13 @@ public class PZ_Parking : PZ_Puzzle_Main
                     {
                         Vector3 targetPos = carTransform.position;
                         targetPos.x -= 0.5f;
-                        _arrowList.Add(Instantiate(_arrowLeft, targetPos, new Quaternion(0, 0, 0, 0)));
+
+                        Managers.Resource.Instantiate("PZ_Arrow_Left_Prefab", transform, (arrow) =>
+                        {
+                            arrow.transform.position = targetPos;
+                            arrow.transform.localScale = arrowScale;
+                            _arrowList.Add(arrow);
+                        });
                     }
 
                     break;
@@ -218,7 +226,13 @@ public class PZ_Parking : PZ_Puzzle_Main
                     {
                         Vector3 targetPos = carTransform.position;
                         targetPos.y -= 0.5f;
-                        _arrowList.Add(Instantiate(_arrowDown, targetPos, new Quaternion(0, 0, 0, 0)));
+
+                        Managers.Resource.Instantiate("PZ_Arrow_Down_Prefab", transform, (arrow) =>
+                        {
+                            arrow.transform.position = targetPos;
+                            arrow.transform.localScale = arrowScale;
+                            _arrowList.Add(arrow);
+                        });
                     }
 
                     break;
@@ -229,7 +243,13 @@ public class PZ_Parking : PZ_Puzzle_Main
                     {
                         Vector3 targetPos = carTransform.position;
                         targetPos.x += 0.5f;
-                        _arrowList.Add(Instantiate(_arrowRight, targetPos, new Quaternion(0, 0, 0, 0)));
+
+                        Managers.Resource.Instantiate("PZ_Arrow_Right_Prefab", transform, (arrow) =>
+                        {
+                            arrow.transform.position = targetPos;
+                            arrow.transform.localScale = arrowScale;
+                            _arrowList.Add(arrow);
+                        });
                     }
 
                     break;
@@ -246,7 +266,13 @@ public class PZ_Parking : PZ_Puzzle_Main
                     {
                         Vector3 targetPos = carTransform.position;
                         targetPos.y += 0.5f;
-                        _arrowList.Add(Instantiate(_arrowUp, targetPos, new Quaternion(0, 0, 0, 0)));
+
+                        Managers.Resource.Instantiate("PZ_Arrow_Up_Prefab", transform, (arrow) =>
+                        {
+                            arrow.transform.position = targetPos;
+                            arrow.transform.localScale = arrowScale;
+                            _arrowList.Add(arrow);
+                        });
                     }
 
                     break;
@@ -257,7 +283,13 @@ public class PZ_Parking : PZ_Puzzle_Main
                     {
                         Vector3 targetPos = carTransform.position;
                         targetPos.x -= 0.5f;
-                        _arrowList.Add(Instantiate(_arrowLeft, targetPos, new Quaternion(0, 0, 0, 0)));
+
+                        Managers.Resource.Instantiate("PZ_Arrow_Left_Prefab", transform, (arrow) =>
+                        {
+                            arrow.transform.position = targetPos;
+                            arrow.transform.localScale = arrowScale;
+                            _arrowList.Add(arrow);
+                        });
                     }
 
                     break;
@@ -268,7 +300,13 @@ public class PZ_Parking : PZ_Puzzle_Main
                     {
                         Vector3 targetPos = carTransform.position;
                         targetPos.y -= 0.5f;
-                        _arrowList.Add(Instantiate(_arrowDown, targetPos, new Quaternion(0, 0, 0, 0)));
+
+                        Managers.Resource.Instantiate("PZ_Arrow_Down_Prefab", transform, (arrow) =>
+                        {
+                            arrow.transform.position = targetPos;
+                            arrow.transform.localScale = arrowScale;
+                            _arrowList.Add(arrow);
+                        });
                     }
 
                     break;
@@ -279,7 +317,13 @@ public class PZ_Parking : PZ_Puzzle_Main
                     {
                         Vector3 targetPos = carTransform.position;
                         targetPos.x += 0.5f;
-                        _arrowList.Add(Instantiate(_arrowRight, targetPos, new Quaternion(0,0,0,0)));
+
+                        Managers.Resource.Instantiate("PZ_Arrow_Right_Prefab", transform, (arrow) =>
+                        {
+                            arrow.transform.position = targetPos;
+                            arrow.transform.localScale = arrowScale;
+                            _arrowList.Add(arrow);
+                        });
                     }
 
                     break;

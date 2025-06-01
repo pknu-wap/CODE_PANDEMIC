@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class AI_ThunderZombie : AI_Controller
 {
@@ -20,6 +21,8 @@ public class AI_ThunderZombie : AI_Controller
 
     private AI_ThunderSkill _thunderSkill;
     private AI_PatientAttack _patientAttack;
+
+    public static event Action OpenWorksiteDoor;
 
     public override ISkillBehavior Skill
     {
@@ -94,6 +97,8 @@ public class AI_ThunderZombie : AI_Controller
         StopMoving();
         ChangeState(new AI_StateDie(this));
         _animator.SetTrigger("Die");
+
+        OpenWorksiteDoor?.Invoke();
 
         Debug.Log($"{AIName} has died.");
     }

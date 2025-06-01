@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PZ_Door : PZ_Interact_NonSpawn
 {
@@ -16,6 +16,7 @@ public class PZ_Door : PZ_Interact_NonSpawn
 
         OpenDoor();
 
+        AI_ThunderZombie.OpenWorksiteDoor += OpenDoor;
         PZ_DoorTrigger.CloseWorksiteDoor += CloseDoor;
     }
 
@@ -31,5 +32,11 @@ public class PZ_Door : PZ_Interact_NonSpawn
         _animator.SetBool("IsOpened", false);
 
         _boxCollider.isTrigger = false;
+    }
+
+    private void OnDisable()
+    {
+        AI_ThunderZombie.OpenWorksiteDoor -= OpenDoor;
+        PZ_DoorTrigger.CloseWorksiteDoor -= CloseDoor;
     }
 }

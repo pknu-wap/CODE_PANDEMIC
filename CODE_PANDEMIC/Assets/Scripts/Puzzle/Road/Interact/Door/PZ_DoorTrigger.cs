@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 
 public class PZ_DoorTrigger : MonoBehaviour
@@ -13,8 +13,6 @@ public class PZ_DoorTrigger : MonoBehaviour
         }
 
         CloseWorksiteDoor?.Invoke();
-
-        // 여기에 번개 좀비 소환 구현
 
         Destroy(gameObject);
     }
