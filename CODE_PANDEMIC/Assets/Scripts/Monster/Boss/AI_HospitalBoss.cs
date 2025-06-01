@@ -39,8 +39,6 @@ public class AI_HospitalBoss : AI_Controller
                 _shortAttack = false;
                 return _throwSkill;
             }
-                
-
             if (_sweepSkill != null && _sweepSkill.IsReady(this))
             {
                 _shortAttack = true;
