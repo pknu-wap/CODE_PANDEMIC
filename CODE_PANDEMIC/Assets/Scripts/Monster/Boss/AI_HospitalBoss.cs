@@ -165,7 +165,7 @@ public class AI_HospitalBoss : AI_Controller
         {
             Cooldown = 20f,
             Width = 5f,
-            Speed = 20f,
+            Speed = 10f,
             ChargeDelay = 0.8f
         };
 
