@@ -210,13 +210,6 @@ public class HybridWeapon : WeaponBase
         ResetAttack(); // 내부에서 _currentAngle 기준으로 원래 회전값으로 복귀함
     }
 
-    private void OnDestroy()
-    {
-        StopAllCoroutines();
-        CancelInvoke();
-    }
-
-
 
     private void Throw()
     {
@@ -261,7 +254,7 @@ public class HybridWeapon : WeaponBase
                 colLayer == LayerMask.NameToLayer("Default"))
             {
 
-                Invoke(nameof(ReturnToPlayer), 0.3f);
+                Invoke(nameof(ReturnToPlayer), 0.01f);
             }
         }
     }
