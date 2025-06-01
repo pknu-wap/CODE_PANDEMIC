@@ -7,7 +7,7 @@ public class AI_ContaminatedArea : MonoBehaviour
     private float _damagePerSecond = 5f;
     private float _radius = 1f;
     private float _interval = 1f;
-
+ // TODO : 원장 좀비 장판 크기 키우기 
     private void Start()
     {
         StartCoroutine(DamageOverTime());
