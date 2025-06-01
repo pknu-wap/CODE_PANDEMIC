@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     public Vector2 _forwardVector;
     public bool IsFacingRight => transform.localScale.x < 0f;
     private bool _isInvincible = false;
+    private float _damageCooldown = 0.05f;
+    private float _lastDamageTime = -999f;
 
 
     [SerializeField] private AnimatorOverrideController withArmOverride;
@@ -143,7 +145,13 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(GameObject attacker, float damageValue)
     {
-        if(_currentState == PlayerState.Dead|| _currentState==PlayerState.Cinematic || _isInvincible) return;   
+        if (_currentState == PlayerState.Dead || _currentState == PlayerState.Cinematic || _isInvincible)
+            return;
+
+        if (Time.time < _lastDamageTime + _damageCooldown)
+            return;
+
+        _lastDamageTime = Time.time;
         _playerStatus.OnDamaged(attacker, damageValue);
     }
 
