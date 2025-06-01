@@ -46,8 +46,8 @@ public class PlayerStat
                 modifier.IncreaseHp += data.Health;
                 modifier.IncreaseDefend += data.Defense;
                 modifier.IncreaseSpeed += data.Speed;
-                modifier.IncreaseDefend += data.Defense;
-                modifier.IncreaseSpeed += data.Speed;
+               
+               
             }
 
            

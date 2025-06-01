@@ -92,10 +92,9 @@ public class AI_Controller : AI_Base
     private void DetectPlayer()
     {
         bool playerFound = false;
-
     foreach (var obj in _aiFov.GetDetectedObjects())
     {
-        if (obj.TryGetComponent<PlayerStatus>(out _))
+        if (_player != null && obj.TryGetComponent<PlayerStatus>(out _))
         {
             _player = obj.transform;
             _destinationSetter.target = _player;

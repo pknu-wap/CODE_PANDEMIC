@@ -10,6 +10,7 @@ public class HybridWeapon : WeaponBase
     [SerializeField] private GameObject swingEffectPrefab;
     [SerializeField] private float _rotationSpeed = 720f;
 
+    private Coroutine swingCoroutine;
     private bool _isThrown = false;
     private bool _isAttacking = false;
     private float _currentAngle = 0f;
@@ -114,12 +115,16 @@ public class HybridWeapon : WeaponBase
             Destroy(effect, 0.3f);
         }
 
-        StartCoroutine(SmoothSwingAttack(swingAngle));
-    }
+        // 이전 코루틴이 있으면 중단
+        if (swingCoroutine != null)
+            StopCoroutine(swingCoroutine);
 
+        swingCoroutine = StartCoroutine(SmoothSwingAttack(swingAngle));
+    }
 
     private IEnumerator SmoothSwingAttack(float swingAngle)
     {
+        if (this == null || gameObject == null || attackPoint == null) yield break;
         float swingDuration = 0.1f;
         float elapsed = 0f;
 
@@ -131,17 +136,25 @@ public class HybridWeapon : WeaponBase
 
         while (elapsed < swingDuration)
         {
+            if (this == null || gameObject == null) yield break;
             float t = elapsed / swingDuration;
             transform.rotation = Quaternion.Slerp(startRot, endRot, t);
             elapsed += Time.deltaTime;
             yield return null;
         }
 
+        if (this == null || gameObject == null) yield break;
         transform.rotation = endRot;
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        Collider2D[] hits = null;
+        if (attackPoint != null)
+            hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        else
+            yield break;
+
         foreach (var hit in hits)
         {
+            if (hit == null) continue;
             AI_Base enemy = hit.GetComponent<AI_Base>();
             if (enemy != null)
             {
@@ -150,10 +163,12 @@ public class HybridWeapon : WeaponBase
             }
         }
 
-        Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
+        Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + (hits != null ? hits.Length : 0));
         Invoke(nameof(ResetAttack), _weaponData.FireRate);
         yield return new WaitForSeconds(0.05f);
         ResetAttack();
+
+        swingCoroutine = null;
     }
 
     private IEnumerator SmoothSwingAttack()
@@ -191,10 +206,18 @@ public class HybridWeapon : WeaponBase
 
         Debug.Log("[HybridWeapon] Melee Attack. Enemies hit: " + hits.Length);
         Invoke(nameof(ResetAttack), _weaponData.FireRate);
-        //  복귀는 굳이 코루틴으로 천천히 안 해도 괜찮음
+
         yield return new WaitForSeconds(0.05f); // 딜레이 약간
         ResetAttack(); // 내부에서 _currentAngle 기준으로 원래 회전값으로 복귀함
     }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+        CancelInvoke();
+    }
+
+
 
     private void Throw()
     {
@@ -238,8 +261,44 @@ public class HybridWeapon : WeaponBase
                 colLayer == LayerMask.NameToLayer("Interact") ||
                 colLayer == LayerMask.NameToLayer("Default"))
             {
-                Destroy(gameObject);
+
+                Invoke(nameof(ReturnToPlayer), 0.3f);
             }
+        }
+    }
+
+    private void ReturnToPlayer()
+    {
+
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null)
+        {
+
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.velocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+            _isThrown = false;
+            _isAttacking = false;
+
+            Transform weaponSocket = player.transform.Find("WeaponSocket"); // 이름 맞게 수정
+            if (weaponSocket != null)
+            {
+                transform.SetParent(weaponSocket);
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
+            }
+            else
+            {
+
+                transform.SetParent(player.transform);
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
+            }
+            Debug.Log("[HybridWeapon] 플레이어에게 다시 장착됨!");
         }
     }
 
@@ -253,13 +312,15 @@ public class HybridWeapon : WeaponBase
 
     private void ResetAttack()
     {
+        if (this == null || gameObject == null) return;
         _isAttacking = false;
         transform.rotation = Quaternion.Euler(0, 0, _currentAngle);
 
         SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
         if (sr != null)
-            sr.flipY = (_currentAngle > 90f || _currentAngle < -90f);
+            sr.flipY = (_currentAngle > 90f || _currentAngle < 270f);
     }
+
 
     private void OnDrawGizmosSelected()
     {
