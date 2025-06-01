@@ -68,7 +68,6 @@ public class Projectile : MonoBehaviour
         Transform parent = _owner?.transform.parent;
         GameObject area = Instantiate(contaminatedAreaPrefab, spawnPosition, Quaternion.identity , parent);
         float scaleFactor = _owner.transform.localScale.x * 0.5f;
-
         area.transform.localScale = Vector3.one * scaleFactor;
         Destroy(gameObject);
     }

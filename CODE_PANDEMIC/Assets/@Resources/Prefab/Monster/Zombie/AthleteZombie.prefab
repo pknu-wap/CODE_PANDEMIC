@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 1112993367928532030}
   - component: {fileID: 3243513698584466628}
   - component: {fileID: 4250689294645702425}
+  - component: {fileID: 3138268074192050209}
   - component: {fileID: 5109862455760832377}
   - component: {fileID: 6903362446902183446}
-  - component: {fileID: 3138268074192050209}
   m_Layer: 12
   m_Name: AthleteZombie
   m_TagString: Enemy
@@ -64,7 +64,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: e1423e5742461c040845d50d66c019a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -252,6 +252,43 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3138268074192050209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868338364832519190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f46cc28fbf5370d4da86a386b6cd57bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashColor: {r: 2.297397, g: 0, b: 0, a: 1}
+  _flashSpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -4
+      outSlope: -4
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25
+      value: 0
+      inSlope: -2.1484594
+      outSlope: -2.1484594
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041731894
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &5109862455760832377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,43 +338,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3138268074192050209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868338364832519190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f46cc28fbf5370d4da86a386b6cd57bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _flashColor: {r: 2.297397, g: 0, b: 0, a: 1}
-  _flashSpeedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -4
-      outSlope: -4
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.25
-      value: 0
-      inSlope: -2.1484594
-      outSlope: -2.1484594
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.041731894
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &6117798260881096819
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,6 +493,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4640065554785263194}
     m_Modifications:
+    - target: {fileID: 3061065373340586033, guid: a3ecf2f7a740796488f13862904e29e4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5010089988796217219, guid: a3ecf2f7a740796488f13862904e29e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

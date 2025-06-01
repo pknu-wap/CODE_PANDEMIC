@@ -47,13 +47,13 @@ public class ObjectManager : MonoBehaviour
             playerCam.SnapToTargetImmediately();
         });
 
-       
-
         while (!cameraLoaded) yield return null;
         while (_leftSpawners < stageData.Spawners.Count) yield return null;
-
         Loaded = true;
+       
     }
+
+
 
     public void ResetStage()
     {

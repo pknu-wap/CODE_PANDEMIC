@@ -12,4 +12,9 @@ public class AI_BossDash : AI_DashSkill
         _targetLayer = targetLayer;
         _bossController = controller;
     }
+    public override void StartSkill(AI_Controller controller, System.Action onSkillComplete)
+    {
+        _bossController._animator.SetTrigger("Dash");
+        base.StartSkill(controller, onSkillComplete);
+    }
 }
