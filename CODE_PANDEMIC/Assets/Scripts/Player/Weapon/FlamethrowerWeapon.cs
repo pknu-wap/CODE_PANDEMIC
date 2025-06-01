@@ -33,8 +33,7 @@ public class FlamethrowerWeapon : WeaponBase
 
     public override void StartAttack(PlayerController owner)
     {
-        //Debug.Log($"[FlamethrowerWeapon] StartAttack 호출, _isFiring={_isFiring}, _isReloading={_isReloading}, WeaponData.Damage={_weaponData?.Damage}");
-
+       
         if (_isFiring || _isReloading) return;
         _isFiring = true;
 

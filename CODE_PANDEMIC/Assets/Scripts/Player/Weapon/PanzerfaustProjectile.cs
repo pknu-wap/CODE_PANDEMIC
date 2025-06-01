@@ -44,7 +44,7 @@ public class PanzerfaustProjectile : MonoBehaviour
             float t = Mathf.InverseLerp(_boostDistance, _range, dist);
             float speedMultiplier = _accelerationCurve.Evaluate(t);
             float currentSpeed = _handleSpeed * speedMultiplier;
-            Debug.Log($"[Projectile] t: {t}, SpeedMultiplier: {speedMultiplier}, CurrentSpeed: {currentSpeed}");
+           
 
             if (currentSpeed > _maxSpeed)
             {
