@@ -238,7 +238,7 @@ public class HybridWeapon : WeaponBase
 
     private void OnTriggerEnter2D(Collider2D trigger)
     {
-        if (_currentMode == HybridMode.Ranged)
+        if (_currentMode == HybridMode.Ranged && _isThrown)
         {
             AI_Base enemy = trigger.gameObject.GetComponent<AI_Base>();
             if (enemy != null)
