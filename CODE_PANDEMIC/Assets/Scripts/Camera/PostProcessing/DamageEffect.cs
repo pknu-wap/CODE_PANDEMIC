@@ -42,9 +42,12 @@ public class DamageEffect : MonoBehaviour
     private void ResetIntensity(object obj)
     {
         if (_fadeCoroutine != null)
+        {
             StopCoroutine(_fadeCoroutine);
+            _fadeCoroutine = null;
+        }
 
-        _vignette.intensity.value = 0f;
+       
         _vignette.active = false;
     }
 
