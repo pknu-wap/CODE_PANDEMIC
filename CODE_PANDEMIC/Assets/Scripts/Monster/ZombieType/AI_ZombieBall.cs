@@ -12,6 +12,7 @@ public class AI_ZombieBall : AI_Controller
     private float _rushEndTime = -Mathf.Infinity;
 
     private bool _isRushing = false;
+    private bool _isDead = false;
     private Vector2 _rushDirection;
 
     protected override void Start()
@@ -51,6 +52,8 @@ public class AI_ZombieBall : AI_Controller
 
     private void Explosion()
     {
+        if (_isDead)
+            return;
         _isRushing = false;
         _rb.velocity = Vector2.zero;
 
@@ -69,6 +72,7 @@ public class AI_ZombieBall : AI_Controller
                 playerStatus.TakeDamage(gameObject, damage);
             }
         }
+        _isDead = true;
         TrySummon();
         base.Die();
         StopMoving();
@@ -104,7 +108,7 @@ public class AI_ZombieBall : AI_Controller
 
     public void TriggerRush(Vector2 direction)
     {
-        if (_isRushing) return;
+        if (_isRushing || _isDead) return;
 
         _rushDirection = direction.normalized;
         _isRushing = true;
@@ -132,7 +136,7 @@ public class AI_ZombieBall : AI_Controller
         LayerMask playerMask = LayerMask.GetMask("Player");
         LayerMask wallMask = LayerMask.GetMask("Wall");
 
-        if (((1 << otherLayer) & playerMask) != 0 || ((1 << otherLayer) & wallMask) != 0)
+        if (((1 << otherLayer) & playerMask) != 0 || ((1 << otherLayer) & wallMask) != 0 && !_isDead)
         {
             Explosion();
         }
