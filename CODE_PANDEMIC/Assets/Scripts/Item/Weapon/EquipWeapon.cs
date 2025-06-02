@@ -151,6 +151,7 @@ public class EquipWeapon : MonoBehaviour
     }
     public void UnEquipWeapon()
     {
+        Managers.Event.InvokeEvent("EquipDisable");
         DestroyPrevWeapon();
     }
   
