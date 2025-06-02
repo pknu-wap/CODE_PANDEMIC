@@ -190,8 +190,8 @@ public class PlayerStatus : MonoBehaviour
     }
     private void OnPlayerDead()
     {
-        Managers.Event.InvokeEvent("OnPlayerDead");
         Managers.Event.InvokeEvent("ResetIntensity");
+        Managers.Event.InvokeEvent("OnPlayerDead");
     }
 
     
