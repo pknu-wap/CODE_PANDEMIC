@@ -52,11 +52,11 @@ public class EquipWeapon : MonoBehaviour
 
     public bool HasWeapon()
     {
-        return _weapon!=null;
+        return _weapon != null;
     }
     public void Reload()
     {
-        if (_weapon.WeaponInfo.Type==Define.WeaponType.ShortWeapon||_weapon==null) return;
+        if (_weapon.WeaponInfo.Type == Define.WeaponType.ShortWeapon || _weapon == null) return;
 
         _weapon.Reload();
     }
@@ -81,11 +81,11 @@ public class EquipWeapon : MonoBehaviour
         _weapon = weapon;
     }
 
-   
+
 
     public void SetWeapon(WeaponItem weaponItem, List<ItemParameter> itemState)
     {
-        if (CheckReloading()==false) return;
+        if (CheckReloading() == false) return;
         Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data);
         if (data == null)
         {
@@ -101,7 +101,7 @@ public class EquipWeapon : MonoBehaviour
                 }
                 else
                 {
-                    SwapWeapon(data,_socket);
+                    SwapWeapon(data, _socket);
                     Managers.Event.InvokeEvent("ShortWeaponEquipped");
                 }
                 break;
@@ -115,7 +115,7 @@ public class EquipWeapon : MonoBehaviour
                     SwapWeapon(data, _socket);
                     Managers.Event.InvokeEvent("GunWeaponEquipped", data.BulletCount);
                 }
-                    break;
+                break;
             case Define.WeaponType.RangeWeapon:
                 if (!CheckDifferentWeapon(data, _weapon))
                 {

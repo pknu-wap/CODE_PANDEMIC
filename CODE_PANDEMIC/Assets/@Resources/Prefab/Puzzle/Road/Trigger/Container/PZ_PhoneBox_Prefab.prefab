@@ -199,17 +199,17 @@ MonoBehaviour:
   _animator: {fileID: 5168695619426821086}
   _zombiePrefab: {fileID: 6117609622689961263, guid: 35be60d419c823f4a8ba23bccc8dd639, type: 3}
   _spawnTransform: {fileID: 5139236731887057839}
-  _zombieCount: 2
+  _zombieCount: 3
   _monsterData:
     TemplateID: 5
     NameID: "\uB178\uBA40 \uC880\uBE44"
     Prefab: M_001
-    Hp: 130
-    AttackDamage: 20
-    AttackDelay: 5
+    Hp: 200
+    AttackDamage: 10
+    AttackDelay: 0.5
     DetectionRange: 7.5
     DetectionAngle: 120
-    MoveSpeed: 2
+    MoveSpeed: 6
     AttackRange: 2
 --- !u!1 &7255273436241557276
 GameObject:

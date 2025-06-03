@@ -17,8 +17,8 @@ public class CloseRangeWeaponBase : WeaponBase
 
     public override void Attack(PlayerController owner)
     {
-        if (!CanFire()) return;
-        SetNextFireTime();
+        if (!CanFire(owner)) return;
+        SetNextFireTime(owner);
         _currentBullet--;
         Managers.Event.InvokeEvent("BulletUpdated", _currentBullet);
         if (_currentBullet <= 0)
