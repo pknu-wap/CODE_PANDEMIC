@@ -565,6 +565,34 @@ PrefabInstance:
       propertyPath: m_CellSize.y
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 94382383764042932, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_Constraint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 94382383764042932, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 94382383764042932, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94382383764042932, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_Padding.m_Left
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 94382383764042932, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_ConstraintCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 94382383764042932, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_Padding.m_Right
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 94382383764042932, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 203115582392150504, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
       propertyPath: m_text
       value: 
@@ -824,6 +852,22 @@ PrefabInstance:
     - target: {fileID: 6896312023591422230, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
       propertyPath: m_Padding.m_Left
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896312023591422230, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_ChildScaleWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896312023591422230, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_ChildScaleHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896312023591422230, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_ChildControlWidth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896312023591422230, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
+      propertyPath: m_ChildControlHeight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7148761702121099598, guid: 7234bf2d8e9b7ed4e9dc653adb20777d, type: 3}
       propertyPath: m_Pivot.x

@@ -5,8 +5,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-
-
 public class UI_Base : MonoBehaviour
 {
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
