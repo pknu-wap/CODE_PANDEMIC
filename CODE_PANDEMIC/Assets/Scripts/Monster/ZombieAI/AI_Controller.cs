@@ -25,7 +25,7 @@ public class AI_Controller : AI_Base
     protected bool _isAttacking;
     public bool _isUsingSkill;
     public bool _attackedPlayer;
-    private bool _isDead = false;
+    public bool _isDead = false;
     private const float SkillRange = 7.5f;
     public virtual ISkillBehavior Skill => null;
     
