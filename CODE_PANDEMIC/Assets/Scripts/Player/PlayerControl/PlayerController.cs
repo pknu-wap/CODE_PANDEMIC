@@ -27,6 +27,13 @@ public class PlayerController : MonoBehaviour
     private float _damageCooldown = 0.05f;
     private float _lastDamageTime = -999f;
 
+    private float _globalNextFireTime = 0f;
+    public float GlobalNextFireTime
+    {
+        get => _globalNextFireTime;
+        set => _globalNextFireTime = value;
+    }
+
 
     [SerializeField] private AnimatorOverrideController withArmOverride;
     [SerializeField] private AnimatorOverrideController noArmOverride;

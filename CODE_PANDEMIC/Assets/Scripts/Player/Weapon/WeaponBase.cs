@@ -9,7 +9,7 @@ public abstract class WeaponBase : MonoBehaviour
     private bool isFacingRight = true;
     private Vector3 _originalScale;
     protected bool _isReloading = false;
-    protected int _currentBullet;
+    public int _currentBullet;
     protected bool _isAttacking = false;
     public bool IsReloading => _isReloading;
 
@@ -37,7 +37,7 @@ public abstract class WeaponBase : MonoBehaviour
     {
         while (_isAttacking)
         {
-            if (CanFire())
+            if (CanFire(owner))
             {
                 Attack(owner);
             }
@@ -132,7 +132,7 @@ public abstract class WeaponBase : MonoBehaviour
         Debug.Log("Reload complete");
     }
 
-    protected bool CanFire()
+    protected bool CanFire(PlayerController owner)
     {
         if (_isReloading) return false;
 
@@ -142,12 +142,12 @@ public abstract class WeaponBase : MonoBehaviour
             return false;
         }
 
-        return Time.time >= _nextFireTime;
+        return Time.time >= owner.GlobalNextFireTime;
     }
 
-    protected void SetNextFireTime()
+    protected void SetNextFireTime(PlayerController owner)
     {
-        _nextFireTime = Time.time + _weaponData.FireRate;
+        owner.GlobalNextFireTime = Time.time + _weaponData.FireRate;
     }
 
 }
