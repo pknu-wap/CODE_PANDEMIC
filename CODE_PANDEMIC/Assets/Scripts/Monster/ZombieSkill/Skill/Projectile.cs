@@ -32,6 +32,10 @@ public class Projectile : MonoBehaviour
     private void FixedUpdate()
     {
         if (_hasTriggered) return;
+        if (_owner._isDead)
+        {
+            Destroy(gameObject);
+        }
         float dist = Vector2.Distance(_startPos, transform.position);
         if (dist >= MaxDistance)
         {
@@ -67,7 +71,7 @@ public class Projectile : MonoBehaviour
         _hasTriggered = true;
         Transform parent = _owner?.transform.parent;
         GameObject area = Instantiate(contaminatedAreaPrefab, spawnPosition, Quaternion.identity , parent);
-        float scaleFactor = _owner.transform.localScale.x * 0.5f;
+        float scaleFactor = Mathf.Abs(_owner.transform.localScale.x) * 0.5f;
         area.transform.localScale = Vector3.one * scaleFactor;
         Destroy(gameObject);
     }
