@@ -84,8 +84,8 @@ public class AI_ThrowSkill : ISkillBehavior
         float speed = _settings.SyringeSpeed;
 
         if (prefab == null) return;
-
-        GameObject syringe = Object.Instantiate(prefab, _controller.transform.position, Quaternion.identity);
+        Transform parent = _controller?.transform.parent;
+        GameObject syringe = Object.Instantiate(prefab, _controller.transform.position, Quaternion.identity , parent);
         Rigidbody2D rb = syringe.GetComponent<Rigidbody2D>();
         if (rb != null)
             rb.velocity = direction * speed;
