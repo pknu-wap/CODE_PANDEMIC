@@ -155,6 +155,7 @@ public class AI_Controller : AI_Base
         {
             _isDead = true;
             Skill?.StopSkill();
+            _rb.velocity = Vector2.zero;
             StopMoving();
             ChangeState(new AI_StateDie(this));
             _animator.SetTrigger("Die");
