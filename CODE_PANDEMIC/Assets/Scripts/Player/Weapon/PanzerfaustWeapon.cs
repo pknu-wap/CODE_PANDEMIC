@@ -14,8 +14,8 @@ public class PanzerFaustWeapon : WeaponBase
 
     public override void Attack(PlayerController owner)
     {
-        if (!CanFire()) return;
-        SetNextFireTime();
+        if (!CanFire(owner)) return;
+        SetNextFireTime(owner);
         _currentBullet--;
 
         if (_currentBullet <= 0)
