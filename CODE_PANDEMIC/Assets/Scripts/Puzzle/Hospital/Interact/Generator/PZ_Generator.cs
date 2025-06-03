@@ -12,6 +12,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     private int _rememberCount = 5;
 
     public static event Action TurnOnGenerator;
+    PZ_Remember_Board _rememberBoard;
 
     // 하이라이트 기능
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -37,9 +38,10 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
         {
             return;
         }
-
+        if (_rememberBoard != null) return;
         Managers.UI.ShowPopupUI<PZ_Remember_Board>("PZ_Remember_Board_Prefab", null, (popupPuzzle) =>
         {
+            _rememberBoard = popupPuzzle;
             popupPuzzle.Setting(this, _rememberCount);
         });
     }

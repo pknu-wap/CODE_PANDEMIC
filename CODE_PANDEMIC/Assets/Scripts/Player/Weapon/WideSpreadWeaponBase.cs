@@ -25,6 +25,7 @@ public class WideSpreadWeaponBase : WeaponBase
         if (_currentBullet <= 0)
         {
             Reload();
+           
         }
 
         if (_animator != null)

@@ -3,17 +3,22 @@ using Inventory.Model;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using Cinemachine;
+using System.Collections;
 
 public class EquipWeapon : MonoBehaviour
 {
 
     [SerializeField]
     private WeaponBase _weapon;
+    [SerializeField]
+    private Transform _socket;
 
     private QuickSlot _quickSlot;
     private PlayerInput _weaponInput;
 
-    [SerializeField] private Transform _socket;
+    private float _equipDelay = 0.35f;
+    Coroutine _equipDelayRoutine;
+
     private void Awake()
     {
         _weaponInput = new PlayerInput();
@@ -37,6 +42,7 @@ public class EquipWeapon : MonoBehaviour
     private void OnDisable()
     {
         Managers.Event.InvokeEvent("CancelReload");
+        StopDelay();
         _weaponInput.QuickSlot.Equip1.performed -= Equip1;
         _weaponInput.QuickSlot.Equip2.performed -= Equip2;
         _weaponInput.QuickSlot.Equip3.performed -= Equip3;
@@ -151,10 +157,12 @@ public class EquipWeapon : MonoBehaviour
     }
     public void UnEquipWeapon()
     {
+        Managers.Event.InvokeEvent("EquipDisable");
+        StopDelay();
         DestroyPrevWeapon();
     }
-
-    public void SwapWeapon(WeaponData data, Transform socket)
+   
+    public void SwapWeapon(WeaponData data,Transform socket)
     {
         DestroyPrevWeapon();
         Managers.Resource.Instantiate(data.WeaponPrefab, socket, (obj) =>
@@ -168,14 +176,26 @@ public class EquipWeapon : MonoBehaviour
 
     private bool EquipQuickSlot(int v)
     {
-        Debug.Log(v);
         if (!_quickSlot.CheckSlot(v))
             return false;
+        if (_equipDelayRoutine != null) return false;
 
         _quickSlot.UseQuickSlot(v, gameObject);
+
+        _equipDelayRoutine = StartCoroutine(EquipDelay());
         return true;
     }
-
+    IEnumerator EquipDelay()
+    {
+        yield return CoroutineHelper.WaitForSeconds(_equipDelay);
+        _equipDelayRoutine = null;
+    }
+    private void StopDelay()
+    {
+        if (_equipDelayRoutine == null) return;
+        StopCoroutine(_equipDelayRoutine );
+        _equipDelayRoutine = null;  
+    }
     private void Equip1(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(1);
     private void Equip2(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(2);
     private void Equip3(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(3);
