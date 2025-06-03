@@ -54,18 +54,20 @@ namespace Inventory.UI
             {
                 Managers.Resource.Instantiate("ItemSlot", callback: (obj) =>
                 {
+                    
                     UI_InventoryItem uiItem = obj.GetComponent<UI_InventoryItem>();
                     uiItem.transform.SetParent(_contentPanel);
-
+                    
+                    uiItem.transform.localScale = Vector3.one; 
                     if (uiItem == null)
                     {
-                        Debug.LogError($"[InstantiateUIItem] {obj}¿¡¼­ UIInventoryItemÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                        Debug.LogError($"[InstantiateUIItem] {obj}ì—ì„œ UIInventoryItemì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                         return;
                     }
 
                     _listOfUiItems.Add(uiItem);
 
-                    // ÀÌº¥Æ® ÇÚµé¸µ
+                    // ì´ë²¤íŠ¸ í•¸ë“¤ë§
                     uiItem.OnItemClicked += HandleItemSelection;
                     uiItem.OnItemBeginDrag += HandleBeginDrag;
                     uiItem.OnItemDroppedOn += HandleSwap;
