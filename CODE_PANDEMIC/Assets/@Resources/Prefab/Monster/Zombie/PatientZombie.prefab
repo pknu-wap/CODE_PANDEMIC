@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6209252629949819688}
   - component: {fileID: 2057573971600145350}
   - component: {fileID: 2837836557863842431}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,6 +484,7 @@ MonoBehaviour:
   _aiPath: {fileID: 7197484425491187524}
   _isUsingSkill: 0
   _attackedPlayer: 0
+  _isDead: 0
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
