@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2197948121418850777}
   - component: {fileID: 3678437561939590926}
   - component: {fileID: 3762472889710851294}
+  - component: {fileID: 446782909905423627}
   m_Layer: 13
   m_Name: ThunderArea
   m_TagString: Untagged
@@ -97,3 +98,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce5bde059adc41449557037b7a36c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &446782909905423627
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8341362285685389900}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ec5d78b37ff1a7847a424a004bbc9056, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
