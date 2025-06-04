@@ -3,7 +3,7 @@ using UnityEngine;
 public class PZ_Boss_Enter : MonoBehaviour
 {
     [SerializeField] private GameObject _block;
-
+    
     private void Start()
     {
         if (Managers.Game.IsClearStage()) Destroy(gameObject);  
