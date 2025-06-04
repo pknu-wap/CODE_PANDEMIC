@@ -5,11 +5,8 @@ public class PZ_Container : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
-    [SerializeField] private GameObject _zombiePrefab;
     [SerializeField] private Transform _spawnTransform;
     [SerializeField] private int _zombieCount = 3;
-
-    [SerializeField] private MonsterData _monsterData;
 
     private bool _isTriggered = false;
 
@@ -29,25 +26,28 @@ public class PZ_Container : MonoBehaviour
 
     private IEnumerator SpawnZombies()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return CoroutineHelper.WaitForSeconds(0.5f);
 
         Vector3 spawnPos = _spawnTransform.position;
         spawnPos.y -= 1f;
-
-        while (_zombieCount-- > 0)
+        if (Managers.Data.Monsters.TryGetValue(5, out MonsterData data))
         {
-            int randomForce = Random.Range(0, 4);
-            Vector2 forceVec = new Vector2(0, -randomForce);
-
-            Managers.Resource.Instantiate("M_001", gameObject.transform, (zombie) =>
+            while (_zombieCount-- > 0)
             {
-                zombie.GetComponent<AI_Base>().SetInfo(_monsterData);
+                int randomForce = Random.Range(0, 4);
+                Vector2 forceVec = new Vector2(0, -randomForce);
 
-                Transform zombieTransform = zombie.GetComponent<Transform>();
-                zombieTransform.position = spawnPos;
-            });
 
-            yield return new WaitForSeconds(0.5f);
+                Managers.Resource.Instantiate(data.Prefab, gameObject.transform, (zombie) =>
+                {
+                    zombie.GetComponent<AI_Base>().SetInfo(data);
+
+                    Transform zombieTransform = zombie.GetComponent<Transform>();
+                    zombieTransform.position = spawnPos;
+                });
+
+                yield return CoroutineHelper.WaitForSeconds(0.5f);
+            }
         }
     }
 }
