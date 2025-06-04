@@ -23,6 +23,7 @@ public class HybridWeapon : WeaponBase
         if (Input.GetKeyDown(KeyCode.T))
         {
             _currentMode = _currentMode == HybridMode.Melee ? HybridMode.Ranged : HybridMode.Melee;
+            Managers.Event.InvokeEvent("ShortWeaponUpdated", (int)_currentMode);
             Debug.Log("[HybridWeapon] Mode Changed: " + _currentMode);
         }
 
