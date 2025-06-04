@@ -22,7 +22,11 @@ public class StageController : MonoBehaviour
     public Transform _ItemsParent;
     public Transform _blockParent;
 
-    public PolygonCollider2D CameraLimit { get { return _cameraLimit; } private set { _cameraLimit = value; } }
+    public PolygonCollider2D CameraLimit 
+    { 
+        get { return _cameraLimit; } 
+        private set { _cameraLimit = value; }
+    }
 
     public void SetInfo(StageData stageData)
     {
@@ -54,10 +58,7 @@ public class StageController : MonoBehaviour
         Managers.Event.Unsubscribe("OffMapCamera", OffMapCamera);
 
     }
-    public void BossSpawner()
-    {
-
-    }
+    
     public void CreateSpawners()
     {
         if (_stageData.BossTemplateID == 0) CreateNormalMapSpawner();
