@@ -99,8 +99,7 @@ public class PlayerStatus : MonoBehaviour
                 }
                 Managers.Game.PlayerStat.SetCurrentHp(_currentHp);
             }
-
-            if (_currentHp > _maxHp)
+            else if (_currentHp > _maxHp)
             {
                 _currentHp = _maxHp;
                 Managers.Game.PlayerStat.SetCurrentHp(_currentHp);
@@ -111,6 +110,7 @@ public class PlayerStatus : MonoBehaviour
         }
 
     }
+
 
     private void OnDisable()
     {
