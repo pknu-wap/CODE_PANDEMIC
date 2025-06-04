@@ -26,7 +26,7 @@ public class PZ_Container : MonoBehaviour
 
     private IEnumerator SpawnZombies()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return CoroutineHelper.WaitForSeconds(0.5f);
 
         Vector3 spawnPos = _spawnTransform.position;
         spawnPos.y -= 1f;
@@ -43,10 +43,10 @@ public class PZ_Container : MonoBehaviour
                     zombie.GetComponent<AI_Base>().SetInfo(data);
 
                     Transform zombieTransform = zombie.GetComponent<Transform>();
-                    zombieTransform.localPosition = spawnPos;
+                    zombieTransform.position = spawnPos;
                 });
 
-                yield return new WaitForSeconds(0.5f);
+                yield return CoroutineHelper.WaitForSeconds(0.5f);
             }
         }
     }
