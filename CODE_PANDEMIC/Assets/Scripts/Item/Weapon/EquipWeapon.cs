@@ -26,7 +26,7 @@ public class EquipWeapon : MonoBehaviour
 
     private void Start()
     {
-        Managers.Event.InvokeEvent("ShortWeaponEquipped");
+        Managers.Event.InvokeEvent("EquipDisable");
         _quickSlot = Managers.Game.QuickSlot;
     }
 
