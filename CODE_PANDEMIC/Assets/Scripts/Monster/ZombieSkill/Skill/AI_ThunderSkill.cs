@@ -11,7 +11,7 @@ public class AI_ThunderSkill : ISkillBehavior
     private float _delayBeforeStrike = 0.5f;
     private float _intervalBetweenStrikes = 1.0f;
     private int _strikeCount = 3;
-    private float _strikeRadius = 1f;
+    private float _strikeRadius = 0.5f;
 
     private GameObject _thunderPrefab;
     private LayerMask _targetLayer;

@@ -5,34 +5,41 @@ public class AI_ContaminatedArea : MonoBehaviour
 {
     private float _duration = 10f;
     private float _damagePerSecond = 5f;
-    private float _radius = 1f;
+    private Vector2 _damageBoxSize = new Vector2(2.5f, 1.2f);
     private float _interval = 1f;
+
     private void Start()
     {
         StartCoroutine(DamageOverTime());
     }
 
     private IEnumerator DamageOverTime()
-{
-    float elapsed = 0f;
-
-    while (elapsed < _duration)
     {
-        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, _radius, LayerMask.GetMask("Player"));
-        foreach (var target in targets)
+        float elapsed = 0f;
+
+        while (elapsed < _duration)
         {
-            if (target.TryGetComponent<PlayerController>(out var player))
+            Collider2D[] targets = Physics2D.OverlapCapsuleAll(
+                transform.position,
+                _damageBoxSize,
+                0f,
+                LayerMask.GetMask("Player")
+            );
+
+            foreach (var target in targets)
             {
-                player.TakeDamage(gameObject, _damagePerSecond);
+                if (target.TryGetComponent<PlayerController>(out var player))
+                {
+                    player.TakeDamage(gameObject, _damagePerSecond);
+                }
             }
+
+            yield return new WaitForSeconds(_interval);
+            elapsed += _interval;
         }
 
-        yield return new WaitForSeconds(_interval);
-        elapsed += _interval;
+        StartCoroutine(FadeOut());
     }
-
-    StartCoroutine(FadeOut());
-}
 
     private IEnumerator FadeOut()
     {

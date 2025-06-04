@@ -108,10 +108,10 @@ public class AI_HospitalBoss : AI_Controller
         }
         if (Health <= 0f && _currentState is not AI_StateDie)
         {
+            _animator.SetTrigger("Die");
             Managers.Game.ClearBoss(_monsterData.TemplateID);
             StartCoroutine(BossDeathSequence()); 
-           
-           
+
         }
     }
 
@@ -119,7 +119,7 @@ public class AI_HospitalBoss : AI_Controller
     {
         Managers.Event.InvokeEvent("OnBossClear");
         yield return CoroutineHelper.WaitForSeconds(2);
-        ChangeState(new AI_StateDie(this));
+        // ChangeState(new AI_StateDie(this));
     }
     protected override void Awake()
     {

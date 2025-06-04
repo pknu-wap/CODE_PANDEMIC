@@ -87,7 +87,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 15
   m_Sprite: {fileID: -252504397, guid: 443895267e5003e439c4dfded2debc30, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -330,6 +330,7 @@ MonoBehaviour:
   _aiPath: {fileID: 9151314753842261910}
   _isUsingSkill: 0
   _attackedPlayer: 0
+  _isDead: 0
   _thunderCoolDown: 10
   _thunderDelay: 1
   _attackCooldown: 2
@@ -485,7 +486,7 @@ GameObject:
   - component: {fileID: 6002078655254404630}
   - component: {fileID: 5796625752949208117}
   - component: {fileID: 1908226957193763641}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
