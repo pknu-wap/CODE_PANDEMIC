@@ -5,11 +5,8 @@ public class PZ_Container : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
-    [SerializeField] private GameObject _zombiePrefab;
     [SerializeField] private Transform _spawnTransform;
     [SerializeField] private int _zombieCount = 3;
-
-    [SerializeField] private MonsterData _monsterData;
 
     private bool _isTriggered = false;
 
@@ -33,7 +30,7 @@ public class PZ_Container : MonoBehaviour
 
         Vector3 spawnPos = _spawnTransform.position;
         spawnPos.y -= 1f;
-        if (Managers.Data.Monsters.TryGetValue(4, out MonsterData data))
+        if (Managers.Data.Monsters.TryGetValue(5, out MonsterData data))
         {
             while (_zombieCount-- > 0)
             {
@@ -43,10 +40,10 @@ public class PZ_Container : MonoBehaviour
 
                 Managers.Resource.Instantiate(data.Prefab, gameObject.transform, (zombie) =>
                 {
-                    zombie.GetComponent<AI_Base>().SetInfo(_monsterData);
+                    zombie.GetComponent<AI_Base>().SetInfo(data);
 
                     Transform zombieTransform = zombie.GetComponent<Transform>();
-                    zombieTransform.position = spawnPos;
+                    zombieTransform.localPosition = spawnPos;
                 });
 
                 yield return new WaitForSeconds(0.5f);
