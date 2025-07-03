@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 _forwardVector;
     public bool IsFacingRight => transform.localScale.x < 0f;
     private bool _isInvincible = false;
+
     private float _damageCooldown = 0.05f;
     private float _lastDamageTime = -999f;
 
@@ -104,10 +105,12 @@ public class PlayerController : MonoBehaviour
             _prevHasWeapon = hasWeapon;
         }
 
+
         Vector2 moveInput = _moveAction.ReadValue<Vector2>();
         bool isMoving = moveInput != Vector2.zero;
         bool wantsRun = _runAction.IsPressed();
-        bool canRun = wantsRun && _playerStamina.CanRun();
+        bool isAlreadyRunning = _playerStamina.isRunning;
+        bool canRun = wantsRun && _playerStamina.CanRun(isAlreadyRunning);
 
         if (isMoving)
             _forwardVector = moveInput;

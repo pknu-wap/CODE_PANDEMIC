@@ -13,6 +13,9 @@ public class PlayerStamina : MonoBehaviour
     [Header("Regen")]
     public float staminaRegenRate = 20f; // 초당
 
+    [Header("Run Settings")]
+    public float minStaminaToRun = 30f;
+
     [HideInInspector] public bool isRunning = false;
 
     void Start()
@@ -35,9 +38,12 @@ public class PlayerStamina : MonoBehaviour
         UseStamina(dashCost);
     }
 
-    public bool CanRun()
+    public bool CanRun(bool isAlreadyRunning)
     {
-        return currentStamina > 0f;
+        if (isAlreadyRunning)
+            return currentStamina > 0f;
+        else
+            return currentStamina >= minStaminaToRun;
     }
 
     public void UseRunStamina()

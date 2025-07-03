@@ -390,6 +390,7 @@ MonoBehaviour:
   runStaminaCost: 20
   dashCost: 30
   staminaRegenRate: 10
+  minStaminaToRun: 30
   isRunning: 0
 --- !u!1 &7458043515022671168
 GameObject:
@@ -686,7 +687,8 @@ MonoBehaviour:
   currentStamina: 0
   runStaminaCost: 8
   dashCost: 30
-  staminaRegenRate: 20
+  staminaRegenRate: 10
+  minStaminaToRun: 20
   isRunning: 0
 --- !u!1 &8466430270737374257
 GameObject:
