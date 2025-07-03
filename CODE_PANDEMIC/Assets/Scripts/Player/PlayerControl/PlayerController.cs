@@ -3,23 +3,25 @@ using UnityEngine.InputSystem;
 using Inventory.Model;
 using System.Collections;
 using UnityEngine.EventSystems;
-using System;
 
 public class PlayerController : MonoBehaviour
 {
-    private EquipWeapon _equipWeapon;
     [SerializeField] private Transform _weaponHolder;
+    [SerializeField] private AnimatorOverrideController withArmOverride;
+    [SerializeField] private AnimatorOverrideController noArmOverride;
+    [SerializeField] public SpriteRenderer playerSpriteRenderer;
 
     private PlayerStatus _playerStatus;
     private PlayerInteraction _playerInteraction;
     private PlayerMovement _playerMovement;
     private Animator _animator;
+    private EquipWeapon _equipWeapon;
 
     private PlayerInput _playerInput;
     private InputAction _moveAction;
     private InputAction _runAction;
     private InputAction _dashAction;
-   
+
     public PlayerState _currentState = PlayerState.Idle;
     public Vector2 _forwardVector;
     public bool IsFacingRight => transform.localScale.x < 0f;
@@ -33,12 +35,6 @@ public class PlayerController : MonoBehaviour
         get => _globalNextFireTime;
         set => _globalNextFireTime = value;
     }
-
-
-    [SerializeField] private AnimatorOverrideController withArmOverride;
-    [SerializeField] private AnimatorOverrideController noArmOverride;
-    [SerializeField] public SpriteRenderer playerSpriteRenderer;
-
 
     private void Awake()
     {
@@ -88,9 +84,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-  
+
         if (_currentState == PlayerState.Dead ||
-            _currentState==PlayerState.Cinematic) return;
+            _currentState == PlayerState.Cinematic) return;
         Transform socket = _equipWeapon.WeaponSocket;
         if (socket == null)
         {
@@ -129,8 +125,8 @@ public class PlayerController : MonoBehaviour
         {
             _playerMovement.TryDash(_forwardVector);
         }
-        
-        if (EventSystem.current.IsPointerOverGameObject()==false&&Mouse.current.leftButton.wasPressedThisFrame)
+
+        if (EventSystem.current.IsPointerOverGameObject() == false && Mouse.current.leftButton.wasPressedThisFrame)
         {
             _equipWeapon?.StartAttack(this);
         }
