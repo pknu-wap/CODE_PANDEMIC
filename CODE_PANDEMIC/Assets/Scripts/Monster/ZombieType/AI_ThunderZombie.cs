@@ -81,7 +81,7 @@ public class AI_ThunderZombie : AI_Controller
         float distance = Vector2.Distance(transform.position, _player.position);
 
         if (_thunderSkill != null && _thunderSkill.IsReady(this))
-            return IsPlayerDetected();
+            return distance <= AttackRange;
         else
             return distance <= 0.6f;
     }
