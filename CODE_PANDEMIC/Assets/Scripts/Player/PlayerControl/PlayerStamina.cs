@@ -2,14 +2,18 @@ using UnityEngine;
 
 public class PlayerStamina : MonoBehaviour
 {
-    public float maxStamina = 10f;
+    [Header("Stamina Settings")]
+    public float maxStamina = 100f;
     public float currentStamina;
 
-    public float staminaRegenRate = 10f;
-    public float runStaminaCost = 20f;
-    public float dodgeCost = 30f;
+    [Header("Costs")]
+    public float runStaminaCost = 8f; // 초당
+    public float dashCost = 30f;       // 1회
 
-    public bool isRunning = false;
+    [Header("Regen")]
+    public float staminaRegenRate = 20f; // 초당
+
+    [HideInInspector] public bool isRunning = false;
 
     void Start()
     {
@@ -18,34 +22,27 @@ public class PlayerStamina : MonoBehaviour
 
     void Update()
     {
-        HandleInput();
         RegenerateStamina();
     }
 
-    void HandleInput()
+    public bool CanDash()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            isRunning = true;
-            UseStamina(runStaminaCost * Time.deltaTime);
-        }
-        else
-        {
-            isRunning = false;
-        }
+        return currentStamina >= dashCost;
+    }
 
+    public void UseDashStamina()
+    {
+        UseStamina(dashCost);
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (currentStamina >= dodgeCost)
-            {
-                UseStamina(dodgeCost);
-            }
-            else
-            {
-                Debug.Log("대쉬 불가 스태니마 부족");
-            }
-        }
+    public bool CanRun()
+    {
+        return currentStamina > 0f;
+    }
+
+    public void UseRunStamina()
+    {
+        UseStamina(runStaminaCost * Time.deltaTime);
     }
 
     void UseStamina(float amount)

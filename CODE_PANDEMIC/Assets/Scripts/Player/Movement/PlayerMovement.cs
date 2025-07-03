@@ -80,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log($"Stats Updated: WalkSpeed={_walkSpeed}, RunSpeed={_runSpeed}");
     }
-
     public void TryDash(Vector2 direction)
     {
         if (_isDashing || Time.time < _lastDashTime + _dashCooldown) return;

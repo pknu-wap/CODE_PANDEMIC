@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AnimatorOverrideController withArmOverride;
     [SerializeField] private AnimatorOverrideController noArmOverride;
     [SerializeField] public SpriteRenderer playerSpriteRenderer;
+    [SerializeField] private PlayerStamina _playerStamina;
 
     private PlayerStatus _playerStatus;
     private PlayerInteraction _playerInteraction;
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
         _moveAction = _playerInput.Player.Move;
         _runAction = _playerInput.Player.Run;
         _dashAction = _playerInput.Player.Dash;
+
     }
 
     private void OnEnable()
@@ -84,9 +86,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (_currentState == PlayerState.Dead || _currentState == PlayerState.Cinematic)
+            return;
 
-        if (_currentState == PlayerState.Dead ||
-            _currentState == PlayerState.Cinematic) return;
         Transform socket = _equipWeapon.WeaponSocket;
         if (socket == null)
         {
@@ -102,29 +104,43 @@ public class PlayerController : MonoBehaviour
             _prevHasWeapon = hasWeapon;
         }
 
-        // 이동 입력
         Vector2 moveInput = _moveAction.ReadValue<Vector2>();
         bool isMoving = moveInput != Vector2.zero;
-        bool isRunning = _runAction.IsPressed();
+        bool wantsRun = _runAction.IsPressed();
+        bool canRun = wantsRun && _playerStamina.CanRun();
 
         if (isMoving)
             _forwardVector = moveInput;
 
-        _playerMovement.Move(moveInput, isRunning);
+        _playerMovement.Move(moveInput, canRun);
 
-        bool isDashing = _playerMovement.IsDashing;
+        if (canRun && isMoving)
+        {
+            _playerStamina.UseRunStamina();
+        }
 
-        // 애니메이션 처리
-        _animator.SetBool("isWalking", isMoving && !isRunning);
-        _animator.SetBool("isRunning", isMoving && isRunning);
-        _animator.SetBool("isDashing", isDashing);
-
-        _currentState = isMoving ? PlayerState.Move : PlayerState.Idle;
+        _playerStamina.isRunning = canRun;
 
         if (_dashAction.triggered)
         {
-            _playerMovement.TryDash(_forwardVector);
+            if (_playerStamina.CanDash())
+            {
+                _playerStamina.UseDashStamina();
+                _playerMovement.TryDash(_forwardVector);
+            }
+            else
+            {
+                Debug.Log("스태미나 부족 - 대쉬 불가");
+            }
         }
+
+        bool isDashing = _playerMovement.IsDashing;
+
+        _animator.SetBool("isWalking", isMoving && !canRun);
+        _animator.SetBool("isRunning", isMoving && canRun);
+        _animator.SetBool("isDashing", isDashing);
+
+        _currentState = isMoving ? PlayerState.Move : PlayerState.Idle;
 
         if (EventSystem.current.IsPointerOverGameObject() == false && Mouse.current.leftButton.wasPressedThisFrame)
         {
