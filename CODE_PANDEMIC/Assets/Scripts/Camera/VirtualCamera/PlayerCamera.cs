@@ -67,7 +67,7 @@ public class PlayerCamera : VirtualCameraBase
         }
         _zoomingCamera = UpdateCameraSize(targetSize, duration);
         StartCoroutine(_zoomingCamera);
-    }
+    } 
 
     IEnumerator UpdateCameraSize(float targetSize, float duration)
     {
@@ -78,12 +78,12 @@ public class PlayerCamera : VirtualCameraBase
         {
             time += Time.deltaTime;
             float t = time / duration;
-            // 부드럽게 보간 (선형 or SmoothStep 등)
+          
             _camera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, t);
             yield return null;
         }
 
-        // 마지막에 정확히 맞춰줌
+     
         _camera.m_Lens.OrthographicSize = targetSize;
     }
    
