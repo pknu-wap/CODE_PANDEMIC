@@ -9,6 +9,7 @@ public class PZ_Parking : PZ_Puzzle_Main
 
     private bool[,] _emptyPlace = new bool[6, 6]; // 빈 장소 목록
 
+    private bool _isInside;
     // 정답이 정해진 퍼즐이므로 빈 장소 하드 코딩
     private void Start()
     {
@@ -330,7 +331,14 @@ public class PZ_Parking : PZ_Puzzle_Main
             }
         }
     }
-
+    public bool IsInsidePlayer()
+    {
+        return _isInside;
+    }
+    public void SettingInsidePlayer(bool value)
+    {
+        _isInside = value; 
+    }
     public void DestroyAllArrows()
     {
         for (int index = 0; index < _arrowList.Count; index++)

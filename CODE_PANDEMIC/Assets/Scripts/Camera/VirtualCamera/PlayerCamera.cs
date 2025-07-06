@@ -11,13 +11,15 @@ public class PlayerCamera : VirtualCameraBase
     Vector3 _playerCameraOffset;
     
     private CinemachineTransposer _transposer;
-    
     private CinemachineConfiner2D _confiner;
     private Transform playerTransform;
+    IEnumerator _zoomingCamera;
+    
 
     protected override bool Init()
     {
         if (base.Init() == false) return false;
+    
         _transposer=GetComponent<CinemachineTransposer>();  
         _confiner=GetComponent<CinemachineConfiner2D>();
         return true;
@@ -49,6 +51,42 @@ public class PlayerCamera : VirtualCameraBase
             StartCoroutine(SetUpCameraDelayed());
         }
     }
+    public void SettingCameraOrthoSize(float size)
+    {
+        ZoomTo(size, 1.0f);
+    }
+    public void ResetCameraOrthoSize()
+    {
+        SettingCameraOrthoSize(_originOrthoSize);
+    }
+    public void ZoomTo(float targetSize, float duration)
+    {
+        if (_zoomingCamera != null)
+        {
+            StopCoroutine(_zoomingCamera);
+        }
+        _zoomingCamera = UpdateCameraSize(targetSize, duration);
+        StartCoroutine(_zoomingCamera);
+    }
+
+    IEnumerator UpdateCameraSize(float targetSize, float duration)
+    {
+        float time = 0f;
+        float startSize = _camera.m_Lens.OrthographicSize;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            // 부드럽게 보간 (선형 or SmoothStep 등)
+            _camera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, t);
+            yield return null;
+        }
+
+        // 마지막에 정확히 맞춰줌
+        _camera.m_Lens.OrthographicSize = targetSize;
+    }
+   
     IEnumerator SetUpCameraDelayed()
     {
         yield return null;
