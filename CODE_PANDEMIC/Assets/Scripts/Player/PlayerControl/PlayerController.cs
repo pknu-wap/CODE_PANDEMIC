@@ -3,27 +3,31 @@ using UnityEngine.InputSystem;
 using Inventory.Model;
 using System.Collections;
 using UnityEngine.EventSystems;
-using System;
 
 public class PlayerController : MonoBehaviour
 {
-    private EquipWeapon _equipWeapon;
     [SerializeField] private Transform _weaponHolder;
+    [SerializeField] private AnimatorOverrideController withArmOverride;
+    [SerializeField] private AnimatorOverrideController noArmOverride;
+    [SerializeField] public SpriteRenderer playerSpriteRenderer;
+    [SerializeField] private PlayerStamina _playerStamina;
 
     private PlayerStatus _playerStatus;
     private PlayerInteraction _playerInteraction;
     private PlayerMovement _playerMovement;
     private Animator _animator;
+    private EquipWeapon _equipWeapon;
 
     private PlayerInput _playerInput;
     private InputAction _moveAction;
     private InputAction _runAction;
     private InputAction _dashAction;
-   
+
     public PlayerState _currentState = PlayerState.Idle;
     public Vector2 _forwardVector;
     public bool IsFacingRight => transform.localScale.x < 0f;
     private bool _isInvincible = false;
+
     private float _damageCooldown = 0.05f;
     private float _lastDamageTime = -999f;
 
@@ -33,12 +37,6 @@ public class PlayerController : MonoBehaviour
         get => _globalNextFireTime;
         set => _globalNextFireTime = value;
     }
-
-
-    [SerializeField] private AnimatorOverrideController withArmOverride;
-    [SerializeField] private AnimatorOverrideController noArmOverride;
-    [SerializeField] public SpriteRenderer playerSpriteRenderer;
-
 
     private void Awake()
     {
@@ -53,6 +51,7 @@ public class PlayerController : MonoBehaviour
         _moveAction = _playerInput.Player.Move;
         _runAction = _playerInput.Player.Run;
         _dashAction = _playerInput.Player.Dash;
+
     }
 
     private void OnEnable()
@@ -88,9 +87,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-  
-        if (_currentState == PlayerState.Dead ||
-            _currentState==PlayerState.Cinematic) return;
+        if (_currentState == PlayerState.Dead || _currentState == PlayerState.Cinematic)
+            return;
+
         Transform socket = _equipWeapon.WeaponSocket;
         if (socket == null)
         {
@@ -106,31 +105,47 @@ public class PlayerController : MonoBehaviour
             _prevHasWeapon = hasWeapon;
         }
 
-        // 이동 입력
+
         Vector2 moveInput = _moveAction.ReadValue<Vector2>();
         bool isMoving = moveInput != Vector2.zero;
-        bool isRunning = _runAction.IsPressed();
+        bool wantsRun = _runAction.IsPressed();
+        bool isAlreadyRunning = _playerStamina.isRunning;
+        bool canRun = wantsRun && _playerStamina.CanRun(isAlreadyRunning);
 
         if (isMoving)
             _forwardVector = moveInput;
 
-        _playerMovement.Move(moveInput, isRunning);
+        _playerMovement.Move(moveInput, canRun);
+
+        if (canRun && isMoving)
+        {
+            _playerStamina.UseRunStamina();
+        }
+
+        _playerStamina.isRunning = canRun;
+
+        if (_dashAction.triggered)
+        {
+            if (_playerStamina.CanDash())
+            {
+                _playerStamina.UseDashStamina();
+                _playerMovement.TryDash(_forwardVector);
+            }
+            else
+            {
+                Debug.Log("스태미나 부족 - 대쉬 불가");
+            }
+        }
 
         bool isDashing = _playerMovement.IsDashing;
 
-        // 애니메이션 처리
-        _animator.SetBool("isWalking", isMoving && !isRunning);
-        _animator.SetBool("isRunning", isMoving && isRunning);
+        _animator.SetBool("isWalking", isMoving && !canRun);
+        _animator.SetBool("isRunning", isMoving && canRun);
         _animator.SetBool("isDashing", isDashing);
 
         _currentState = isMoving ? PlayerState.Move : PlayerState.Idle;
 
-        if (_dashAction.triggered)
-        {
-            _playerMovement.TryDash(_forwardVector);
-        }
-        
-        if (EventSystem.current.IsPointerOverGameObject()==false&&Mouse.current.leftButton.wasPressedThisFrame)
+        if (EventSystem.current.IsPointerOverGameObject() == false && Mouse.current.leftButton.wasPressedThisFrame)
         {
             _equipWeapon?.StartAttack(this);
         }
