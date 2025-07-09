@@ -33,7 +33,7 @@ public abstract class PZ_Puzzle_Base : UI_PopUp
     }
     
     // 퍼즐 클리어
-    protected abstract void PuzzleClear();
+    public abstract void PuzzleClear();
 
     protected void ReadyToPause()
     {
