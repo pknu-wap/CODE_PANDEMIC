@@ -11,7 +11,7 @@ public class PZ_TrafficLight : MonoBehaviour
     [SerializeField] private Sprite _red;
 
     private bool _isDamageTime = false;
-    private float _damageValue = 20;
+    private float _damageValue = 15;
 
     private void Start()
     {

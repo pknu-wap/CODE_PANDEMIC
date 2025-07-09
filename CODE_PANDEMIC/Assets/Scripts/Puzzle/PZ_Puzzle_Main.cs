@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PZ_Puzzle_Main : PZ_Puzzle_Base
 {
@@ -7,7 +7,7 @@ public class PZ_Puzzle_Main : PZ_Puzzle_Base
         return base.Init();
     }
 
-    protected override void PuzzleClear()
+    public override void PuzzleClear()
     {
 
     }

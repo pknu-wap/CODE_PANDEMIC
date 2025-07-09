@@ -359,7 +359,7 @@ public class PZ_Parking : PZ_Puzzle_Main
         PuzzleClear();
     }
 
-    protected override void PuzzleClear()
+    public override void PuzzleClear()
     {
         Managers.Game.ClearPuzzle(_data.ID);
         Destroy(gameObject);

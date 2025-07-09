@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -87,10 +87,8 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
     }
 
     // 퍼즐 클리어
-    protected override void PuzzleClear()
+    public override void PuzzleClear()
     {
-        Debug.Log("Remember Puzzle Clear!");
-
         _owner.StartPuzzleClear();
 
         Managers.UI.ClosePopupUI();
