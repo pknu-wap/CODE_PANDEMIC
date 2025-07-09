@@ -220,7 +220,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -271,5 +271,4 @@ MonoBehaviour:
   _defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   _highlightMaterial: {fileID: 2100000, guid: bfc385c37cbf30f468363b2257f47d20, type: 2}
   _animator: {fileID: 7343720785181734316}
-  _isLeft: 1
   _pointLight: {fileID: 1708801390054765590}
