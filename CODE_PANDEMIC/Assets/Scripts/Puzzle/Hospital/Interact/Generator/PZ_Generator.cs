@@ -62,7 +62,7 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
         PuzzleClear();
     }
 
-    protected override void PuzzleClear()
+    public override void PuzzleClear()
     {
         StartCoroutine(SettingLeverPosition());
 

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class PZ_Piano_Base : PZ_Puzzle_Main
@@ -91,7 +91,7 @@ public class PZ_Piano_Base : PZ_Puzzle_Main
         _currentIndex++;
     }
 
-    protected override void PuzzleClear()
+    public override void PuzzleClear()
     {
         if (!_puzzleOwner)
         {
