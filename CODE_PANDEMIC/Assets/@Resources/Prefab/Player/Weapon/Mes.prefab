@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72b61a58e79f4541a8a1152c54ca482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentBullet: 0
   weaponSpriteRenderer: {fileID: 0}
   attackRange: 1.5
   enemyLayer:
@@ -107,9 +108,10 @@ MonoBehaviour:
     m_Bits: 4096
   attackPoint: {fileID: 7963354309609057239}
   attackAngle: 90
-  FireRate: 0.3
   swingEffectPrefab: {fileID: 9202961498843298442, guid: f0f5b08db41bcaf43957dc2c907c5fa8, type: 3}
-  rotationSpeed: 720
+  _rotationSpeed: 720
+  throwPower: 10
+  autoReturnDelay: 7
 --- !u!61 &934573385541538651
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -153,7 +155,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.6999998, y: 0.4}
+  m_Size: {x: 3.2, y: 0.6}
   m_EdgeRadius: 0
 --- !u!50 &5895560467336243387
 Rigidbody2D:
