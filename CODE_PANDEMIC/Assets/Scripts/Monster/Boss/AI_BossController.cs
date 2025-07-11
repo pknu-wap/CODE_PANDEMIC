@@ -3,11 +3,13 @@ using UnityEngine;
 
 public abstract class AI_BossController : AI_Controller
 {
+    [Header("Boss Cinematic")]
     [SerializeField] private CinematicCamera _camera;
     [SerializeField] protected ShockWave _wave;
     protected bool _isCinematicStarted = false;
-    public bool IsBerserk { get; protected set; }
     protected int MaxHealth => _monsterData.Hp;
+    public bool IsBerserk { get; protected set; }
+    
 
     protected override void Start()
     {

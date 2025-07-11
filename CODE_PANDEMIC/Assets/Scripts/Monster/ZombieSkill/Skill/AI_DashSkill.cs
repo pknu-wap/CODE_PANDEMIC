@@ -51,16 +51,29 @@ public class AI_DashSkill : ISkillBehavior
     }
 
     protected virtual IEnumerator DashRoutine(System.Action onSkillComplete)
-{
+    {
         Vector2 start = _controller.transform.position;
         Vector2 target = _controller._player.position;
 
         Vector2 direction = (target - start).normalized;
-        float distance = Vector2.Distance(start, target);
-        float duration = distance / _settings.Speed;
-        float elapsed = 0f;
+        float distanceToPlayer = Vector2.Distance(start, target);
+        
+        float dashDistance;
+        
+        if (distanceToPlayer <= _controller.DetectionRange)
+        {
+            dashDistance = _controller.DetectionRange;
+            _controller._animator.speed = 1f;
+        }
+        else
+        {
+            dashDistance = distanceToPlayer;
+            float tempDuration = dashDistance / _settings.Speed;
+            _controller._animator.speed = _baseAnimationDuration / tempDuration;
+        }
 
-        _controller._animator.speed = _baseAnimationDuration / duration;
+        float duration = dashDistance / _settings.Speed;
+        float elapsed = 0f;
 
         yield return new WaitForSeconds(_settings.ChargeDelay);
 
