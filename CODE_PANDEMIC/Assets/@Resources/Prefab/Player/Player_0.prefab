@@ -300,6 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6606543293775351987}
   - component: {fileID: 6985098698159176500}
+  - component: {fileID: 7330799063616449835}
   m_Layer: 7
   m_Name: Light 2D
   m_TagString: Untagged
@@ -372,6 +373,25 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &7330799063616449835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7335785400083749872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864935390046f484994339c9dd076f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 10
+  currentStamina: 0
+  runStaminaCost: 20
+  dashCost: 30
+  staminaRegenRate: 10
+  minStaminaToRun: 30
+  isRunning: 0
 --- !u!1 &7458043515022671168
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +411,7 @@ GameObject:
   - component: {fileID: 4997469027531815828}
   - component: {fileID: -1855312356777860054}
   - component: {fileID: 7041675106503470408}
+  - component: {fileID: 1425299977713885376}
   m_Layer: 7
   m_Name: Player_0
   m_TagString: Player
@@ -584,11 +605,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponHolder: {fileID: 139337128564268983}
-  _currentState: 0
-  _forwardVector: {x: 0, y: 0}
   withArmOverride: {fileID: 22100000, guid: cfa74da12db09544c9d1a6dd09f919c6, type: 2}
   noArmOverride: {fileID: 22100000, guid: 754009336572b4143bea85991da13840, type: 2}
   playerSpriteRenderer: {fileID: 0}
+  _playerStamina: {fileID: 1425299977713885376}
+  _currentState: 0
+  _forwardVector: {x: 0, y: 0}
 --- !u!114 &-5189419664297786888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,6 +671,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1425299977713885376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458043515022671168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864935390046f484994339c9dd076f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  currentStamina: 0
+  runStaminaCost: 8
+  dashCost: 30
+  staminaRegenRate: 10
+  minStaminaToRun: 20
+  isRunning: 0
 --- !u!1 &8466430270737374257
 GameObject:
   m_ObjectHideFlags: 0

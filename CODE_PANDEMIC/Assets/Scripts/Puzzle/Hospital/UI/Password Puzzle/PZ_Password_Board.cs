@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class PZ_Password_Board : PZ_Puzzle_Main
@@ -79,7 +79,7 @@ public class PZ_Password_Board : PZ_Puzzle_Main
     }
 
     // 퍼즐 클리어
-    protected override void PuzzleClear()
+    public override void PuzzleClear()
     {
         Debug.LogWarning("Password Puzzle Clear!!!");
 
