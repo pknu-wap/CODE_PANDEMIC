@@ -8,9 +8,9 @@ public class AI_StateDie : AI_IState
 
     public void OnEnter()
     {
+        _controller._animator.SetTrigger("Die");
         _controller._animator.SetBool("Walk", false);
         _controller._animator.SetBool("Attack", false);
-        _controller._animator.SetTrigger("Die");
         _controller.Die(); // 실제 죽는 처리
     }
 

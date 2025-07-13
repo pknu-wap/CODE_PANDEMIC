@@ -64,12 +64,12 @@ public class AI_Controller : AI_Base
 
     private void Update()
     {
-        DetectPlayer();
-        _currentState?.OnUpdate();
-
         if (_player == null || Skill == null) return;
         if (_isUsingSkill) return;
-        if (_currentState is AI_StateDie) return;
+        if (_currentState is AI_StateDie || _isDead) return;
+        
+        DetectPlayer();
+        _currentState?.OnUpdate();
 
         bool inRange = IsPlayerInSkillRange();
         bool skillReady = Skill.IsReady(this);
@@ -84,7 +84,7 @@ public class AI_Controller : AI_Base
 
     private void FixedUpdate()
     {
-        if (_player == null || _currentState is AI_StateDie) return;
+        if (_player == null || _currentState is AI_StateDie || _isDead) return;
         UpdateDirection();
         UpdateFovDirection();
         _currentState?.OnFixedUpdate();
@@ -152,15 +152,20 @@ public class AI_Controller : AI_Base
             _player = FindObjectOfType<PlayerStatus>().transform;
             ForceDetectTarget(_player);
         }
-        if (Health <= 0)
+        if (Health <= 0 && !_isDead)
         {
-            _isDead = true;
-            Skill?.StopSkill();
-            _rb.velocity = Vector2.zero;
-            StopMoving();
-            ChangeState(new AI_StateDie(this));
+            Dielogic();
         }
             
+    }
+
+    protected virtual void Dielogic()
+    {
+        _isDead = true;
+        Skill?.StopSkill();
+        _rb.velocity = Vector2.zero;
+        StopMoving();
+        ChangeState(new AI_StateDie(this));
     }
 
 

@@ -50,7 +50,7 @@ public class AI_ThrowSkill : ISkillBehavior
 
     public virtual void StopSkill()
     {
-        if (_skillCoroutine != null && _controller != null)
+        if (_skillCoroutine != null)
         {
             _controller.StopCoroutine(_skillCoroutine);
             Visualizer?.Hide();

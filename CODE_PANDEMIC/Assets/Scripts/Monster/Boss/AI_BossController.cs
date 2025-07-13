@@ -13,8 +13,11 @@ public abstract class AI_BossController : AI_Controller
 
     protected override void Start()
     {
-        StartCoroutine(BossStartSequence());
         base.Start();
+    }
+    public void StartBossFight()
+    {
+        StartCoroutine(BossStartSequence());
     }
 
     protected IEnumerator BossStartSequence()
@@ -36,23 +39,27 @@ public abstract class AI_BossController : AI_Controller
     public override void TakeDamage(int amount)
     {
         if (_isDead) return;
-        base.TakeDamage(amount);
-
         if (!IsBerserk && Health <= MaxHealth * 0.5f)
         {
             EnterBerserkMode();
         }
-
-        if (Health <= 0f && _currentState is not AI_StateDie)
+        base.TakeDamage(amount);
+        if (Health <= 0 && !_isDead)
         {
-            _isDead = true;
-            Skill?.StopSkill();
-            _rb.velocity = Vector2.zero;
-            StopMoving();
-            Managers.Game.ClearBoss(_monsterData.TemplateID);
-            StartCoroutine(BossDeathSequence());
-            ChangeState(new AI_StateDie(this));
+            Dielogic();
         }
+        
+    }
+    protected override void Dielogic()
+    {
+        if (_isDead) return;
+        _isDead = true;
+        Skill?.StopSkill();
+        _rb.velocity = Vector2.zero;
+        StopMoving();
+        Managers.Game.ClearBoss(_monsterData.TemplateID);
+        ChangeState(new AI_StateDie(this));
+        StartCoroutine(BossDeathSequence());
     }
 
     protected virtual void EnterBerserkMode()
@@ -62,7 +69,7 @@ public abstract class AI_BossController : AI_Controller
 
     protected IEnumerator BossDeathSequence()
     {
-        Managers.Event.InvokeEvent("OnBossClear");
         yield return CoroutineHelper.WaitForSeconds(2);
+        Managers.Event.InvokeEvent("OnBossClear");
     }
 }

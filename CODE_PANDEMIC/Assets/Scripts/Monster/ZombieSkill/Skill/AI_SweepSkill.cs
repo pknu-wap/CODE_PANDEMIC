@@ -37,7 +37,7 @@ public class AI_SweepSkill : ISkillBehavior
 
     public virtual void StopSkill()
     {
-        if (_skillCoroutine != null && _controller != null)
+        if (_skillCoroutine != null)
         {
             _controller.StopCoroutine(_skillCoroutine);
         }
@@ -61,6 +61,11 @@ public class AI_SweepSkill : ISkillBehavior
         _controller._animator.SetBool("Attack", true);
         for (int i = 0; i < _settings.Count; i++)
         {
+            if (_controller._isDead)
+            {
+                onSkillComplete?.Invoke();
+                yield break;
+            }
             DoSweepAttack(attackDirection);
             yield return new WaitForSeconds(_settings.Interval);
         }

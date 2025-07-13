@@ -60,9 +60,9 @@ public class AI_DashSkill : ISkillBehavior
         
         float dashDistance;
         
-        if (distanceToPlayer <= _controller.DetectionRange)
+        if (distanceToPlayer <= _controller.DetectionRange / 2)
         {
-            dashDistance = _controller.DetectionRange;
+            dashDistance = _controller.DetectionRange / 2;
             _controller._animator.speed = 1f;
         }
         else
@@ -75,7 +75,7 @@ public class AI_DashSkill : ISkillBehavior
         float duration = dashDistance / _settings.Speed;
         float elapsed = 0f;
 
-        yield return new WaitForSeconds(_settings.ChargeDelay);
+        yield return CoroutineHelper.WaitForSeconds(_settings.ChargeDelay);
 
         _controller._animator.SetBool("Attack", true);
         Rigidbody2D rb = _controller.GetComponent<Rigidbody2D>();
