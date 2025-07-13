@@ -18,7 +18,7 @@ public class AI_Controller : AI_Base
     public Animator _animator;
     [SerializeField] protected AI_Fov _aiFov;
     public AIPath _aiPath;
-    protected AIDestinationSetter _destinationSetter;
+    public AIDestinationSetter _destinationSetter;
     EnemyDamageEffect _damageEffect;
 
     protected AI_IState _currentState;
@@ -69,6 +69,7 @@ public class AI_Controller : AI_Base
 
         if (_player == null || Skill == null) return;
         if (_isUsingSkill) return;
+        if (_currentState is AI_StateDie) return;
 
         bool inRange = IsPlayerInSkillRange();
         bool skillReady = Skill.IsReady(this);
@@ -83,7 +84,7 @@ public class AI_Controller : AI_Base
 
     private void FixedUpdate()
     {
-        if (_player == null) return;
+        if (_player == null || _currentState is AI_StateDie) return;
         UpdateDirection();
         UpdateFovDirection();
         _currentState?.OnFixedUpdate();
@@ -133,7 +134,7 @@ public class AI_Controller : AI_Base
     public void ChangeState(AI_IState newState)
     {
         if (_currentState?.GetType() == newState.GetType()) return;
-        if (_state == AI_State.Dead) return;
+        if (_currentState is AI_StateDie) return;
         _currentState?.OnExit();
         _currentState = newState;
         _currentState?.OnEnter();
@@ -151,14 +152,13 @@ public class AI_Controller : AI_Base
             _player = FindObjectOfType<PlayerStatus>().transform;
             ForceDetectTarget(_player);
         }
-        if (Health <= 0f && _currentState is not AI_StateDie)
+        if (Health <= 0)
         {
             _isDead = true;
             Skill?.StopSkill();
             _rb.velocity = Vector2.zero;
             StopMoving();
             ChangeState(new AI_StateDie(this));
-            _animator.SetTrigger("Die");
         }
             
     }
