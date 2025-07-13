@@ -544,14 +544,15 @@ MonoBehaviour:
   _animator: {fileID: 8412234891018398290}
   _aiFov: {fileID: 3135859168411677135}
   _aiPath: {fileID: 7261354204466670365}
+  _destinationSetter: {fileID: 0}
   _isUsingSkill: 0
   _attackedPlayer: 0
   _isDead: 0
   _camera: {fileID: 3020132318602466255}
+  _wave: {fileID: 1905877669876379645}
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
-  _wave: {fileID: 1905877669876379645}
   _syringePrefab: {fileID: 4688839435082273960, guid: 2d431244ffcb9844aa8d3231bbc23504, type: 3}
   _throwSkillData:
     Cooldown: 0
@@ -712,7 +713,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.2011719}
+    oldSize: {x: 1, y: 1.5014647}
     newSize: {x: 1.2499999, y: 1.5014647}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -777,7 +778,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7891205480170759343}

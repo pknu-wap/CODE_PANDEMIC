@@ -1,15 +1,11 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-public class AI_HospitalBoss : AI_Controller
+public class AI_HospitalBoss : AI_BossController
 {
-    [SerializeField] 
-    private CinematicCamera _camera;
+    [SerializeField]
     public LayerMask TargetLayer;
     [SerializeField]
-    ShockWave _wave;
-    public bool IsBerserk { get; private set; }
     public GameObject _syringePrefab;
     public ThrowSkillData _throwSkillData;
     public SweepSkillData _sweepSkillData;
@@ -18,8 +14,6 @@ public class AI_HospitalBoss : AI_Controller
 
     public AI_BossThrowVisualizer _syringeVisualizer;
     public override float AiDamage => _monsterData.AttackDamage;
-    public int MaxHealth => _monsterData.Hp;
-
     private AI_BossThrow _throwSkill = new AI_BossThrow();
     private AI_BossSweep _sweepSkill = new AI_BossSweep();
     private AI_BossDash _dashSkill = new AI_BossDash();
@@ -49,21 +43,7 @@ public class AI_HospitalBoss : AI_Controller
         }
     }
    
-    private IEnumerator BossStartSequence()
-    {
-        if (_camera == null) yield break;
-        _camera.gameObject.SetActive(true);
-        _camera.OnCinematic();
-        Managers.Event.InvokeEvent("OnCinematicStart");
-        //TODO: BOSSSEQUENCE
-        yield return CoroutineHelper.WaitForSeconds(2.0f);
-        _wave.gameObject.SetActive(true);
-        _wave.CallShockWave();
-        yield return CoroutineHelper.WaitForSeconds(1.0f);
-        _camera.OnEndCinematic(Define.CinematicType.BossSequence);
-        Managers.Event.InvokeEvent("OnCinematicEnd");
-    }
-    public override void SetInfo(MonsterData monsterData)
+        public override void SetInfo(MonsterData monsterData)
     {
         base.SetInfo(monsterData);
         StartCoroutine(BossStartSequence());
@@ -99,39 +79,12 @@ public class AI_HospitalBoss : AI_Controller
         _dashSkill.SetSettings(_dashSkillData, TargetLayer, this);
     }
 
-    public override void TakeDamage(int amount)
-    {
-        base.TakeDamage(amount);
-        if (!IsBerserk && Health <= MaxHealth * 0.5f)
-        {
-            EnterBerserkMode();
-        }
-        if (Health <= 0f && _currentState is not AI_StateDie)
-        {
-            _animator.SetTrigger("Die");
-            Managers.Game.ClearBoss(_monsterData.TemplateID);
-            StartCoroutine(BossDeathSequence()); 
-
-        }
-    }
-
-    IEnumerator BossDeathSequence()
-    {
-        Managers.Event.InvokeEvent("OnBossClear");
-        yield return CoroutineHelper.WaitForSeconds(2);
-        // ChangeState(new AI_StateDie(this));
-    }
     protected override void Awake()
     {
         TargetLayer = LayerMask.GetMask("Player");
         base.Awake();
     }
   
-    private void EnterBerserkMode()
-    {
-        IsBerserk = true;
-    }
-
     public override bool IsPlayerInSkillRange()
     {
         float distance = Vector2.Distance(transform.position, _player.position);
@@ -139,7 +92,7 @@ public class AI_HospitalBoss : AI_Controller
         if (_sweepSkill != null && _sweepSkill.IsReady(this) && _shortAttack == true)
             return distance <= _sweepSkillData.Range * 0.7f;
         else
-            return IsPlayerDetected();
+            return distance <= _monsterData.DetectionRange;
     }
     private void SettingData()
     {
