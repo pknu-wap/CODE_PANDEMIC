@@ -6,20 +6,26 @@ public class PanzerfaustProjectile : MonoBehaviour
     private int _damage;
     private PlayerController _owner;
     private Rigidbody2D rb;
-
     private float _maxSpeed = 200.0f;
+    private Vector2 _moveDir;
+    private Vector3 _startPos;
+    private bool _isExploded = false;
+
+    [Header("Explosion Settings")]
     [SerializeField] private ShockWave _shockWave;
     [SerializeField] private float _explosionRadius = 1.5f;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private GameObject _explosionEffect;
+
+    [Header("Boost Settings")]
     [SerializeField] private float _boostDistance = 5f;
+
+    [Header("Handle Settings")]
     [SerializeField] private float _handleSpeed = 20f;
     [SerializeField] private AnimationCurve _accelerationCurve;
-    [SerializeField] private LayerMask obstacleLayer;
 
-    private Vector2 _moveDir;
-    private Vector3 _startPos;
-    private bool _isExploded = false;
+    [Header("Collision Settings")]
+    [SerializeField] private LayerMask obstacleLayer;
 
     private void Awake()
     {

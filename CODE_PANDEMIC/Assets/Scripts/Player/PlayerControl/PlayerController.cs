@@ -23,15 +23,16 @@ public class PlayerController : MonoBehaviour
     private InputAction _runAction;
     private InputAction _dashAction;
 
+    private bool _isInvincible = false;
+    private float _damageCooldown = 0.05f;
+    private float _lastDamageTime = -999f;
+    private float _globalNextFireTime = 0f;
+
     public PlayerState _currentState = PlayerState.Idle;
     public Vector2 _forwardVector;
     public bool IsFacingRight => transform.localScale.x < 0f;
-    private bool _isInvincible = false;
 
-    private float _damageCooldown = 0.05f;
-    private float _lastDamageTime = -999f;
 
-    private float _globalNextFireTime = 0f;
     public float GlobalNextFireTime
     {
         get => _globalNextFireTime;

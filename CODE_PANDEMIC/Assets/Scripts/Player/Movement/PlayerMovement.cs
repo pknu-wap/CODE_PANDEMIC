@@ -4,17 +4,15 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
-
     private float _walkSpeed;
     private float _runSpeed;
     private float _dashSpeed;
     private float _dashDuration;
     private float _dashCooldown;
-
-    private bool _isDashing = false;
-    public bool IsDashing => _isDashing;
-
     private float _lastDashTime = -999f;
+    private bool _isDashing = false;
+
+    public bool IsDashing => _isDashing;
 
     private void Awake()
     {
