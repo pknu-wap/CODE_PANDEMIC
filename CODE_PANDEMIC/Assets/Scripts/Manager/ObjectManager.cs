@@ -10,6 +10,8 @@ public class ObjectManager : MonoBehaviour
   
     
     private PlayerCamera _playerCamera;
+
+    public PlayerCamera PlayerCamera { get { return _playerCamera; } }
     public StageController MapObject { get; private set; }
     public PlayerStatus Player { get; private set; }
 

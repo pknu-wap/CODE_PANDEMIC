@@ -28,7 +28,7 @@ public class AI_ContaminatedArea : MonoBehaviour
 
             foreach (var target in targets)
             {
-                if (target.TryGetComponent<PlayerController>(out var player))
+                if (target.TryGetComponent<AttackObjCollider>(out var player))
                 {
                     player.TakeDamage(gameObject, _damagePerSecond);
                 }

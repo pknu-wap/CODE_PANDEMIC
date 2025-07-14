@@ -191,6 +191,7 @@ public class UIManager : MonoBehaviour
         {
             Managers.Resource.Instantiate("UI_FadeImage", UIRoot.transform, (obj) =>
             {
+               
                 _fadeImage = obj;
                 SetCanvas(obj);
                 var fade = _fadeImage.GetOrAddComponent<UI_FadeImage>();

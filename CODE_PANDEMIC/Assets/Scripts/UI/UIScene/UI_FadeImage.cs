@@ -23,12 +23,12 @@ public class UI_FadeImage : UI_Base
 
         BindImage(typeof(Images));
         _fadeImage = GetImage((int)Images.FadeImage);
-
+        
         if (_fadeImage == null)
         {
             Debug.LogError("UI_FadeImage: FadeImage Image is NULL.");
         }
-
+        
         return _fadeImage != null;
     }
     public void FadeAtOnce()
