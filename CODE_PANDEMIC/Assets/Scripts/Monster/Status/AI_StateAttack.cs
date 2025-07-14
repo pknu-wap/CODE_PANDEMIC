@@ -14,6 +14,7 @@ public class AI_StateAttack : AI_IState
     public virtual void OnEnter()
     {
         _controller.StopMoving();
+        _controller.UpdateDirection();
         _controller._isUsingSkill = true;
         _controller.StartCoroutine(ChargeAndExecuteSkill());
     }

@@ -59,7 +59,6 @@ public abstract class AI_BossController : AI_Controller
         StopMoving();
         Managers.Game.ClearBoss(_monsterData.TemplateID);
         ChangeState(new AI_StateDie(this));
-        StartCoroutine(BossDeathSequence());
     }
 
     protected virtual void EnterBerserkMode()
@@ -67,9 +66,15 @@ public abstract class AI_BossController : AI_Controller
         IsBerserk = true;
     }
 
+    public override void DieAnimationEnd()
+    {
+        StartCoroutine(BossDeathSequence());
+        base.DieAnimationEnd();
+    }
+
     protected IEnumerator BossDeathSequence()
     {
-        yield return CoroutineHelper.WaitForSeconds(2);
         Managers.Event.InvokeEvent("OnBossClear");
+        yield return CoroutineHelper.WaitForSeconds(1);
     }
 }
