@@ -1,3 +1,4 @@
+using UnityEngine;
 public class AI_StateDie : AI_IState
 {
     private readonly AI_Controller _controller;
@@ -7,6 +8,9 @@ public class AI_StateDie : AI_IState
 
     public void OnEnter()
     {
+        _controller._animator.SetTrigger("Die");
+        _controller._animator.SetBool("Walk", false);
+        _controller._animator.SetBool("Attack", false);
         _controller.Die(); // 실제 죽는 처리
     }
 

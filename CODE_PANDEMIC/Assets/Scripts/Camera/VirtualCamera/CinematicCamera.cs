@@ -22,12 +22,15 @@ public class CinematicCamera :VirtualCameraBase
         {
             case Define.CinematicType.PuzzleClear:
                 StartCoroutine(EndPuzzleCinematic());
+               
                 break;
             case Define.CinematicType.BossSequence:
-                _camera.Priority= Define.None; //smooth step
+                _camera.Priority= Define.None;
+                
                 break;
         }
-        
+        Managers.Object.PlayerCamera.ResetCameraOrthoSize();
+
     }
     IEnumerator EndPuzzleCinematic()
     {

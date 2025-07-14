@@ -71,6 +71,7 @@ public class Define
     public const int PlayerCamera = 10;
     public const int Cinematic = 20;
 
+    public const int ParkingRange = 5;
 
     public enum InteractType
     {
