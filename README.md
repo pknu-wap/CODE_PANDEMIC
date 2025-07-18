@@ -2,7 +2,8 @@
 
 주인공 ‘로건 케인’이 좀비 아포칼립스 세상에서 백신을 찾으러 나가는 슈팅기반 퍼즐 게임
 
-<img width="1024" height="682" alt="TitleScene" src="https://github.com/user-attachments/assets/56bbc092-8054-4f5e-a5e2-7faf13a35ce6" />
+<img width="1343" height="755" alt="image" src="https://github.com/user-attachments/assets/d039953a-8f65-4cff-8258-1f43266de4f1" />
+
 
 ## Stack & Coop
 <img src="https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=Unity&logoColor=white"/> <img src="https://img.shields.io/badge/C Sharp-239120?style=for-the-badge&logo=csharp&logoColor=white"/>
