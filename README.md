@@ -56,11 +56,11 @@ R1895(리볼버),  M870(샷건), AR15(AR), 판처파우스트, 화염방사기, 
 
 ### Game Play
 
-#### - Puzzle
-![KakaoTalk_20250719_111827771_01](https://github.com/user-attachments/assets/df8413a5-57c4-4321-a19e-6217e0205332)
-
 #### - Shooting
 ![KakaoTalk_20250719_113151329](https://github.com/user-attachments/assets/94ef7690-259a-4dbb-a941-3249774a92f0)
+
+#### - Puzzle
+![KakaoTalk_20250719_111827771_01](https://github.com/user-attachments/assets/df8413a5-57c4-4321-a19e-6217e0205332)
 
 #### - Zombie
 ![KakaoTalk_20250719_111827771](https://github.com/user-attachments/assets/6acfe9dd-b4f3-4dcd-a647-e5da457b62f8)
