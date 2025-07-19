@@ -54,7 +54,7 @@ R1895(리볼버),  M870(샷건), AR15(AR), 판처파우스트, 화염방사기, 
 
 <img width="300" height="300" alt="ZombieBall" src="https://github.com/user-attachments/assets/f0eccc4f-8ced-4a4b-8276-6961d67e4d85" />
 
-### Game Play
+## Game Play
 
 #### - Shooting
 ![KakaoTalk_20250719_113151329](https://github.com/user-attachments/assets/94ef7690-259a-4dbb-a941-3249774a92f0)
