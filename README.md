@@ -22,12 +22,12 @@
 병원 -> 도로 -> 연구실
 
 
-#### 조작법
+#### - 조작법
 이동 : WASD, SHIFT : 달리기, F : 상호작용, SPACE : 대쉬, 마우스 좌클릭 : 공격
 <img width="615" height="213" alt="PlayerRun1" src="https://github.com/user-attachments/assets/d4e80354-bc50-482d-bf21-295d690faed1" />
 
 
-#### 무기류
+#### - 무기류
 R1895(리볼버),  M870(샷건), AR15(AR), 판처파우스트, 화염방사기, 메스 등
 
 <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/7f687cb3-9a86-4773-bf8e-e3f50c12d29b" />
@@ -36,7 +36,7 @@ R1895(리볼버),  M870(샷건), AR15(AR), 판처파우스트, 화염방사기, 
 
 
 
-#### 퍼즐
+#### - 퍼즐
 그림 퍼즐, 슬라이딩 퍼즐, Ligth out 퍼즐, 엘리베이터 퍼즐, 발전기 퍼즐, 자동차 퍼즐, 물고기 퍼즐, 축구 퍼즐
 
 <img width="478" height="268" alt="image" src="https://github.com/user-attachments/assets/cb4fc2f4-2b96-421a-8814-1d21e0b10599" />
@@ -44,7 +44,7 @@ R1895(리볼버),  M870(샷건), AR15(AR), 판처파우스트, 화염방사기, 
 <img width="300" height="300" alt="CarPuzzle" src="https://github.com/user-attachments/assets/87f4fe87-8b44-4b5d-82c5-543ad7fffeaa" />
 
 
-#### 좀비 
+#### - 좀비 
 기본 좀비, 간호사 좀비, 원장  좀비, 좀비 볼, 번개 좀비, 선수 좀비
 기본 좀비를 제외한 다른 좀비들은  각각의 고유한 공격 스킬이 존재
 
@@ -55,6 +55,15 @@ R1895(리볼버),  M870(샷건), AR15(AR), 판처파우스트, 화염방사기, 
 <img width="300" height="300" alt="ZombieBall" src="https://github.com/user-attachments/assets/f0eccc4f-8ced-4a4b-8276-6961d67e4d85" />
 
 ### Game Play
+
+#### - Puzzle
+![KakaoTalk_20250719_111827771_01](https://github.com/user-attachments/assets/df8413a5-57c4-4321-a19e-6217e0205332)
+
+#### - Shooting
+![KakaoTalk_20250719_113151329](https://github.com/user-attachments/assets/94ef7690-259a-4dbb-a941-3249774a92f0)
+
+#### - Zombie
+![KakaoTalk_20250719_111827771](https://github.com/user-attachments/assets/6acfe9dd-b4f3-4dcd-a647-e5da457b62f8)
 
 
 
