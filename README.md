@@ -41,6 +41,7 @@ R1895(리볼버),  M870(샷건), AR15(AR), 판처파우스트, 화염방사기, 
 
 <img width="478" height="268" alt="image" src="https://github.com/user-attachments/assets/cb4fc2f4-2b96-421a-8814-1d21e0b10599" />
 <img width="478" height="268" alt="image" src="https://github.com/user-attachments/assets/ace495c7-d624-4b3f-8739-e4fac7e34599" />
+
 <img width="300" height="300" alt="CarPuzzle" src="https://github.com/user-attachments/assets/87f4fe87-8b44-4b5d-82c5-543ad7fffeaa" />
 
 
