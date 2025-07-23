@@ -72,6 +72,6 @@ public class PZ_LightOut_Button : UI_Base
     {
         PZ_LightOut_Board board = GetComponentInParent<PZ_LightOut_Board>();
         board.ChangeButtonsState(_buttonIndex);
-        board.CheckButtonsCorrect();
+        board.CheckPuzzleClear();
     }
 }

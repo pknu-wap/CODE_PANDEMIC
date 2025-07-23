@@ -64,7 +64,9 @@ public abstract class PZ_Puzzle_UI_Base : UI_PopUp, IPZ_Puzzle_Base
     {
         _puzzleOwner.ClearPuzzle();
 
+        Managers.UI.ClosePopupUI();
         Managers.Game.ClearPuzzle(_data.ID);
+        Managers.Game.AddClearPuzzleCount();
     }
 
     #endregion

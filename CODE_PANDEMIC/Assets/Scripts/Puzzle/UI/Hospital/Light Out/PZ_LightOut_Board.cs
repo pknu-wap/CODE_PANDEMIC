@@ -68,7 +68,7 @@ public class PZ_LightOut_Board : PZ_Puzzle_UI_Main
 
     #region Clear
 
-    public void CheckButtonsCorrect()
+    public override void CheckPuzzleClear()
     {
         if (_lightOutButtonList.FindAll(button => button.IsButtonCorrect() == true).Count == _buttonMaxCount)
         {

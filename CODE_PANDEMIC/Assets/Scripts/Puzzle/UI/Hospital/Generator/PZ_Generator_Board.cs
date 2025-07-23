@@ -2,12 +2,15 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PZ_Remember_Board : PZ_Puzzle_UI_Side
+public class PZ_Generator_Board : PZ_Puzzle_UI_Side
 {
     private int _rememberCount = 5;
     private const int _buttonCount = 5;
+    private int _buttonNumber;
 
-    private List<PZ_Remember_Button> _buttonList = new List<PZ_Remember_Button>();
+    public int ButtonNumber { get { return _buttonNumber; }  set { _buttonNumber = value; } }
+
+    private List<PZ_Generator_Button> _buttonList = new List<PZ_Generator_Button>();
 
     private List<int> _correctNumbers = new List<int>();
     private int _currentIndex = 0;
@@ -56,9 +59,9 @@ public class PZ_Remember_Board : PZ_Puzzle_UI_Side
         }
     }
 
-    public override void CheckPuzzleClear(int buttonNumber)
+    public override void CheckPuzzleClear()
     {
-        if (_correctNumbers[_currentIndex] != buttonNumber)
+        if (_correctNumbers[_currentIndex] != _buttonNumber)
         {
             _currentIndex = 0;
             _correctNumbers.Clear();
@@ -78,8 +81,6 @@ public class PZ_Remember_Board : PZ_Puzzle_UI_Side
 
     public override void PuzzleClear()
     {
-        _owner.StartPuzzleClear();
-
-        Managers.UI.ClosePopupUI();
+        _owner.PuzzleClear();
     }
 }

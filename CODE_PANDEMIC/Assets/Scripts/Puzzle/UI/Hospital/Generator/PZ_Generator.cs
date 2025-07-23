@@ -12,7 +12,7 @@ public class PZ_Generator : PZ_Puzzle_Interact_Side, IInteractable
     private int _rememberCount = 5;
 
     public static event Action TurnOnGenerator;
-    PZ_Remember_Board _rememberBoard;
+    PZ_Generator_Board _generatorBoard;
 
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Material _defaultMaterial;
@@ -36,10 +36,10 @@ public class PZ_Generator : PZ_Puzzle_Interact_Side, IInteractable
             return;
         }
 
-        Managers.UI.ShowPopupUI<PZ_Remember_Board>("PZ_Remember_Board_Prefab", null, (popupPuzzle) =>
+        Managers.UI.ShowPopupUI<PZ_Generator_Board>("PZ_Generator_Board_Prefab", null, (popupPuzzle) =>
         {
-            _rememberBoard = popupPuzzle;
-            popupPuzzle.Setting(this, _rememberCount);
+            _generatorBoard = popupPuzzle;
+            _generatorBoard.Setting(this, _rememberCount);
         });
     }
 
@@ -54,6 +54,13 @@ public class PZ_Generator : PZ_Puzzle_Interact_Side, IInteractable
         _handleTransform.localPosition = new Vector3(-0.242f, 0.88f, 0);
     }
 
+    protected override void GiveReward(Action action = null)
+    {
+        base.GiveReward(action);
+
+        TurnOnGenerator?.Invoke();
+    }
+
     public override void CheckPuzzleClear()
     {
         PuzzleClear();
@@ -61,14 +68,13 @@ public class PZ_Generator : PZ_Puzzle_Interact_Side, IInteractable
 
     public override void PuzzleClear()
     {
+        base.PuzzleClear();
+
         StartCoroutine(SettingLeverPosition());
 
         _animator.SetBool("IsInteracted", true);
 
         _isInteracted = true;
-        Managers.Game.ClearPuzzle(_data.ID);
-        Managers.Game.AddClearPuzzleCount();
-        TurnOnGenerator?.Invoke();
     }
 
     public void OnHighLight()
