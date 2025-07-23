@@ -1,24 +1,23 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
 public class PZ_Piano_Tile_Black : UI_Base
 {
-    // 검은 건반 enum
     private enum PianoNoteBlack
     {
-        DoSharp, // 도샾
-        ReSharp, // 레샾
-        FaSharp, // 파샾
-        SolSharp, // 솔샾
-        LaSharp, // 라샾
+        DoSharp,
+        ReSharp,
+        FaSharp,
+        SolSharp,
+        LaSharp,
     }
 
     private RectTransform _rectTransform;
     private Image _image;
     private PZ_Piano_Base _pianoBase;
-    private PianoNoteBlack[] _pianoNoteTypes; // 건반 음 종류
-    private PianoNoteBlack _pianoTileNote; // 현재 건반 음
+    private PianoNoteBlack[] _pianoNoteTypes;
+    private PianoNoteBlack _pianoTileNote;
 
     private Material _normalMaterial;
     private Material _pressedMaterial;
@@ -42,18 +41,15 @@ public class PZ_Piano_Tile_Black : UI_Base
             _pressedMaterial = getMaterial;
         });
 
-        // enum 값들을 배열로 가져옴
         _pianoNoteTypes = (PianoNoteBlack[])System.Enum.GetValues(typeof(PianoNoteBlack));
 
         BindEvent(gameObject, OnButtonClick);
     }
 
-    // 건반 기본 세팅
     public void TileSetup(int index)
     {
         Setting();
 
-        // 중간의 빈 검은 타일
         if (index == 2)
         {
             _image.enabled = false;
@@ -75,14 +71,12 @@ public class PZ_Piano_Tile_Black : UI_Base
         }
     }
 
-    // 건반 클릭 이벤트
     public void OnButtonClick()
     {
-        Debug.Log("누른 검은 건반 : " + _pianoTileNote.ToString());
-
         StartCoroutine(ChangeTileColor());
 
-        _pianoBase.CheckPuzzleClear(_pianoTileNote.ToString());
+        _pianoBase.SelectedNote = _pianoTileNote.ToString();
+        _pianoBase.CheckPuzzleClear();
     }
 
     private IEnumerator ChangeTileColor()
@@ -90,7 +84,7 @@ public class PZ_Piano_Tile_Black : UI_Base
         _image.material = _pressedMaterial;
         _image.SetMaterialDirty();
 
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return CoroutineHelper.WaitForSecondsRealtime(0.1f);
 
         _image.material = _normalMaterial;
         _image.SetMaterialDirty();

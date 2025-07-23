@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
@@ -7,14 +7,14 @@ public class PZ_Sliding_Tile : UI_Base
 {
     #region Base
 
-    private TextMeshProUGUI _tileNumberText; // 현재 타일 번호 출력을 위한 text
-    private int _tileNumber; // 현재 타일 번호
+    private TextMeshProUGUI _tileNumberText;
+    private int _tileNumber;
 
     private PZ_Sliding_Board _slidingBoard;
-    private Vector3 _correctPosition; // 올바른 위치의 Position
-    public bool _isCorrect = false; // 현재 타일의 위치가 올바른 위치인지 판단
+    private Vector3 _correctPosition;
+    public bool _isCorrect = false;
 
-    private Image _image; // 퍼즐 이미지
+    private Image _image;
 
     public int TileNumber
     {
@@ -31,7 +31,6 @@ public class PZ_Sliding_Tile : UI_Base
 
     #region Tile
 
-    // tileEmptyIndex 마지막 빈 타일의 index
     public void TileSetup(int tileNumber, int tileEmptyIndex)
     {
         _slidingBoard = GetComponentInParent<PZ_Sliding_Board>();
@@ -40,13 +39,11 @@ public class PZ_Sliding_Tile : UI_Base
 
         TileNumber = tileNumber;
 
-        // 슬라이딩 퍼즐 타일 Sprite 비동기 로딩
         string tileSpriteKey = "PZ_Sliding_Tile_" + tileNumber.ToString() + "_Sprite";
         Managers.Resource.LoadAsync<Sprite>(tileSpriteKey, (imageSprite) =>
         {
             _image.sprite = imageSprite;
 
-            // 빈 타일 비활성화
             if (TileNumber == tileEmptyIndex)
             {
                 _image.enabled = false;
@@ -54,7 +51,7 @@ public class PZ_Sliding_Tile : UI_Base
             }
         });
 
-        BindEvent(gameObject, OnTileClick);
+        BindEvent(gameObject, OnTileClick, Define.UIEvent.Click);
     }
 
     public void TileMoveto(Vector3 endPosition)
@@ -62,7 +59,6 @@ public class PZ_Sliding_Tile : UI_Base
         StartCoroutine("TileMove", endPosition);
     }
 
-    // 타일 자연스럽게 움직이기
     private IEnumerator TileMove(Vector3 endPosition)
     {
         float currentTime = 0f;
@@ -79,10 +75,8 @@ public class PZ_Sliding_Tile : UI_Base
             yield return null;
         }
 
-        // 타일 위치 체크
         _isCorrect = CheckCorrectPosition();
 
-        // 퍼즐 클리어 체크
         _slidingBoard.CheckPuzzleClear();
     }
 
@@ -90,30 +84,29 @@ public class PZ_Sliding_Tile : UI_Base
 
     #region Check
 
-    // 정답 위치 설정
     public void SetCorrectPosition()
     {
         _correctPosition = GetComponent<RectTransform>().localPosition;
     }
 
-    // 현재 타일 위치가 올바른 위치인지 확인
     private bool CheckCorrectPosition()
     {
         if (GetComponent<RectTransform>().localPosition == _correctPosition)
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     #endregion
 
-    // 클릭 이벤트
+    #region Event
+
     public void OnTileClick()
     {
         _slidingBoard.MoveTile(this);
     }
+
+    #endregion
 }

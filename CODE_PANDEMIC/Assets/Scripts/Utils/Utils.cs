@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-//∞«µÈ¡ˆ∏∂ººø‰ 
+//Í±¥Îì§ÏßÄÎßàÏÑ∏Ïöî 
 public class Utils
 {
     public static T GetOrAddComponent<T>(GameObject obj) where T : UnityEngine.Component
@@ -46,10 +46,12 @@ public static class CoroutineHelper
     private static readonly WaitForEndOfFrame WaitForEndOfFrame = new WaitForEndOfFrame();
     private static readonly WaitForFixedUpdate WaitForFixedUpdate = new WaitForFixedUpdate();
     private static Dictionary<float, WaitForSeconds> _WaitForSeconds;
+    private static Dictionary<float, WaitForSecondsRealtime> _WaitForSecondsRealtime;
 
-    static CoroutineHelper() // ¡§¿˚ ª˝º∫¿⁄
+    static CoroutineHelper() // Ï†ïÏ†Å ÏÉùÏÑ±Ïûê
     {
         _WaitForSeconds = new Dictionary<float, WaitForSeconds>();
+        _WaitForSecondsRealtime = new Dictionary<float, WaitForSecondsRealtime>();
     }
 
     public static WaitForSeconds WaitForSeconds(float seconds)
@@ -59,5 +61,14 @@ public static class CoroutineHelper
             _WaitForSeconds.Add(seconds, waitForSeconds = new WaitForSeconds(seconds));
         }
         return waitForSeconds;
+    }
+
+    public static WaitForSecondsRealtime WaitForSecondsRealtime(float seconds)
+    {
+        if (!_WaitForSecondsRealtime.TryGetValue(seconds, out var waitForSecondsRealtime))
+        {
+            _WaitForSecondsRealtime.Add(seconds, waitForSecondsRealtime = new WaitForSecondsRealtime(seconds));
+        }
+        return waitForSecondsRealtime;
     }
 }

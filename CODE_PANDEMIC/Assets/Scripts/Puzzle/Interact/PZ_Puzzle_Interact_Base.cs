@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
-using Inventory.Model;
 using UnityEngine;
+using Inventory.Model;
 
-public  class PZ_Puzzle_Side : MonoBehaviour
+public abstract class PZ_Puzzle_Interact_Base : MonoBehaviour, IPZ_Puzzle_Base
 {
     protected PuzzleData _data;
 
@@ -12,7 +11,7 @@ public  class PZ_Puzzle_Side : MonoBehaviour
         _data = data;
     }
 
-    protected void GiveRewardItem(Action action=null)
+    protected void GiveRewardItem(Action action = null)
     {
         if (Managers.Data.Puzzles.TryGetValue(_data.ID, out PuzzleData data))
         {
@@ -25,7 +24,12 @@ public  class PZ_Puzzle_Side : MonoBehaviour
         }
     }
 
-    protected virtual void PuzzleClear()
+    public void CheckPuzzleClear()
+    {
+
+    }
+
+    public void PuzzleClear()
     {
         Managers.Game.ClearPuzzle(_data.ID);
     }

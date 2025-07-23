@@ -1,26 +1,25 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
 public class PZ_Piano_Tile_White : UI_Base
 {
-    // 흰 건반 enum
     private enum PianoNoteWhite
     {
-        Do, // 도
-        Re, // 레
-        Mi, // 미
-        Fa, // 파
-        Sol, // 솔
-        La, // 라
-        Ti // 시
+        Do,
+        Re,
+        Mi,
+        Fa,
+        Sol,
+        La,
+        Ti
     }
 
     private RectTransform _rectTransform;
     private Image _image;
     private PZ_Piano_Base _pianoBase;
-    private PianoNoteWhite[] _pianoNoteTypes; // 건반 음 종류
-    private PianoNoteWhite _pianoTileNote; // 현재 건반 음
+    private PianoNoteWhite[] _pianoNoteTypes;
+    private PianoNoteWhite _pianoTileNote;
 
     private Material _normalMaterial;
     private Material _pressedMaterial;
@@ -44,13 +43,11 @@ public class PZ_Piano_Tile_White : UI_Base
             _pressedMaterial = getMaterial;
         });
 
-        // enum 값들을 배열로 가져옴
         _pianoNoteTypes = (PianoNoteWhite[])System.Enum.GetValues(typeof(PianoNoteWhite));
 
         BindEvent(gameObject, OnButtonClick);
     }
 
-    // 건반 기본 세팅
     public void TileSetup(int index)
     {
         Setting();
@@ -60,14 +57,12 @@ public class PZ_Piano_Tile_White : UI_Base
         _pianoTileNote = _pianoNoteTypes[index];
     }
 
-    // 건반 클릭 이벤트
     public void OnButtonClick()
     {
-        Debug.Log("누른 흰 건반 : " + _pianoTileNote.ToString());
-
         StartCoroutine(ChangeTileColor());
 
-        _pianoBase.CheckPuzzleClear(_pianoTileNote.ToString());
+        _pianoBase.SelectedNote = _pianoTileNote.ToString();
+        _pianoBase.CheckPuzzleClear();
     }
 
     private IEnumerator ChangeTileColor()
@@ -75,7 +70,7 @@ public class PZ_Piano_Tile_White : UI_Base
         _image.material = _pressedMaterial;
         _image.SetMaterialDirty();
 
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return CoroutineHelper.WaitForSecondsRealtime(0.1f);
 
         _image.material = _normalMaterial;
         _image.SetMaterialDirty();
