@@ -19,6 +19,13 @@ public abstract class PZ_Puzzle_UI_Base : UI_PopUp, IPZ_Puzzle_Base
         return base.Init();
     }
 
+    private void Start()
+    {
+        Managers.UI.SetCanvas(gameObject);
+
+        ReadyToPause();
+    }
+
     #endregion
 
     #region Setting
@@ -51,10 +58,7 @@ public abstract class PZ_Puzzle_UI_Base : UI_PopUp, IPZ_Puzzle_Base
 
     #region Clear
 
-    public virtual void CheckPuzzleClear()
-    {
-
-    }
+    public abstract void CheckPuzzleClear();
 
     public virtual void PuzzleClear()
     {

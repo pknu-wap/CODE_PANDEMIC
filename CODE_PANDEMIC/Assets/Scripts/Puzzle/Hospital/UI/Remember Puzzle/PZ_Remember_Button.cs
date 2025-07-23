@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -34,14 +34,14 @@ public class PZ_Remember_Button : UI_Base
             _pressedSprite = getSprite;
         });
 
-        BindEvent(gameObject, OnButtonClick);
+        BindEvent(gameObject, OnButtonClick, Define.UIEvent.Click);
     }
 
     public IEnumerator ChangeButtonColor()
     {
         _image.sprite = _pressedSprite;
 
-        yield return new WaitForSecondsRealtime(0.4f);
+        yield return CoroutineHelper.WaitForSecondsRealtime(0.4f);
 
         _image.sprite = _normalSprite;
     }

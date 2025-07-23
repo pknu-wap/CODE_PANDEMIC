@@ -2,24 +2,18 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PZ_Remember_Board : PZ_Puzzle_Base
+public class PZ_Remember_Board : PZ_Puzzle_UI_Side
 {
-    private int _rememberCount = 5; // 난이도
-    private const int _buttonCount = 5; // 버튼 개수
+    private int _rememberCount = 5;
+    private const int _buttonCount = 5;
 
     private List<PZ_Remember_Button> _buttonList = new List<PZ_Remember_Button>();
 
     private List<int> _correctNumbers = new List<int>();
     private int _currentIndex = 0;
 
-    private PZ_Generator _owner; // 발전기
+    private PZ_Generator _owner;
 
-    public override bool Init()
-    {
-        return base.Init();
-    }
-
-    // 세팅
     public void Setting(PZ_Generator owner, int selectedRememberCount)
     {
         _rememberCount = selectedRememberCount;
@@ -34,11 +28,8 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
         }
 
         StartCoroutine(StartRandomEvent());
-
-        ReadyToPause();
     }
 
-    // 랜덤으로 불 키는 이벤트
     private IEnumerator StartRandomEvent()
     {
         for (int index = 0; index < _buttonCount; index++)
@@ -46,7 +37,7 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
             _buttonList[index]._isShowingEvent = true;
         }
 
-        yield return new WaitForSecondsRealtime(1f);
+        yield return CoroutineHelper.WaitForSecondsRealtime(1.0f);
 
         for (int index = 0; index < _rememberCount; index++)
         {
@@ -56,7 +47,7 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
 
             _correctNumbers.Add(randomInt);
 
-            yield return new WaitForSecondsRealtime(0.6f);
+            yield return CoroutineHelper.WaitForSecondsRealtime(0.6f);
         }
 
         for (int index = 0; index < _buttonCount; index++)
@@ -65,8 +56,7 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
         }
     }
 
-    // 클리어 체크
-    public void CheckPuzzleClear(int buttonNumber)
+    public override void CheckPuzzleClear(int buttonNumber)
     {
         if (_correctNumbers[_currentIndex] != buttonNumber)
         {
@@ -86,7 +76,6 @@ public class PZ_Remember_Board : PZ_Puzzle_Base
         }
     }
 
-    // 퍼즐 클리어
     public override void PuzzleClear()
     {
         _owner.StartPuzzleClear();

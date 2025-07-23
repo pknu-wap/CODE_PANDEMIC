@@ -1,15 +1,15 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PZ_LightOut_Button : UI_Base
 {
-    private Image _image; // 추후 Bind 배우고 수정 예정
+    private Image _image;
 
-    private Sprite _correctSprite; // 맞았을때 색
-    private Sprite _wrongSprite; // 틀렸을때 색
+    private Sprite _correctSprite;
+    private Sprite _wrongSprite;
 
-    private int _buttonIndex; // 현재 버튼 Index
-    private bool _isCorrectState = false; // 현재 버튼이 올바른 상태인지 체크
+    private int _buttonIndex;
+    private bool _isCorrectState = false;
 
     public void Setting(int buttonIndex)
     {
@@ -29,10 +29,9 @@ public class PZ_LightOut_Button : UI_Base
 
         _buttonIndex = buttonIndex;
 
-        BindEvent(gameObject, OnButtonClick);
+        BindEvent(gameObject, OnButtonClick, Define.UIEvent.Click);
     }
 
-    // 무작위 버튼 상태 설정
     public void ShuffleButtonState()
     {
         int randomState = Random.Range(0, 2);
@@ -49,7 +48,6 @@ public class PZ_LightOut_Button : UI_Base
         }
     }
 
-    // 현재 버튼의 상태와 그에 맞는 색으로 변경
     public void ChangeButtonState()
     {
         if (_isCorrectState)
@@ -65,17 +63,13 @@ public class PZ_LightOut_Button : UI_Base
         _isCorrectState = !_isCorrectState;
     }
 
-    // 현재 버튼이 올바른 색을 가졌는지를 반환
     public bool IsButtonCorrect()
     {
         return _isCorrectState;
     }
 
-    // 버튼 클릭 이벤트
     private void OnButtonClick()
     {
-        Debug.Log("클릭한 버튼 : " + _buttonIndex);
-
         PZ_LightOut_Board board = GetComponentInParent<PZ_LightOut_Board>();
         board.ChangeButtonsState(_buttonIndex);
         board.CheckButtonsCorrect();

@@ -6,12 +6,12 @@ public abstract class PZ_Puzzle_Interact_Base : MonoBehaviour, IPZ_Puzzle_Base
 {
     protected PuzzleData _data;
 
-    public void SetInfo(PuzzleData data)
+    public virtual void SetInfo(PuzzleData data)
     {
         _data = data;
     }
 
-    protected void GiveRewardItem(Action action = null)
+    protected virtual void GiveReward(Action action = null)
     {
         if (Managers.Data.Puzzles.TryGetValue(_data.ID, out PuzzleData data))
         {
@@ -24,12 +24,9 @@ public abstract class PZ_Puzzle_Interact_Base : MonoBehaviour, IPZ_Puzzle_Base
         }
     }
 
-    public void CheckPuzzleClear()
-    {
+    public abstract void CheckPuzzleClear();
 
-    }
-
-    public void PuzzleClear()
+    public virtual void PuzzleClear()
     {
         Managers.Game.ClearPuzzle(_data.ID);
     }

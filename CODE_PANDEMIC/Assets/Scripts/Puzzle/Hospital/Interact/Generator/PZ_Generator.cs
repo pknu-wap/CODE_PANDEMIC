@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 
-public class PZ_Generator : PZ_Puzzle_Base, IInteractable
+public class PZ_Generator : PZ_Puzzle_Interact_Side, IInteractable
 {
     [SerializeField] private Transform _handleTransform;
     private Animator _animator;
@@ -14,7 +14,6 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     public static event Action TurnOnGenerator;
     PZ_Remember_Board _rememberBoard;
 
-    // 하이라이트 기능
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Material _defaultMaterial;
     [SerializeField] private Material _highlightMaterial;
@@ -23,7 +22,6 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
     {
         base.SetInfo(data);
         _rememberCount = data.RememberCount;
-      
     }
 
     private void Start()
@@ -31,14 +29,13 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
         _animator = GetComponentInChildren<Animator>();
     }
 
-    // 발전기 퍼즐 띄우기
     public void Interact(GameObject player)
     {
         if (_isInteracted)
         {
             return;
         }
-        if (_rememberBoard != null) return;
+
         Managers.UI.ShowPopupUI<PZ_Remember_Board>("PZ_Remember_Board_Prefab", null, (popupPuzzle) =>
         {
             _rememberBoard = popupPuzzle;
@@ -48,16 +45,16 @@ public class PZ_Generator : PZ_Puzzle_Base, IInteractable
 
     private IEnumerator SettingLeverPosition()
     {
-        yield return new WaitForSeconds(0.18f);
+        yield return CoroutineHelper.WaitForSeconds(0.18f);
 
         _handleTransform.localPosition = new Vector3(-0.06f, 0.919f, 0);
 
-        yield return new WaitForSeconds(0.18f);
+        yield return CoroutineHelper.WaitForSeconds(0.18f);
 
         _handleTransform.localPosition = new Vector3(-0.242f, 0.88f, 0);
     }
 
-    public void StartPuzzleClear()
+    public override void CheckPuzzleClear()
     {
         PuzzleClear();
     }
