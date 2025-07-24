@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
 
 public class PZ_Help_Text : MonoBehaviour
@@ -16,14 +16,7 @@ public class PZ_Help_Text : MonoBehaviour
 
     public void ToggleHint()
     {
-        if (_onHint)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
+        gameObject.SetActive(!_onHint);
 
         _onHint = !_onHint;
     }

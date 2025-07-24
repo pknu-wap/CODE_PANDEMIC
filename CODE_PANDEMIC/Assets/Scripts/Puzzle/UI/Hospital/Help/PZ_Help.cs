@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PZ_Help : UI_Base
 {
@@ -12,12 +12,11 @@ public class PZ_Help : UI_Base
 
         _text.Setting(_hintText);
 
-        BindEvent(gameObject, OnButtonClick);
+        BindEvent(gameObject, OnButtonClick, Define.UIEvent.Click);
     }
 
     public void OnButtonClick()
     {
-        Debug.Log("Check!!!");
         _text.ToggleHint();
     }
 }
