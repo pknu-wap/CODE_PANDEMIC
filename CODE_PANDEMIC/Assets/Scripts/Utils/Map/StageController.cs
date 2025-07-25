@@ -124,8 +124,8 @@ public class StageController : MonoBehaviour
             {
                 obj.transform.position = data.Pos;
                 PZ_Puzzle_Item puzzleItem = obj.GetComponent<PZ_Puzzle_Item>();
-                PZ_Puzzle_Base puzzle = obj.GetComponent<PZ_Puzzle_Base>();
-                PZ_Puzzle_Side puzzleSide = obj.GetComponent<PZ_Puzzle_Side>();
+                PZ_Puzzle_UI_Base puzzleUI = obj.GetComponent<PZ_Puzzle_UI_Base>();
+                PZ_Puzzle_Interact_Base puzzleInteract = obj.GetComponent<PZ_Puzzle_Interact_Base>();
                 if (data.IsMain)
                 {
                     if (data.LinkedBlock.Prefab != null)
@@ -137,9 +137,9 @@ public class StageController : MonoBehaviour
                     puzzleItem.SetInfo(data);
                     puzzleItem.SettingPuzzle();
                 }
-                else if (puzzle != null)
+                else if (puzzleUI != null)
                 {
-                    puzzle.SetInfo(data); //원래 이렇게 하면 안되긴하는데 퍼즐 코드가 너무어지러워서 임시 
+                    puzzleUI.SetInfo(data); //원래 이렇게 하면 안되긴하는데 퍼즐 코드가 너무어지러워서 임시 
                     if (obj.GetComponent<PZ_Generator>() != null)
                     {
                         Color color = new Color(0.02f, 0.02f, 0.02f, 0);
@@ -147,11 +147,10 @@ public class StageController : MonoBehaviour
                     }
 
                 }
-                else if (puzzleSide != null)
+                else if (puzzleInteract != null)
                 {
-                    puzzleSide.SetInfo(data);
+                    puzzleInteract.SetInfo(data);
                 }
-
             });
         }
     }
