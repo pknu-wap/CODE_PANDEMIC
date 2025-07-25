@@ -41,12 +41,7 @@ public class WeaponDebugEquipWindow : EditorWindow
         GUILayout.Space(10);
         GUILayout.Label("무기 정보 설정", EditorStyles.boldLabel);
 
-        damage = EditorGUILayout.IntField("Damage", damage);
-        fireRate = EditorGUILayout.FloatField("Fire Rate", fireRate);
-        bulletSpeed = EditorGUILayout.FloatField("Bullet Speed", bulletSpeed);
-        range = EditorGUILayout.FloatField("Range", range);
-        reloadTime = EditorGUILayout.FloatField("Reload Time", reloadTime);
-        spreadAngle = EditorGUILayout.FloatField("Spread Angle", spreadAngle);
+        CustomWeaponSetting();
 
         GUILayout.Space(10);
         GUILayout.Label("추가 설정", EditorStyles.boldLabel);
@@ -63,6 +58,16 @@ public class WeaponDebugEquipWindow : EditorWindow
 
         GUI.enabled = true;
     }
+    private void CustomWeaponSetting()
+    {
+        damage = EditorGUILayout.IntField("Damage", damage);
+        fireRate = EditorGUILayout.FloatField("Fire Rate", fireRate);
+        bulletSpeed = EditorGUILayout.FloatField("Bullet Speed", bulletSpeed);
+        range = EditorGUILayout.FloatField("Range", range);
+        reloadTime = EditorGUILayout.FloatField("Reload Time", reloadTime);
+        spreadAngle = EditorGUILayout.FloatField("Spread Angle", spreadAngle);
+    }
+
 
     private void TryEquipPrefabWeapon()
     {
