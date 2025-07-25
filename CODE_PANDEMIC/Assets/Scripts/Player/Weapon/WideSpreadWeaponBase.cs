@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class WideSpreadWeaponBase : WeaponBase
 {
-    [SerializeField]
-    private GameObject bulletPrefab;
-    [SerializeField]
-    private GameObject firePoint;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject firePoint;
 
     private Animator _animator;
     private bool isPickedUp = false;
@@ -19,9 +17,11 @@ public class WideSpreadWeaponBase : WeaponBase
     public override void Attack(PlayerController owner)
     {
         if (!CanFire(owner)) return;
+
         SetNextFireTime(owner);
         _currentBullet--;
         Managers.Event.InvokeEvent("BulletUpdated", _currentBullet);
+
         if (_currentBullet <= 0)
         {
             Reload();

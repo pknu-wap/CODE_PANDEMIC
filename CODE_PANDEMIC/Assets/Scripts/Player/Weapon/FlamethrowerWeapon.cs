@@ -14,7 +14,11 @@ public class FlamethrowerWeapon : WeaponBase
     {
         Debug.Log("[FlamethrowerWeapon] Attack 호출");
         StartAttack(owner);
+        UpdateFirePointRotation();
 
+    }
+    private void UpdateFirePointRotation()
+    {
         if (firePoint != null)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -30,32 +34,20 @@ public class FlamethrowerWeapon : WeaponBase
             }
         }
     }
-
     public override void StartAttack(PlayerController owner)
     {
-       
         if (_isFiring || _isReloading) return;
         _isFiring = true;
 
         if (_currentFlame == null)
         {
-            Debug.Log("[FlamethrowerWeapon] flameHitboxPrefab Instantiate");
-            _currentFlame = Instantiate(flameHitboxPrefab, firePoint.position, firePoint.rotation, firePoint);
-            FlameHitbox hitbox = _currentFlame.GetComponent<FlameHitbox>();
-            hitbox.SetInfo(_weaponData);
-
-            if (flameEffectPrefab != null)
-            {
-                _currentEffect = Instantiate(flameEffectPrefab, _currentFlame.transform);
-                _currentEffect.transform.localPosition = Vector3.zero;
-            }
+            CreateFlameAndEffect();
         }
         else
         {
-            FlameHitbox hitbox = _currentFlame.GetComponent<FlameHitbox>();
-            hitbox.SetInfo(_weaponData);
-            if (_currentEffect == null)
-            _currentEffect.SetActive(true);
+            UpdateFlameDamage();
+            if (_currentEffect != null)
+                _currentEffect.SetActive(true);
         }
 
         _currentFlame.SetActive(true);
@@ -63,9 +55,29 @@ public class FlamethrowerWeapon : WeaponBase
             _currentEffect.SetActive(true);
     }
 
+    private void CreateFlameAndEffect()
+    {
+        _currentFlame = Instantiate(flameHitboxPrefab, firePoint.position, firePoint.rotation, firePoint);
+        FlameHitbox hitbox = _currentFlame.GetComponent<FlameHitbox>();
+        hitbox.SetInfo(_weaponData);
+
+        if (flameEffectPrefab != null)
+        {
+            _currentEffect = Instantiate(flameEffectPrefab, _currentFlame.transform);
+            _currentEffect.transform.localPosition = Vector3.zero;
+        }
+    }
+
+    private void UpdateFlameDamage()
+    {
+        FlameHitbox hitbox = _currentFlame.GetComponent<FlameHitbox>();
+        hitbox.SetInfo(_weaponData);
+    }
+
     public override void StopAttack()
     {
         _isFiring = false;
+
         if (_currentFlame != null)
             _currentFlame.SetActive(false);
 
