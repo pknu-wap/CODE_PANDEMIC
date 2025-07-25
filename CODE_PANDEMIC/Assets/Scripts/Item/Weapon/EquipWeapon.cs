@@ -8,10 +8,8 @@ using System.Collections;
 public class EquipWeapon : MonoBehaviour
 {
 
-    [SerializeField]
-    private WeaponBase _weapon;
-    [SerializeField]
-    private Transform _socket;
+    [SerializeField] private WeaponBase _weapon;
+    [SerializeField] private Transform _socket;
 
     private QuickSlot _quickSlot;
     private PlayerInput _weaponInput;

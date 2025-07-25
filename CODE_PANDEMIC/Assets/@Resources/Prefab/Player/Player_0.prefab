@@ -299,6 +299,7 @@ MonoBehaviour:
   runStaminaCost: 20
   dashCost: 30
   staminaRegenRate: 10
+  regenInterval: 0.1
   minStaminaToRun: 30
   isRunning: 0
 --- !u!1 &7458043515022671168
@@ -321,6 +322,9 @@ GameObject:
   - component: {fileID: -1855312356777860054}
   - component: {fileID: 7041675106503470408}
   - component: {fileID: 1425299977713885376}
+  - component: {fileID: 9005181514018684588}
+  - component: {fileID: 7791760417861762656}
+  - component: {fileID: 1762565390760844988}
   m_Layer: 7
   m_Name: Player_0
   m_TagString: Player
@@ -512,11 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b0a067ad2678e43a9e5713e7e0d085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponHolder: {fileID: 139337128564268983}
-  withArmOverride: {fileID: 22100000, guid: cfa74da12db09544c9d1a6dd09f919c6, type: 2}
-  noArmOverride: {fileID: 22100000, guid: 754009336572b4143bea85991da13840, type: 2}
   playerSpriteRenderer: {fileID: 0}
-  _playerStamina: {fileID: 1425299977713885376}
   _currentState: 0
   _forwardVector: {x: 0, y: 0}
 --- !u!114 &-5189419664297786888
@@ -543,6 +543,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a37e80e9fb29f346b94d97e78fc873b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &-1855312356777860054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,8 +599,47 @@ MonoBehaviour:
   runStaminaCost: 8
   dashCost: 30
   staminaRegenRate: 10
+  regenInterval: 0.1
   minStaminaToRun: 20
   isRunning: 0
+--- !u!114 &9005181514018684588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458043515022671168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803a50957cb591a4b8a708b18986b3c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7791760417861762656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458043515022671168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d80c3840780a34d92c315b996ff666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  withArmOverride: {fileID: 22100000, guid: cfa74da12db09544c9d1a6dd09f919c6, type: 2}
+  noArmOverride: {fileID: 22100000, guid: 754009336572b4143bea85991da13840, type: 2}
+--- !u!114 &1762565390760844988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458043515022671168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ee9f11b1c8db2408a4ccab24e11ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8466430270737374257
 GameObject:
   m_ObjectHideFlags: 0

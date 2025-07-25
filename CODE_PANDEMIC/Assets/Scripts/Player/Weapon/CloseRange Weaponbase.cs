@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class CloseRangeWeaponBase : WeaponBase
 {
-    [SerializeField]
-    private GameObject bulletPrefab;
-    [SerializeField]
-    private GameObject firePoint;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject firePoint;
 
     private Animator _animator;
     private bool isPickedUp = false;
