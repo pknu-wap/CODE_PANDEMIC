@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class PistolWeaponBase : WeaponBase
 {
-    [SerializeField]
-    private GameObject bulletPrefab;
-    [SerializeField]
-    private GameObject firePoint;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject firePoint;
 
     private Animator _animator;
     private bool isPickedUp = false;
@@ -42,13 +40,6 @@ public class PistolWeaponBase : WeaponBase
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
             firePoint.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-
-            //if (weaponSpriteRenderer != null)
-            //{
-            //    bool isLeft = mousePos.x < firePoint.transform.position.x;
-            //    weaponSpriteRenderer.flipY = isLeft;
-            //    Debug.Log($"angle: {angle}, isLeft: {isLeft}, flipY: {weaponSpriteRenderer.flipY}");
-            //}
         }
 
         if (bulletPrefab != null && firePoint != null)

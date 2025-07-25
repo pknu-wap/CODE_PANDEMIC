@@ -1,115 +1,75 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Inventory.Model;
-using System.Collections;
 using UnityEngine.EventSystems;
+using System.Collections;
+using Inventory.Model;
 
+[RequireComponent(typeof(PlayerInputHandler))]
+[RequireComponent(typeof(PlayerAnimationHandler))]
+[RequireComponent(typeof(PlayerCombatHandler))]
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerStatus))]
+[RequireComponent(typeof(PlayerStamina))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Transform _weaponHolder;
-    [SerializeField] private AnimatorOverrideController withArmOverride;
-    [SerializeField] private AnimatorOverrideController noArmOverride;
-    [SerializeField] public SpriteRenderer playerSpriteRenderer;
-    [SerializeField] private PlayerStamina _playerStamina;
-
-    private PlayerStatus _playerStatus;
-    private PlayerInteraction _playerInteraction;
-    private PlayerMovement _playerMovement;
-    private Animator _animator;
-    private EquipWeapon _equipWeapon;
-
-    private PlayerInput _playerInput;
-    private InputAction _moveAction;
-    private InputAction _runAction;
-    private InputAction _dashAction;
-
-    private bool _isInvincible = false;
-    private float _damageCooldown = 0.05f;
-    private float _lastDamageTime = -999f;
-    private float _globalNextFireTime = 0f;
+    [SerializeField] private SpriteRenderer playerSpriteRenderer;
 
     public PlayerState _currentState = PlayerState.Idle;
     public Vector2 _forwardVector;
+    public float GlobalNextFireTime { get; set; } = 0f;
     public bool IsFacingRight => transform.localScale.x < 0f;
 
+    private PlayerInputHandler _inputHandler;
+    private PlayerAnimationHandler _animationHandler;
+    private PlayerCombatHandler _combatHandler;
+    private PlayerMovement _playerMovement;
+    private PlayerStatus _playerStatus;
+    private PlayerStamina _playerStamina;
 
-    public float GlobalNextFireTime
-    {
-        get => _globalNextFireTime;
-        set => _globalNextFireTime = value;
-    }
+    private bool _isInvincible = false;
+    private float _lastDamageTime = -999f;
+    private const float _damageCooldown = 0.05f;
 
     private void Awake()
     {
-        _playerStatus = GetComponent<PlayerStatus>();
-        _playerInteraction = GetComponent<PlayerInteraction>();
+        _inputHandler = GetComponent<PlayerInputHandler>();
+        _animationHandler = GetComponent<PlayerAnimationHandler>();
+        _combatHandler = GetComponent<PlayerCombatHandler>();
         _playerMovement = GetComponent<PlayerMovement>();
-        _equipWeapon = GetComponent<EquipWeapon>();
-        _animator = GetComponent<Animator>();
+        _playerStatus = GetComponent<PlayerStatus>();
+        _playerStamina = GetComponent<PlayerStamina>();
 
-        _playerInput = new PlayerInput();
-
-        _moveAction = _playerInput.Player.Move;
-        _runAction = _playerInput.Player.Run;
-        _dashAction = _playerInput.Player.Dash;
-
+        _combatHandler.Initialize(this);
     }
 
     private void OnEnable()
     {
-        _playerInput.Enable();
-        _moveAction.Enable();
-        _runAction.Enable();
-        _dashAction.Enable();
-
-        _playerInput.Player.Reload.performed += PerformReload;
+        _inputHandler.EnableInput();
+        _combatHandler.SubscribeInput();
 
         Managers.Event.Subscribe("OnPlayerDead", OnPlayerDead);
         Managers.Event.Subscribe("OnCinematicStart", OnEnterCinematic);
         Managers.Event.Subscribe("OnCinematicEnd", OnExitCinematic);
     }
 
-
     private void OnDisable()
     {
-        _moveAction.Disable();
-        _runAction.Disable();
-        _dashAction.Disable();
-
-        _playerInput.Player.Reload.performed -= PerformReload;
+        _inputHandler.DisableInput();
+        _combatHandler.UnsubscribeInput();
 
         Managers.Event.Unsubscribe("OnPlayerDead", OnPlayerDead);
         Managers.Event.Unsubscribe("OnCinematicStart", OnEnterCinematic);
         Managers.Event.Unsubscribe("OnCinematicEnd", OnExitCinematic);
     }
 
-
-    private bool _prevHasWeapon = false;
-
     private void Update()
     {
         if (_currentState == PlayerState.Dead || _currentState == PlayerState.Cinematic)
             return;
 
-        Transform socket = _equipWeapon.WeaponSocket;
-        if (socket == null)
-        {
-            Debug.LogWarning("소켓이 비어 있습니다.");
-            return;
-        }
-
-        bool hasWeapon = socket.childCount > 0;
-
-        if (hasWeapon != _prevHasWeapon)
-        {
-            _animator.runtimeAnimatorController = hasWeapon ? noArmOverride : withArmOverride;
-            _prevHasWeapon = hasWeapon;
-        }
-
-
-        Vector2 moveInput = _moveAction.ReadValue<Vector2>();
+        Vector2 moveInput = _inputHandler.GetMoveInput();
         bool isMoving = moveInput != Vector2.zero;
-        bool wantsRun = _runAction.IsPressed();
+        bool wantsRun = _inputHandler.IsRunPressed();
         bool isAlreadyRunning = _playerStamina.isRunning;
         bool canRun = wantsRun && _playerStamina.CanRun(isAlreadyRunning);
 
@@ -117,15 +77,12 @@ public class PlayerController : MonoBehaviour
             _forwardVector = moveInput;
 
         _playerMovement.Move(moveInput, canRun);
-
-        if (canRun && isMoving)
-        {
-            _playerStamina.UseRunStamina();
-        }
-
         _playerStamina.isRunning = canRun;
 
-        if (_dashAction.triggered)
+        if (canRun && isMoving)
+            _playerStamina.StartRunning();
+
+        if (_inputHandler.IsDashTriggered())
         {
             if (_playerStamina.CanDash())
             {
@@ -138,22 +95,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        bool isDashing = _playerMovement.IsDashing;
-
-        _animator.SetBool("isWalking", isMoving && !canRun);
-        _animator.SetBool("isRunning", isMoving && canRun);
-        _animator.SetBool("isDashing", isDashing);
-
+        _animationHandler.UpdateAnimationStates(isMoving, canRun, _playerMovement.IsDashing);
         _currentState = isMoving ? PlayerState.Move : PlayerState.Idle;
 
-        if (EventSystem.current.IsPointerOverGameObject() == false && Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            _equipWeapon?.StartAttack(this);
-        }
-        else if (Mouse.current.leftButton.wasReleasedThisFrame)
-        {
-            _equipWeapon?.StopAttack();
-        }
+        _combatHandler.HandleAttackInput();
     }
 
     private void OnPlayerDead(object obj)
@@ -161,7 +106,7 @@ public class PlayerController : MonoBehaviour
         if (_currentState == PlayerState.Dead) return;
         _currentState = PlayerState.Dead;
 
-        _animator.SetBool("isDead", true);
+        _animationHandler.SetDeadAnimation();
         _playerMovement.StopImmediately();
         enabled = false;
     }
@@ -182,6 +127,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerStatus.ApplyHealChange(healValue);
     }
+
     public bool IsDead() => _currentState == PlayerState.Dead;
 
     private void OnEnterCinematic(object obj)
@@ -190,8 +136,7 @@ public class PlayerController : MonoBehaviour
 
         _currentState = PlayerState.Cinematic;
         _playerMovement.StopImmediately();
-
-        _equipWeapon?.StopAttack();
+        _combatHandler.StopAttack();
     }
 
     private void OnExitCinematic(object obj)
@@ -202,6 +147,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(InvincibilityCoroutine(0.5f));
         }
     }
+
     private IEnumerator InvincibilityCoroutine(float duration)
     {
         _isInvincible = true;
@@ -214,10 +160,4 @@ public class PlayerController : MonoBehaviour
         if (moveInput.x != 0)
             playerSpriteRenderer.flipX = moveInput.x < 0;
     }
-    private void PerformReload(InputAction.CallbackContext context)
-    {
-        Debug.LogWarning("Reload");
-        _equipWeapon?.Reload();
-    }
-
 }
