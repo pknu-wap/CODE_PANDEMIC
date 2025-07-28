@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlayerInteraction : MonoBehaviour
 {
-    private PlayerController _playerController;
-
-    private float _interactionRange = 1.5f;
     [SerializeField] private LayerMask _interactableLayer;
 
+    private PlayerController _playerController;
     private RaycastHit2D _prevHit;
+    private float _interactionRange = 1.5f;
 
     private void Start()
     {

@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class BulletPool : MonoBehaviour
 {
-    public static BulletPool Instance;
-
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private int poolSize = 20;
 
     private Queue<GameObject> bulletPool = new Queue<GameObject>();
+
+    public static BulletPool Instance;
 
     private void Awake()
     {
@@ -19,18 +19,25 @@ public class BulletPool : MonoBehaviour
         }
 
         Instance = this;
+        InitializePool();
+    }
 
-        if (bulletPrefab == null)
-        {
-            return;
-        }
+    private void InitializePool()
+    {
+        if (bulletPrefab == null) return;
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject bullet = Instantiate(bulletPrefab);
+            GameObject bullet = CreateBullet();
             bullet.SetActive(false);
             bulletPool.Enqueue(bullet);
         }
+    }
+
+    private GameObject CreateBullet()
+    {
+        GameObject bullet = Instantiate(bulletPrefab);
+        return bullet;
     }
 
     public GameObject GetBullet()
@@ -43,8 +50,7 @@ public class BulletPool : MonoBehaviour
         }
         else
         {
-            GameObject bullet = Instantiate(bulletPrefab);
-            return bullet;
+            return CreateBullet();
         }
     }
 

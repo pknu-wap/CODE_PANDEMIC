@@ -3,12 +3,17 @@ using System.Collections;
 
 public class HybridWeapon : WeaponBase
 {
+    [Header("Melee Settings")]
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackAngle = 120f;
     [SerializeField] private GameObject swingEffectPrefab;
+
+    [Header("Ranged Settings")]
     [SerializeField] private float _rotationSpeed = 720f;
+    [SerializeField] private float throwPower = 10f;
+    [SerializeField] private float autoReturnDelay = 7f;
 
     private Coroutine swingCoroutine;
     private bool _isThrown = false;
@@ -221,6 +226,9 @@ public class HybridWeapon : WeaponBase
 
         Debug.Log("[HybridWeapon] Throw (Ranged mode) 시작!");
 
+        CancelInvoke(nameof(ReturnToPlayer));
+        Invoke(nameof(ReturnToPlayer), autoReturnDelay);
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -262,6 +270,8 @@ public class HybridWeapon : WeaponBase
 
     private void ReturnToPlayer()
     {
+
+        CancelInvoke(nameof(ReturnToPlayer));
 
         PlayerController player = FindObjectOfType<PlayerController>();
         if (player != null)

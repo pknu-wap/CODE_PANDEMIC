@@ -103,7 +103,6 @@ public abstract class WeaponBase : MonoBehaviour
     private IEnumerator ReloadRoutine()
     {
         Managers.Event.InvokeEvent("Reload", _weaponData);
-
         yield return CoroutineHelper.WaitForSeconds(_weaponData.ReloadTime);
 
         _currentBullet = _weaponData.BulletCount;

@@ -12,28 +12,21 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    public void SetInfo(int damage)
-    {
-        _damage = damage;
 
-    }
     private void OnEnable()
     {
         CancelInvoke();
-        Invoke("ReturnToPool", _lifeTime);
+        Invoke(nameof(ReturnToPool), _lifeTime);
+    }
+
+    public void SetInfo(int damage)
+    {
+        _damage = damage;
     }
 
     public void Fire(Vector2 direction)
     {
-        Debug.Log("발사되었습니다.: " + direction);
         rb.velocity = direction.normalized * _speed;
-    }
-
-
-
-    private void ReturnToPool()
-    {
-        BulletPool.Instance.ReturnBullet(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -43,10 +36,21 @@ public class Bullet : MonoBehaviour
         {
             enemy.TakeDamage(_damage);
         }
+        ResetBullet();
+    }
+
+    private void ReturnToPool()
+    {
+        BulletPool.Instance.ReturnBullet(gameObject);
+    }
+
+    private void ResetBullet()
+    {
         _damage = 0;
         _owner = null;
         ReturnToPool();
     }
+
     public void SetOwner(PlayerController owner)
     {
         _owner = owner;

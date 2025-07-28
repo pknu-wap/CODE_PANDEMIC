@@ -1,20 +1,21 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D _rigidbody;
+    [SerializeField] private LayerMask _wallLayer;
 
+    private Rigidbody2D _rigidbody;
     private float _walkSpeed;
     private float _runSpeed;
     private float _dashSpeed;
     private float _dashDuration;
     private float _dashCooldown;
-
-    private bool _isDashing = false;
-    public bool IsDashing => _isDashing;
-
     private float _lastDashTime = -999f;
+    private bool _isDashing = false;
+
+    public bool IsDashing => _isDashing;
 
     private void Awake()
     {
@@ -95,11 +96,11 @@ public class PlayerMovement : MonoBehaviour
         float dashTime = 0f;
         Vector2 dashDir = direction.normalized;
 
-        while (dashTime < _dashDuration)
+        while (dashTime < _dashDuration && !IsWallAhead(dashDir))
         {
-            if (IsWallAhead(dashDir)) break;
-
-            _rigidbody.MovePosition(_rigidbody.position + dashDir * _dashSpeed * Time.fixedDeltaTime);
+            _rigidbody.MovePosition(
+                _rigidbody.position + dashDir * _dashSpeed * Time.fixedDeltaTime
+            );
 
             dashTime += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
@@ -111,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
     private bool IsWallAhead(Vector2 dashDir)
     {
         float distance = _dashSpeed * Time.fixedDeltaTime;
-        RaycastHit2D hit = Physics2D.Raycast(_rigidbody.position, dashDir, distance, LayerMask.GetMask("Wall"));
+        RaycastHit2D hit = Physics2D.Raycast(_rigidbody.position, dashDir, distance, _wallLayer);
         return hit.collider != null;
     }
 

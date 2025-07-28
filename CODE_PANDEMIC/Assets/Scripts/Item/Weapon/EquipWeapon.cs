@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Cinemachine;
 using System.Collections;
+using static Define;
 
 public class EquipWeapon : MonoBehaviour
 {
 
-    [SerializeField]
-    private WeaponBase _weapon;
-    [SerializeField]
-    private Transform _socket;
+    [SerializeField] private WeaponBase _weapon;
+    [SerializeField] private Transform _socket;
 
     private QuickSlot _quickSlot;
     private PlayerInput _weaponInput;
@@ -201,4 +200,64 @@ public class EquipWeapon : MonoBehaviour
     private void Equip3(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(3);
     private void Equip4(UnityEngine.InputSystem.InputAction.CallbackContext ctx) => EquipQuickSlot(4);
 
+    #region 테스트용
+    public void SetWeaponWithPrefab(WeaponItem weaponItem, List<ItemParameter> itemState, GameObject prefab)
+    {
+        if (!CheckReloading()) return;
+
+        if (!Managers.Data.Weapons.TryGetValue(weaponItem.TemplateID, out WeaponData data))
+        {
+            Debug.LogWarning("무기 데이터가 존재하지 않습니다.");
+            return;
+        }
+
+        data.WeaponPrefab = prefab.name; 
+
+        switch (data.Type)
+        {
+            case WeaponType.ShortWeapon:
+                if (!CheckDifferentWeapon(data, _weapon))
+                {
+                    UnEquipWeapon();
+                }
+                else
+                {
+                    SwapWeaponWithPrefab(data, _socket, prefab);
+                    Managers.Event.InvokeEvent("ShortWeaponEquipped");
+                }
+                break;
+
+            case WeaponType.PistolWeapon:
+            case WeaponType.RangeWeapon:
+                if (!CheckDifferentWeapon(data, _weapon))
+                {
+                    UnEquipWeapon();
+                }
+                else
+                {
+                    SwapWeaponWithPrefab(data, _socket, prefab);
+                    Managers.Event.InvokeEvent("GunWeaponEquipped", data.BulletCount);
+                }
+                break;
+        }
+    }
+    private void SwapWeaponWithPrefab(WeaponData data, Transform socket, GameObject prefab)
+    {
+        DestroyPrevWeapon();
+
+        GameObject weaponInstance = Instantiate(prefab, socket);
+        weaponInstance.transform.localPosition = Vector3.zero;
+        weaponInstance.transform.localRotation = Quaternion.identity;
+
+        _weapon = weaponInstance.GetComponent<WeaponBase>();
+        if (_weapon != null)
+        {
+            _weapon.SetInfo(data);
+        }
+        else
+        {
+            Debug.LogError("프리팹에 WeaponBase 컴포넌트가 없습니다.");
+        }
+    }
+    #endregion
 }
