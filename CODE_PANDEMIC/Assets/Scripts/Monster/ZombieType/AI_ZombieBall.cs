@@ -9,125 +9,71 @@ public class AI_ZombieBall : AI_Controller
     public float explosionRadius = 2.5f;
     public float explosionDamageMultiplier = 1.1f;
 
-    private float _rushEndTime = -Mathf.Infinity;
+    public LayerMask TargetLayer; // 추가
 
-    private bool _isRushing = false;
-    private bool _isDead = false;
-    private Vector2 _rushDirection;
+    private AI_ZombieBall_RushSkill _rushSkill;
+    private AI_ZombieBall_ExplosionSkill _explosionSkill;
+
+    public override ISkillBehavior Skill
+    {
+        get
+        {
+            return _rushSkill;
+        }
+    }
+
+    protected override void Awake()
+    {
+        TargetLayer = LayerMask.GetMask("Player"); // 초기화
+        base.Awake();
+        _rushSkill = new AI_ZombieBall_RushSkill();
+        _explosionSkill = new AI_ZombieBall_ExplosionSkill();
+
+        _rushSkill.RushDuration = rushDuration;
+        _rushSkill.SetSettings(null, TargetLayer, this);
+
+        _explosionSkill.explosionEffectPrefab = explosionEffectPrefab;
+        _explosionSkill.explosionRadius = explosionRadius;
+        _explosionSkill.explosionDamageMultiplier = explosionDamageMultiplier;
+        _explosionSkill.summonRadius = summonRadius;
+        _explosionSkill.zombiePrefab = zombiePrefab;
+        _explosionSkill.SetSettings(null, TargetLayer, this);
+    }
 
     protected override void Start()
     {
-    // if (_monsterData == null)
-    // {
-    //     _monsterData = new MonsterData();
-    //     _monsterData.NameID = "ZombieBall";
-    //     _monsterData.Hp = 300;
-    //     _monsterData.AttackDelay = 0;
-    //     _monsterData.DetectionRange = 0;
-    //     _monsterData.DetectionAngle = 0;
-    //     _monsterData.MoveSpeed = 7f;
-    //     _monsterData.AttackRange = 0;
-    //     _monsterData.AttackDamage = 50;
-    // }      
-        base.Start();   
-        ChangeState(new AI_StateIdle(this));
-    }
-
-    protected void Update()
-    {
-        if (_isRushing)
+        base.Start();
+        if (!Init())
         {
-            _rb.velocity = _rushDirection * MoveSpeed;
-            float rotationSpeed = MoveSpeed * 30f;
-            float direction = Mathf.Sign(_rushDirection.x);
-            transform.Rotate(Vector3.forward, -direction * rotationSpeed * Time.deltaTime);
-
-            if (Time.time >= _rushEndTime)
-            {
-                Explosion();
-            }
-        }
-    }
-
-
-    private void Explosion()
-    {
-        if (_isDead)
+            enabled = false;
             return;
-        _isRushing = false;
-        _rb.velocity = Vector2.zero;
-
-        if (explosionEffectPrefab)
-        {
-            Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
         }
-
-        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, explosionRadius, LayerMask.GetMask("Player"));
-        int damage = Mathf.RoundToInt(Damage * explosionDamageMultiplier);
-
-        foreach (var target in targets)
-        {
-            if (target.TryGetComponent<PlayerController>(out var playerStatus))
-            {
-                playerStatus.TakeDamage(gameObject, damage);
-            }
-        }
-        _isDead = true;
-        TrySummon();
-        base.Die();
-        StopMoving();
-        ChangeState(new AI_StateDie(this));
-        _animator.SetTrigger("Die");
-    }
-
-    private void TrySummon()
-    {
-        if (_player == null)
-            return;
-        int summonCount = Random.Range(3,6);
-        if (Managers.Data.Monsters.TryGetValue(5, out MonsterData data))
-        {
-            for (int i = 0; i < summonCount; i++)
-            {
-                Managers.Resource.Instantiate(data.Prefab, null, (obj) =>
-                {
-                    Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * summonRadius;
-                    obj.transform.position = spawnPos;
-                    obj.transform.SetParent(transform.parent, worldPositionStays: true);
-                    obj.GetComponent<AI_Base>()?.SetInfo(data);
-                    AI_Controller summonZombie = obj.GetComponent<AI_PatientZombie>();
-                    if (summonZombie != null)
-                    {
-                        summonZombie.ForceDetectTarget(_player);
-                    }
-                });
-               
-            }
-        }
-    }
-
-    public void TriggerRush(Vector2 direction)
-    {
-        if (_isRushing || _isDead) return;
-
-        _rushDirection = direction.normalized;
-        _isRushing = true;
-        _rushEndTime = Time.time + rushDuration;
     }
 
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        if (!_isRushing)
+        if (!_rushSkill.IsRushing)
         {
-            ForceDetectTarget(_player);
-            Vector2 dir = (_player.transform.position - transform.position).normalized;
-            TriggerRush(dir);
+            ForceDetectTarget(_detection.Player);
+            _rushSkill.StartSkill(this, null);
         }
         if (Health <= 0)
         {
-            Explosion();
+            _explosionSkill.StartSkill(this, null);
         }
+    }
+
+    protected override void Dielogic()
+    {
+        if (_isDead) return;
+        _isDead = true;
+        Managers.Game.AddZombieKillCount();
+        _combat.StopSkill();
+        _rb.velocity = Vector2.zero;
+        _movement.StopMoving();
+        _explosionSkill.StartSkill(this, null); // 폭발 로직 호출
+        ChangeState<AI_StateDie>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -138,8 +84,11 @@ public class AI_ZombieBall : AI_Controller
 
         if (((1 << otherLayer) & playerMask) != 0 || ((1 << otherLayer) & wallMask) != 0 && !_isDead)
         {
-            Explosion();
+            _explosionSkill.StartSkill(this, null);
         }
     }
-
+    public override bool IsPlayerInSkillRange()
+    {
+        return false;
+    }
 }

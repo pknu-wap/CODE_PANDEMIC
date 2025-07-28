@@ -58,7 +58,7 @@ public abstract class AI_BossController : AI_Controller
         _rb.velocity = Vector2.zero;
         StopMoving();
         Managers.Game.ClearBoss(_monsterData.TemplateID);
-        ChangeState(new AI_StateDie(this));
+        ChangeState<AI_StateDie>();
     }
 
     protected virtual void EnterBerserkMode()

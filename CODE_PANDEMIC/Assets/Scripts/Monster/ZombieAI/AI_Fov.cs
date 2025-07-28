@@ -10,16 +10,12 @@ public class AI_Fov : MonoBehaviour
     public float _fov = 180f;
     public int _rayCount = 90;
     public float _viewDistance = 4f;
-    public LayerMask _layerMask;
+    [SerializeField] private LayerMask _layerMask;
     private Mesh _mesh;
-    private List<GameObject> _detectedObjects = new List<GameObject>();
+    private readonly HashSet<GameObject> _detectedObjects = new HashSet<GameObject>();
     private void Awake()
     {
         _layerMask = LayerMask.GetMask("Wall", "Player");
-    }
-
-    private void Start()
-    {
         _mesh = new Mesh { name = "FOV" };
         GetComponent<MeshFilter>().mesh = _mesh;
     }
@@ -50,7 +46,7 @@ public class AI_Fov : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, _viewDistance, _layerMask);
             Vector3 vertex = direction * (hit.collider == null ? _viewDistance : hit.distance);
 
-            if (hit.collider != null && !_detectedObjects.Contains(hit.collider.gameObject))
+            if (hit.collider != null)
             {
                 _detectedObjects.Add(hit.collider.gameObject);
             }
@@ -79,7 +75,7 @@ public class AI_Fov : MonoBehaviour
         return new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0f);
     }
 
-    public List<GameObject> GetDetectedObjects()
+    public HashSet<GameObject> GetDetectedObjects()
     {
         return _detectedObjects;
     }

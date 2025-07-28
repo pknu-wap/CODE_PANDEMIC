@@ -1,38 +1,24 @@
 using System.Collections;
 using UnityEngine;
 
-public class AI_ThrowSkill : ISkillBehavior
+public class AI_ThrowSkill : AI_SkillBase
 {
-    protected AI_Controller _controller;
     private Coroutine _skillCoroutine;
     private float _lastSkillTime = -Mathf.Infinity;
-    protected ThrowSkillData _settings;
-    protected LayerMask _targetLayer;
-    protected AI_LineVisualizer Visualizer
+    protected ThrowSkillSettings _settings;
+
+    public override void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
     {
-        get
-        {
-            return (_controller as AI_NurseZombie)?._visualizer
-                ?? (_controller as AI_HospitalBoss)?._syringeVisualizer;
-        }
-    }
-    public void SetController(AI_Controller controller)
-    {
-        _controller = controller;
-    }
-    public virtual void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
-    {
-        _controller = controller;
-        _targetLayer = targetLayer;
-        _settings = settings as ThrowSkillData;
+        base.SetSettings(settings, targetLayer, controller);
+        _settings = settings as ThrowSkillSettings;
     }
 
-    public virtual bool IsReady(AI_Controller controller)
+    public override bool IsReady(AI_Controller controller)
     {
-        return Time.time >= _lastSkillTime + _settings.Cooldown;
+        return Time.time >= _lastSkillTime + _settings.Data.Cooldown;
     }
 
-    public virtual void StartSkill(AI_Controller controller, System.Action onSkillComplete)
+    public override void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
         if (!IsReady(controller))
         {
@@ -42,50 +28,49 @@ public class AI_ThrowSkill : ISkillBehavior
 
         _controller = controller;
         _lastSkillTime = Time.time;
-        _controller._isUsingSkill = true;
-        _controller._aiPath.canMove = false;
+        _movement._isUsingSkill = true;
+        _controller._movement.StopMoving();
         _controller._animator.SetBool("Attack", true);
         _skillCoroutine = _controller.StartCoroutine(ThrowRoutine(onSkillComplete));
     }
 
-    public virtual void StopSkill()
+    public override void StopSkill()
     {
         if (_skillCoroutine != null)
         {
             _controller.StopCoroutine(_skillCoroutine);
-            Visualizer?.Hide();
+            _settings.Visualizer?.Hide();
         }
     }
 
     protected virtual IEnumerator ThrowRoutine(System.Action onSkillComplete)
     {
-        if (_controller._player == null) yield break;
+        if (_controller._detection.Player == null) yield break;
 
         Vector2 origin = _controller.transform.position;
-        Vector2 target = _controller._player.position;
-        float width = _settings.Range;
+        Vector2 target = _controller._detection.Player.position;
+        float width = _settings.Data.Range;
 
-        Visualizer?.Show(origin, target, width);
-        yield return new WaitForSeconds(_settings.ChargeDelay);
-        Visualizer?.Hide();
+        _settings.Visualizer?.Show(origin, target, width);
+        yield return new WaitForSeconds(_settings.Data.ChargeDelay);
+        _settings.Visualizer?.Hide();
 
         ThrowSyringe((target - origin).normalized);
 
-        _controller._aiPath.canMove = true;
-        _controller._isUsingSkill = false;
+        _controller._movement.ChasePlayer();
+        _movement._isUsingSkill = false;
         onSkillComplete?.Invoke();
     }
 
     protected virtual void ThrowSyringe(Vector2 direction)
     {
-        GameObject prefab = (_controller as AI_NurseZombie)?._syringePrefab 
-                           ?? (_controller as AI_HospitalBoss)?._syringePrefab;
-                           
-        float speed = _settings.SyringeSpeed;
+        GameObject prefab = _settings.SyringePrefab;
+
+        float speed = _settings.Data.SyringeSpeed;
 
         if (prefab == null) return;
         Transform parent = _controller?.transform.parent;
-        GameObject syringe = Object.Instantiate(prefab, _controller.transform.position, Quaternion.identity , parent);
+        GameObject syringe = Object.Instantiate(prefab, _controller.transform.position, Quaternion.identity, parent);
         Rigidbody2D rb = syringe.GetComponent<Rigidbody2D>();
         if (rb != null)
             rb.velocity = direction * speed;
@@ -98,6 +83,4 @@ public class AI_ThrowSkill : ISkillBehavior
             proj.SetOwner(_controller);
         }
     }
-
-   
 }

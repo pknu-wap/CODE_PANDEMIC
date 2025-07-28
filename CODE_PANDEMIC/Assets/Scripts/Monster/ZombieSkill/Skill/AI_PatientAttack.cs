@@ -2,50 +2,41 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class AI_PatientAttack : ISkillBehavior
+public class AI_PatientAttack : AI_SkillBase
 {
-    protected AI_Controller _controller;
     private GameObject _hitboxPrefab;
     private Transform _spawnPoint;
-    private float _cooldown;
-    private float _duration;
     private float _lastUsedTime;
     private Coroutine _skillCoroutine;
-    // protected PatientSkillData _settings;
-    protected LayerMask _targetLayer;
+    protected PatientAttackSkillData _settings;
 
-    public void SetController(AI_Controller controller)
+    public override void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
     {
-        _controller = controller;
-    }
-
-    public AI_PatientAttack(GameObject hitboxPrefab, Transform spawnPoint, float cooldown, float duration)
-    {
-        _hitboxPrefab = hitboxPrefab;
-        _spawnPoint = spawnPoint;
-        _cooldown = cooldown;
-        _duration = duration;
+        base.SetSettings(settings, targetLayer, controller);
+        _settings = settings as PatientAttackSkillData;
+        _hitboxPrefab = _settings.HitboxPrefab;
+        _spawnPoint = _settings.SpawnPoint;
         if (_hitboxPrefab != null)
             _hitboxPrefab.SetActive(false);
     }
 
-    public bool IsReady(AI_Controller controller)
+    public override bool IsReady(AI_Controller controller)
     {
-        return Time.time >= _lastUsedTime + _cooldown;
+        return Time.time >= _lastUsedTime + _settings.Cooldown;
     }
 
-    public void StartSkill(AI_Controller controller, System.Action onSkillComplete)
+    public override void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
         if (!IsReady(controller))
         {
             onSkillComplete?.Invoke();
             return;
         }
-        _controller = controller;        
+        _controller = controller;
         _controller._animator.SetBool("Attack", true);
         _lastUsedTime = Time.time;
-        _controller._isUsingSkill = true;
-        _controller._aiPath.canMove = false;
+        _movement._isUsingSkill = true;
+        _controller._movement.StopMoving();
 
         _skillCoroutine = _controller.StartCoroutine(SkillRoutine(onSkillComplete));
     }
@@ -60,27 +51,20 @@ public class AI_PatientAttack : ISkillBehavior
         }
         _hitboxPrefab.transform.position = spawnPos;
         _hitboxPrefab.SetActive(true);
-        _hitboxPrefab.GetComponent<AttackCollider>().Initialize((int)_controller.Damage, _duration, LayerMask.GetMask("Player"));
+        _hitboxPrefab.GetComponent<AttackCollider>().Initialize((int)_controller.Damage, _settings.Duration, LayerMask.GetMask("Player"));
 
-        yield return new WaitForSeconds(_duration);
+        yield return new WaitForSeconds(_settings.Duration);
         _hitboxPrefab.SetActive(false);
-        _controller._isUsingSkill = false;
-        _controller._aiPath.canMove = true;
+        _movement._isUsingSkill = false;
+        _movement.ChasePlayer();
         onSkillComplete?.Invoke();
     }
 
-    public void StopSkill()
+    public override void StopSkill()
     {
         if (_skillCoroutine != null && _controller != null)
         {
             _controller.StopCoroutine(_skillCoroutine);
         }
     }
-    public void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
-    {
-        _controller = controller;
-        _targetLayer = targetLayer;
-        // _settings = settings as PatientSkillData;
-    }
-    
 }
