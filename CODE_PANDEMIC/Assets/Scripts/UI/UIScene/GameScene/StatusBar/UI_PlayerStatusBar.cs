@@ -12,7 +12,7 @@ public class UI_PlayerStatusBar : UI_Base
     private RectTransform _effectHpBar;
 
     private float _originWidth;
-
+   
     public override bool Init()
     {
         if (base.Init() == false)
