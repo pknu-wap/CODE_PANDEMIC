@@ -15,4 +15,11 @@ public abstract class PZ_Puzzle_UI_Side : PZ_Puzzle_UI_Base
             }
         }
     }
+
+    public override void PuzzleClear()
+    {
+        base.PuzzleClear();
+
+        GiveReward();
+    }
 }
