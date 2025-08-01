@@ -18,6 +18,11 @@ GameObject:
   - component: {fileID: 3866471302837826774}
   - component: {fileID: 16658343491885627}
   - component: {fileID: 2307662677944001384}
+  - component: {fileID: 94443752396917965}
+  - component: {fileID: 7865888758224177585}
+  - component: {fileID: 3770412662217192772}
+  - component: {fileID: 1388414486358554537}
+  - component: {fileID: 3580150483346153137}
   m_Layer: 12
   m_Name: ThunderZombie
   m_TagString: Enemy
@@ -323,24 +328,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52429bbd2cbf274ead918711cbe9485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statusBar: {fileID: 2426114506925949664}
-  _player: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
+  _movement: {fileID: 94443752396917965}
+  _detection: {fileID: 7865888758224177585}
+  _combat: {fileID: 3770412662217192772}
   _animator: {fileID: 2348480541319997688}
-  _aiFov: {fileID: 9046656977550785433}
-  _aiPath: {fileID: 9151314753842261910}
-  _isUsingSkill: 0
-  _attackedPlayer: 0
   _isDead: 0
-  _thunderCoolDown: 10
-  _thunderDelay: 1
-  _attackCooldown: 2
-  _attackDuration: 0.1
   attackColliderPrefab: {fileID: 9029848103909087761}
   hitboxSpawnPoint: {fileID: 1456583013782869604}
   thunderPrefab: {fileID: 8341362285685389900, guid: 8b942920d41f5c341809bc05a75cae21, type: 3}
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &94443752396917965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118186621720114397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ab5d4b695d004d9ef3be090ba6881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isUsingSkill: 0
+--- !u!114 &7865888758224177585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118186621720114397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ba5dbbfeef77940b097c793fc182bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aiFov: {fileID: 9046656977550785433}
+--- !u!114 &3770412662217192772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118186621720114397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c8e1261c0647348b4fd573527de954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1388414486358554537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118186621720114397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e92234faca5c3043b2efc0fd8061dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3580150483346153137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118186621720114397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be505b4af2f01db4fb99d67371bba6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statusBar: {fileID: 2426114506925949664}
 --- !u!1 &8104003313872174260
 GameObject:
   m_ObjectHideFlags: 0

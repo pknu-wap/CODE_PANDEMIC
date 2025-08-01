@@ -1,33 +1,25 @@
 using System.Collections;
 using UnityEngine;
 
-public class AI_DashSkill : ISkillBehavior
+public class AI_DashSkill : AI_SkillBase
 {
-    protected AI_Controller _controller;
     private Coroutine _dashCoroutine;
     protected DashSkillData _settings;
-    protected LayerMask _targetLayer;
     private float _lastSkillTime = -Mathf.Infinity;
     protected float _baseAnimationDuration = 0.5f; // 기본 애니메이션 길이
 
-    public void SetController(AI_Controller controller)
+    public override void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
     {
-        _controller = controller;
-    }
-
-    public virtual void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
-    {
-        _controller = controller;
-        _targetLayer = targetLayer;
+        base.SetSettings(settings, targetLayer, controller);
         _settings = settings as DashSkillData;
     }
 
-    public virtual bool IsReady(AI_Controller controller)
+    public override bool IsReady(AI_Controller controller)
     {
         return Time.time >= _lastSkillTime + _settings.Cooldown;
     }
 
-    public virtual void StartSkill(AI_Controller controller, System.Action onSkillComplete)
+    public override void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
         if (!IsReady(controller))
         {
@@ -37,12 +29,12 @@ public class AI_DashSkill : ISkillBehavior
 
         _controller = controller;
         _lastSkillTime = Time.time;
-        _controller._isUsingSkill = true;
-        _controller._aiPath.canMove = false;
+        _movement._isUsingSkill = true;
+        _controller._movement.StopMoving();
         _dashCoroutine = _controller.StartCoroutine(DashRoutine(onSkillComplete));
     }
 
-    public virtual void StopSkill()
+    public override void StopSkill()
     {
         if (_dashCoroutine != null && _controller != null)
         {
@@ -53,7 +45,7 @@ public class AI_DashSkill : ISkillBehavior
     protected virtual IEnumerator DashRoutine(System.Action onSkillComplete)
     {
         Vector2 start = _controller.transform.position;
-        Vector2 target = _controller._player.position;
+        Vector2 target = _controller._detection.Player.position;
 
         Vector2 direction = (target - start).normalized;
         float distanceToPlayer = Vector2.Distance(start, target);
@@ -87,10 +79,10 @@ public class AI_DashSkill : ISkillBehavior
             if (rb != null)
                 rb.velocity = direction * _settings.Speed;
 
-            if (!_hasHitPlayer && Vector2.Distance(_controller.transform.position, _controller._player.position) <= 1f)
+            if (!_hasHitPlayer && Vector2.Distance(_controller.transform.position, _controller._detection.Player.position) <= 1f)
             {
                 _hasHitPlayer = true;
-                if (_controller._player.TryGetComponent<PlayerController>(out var player))
+                if (_controller._detection.Player.TryGetComponent<PlayerController>(out var player))
                 {
                     int damage = Mathf.RoundToInt(_controller.AiDamage * 0.8f);
                     player.TakeDamage(_controller.gameObject, damage);
@@ -108,8 +100,8 @@ public class AI_DashSkill : ISkillBehavior
             rb.velocity = Vector2.zero;
 
         _controller._animator.speed = 1f;
-        _controller._aiPath.canMove = true;
-        _controller._isUsingSkill = false;
+        _controller._movement.ChasePlayer();
+        _movement._isUsingSkill = false;
         onSkillComplete?.Invoke();
     }
 }

@@ -1,20 +1,14 @@
 using UnityEngine;
-public class AI_StateDie : AI_IState
+public class AI_StateDie : AI_StateBase
 {
-    private readonly AI_Controller _controller;
-    public AI_StateDie(AI_Controller controller){
-        _controller = controller;
-    }
-
-    public void OnEnter()
+    public override void OnEnter(AI_Controller controller)
     {
+        base.OnEnter(controller);
         _controller._animator.SetTrigger("Die");
         _controller._animator.SetBool("Walk", false);
         _controller._animator.SetBool("Attack", false);
-        _controller.Die(); // 실제 죽는 처리
+        _controller.Die();
     }
 
-    public void OnUpdate() { }
-
-    public void OnExit() { }
+    public override void OnUpdate() { }
 }
