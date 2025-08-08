@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.InputSystem;
 
 public class DroneController : MonoBehaviour
 {
@@ -10,9 +12,18 @@ public class DroneController : MonoBehaviour
 
     private Transform target;
     private float nextFireTime;
+    private bool isActive = false;
+    private bool isRunningCycle = false;
 
     void Update()
     {
+        if (Keyboard.current.qKey.wasPressedThisFrame && !isRunningCycle)
+        {
+            StartCoroutine(DroneCycle());
+        }
+
+        if (!isActive) return;
+
         FindTarget();
 
         if (target != null)
@@ -20,6 +31,24 @@ public class DroneController : MonoBehaviour
             MoveToTarget();
             AimAtTarget();
             TryFire();
+        }
+    }
+
+    IEnumerator DroneCycle()
+    {
+        isRunningCycle = true;
+
+        while (true)
+        {
+            // 드론 활성화
+            isActive = true;
+            Debug.Log("Drone 활성화됨");
+            yield return new WaitForSeconds(10f);
+
+            // 드론 비활성화
+            isActive = false;
+            Debug.Log("Drone 비활성화됨");
+            yield return new WaitForSeconds(15f);
         }
     }
 
