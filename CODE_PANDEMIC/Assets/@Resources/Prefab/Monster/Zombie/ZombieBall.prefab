@@ -120,6 +120,11 @@ GameObject:
   - component: {fileID: 6865276366003827684}
   - component: {fileID: 8586308088657716303}
   - component: {fileID: 669234386488741438}
+  - component: {fileID: 3884591444567979247}
+  - component: {fileID: 589689161302041071}
+  - component: {fileID: 2858291754658288034}
+  - component: {fileID: 7920061269801057384}
+  - component: {fileID: 6070813707706901060}
   m_Layer: 12
   m_Name: ZombieBall
   m_TagString: Enemy
@@ -245,19 +250,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1af63134ba4ad44a8f65dea4aa67f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statusBar: {fileID: 0}
-  _player: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
+  _movement: {fileID: 0}
+  _detection: {fileID: 0}
+  _combat: {fileID: 0}
   _animator: {fileID: 669234386488741438}
-  _aiFov: {fileID: 5030598014024440797}
-  _aiPath: {fileID: 3116256864094936936}
-  _isUsingSkill: 0
-  _attackedPlayer: 0
+  _isDead: 0
   zombiePrefab: {fileID: 6117609622689961263, guid: 35be60d419c823f4a8ba23bccc8dd639, type: 3}
   explosionEffectPrefab: {fileID: 4509841408478016183, guid: c5980dee78a5a464dba045d1e66147d8, type: 3}
   summonRadius: 1.5
   rushDuration: 2
   explosionRadius: 2.5
   explosionDamageMultiplier: 1.1
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &8111326292182301419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +441,69 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3884591444567979247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8363418142991693937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ab5d4b695d004d9ef3be090ba6881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isUsingSkill: 0
+--- !u!114 &589689161302041071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8363418142991693937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ba5dbbfeef77940b097c793fc182bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aiFov: {fileID: 5030598014024440797}
+--- !u!114 &2858291754658288034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8363418142991693937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c8e1261c0647348b4fd573527de954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7920061269801057384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8363418142991693937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e92234faca5c3043b2efc0fd8061dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6070813707706901060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8363418142991693937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be505b4af2f01db4fb99d67371bba6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statusBar: {fileID: 0}
 --- !u!1001 &6926984591252753122
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ public class AI_HospitalBoss : AI_BossController
     }
     protected override void Start()
     {
-        ChangeState(new AI_StateIdle(this));
+        ChangeState<AI_StateIdle>();
         _throwSkill.SetController(this);
         _sweepSkill.SetController(this);
         _dashSkill.SetController(this);
@@ -85,15 +85,15 @@ public class AI_HospitalBoss : AI_BossController
         base.Awake();
     }
   
-    public override bool IsPlayerInSkillRange()
-    {
-        float distance = Vector2.Distance(transform.position, _player.position);
+    // public override bool IsPlayerInSkillRange()
+    // {
+    //     float distance = Vector2.Distance(transform.position, _player.position);
 
-        if (_sweepSkill != null && _sweepSkill.IsReady(this) && _shortAttack == true)
-            return distance <= _sweepSkillData.Range * 0.7f;
-        else
-            return distance <= _monsterData.DetectionRange;
-    }
+    //     if (_sweepSkill != null && _sweepSkill.IsReady(this) && _shortAttack == true)
+    //         return distance <= _sweepSkillData.Range * 0.7f;
+    //     else
+    //         return distance <= _monsterData.DetectionRange;
+    // }
     private void SettingData()
     {
         _sweepSkillData = new SweepSkillData

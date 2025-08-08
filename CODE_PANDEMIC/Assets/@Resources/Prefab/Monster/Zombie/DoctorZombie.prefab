@@ -120,6 +120,11 @@ GameObject:
   - component: {fileID: 7808319879559601176}
   - component: {fileID: 3917991135891355127}
   - component: {fileID: 8536497522474032142}
+  - component: {fileID: 1294605010573515893}
+  - component: {fileID: 7762531289548051503}
+  - component: {fileID: 9186162723720707889}
+  - component: {fileID: 1098838590550282571}
+  - component: {fileID: 1253087722267004615}
   m_Layer: 12
   m_Name: DoctorZombie
   m_TagString: Enemy
@@ -423,23 +428,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a10914244c1ae4ebd87616b0c802c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statusBar: {fileID: 224779457809320464}
-  _player: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
+  _movement: {fileID: 1294605010573515893}
+  _detection: {fileID: 7762531289548051503}
+  _combat: {fileID: 9186162723720707889}
   _animator: {fileID: 8153164703839869722}
-  _aiFov: {fileID: 8924172601113639245}
-  _aiPath: {fileID: 140057819118564430}
-  _isUsingSkill: 0
-  _attackedPlayer: 0
+  _isDead: 0
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
-  _sweepSkillData:
-    Cooldown: 0
-    Count: 0
-    Interval: 0
-    Range: 0
-    Angle: 0
-    ChargeDelay: 0
+--- !u!114 &1294605010573515893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7411446937260651626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ab5d4b695d004d9ef3be090ba6881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isUsingSkill: 0
+--- !u!114 &7762531289548051503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7411446937260651626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ba5dbbfeef77940b097c793fc182bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aiFov: {fileID: 8924172601113639245}
+--- !u!114 &9186162723720707889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7411446937260651626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c8e1261c0647348b4fd573527de954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1098838590550282571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7411446937260651626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e92234faca5c3043b2efc0fd8061dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1253087722267004615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7411446937260651626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be505b4af2f01db4fb99d67371bba6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statusBar: {fileID: 224779457809320464}
 --- !u!1001 &3049042157426313947
 PrefabInstance:
   m_ObjectHideFlags: 0

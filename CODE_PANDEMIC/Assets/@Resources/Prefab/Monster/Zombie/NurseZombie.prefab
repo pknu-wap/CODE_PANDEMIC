@@ -101,7 +101,7 @@ MonoBehaviour:
   _viewDistance: 7.5
   _layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 136
 --- !u!1 &1581368628654613828
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,6 +165,11 @@ GameObject:
   - component: {fileID: 1199447015546067354}
   - component: {fileID: 4450321976181091342}
   - component: {fileID: -641412139093632534}
+  - component: {fileID: 3109993271051667693}
+  - component: {fileID: 9130037518389348048}
+  - component: {fileID: 2281389630109981564}
+  - component: {fileID: 1965370687985804377}
+  - component: {fileID: 1478664999542892787}
   m_Layer: 12
   m_Name: NurseZombie
   m_TagString: Enemy
@@ -255,18 +260,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee5850eeeff3204a8d5dd72229f1946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statusBar: {fileID: 3070170966509570469}
+  _movement: {fileID: 3109993271051667693}
+  _detection: {fileID: 9130037518389348048}
+  _combat: {fileID: 2281389630109981564}
   _player: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
   _animator: {fileID: 1199447015546067354}
-  _aiFov: {fileID: 6530414335077700310}
-  _aiPath: {fileID: 3720851884296316083}
-  _isUsingSkill: 0
-  _attackedPlayer: 0
+  _isDead: 0
   _syringePrefab: {fileID: 4688839435082273960, guid: 2d431244ffcb9844aa8d3231bbc23504, type: 3}
-  SkillCooldown: 8
-  SkillChargeDelay: 1
-  SyringeSpeed: 10
-  SyringeRange: 7
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -485,6 +485,69 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3109993271051667693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954702815652460496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ab5d4b695d004d9ef3be090ba6881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isUsingSkill: 0
+--- !u!114 &9130037518389348048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954702815652460496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ba5dbbfeef77940b097c793fc182bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aiFov: {fileID: 6530414335077700310}
+--- !u!114 &2281389630109981564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954702815652460496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c8e1261c0647348b4fd573527de954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1965370687985804377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954702815652460496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e92234faca5c3043b2efc0fd8061dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1478664999542892787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954702815652460496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be505b4af2f01db4fb99d67371bba6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statusBar: {fileID: 3070170966509570469}
 --- !u!1001 &1043101935311106909
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,42 +1,51 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 
 public abstract class AI_Base : MonoBehaviour
 {
-    // 기본 체력, 데미지, 이동 속도, 감지 범위, 시야각 등 공통 속성
-    [SerializeField] UI_EnemyStatusBar _statusBar;
     protected MonsterData _monsterData;
-    int _currentHp = 0;
     protected AI_State _state = AI_State.Idle;
+    protected AI_Health _health;
+
     public event Action OnDie;
 
-    
+    protected virtual void Awake()
+    {
+        _health = GetComponent<AI_Health>();
+    }
+
+    protected virtual void OnEnable()
+    {
+        _health.OnDied += Die;
+    }
+
+    protected virtual void OnDisable()
+    {
+        _health.OnDied -= Die;
+    }
+
     public virtual void SetInfo(MonsterData monsterData)
     {
         _monsterData = monsterData;
-        _currentHp = monsterData.Hp;
-        if (_statusBar != null)
-        {
-            _statusBar.Init(monsterData);
-        }
+        _health.SetInfo(monsterData);
     }
+
     public virtual bool Init()
     {
         if (_monsterData == null)
         {
-            _monsterData.NameID = "TestZombie";
-            _monsterData.Hp = 100;
-            _currentHp = _monsterData.Hp;
-            _monsterData.AttackDelay = 5.0f;
-            _monsterData.DetectionRange = 7.5f;
-            _monsterData.DetectionAngle = 120;
-            _monsterData.MoveSpeed = 1.0f;
-            _monsterData.AttackRange = 2f;
-            _monsterData.AttackDamage = 10;
-
+            _monsterData = new MonsterData
+            {
+                NameID = "TestZombie",
+                Hp = 100,
+                AttackDelay = 5.0f,
+                DetectionRange = 7.5f,
+                DetectionAngle = 120,
+                MoveSpeed = 1.0f,
+                AttackRange = 2f,
+                AttackDamage = 10
+            };
+            _health.SetInfo(_monsterData);
         }
         return true;
     }
@@ -53,49 +62,28 @@ public abstract class AI_Base : MonoBehaviour
 
     public virtual void TakeDamage(int amount)
     {
-        if (_currentHp <= 0f)
-            return;
-        _currentHp -= amount;
-        if (_statusBar != null)
-        {
-            if (_statusBar.gameObject?.activeSelf == false)
-                _statusBar.gameObject?.SetActive(true);
-            _statusBar?.UpdateHpBar(Mathf.RoundToInt(_currentHp));
-        }
-        if (_currentHp<= 0f)
-        {
-            Die();
-        }
+        _health.TakeDamage(amount);
     }
 
     public virtual void Die()
     {
+        if (_state == AI_State.Dead)
+            return;
+
         _state = AI_State.Dead;
-        Managers.Game.AddZombieKillCount();
-        Action callback = OnDie;
-        if (callback != null)
-            callback();
+        OnDie?.Invoke();
     }
+
     public virtual void DieAnimationEnd()
     {
         gameObject.SetActive(false);
     }
 
-    internal void TakeDamage(int damage, Vector3 knockbackDir)
-    {
-        throw new NotImplementedException();
-    }
-
-    internal void TakeDamage(float handAttackDamage)
-    {
-        throw new NotImplementedException();
-    }
-
-    public float MoveSpeed { get { return _monsterData.MoveSpeed; } }
-    public float DetectionRange { get { return _monsterData.DetectionRange; } }
-    public float DetectionAngle { get { return _monsterData.DetectionAngle; } }
-    public float Damage { get { return _monsterData.AttackDamage; } }
-    public int Health { get { return _currentHp; } }
-    public float AttackRange { get { return _monsterData.AttackRange; } }
-    public float AttackDelay { get { return _monsterData.AttackDelay; } }
+    public float MoveSpeed => _monsterData.MoveSpeed;
+    public float DetectionRange => _monsterData.DetectionRange;
+    public float DetectionAngle => _monsterData.DetectionAngle;
+    public float Damage => _monsterData.AttackDamage;
+    public int Health => _health.CurrentHp;
+    public float AttackRange => _monsterData.AttackRange;
+    public float AttackDelay => _monsterData.AttackDelay;
 }

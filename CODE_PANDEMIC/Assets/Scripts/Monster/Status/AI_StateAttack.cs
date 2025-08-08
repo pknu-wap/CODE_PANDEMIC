@@ -1,58 +1,45 @@
 using System.Collections;
 using UnityEngine;
 
-public class AI_StateAttack : AI_IState
+public class AI_StateAttack : AI_StateBase
 {
-    private float _chargeDelay = 1f;
-    private readonly AI_Controller _controller;
-
-    public AI_StateAttack(AI_Controller controller) 
-    { 
-        _controller = controller;
-    }
-
-    public virtual void OnEnter()
+    public override void OnEnter(AI_Controller controller)
     {
-        _controller.StopMoving();
-        _controller.UpdateDirection();
-        _controller._isUsingSkill = true;
+        base.OnEnter(controller);
+        _controller._animator.SetBool("Attack", true);
+        _movement.StopMoving();
+        _movement.UpdateDirection(_detection.Player);
+        _movement._isUsingSkill = true;
+        
         _controller.StartCoroutine(ChargeAndExecuteSkill());
     }
 
-    public virtual void OnUpdate()
+    public override void OnUpdate()
     {
-        if (_controller._isUsingSkill)
-            return;
     }
 
-    public virtual void OnFixedUpdate() { }
-
-    public virtual void OnExit()
+    public override void OnExit()
     {
-        if (_controller.Skill != null)
-            _controller.Skill.StopSkill();
-        _controller._isUsingSkill = false;
-        _controller.StopAttack();
+        _combat.StopAttack(null);
     }
 
     private IEnumerator ChargeAndExecuteSkill()
     {
-        if (_controller.Skill != null && _controller.Skill.IsReady(_controller))
+        if (_combat.Skill.IsReady(_controller))
         {
-            _controller.Skill.StartSkill(_controller, OnSkillComplete);
+            _combat.Skill.StartSkill(_controller, OnSkillComplete);
         }
         else
         {
             OnSkillComplete();
         }
-        yield break;
+        yield return null; 
     }
 
     private void OnSkillComplete()
     {
-        _controller._isUsingSkill = false;
-        _controller.ChangeState(new AI_StateWalk(_controller));
-        _controller._animator.SetBool("Attack" , false);
-        _controller.StopAttack();
+        _movement._isUsingSkill = false;
+        _controller._animator.SetBool("Attack", false);
+        _controller.ChangeState<AI_StateWalk>();
     }
 }

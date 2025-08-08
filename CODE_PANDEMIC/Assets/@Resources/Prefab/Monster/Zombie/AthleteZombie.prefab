@@ -18,6 +18,11 @@ GameObject:
   - component: {fileID: 3138268074192050209}
   - component: {fileID: 5109862455760832377}
   - component: {fileID: 6903362446902183446}
+  - component: {fileID: 6483019150510315017}
+  - component: {fileID: 8673092758916890544}
+  - component: {fileID: 7755812542354994241}
+  - component: {fileID: 5922815422279831222}
+  - component: {fileID: 8723926444519403290}
   m_Layer: 12
   m_Name: AthleteZombie
   m_TagString: Enemy
@@ -301,22 +306,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126c992aa0625a245bbee2e4b5ff7213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statusBar: {fileID: 2754730304722430225}
-  _player: {fileID: 2242487472525224633, guid: 78723ed1fd648454c8cb060393e63416, type: 3}
+  _movement: {fileID: 6483019150510315017}
+  _detection: {fileID: 8673092758916890544}
+  _combat: {fileID: 7755812542354994241}
   _animator: {fileID: 6903362446902183446}
-  _aiFov: {fileID: 7754338754514101537}
-  _aiPath: {fileID: 4189879473786056706}
-  _isUsingSkill: 0
-  _attackedPlayer: 0
+  _isDead: 0
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
   _visualizer: {fileID: 3666780639554816551}
-  _dashSkillData:
-    Cooldown: 0
-    Width: 0
-    Speed: 0
-    ChargeDelay: 0
 --- !u!95 &6903362446902183446
 Animator:
   serializedVersion: 5
@@ -338,6 +336,69 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6483019150510315017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868338364832519190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ab5d4b695d004d9ef3be090ba6881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isUsingSkill: 0
+--- !u!114 &8673092758916890544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868338364832519190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ba5dbbfeef77940b097c793fc182bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aiFov: {fileID: 7754338754514101537}
+--- !u!114 &7755812542354994241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868338364832519190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c8e1261c0647348b4fd573527de954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5922815422279831222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868338364832519190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e92234faca5c3043b2efc0fd8061dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8723926444519403290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868338364832519190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be505b4af2f01db4fb99d67371bba6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statusBar: {fileID: 2754730304722430225}
 --- !u!1 &6117798260881096819
 GameObject:
   m_ObjectHideFlags: 0

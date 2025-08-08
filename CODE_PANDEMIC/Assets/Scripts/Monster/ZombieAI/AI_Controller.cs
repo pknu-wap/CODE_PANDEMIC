@@ -1,6 +1,6 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
-using System.Linq;
 
 public enum AI_State
 {
@@ -10,35 +10,42 @@ public enum AI_State
     Dead
 }
 
+[RequireComponent(typeof(AI_Movement), typeof(AI_Detection), typeof(AI_Combat))]
 public class AI_Controller : AI_Base
 {
-    public Transform _player;
+    public AI_Movement _movement;
+    public AI_Detection _detection;
+    public AI_Combat _combat;
+
     protected Rigidbody2D _rb;
-    protected SpriteRenderer _renderer;
     public Animator _animator;
-    [SerializeField] protected AI_Fov _aiFov;
-    public AIPath _aiPath;
-    public AIDestinationSetter _destinationSetter;
-    EnemyDamageEffect _damageEffect;
+    private EnemyDamageEffect _damageEffect;
 
     protected AI_IState _currentState;
-    protected bool _isAttacking;
-    public bool _isUsingSkill;
-    public bool _attackedPlayer;
+    private Dictionary<Type, AI_IState> _states;
+
     public bool _isDead = false;
-    private const float SkillRange = 7.5f;
+
     public virtual ISkillBehavior Skill => null;
-    
     public virtual float AiDamage => 0f;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        _movement = GetComponent<AI_Movement>();
+        _detection = GetComponent<AI_Detection>();
+        _combat = GetComponent<AI_Combat>();
         _rb = GetComponent<Rigidbody2D>();
-        _renderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
-        _aiPath = GetComponent<AIPath>();
-        _destinationSetter = GetComponent<AIDestinationSetter>();
         _damageEffect = Utils.GetOrAddComponent<EnemyDamageEffect>(gameObject);
+
+        _states = new Dictionary<Type, AI_IState>
+        {
+            { typeof(AI_StateIdle), new AI_StateIdle() },
+            { typeof(AI_StateWalk), new AI_StateWalk() },
+            { typeof(AI_StateAttack), new AI_StateAttack() },
+            { typeof(AI_StateDie), new AI_StateDie() }
+        };
     }
 
     protected virtual void Start()
@@ -49,11 +56,12 @@ public class AI_Controller : AI_Base
             return;
         }
 
-        ConfigurePathfinding();
-        ChangeState(new AI_StateIdle(this));
-        _state = AI_State.Idle;
-
-        _destinationSetter.target = null;
+        _movement.Configure(MoveSpeed);
+        if (Skill != null)
+        {
+            _combat.Skill = Skill;
+        }
+        ChangeState<AI_StateIdle>();
     }
 
     public override bool Init()
@@ -64,80 +72,49 @@ public class AI_Controller : AI_Base
 
     private void Update()
     {
-        if (_player == null || Skill == null) return;
-        if (_isUsingSkill) return;
-        if (_currentState is AI_StateDie || _isDead) return;
-        
-        DetectPlayer();
+        if (_isDead) return;
+        _detection.DetectPlayer(OnPlayerDetected);
         _currentState?.OnUpdate();
-
         bool inRange = IsPlayerInSkillRange();
-        bool skillReady = Skill.IsReady(this);
-        bool inFov = IsPlayerDetected();
-        if (!_isAttacking && inRange && skillReady && inFov)
+        bool skillReady = Skill != null && Skill.IsReady(this);
+        if (!_movement._isUsingSkill && inRange && skillReady && _detection.IsPlayerDetected)
         {
-            StartAttack();
+            _combat.StartAttack(OnAttackStarted);
         }
-        else if (_isAttacking && (!inRange || !skillReady))
-            StopAttack();
     }
 
     private void FixedUpdate()
     {
-        if (_player == null || _currentState is AI_StateDie || _isDead) return;
-        UpdateDirection();
-        UpdateFovDirection();
+        if (_isDead) return;
+        _movement.UpdateDirection(_detection.Player);
+        _movement.UpdateFovDirection();
         _currentState?.OnFixedUpdate();
     }
 
-    private void DetectPlayer()
+    private void OnPlayerDetected(Transform player)
     {
-        bool playerFound = false;
-    foreach (var obj in _aiFov.GetDetectedObjects())
-    {
-        if (_player != null && obj.TryGetComponent<PlayerStatus>(out _))
+        _movement.SetTarget(player);
+        if (player == null)
         {
-            _player = obj.transform;
-            _destinationSetter.target = _player;
-            playerFound = true;
-            break;
+            _movement.StopMoving();
+        }
+        else
+        {
+            if (_currentState is AI_StateIdle)
+            {
+                ChangeState<AI_StateWalk>();
+            }
         }
     }
 
-    if (!_attackedPlayer && !playerFound)
+    public void ChangeState<T>() where T : AI_IState
     {
-        _destinationSetter.target = null;
-        StopMoving();
-    }
-}
-
-    public virtual void UpdateFovDirection()
-    {
-        if (_player == null || _aiFov == null) return;
-        float angle = transform.localScale.x < 0 ? 0f : 180f;
-        _aiFov.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
-    }
-
-    public virtual void UpdateDirection()
-    {
-        if (_player == null || _isUsingSkill) return;
-
-        float direction = _player.position.x - transform.position.x;
-        Vector3 scale = transform.localScale;
-        scale.x = direction > 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
-        transform.localScale = scale;
-    }
-
-    public void ChasePlayer() => _aiPath.canMove = true;
-    public void StopMoving() => _aiPath.canMove = false;
-
-    public void ChangeState(AI_IState newState)
-    {
-        if (_currentState?.GetType() == newState.GetType()) return;
-        if (_currentState is AI_StateDie) return;
+        if (!_states.TryGetValue(typeof(T), out var newState)) return;
+        if (_currentState?.GetType() == typeof(T) || _currentState is AI_StateDie) return;
+        
         _currentState?.OnExit();
         _currentState = newState;
-        _currentState?.OnEnter();
+        _currentState.OnEnter(this);
     }
 
     public override void TakeDamage(int amount)
@@ -147,70 +124,56 @@ public class AI_Controller : AI_Base
         if (Health > 0)
             _damageEffect.CallDamageFlash();
 
-        if (!_isUsingSkill && _currentState is not AI_StateDie)
+        if (_currentState is not AI_StateDie)
         {
-            _player = FindObjectOfType<PlayerStatus>().transform;
-            ForceDetectTarget(_player);
+            var player = FindObjectOfType<PlayerStatus>().transform;
+            ForceDetectTarget(player);
         }
-        if (Health <= 0 && !_isDead)
-        {
-            Dielogic();
-        }
-            
+    }
+
+    public override void Die()
+    {
+        Dielogic();
     }
 
     protected virtual void Dielogic()
     {
+        if (_isDead) return;
         _isDead = true;
-        Skill?.StopSkill();
+        Managers.Game.AddZombieKillCount();
+        _combat.StopSkill();
         _rb.velocity = Vector2.zero;
-        StopMoving();
-        ChangeState(new AI_StateDie(this));
+        _movement.StopMoving();
+        ChangeState<AI_StateDie>();
     }
 
-
-    public bool IsPlayerDetected() =>
-        _attackedPlayer || (_player != null && _aiFov.GetDetectedObjects().Contains(_player.gameObject));
-
-    public virtual bool IsPlayerInSkillRange() =>
-        _player != null && Vector2.Distance(transform.position, _player.position) <= SkillRange;
-
-    public virtual void ForceDetectTarget(Transform player)
+    public void ForceDetectTarget(Transform player)
     {
-        _player = player;
-        _destinationSetter.target = player;
-        _attackedPlayer = true;
-        _aiPath.destination = player.position;
-        ChangeState(new AI_StateWalk(this));
+        _detection.ForceDetectTarget(player);
+        _movement.SetTarget(player);
+        ChangeState<AI_StateWalk>();
     }
 
-    public bool IsAttacking() => _isAttacking;
-
-    public void StartAttack()
+    private void OnAttackStarted()
     {
-        if (_isAttacking || _player == null) return;
-
-        _isAttacking = true;
-        StopMoving();
-        ChangeState(new AI_StateAttack(this));
+        _movement.StopMoving();
+        ChangeState<AI_StateAttack>();
     }
 
-    public void StopAttack()
+    public void OnAttackStopped()
     {
-        if (!_isAttacking) return;
-
-        _isAttacking = false;
-        ChasePlayer();
-        ChangeState(new AI_StateIdle(this));
+        _movement.ChasePlayer();
+        ChangeState<AI_StateIdle>();
     }
 
-    private void ConfigurePathfinding()
+    public void ChasePlayer() => _movement.ChasePlayer();
+    public void StopMoving() => _movement.StopMoving();
+    public bool IsAttacking() => _combat.IsAttacking;
+
+    public virtual bool IsPlayerInSkillRange()
     {
-        _aiPath.height = 0.01f;
-        _aiPath.maxSpeed = MoveSpeed;
-        _aiPath.pickNextWaypointDist = 1.2f;
-        _aiPath.orientation = OrientationMode.YAxisForward;
-        _aiPath.enableRotation = false;
-        _aiPath.gravity = Vector3.zero;
+        if(_detection.Player == null) return false;
+        return Vector2.Distance(transform.position, _detection.Player.position) <= 1f;
     }
 }
+

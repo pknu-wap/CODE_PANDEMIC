@@ -1,33 +1,23 @@
-using System.Diagnostics;
-
-public class AI_StateWalk : AI_IState
+public class AI_StateWalk : AI_StateBase
 {
-    private readonly AI_Controller _controller;
-
-    public AI_StateWalk(AI_Controller controller)
+    public override void OnEnter(AI_Controller controller)
     {
-        _controller = controller;
-    }
-
-    public void OnEnter()
-    {
-        _controller.ChasePlayer();
+        base.OnEnter(controller);
+        _movement.ChasePlayer();
         _controller._animator.SetBool("Walk", true);
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
-        if (!_controller.IsPlayerDetected() && !_controller._attackedPlayer)
+        if (!_detection.IsPlayerDetected)
         {
-            _controller.ChangeState(new AI_StateIdle(_controller));
-            _controller._animator.SetBool("Walk", false);
+            _controller.ChangeState<AI_StateIdle>();
         }
     }
 
-    public void OnFixedUpdate() { }
-
-    public void OnExit()
+    public override void OnExit()
     {
-        _controller.StopMoving();
+        _movement.StopMoving();
+        _controller._animator.SetBool("Walk", false);
     }
 }

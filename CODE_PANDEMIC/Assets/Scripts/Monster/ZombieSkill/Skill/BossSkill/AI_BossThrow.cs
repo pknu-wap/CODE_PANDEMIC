@@ -11,7 +11,6 @@ public class AI_BossThrow : AI_ThrowSkill
 
     public void SetSettings(ThrowSkillData settings, LayerMask targetLayer, AI_HospitalBoss controller)
     {
-        _settings = settings;
         _targetLayer = targetLayer;
         _bossController = controller;
     }
@@ -44,12 +43,12 @@ public class AI_BossThrow : AI_ThrowSkill
             if (syringe.TryGetComponent(out Projectile projectile))
             {
                 projectile.SetOwner(_controller);
-                projectile.MaxDistance = _settings.Range;
+                projectile.MaxDistance = _settings.Data.Range;
             }
 
             if (syringe.TryGetComponent(out Rigidbody2D rb))
             {
-                rb.velocity = dir * _settings.SyringeSpeed;
+                rb.velocity = dir * _settings.Data.SyringeSpeed;
             }
         }
     }
