@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: db4128aafb4f5c945bd174b0de9fd574
+guid: f9aa096f6464d1e44985224058c1bf4c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -95,7 +95,70 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Glock_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 229
+        width: 560
+        height: 183
+      alignment: 9
+      pivot: {x: 0.87477356, y: 0.5412684}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8e4f9e3fa8670e4eaf9c56fe74bb7a0
+      internalID: 1749087518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Glock_1
+      rect:
+        serializedVersion: 2
+        x: 820
+        y: 228
+        width: 560
+        height: 183
+      alignment: 9
+      pivot: {x: 0.8227565, y: 0.5412686}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c7dafc5a35b81d49a23405fb6a7548c
+      internalID: -1638614604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Glock_2
+      rect:
+        serializedVersion: 2
+        x: 1601
+        y: 228
+        width: 560
+        height: 183
+      alignment: 9
+      pivot: {x: 0.8728472, y: 0.547164}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b54a232cbb425441b595d3e15115696
+      internalID: -1578695005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +169,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Glock_0: 1749087518
+      Glock_1: -1638614604
+      Glock_2: -1578695005
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
