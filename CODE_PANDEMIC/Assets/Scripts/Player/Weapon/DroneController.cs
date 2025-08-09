@@ -9,30 +9,56 @@ public class DroneController : MonoBehaviour
     public float fireRate = 1f;
     public GameObject bulletPrefab;
     public Transform firePoint;
+    public float followDistance = 2f;
 
+    private Transform playerTransform;
     private Transform target;
     private float nextFireTime;
+
     private bool isActive = false;
     private bool isRunningCycle = false;
 
     void Update()
     {
+        if (playerTransform == null)
+        {
+            GameObject playerObj = GameObject.FindWithTag("Player");
+            if (playerObj != null)
+                playerTransform = playerObj.transform;
+        }
+
         if (Keyboard.current.qKey.wasPressedThisFrame && !isRunningCycle)
         {
             StartCoroutine(DroneCycle());
         }
 
-        if (!isActive) return;
+        if (!isActive || playerTransform == null) return;
+
+        FollowPlayer();
 
         FindTarget();
 
         if (target != null)
         {
-            MoveToTarget();
             AimAtTarget();
             TryFire();
         }
     }
+
+    void FollowPlayer()
+    {
+        if (playerTransform == null) return;
+
+        Vector2 dir = (playerTransform.position - transform.position);
+        float dist = dir.magnitude;
+
+        if (dist > followDistance)
+        {
+            Vector2 moveDir = dir.normalized;
+            transform.position += (Vector3)(moveDir * moveSpeed * Time.deltaTime);
+        }
+    }
+
 
     IEnumerator DroneCycle()
     {
@@ -72,12 +98,6 @@ public class DroneController : MonoBehaviour
         }
 
         target = closest;
-    }
-
-    void MoveToTarget()
-    {
-        Vector2 dir = (target.position - transform.position).normalized;
-        transform.position += (Vector3)(dir * moveSpeed * Time.deltaTime);
     }
 
     void AimAtTarget()
