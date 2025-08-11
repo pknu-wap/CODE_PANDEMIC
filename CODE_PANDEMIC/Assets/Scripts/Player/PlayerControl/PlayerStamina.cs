@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using static PlayerStatus;
 
 public class PlayerStamina : MonoBehaviour
 {
@@ -23,11 +24,30 @@ public class PlayerStamina : MonoBehaviour
     private Coroutine regenCoroutine;
     private Coroutine runDrainCoroutine;
 
+    public delegate void OnStaminaDelegate(float ratio);
+    private OnStaminaDelegate _onStaminaUpdate;
     void Start()
     {
+        Init();
+    }
+    private void OnDisable()
+    {
+        if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StaminaBar != null)
+        {
+            DisableDelegate(gameSceneUI.StaminaBar.UpdateStamina);
+        }
+    }
+    private void Init()
+    {
         currentStamina = maxStamina;
+        if (Managers.UI.SceneUI is UI_GameScene gameSceneUI && gameSceneUI.StaminaBar != null)
+        {
+             SetUpStaminaDelegate(gameSceneUI.StaminaBar.UpdateStamina);
+        
+        }
         regenCoroutine = StartCoroutine(StaminaRegenRoutine());
     }
+
 
     public bool CanDash()
     {
@@ -67,10 +87,14 @@ public class PlayerStamina : MonoBehaviour
         while (true)
         {
             UseStamina(runStaminaCost * regenInterval);
+            
             yield return interval;
         }
     }
-
+    private void CallStaminaUpdate(float amount)
+    { 
+        _onStaminaUpdate(amount);
+    }
     IEnumerator StaminaRegenRoutine()
     {
         WaitForSeconds interval = new WaitForSeconds(regenInterval);
@@ -80,7 +104,10 @@ public class PlayerStamina : MonoBehaviour
             {
                 currentStamina += staminaRegenRate * regenInterval;
                 currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+                CallStaminaUpdate(currentStamina / maxStamina);
             }
+            
+        
             yield return interval;
         }
     }
@@ -89,5 +116,17 @@ public class PlayerStamina : MonoBehaviour
     {
         currentStamina -= amount;
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        Debug.Log($"[UseStamina] 사용: {amount}, 현재: {currentStamina}");
+        CallStaminaUpdate(currentStamina / maxStamina);
     }
+    #region Delegate
+    public void SetUpStaminaDelegate(OnStaminaDelegate updateMethod)
+    {
+        _onStaminaUpdate += updateMethod;
+    }
+    public void DisableDelegate(OnStaminaDelegate updateMethod)
+    {
+        _onStaminaUpdate -= updateMethod;
+    }
+    #endregion
 }

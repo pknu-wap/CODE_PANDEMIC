@@ -9,12 +9,10 @@ public class StageEnvironmentTrigger : MonoBehaviour
 {
    [SerializeField] StageEnvironmentData _environmentData;
 
-    void Start()
+    private void Start()
     {
-        if(_environmentData!=null) TriggerEnvironment();
-
+        if (_environmentData != null) TriggerEnvironment();
     }
-
     void TriggerEnvironment()
     {
         Managers.Event.InvokeEvent("ToneUpdated", _environmentData.Tone);

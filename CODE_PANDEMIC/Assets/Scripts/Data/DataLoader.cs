@@ -104,18 +104,18 @@ public class StageDataLoader : ILoader<int, StageData>
     }
 }
 
-[Serializable]
+[System.Serializable]
 public class MonsterPosData
 {
     public int ID;
     public Vector2 Pos;
 }
 
-[Serializable]
+[System.Serializable]
 public class SpawnerData
 {
     public int TemplateID;
-    public List<MonsterPosData> Monsters;
+    public List<MonsterPosData> Monsters = new List<MonsterPosData>();
 }
 [Serializable]
 public class SpawnerDataLoader : ILoader<int, SpawnerData>
