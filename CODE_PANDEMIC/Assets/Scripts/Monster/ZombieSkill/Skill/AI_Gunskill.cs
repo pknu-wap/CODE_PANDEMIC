@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_Solider_Gunskill : AI_SkillBase
+public class AI_Gunskill : AI_SkillBase
 {
     protected GunSkillData _settings;
 
@@ -23,7 +23,6 @@ public class AI_Solider_Gunskill : AI_SkillBase
         }
 
         _controller = controller;
-        _lastSkillTime = Time.time;
         _movement._isUsingSkill = true;
         _controller._movement.StopMoving();
 
@@ -78,7 +77,7 @@ public class AI_Solider_Gunskill : AI_SkillBase
 
         yield return new WaitForSeconds(_settings.FireRate);
     }
-
+        _lastSkillTime = Time.time;
         _controller._movement.ChasePlayer();
         _movement._isUsingSkill = false;
         onSkillComplete?.Invoke();
