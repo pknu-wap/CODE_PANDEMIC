@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1279165682500468413}
   - component: {fileID: 6579003937693431546}
   - component: {fileID: 9212924589945504202}
-  - component: {fileID: 566497731883440008}
+  - component: {fileID: 353568534322146230}
   m_Layer: 0
   m_Name: R1895_0P
   m_TagString: Untagged
@@ -108,7 +108,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &566497731883440008
+--- !u!114 &353568534322146230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,12 +117,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1206747611793718374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fe2bf768cd13264e9cfee50b5845d1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9821c1785445c09408f274dce974d3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentBullet: 30
   weaponSpriteRenderer: {fileID: 0}
+  bulletCount: 1
+  spreadAngle: 25
   bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
-  firePoint: {fileID: 5789591542077271838}
+  firePoint: {fileID: 3965594873968723199}
 --- !u!1001 &3338736581714285292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -183,10 +186,5 @@ PrefabInstance:
 --- !u!4 &3965594873968723199 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1827631032718497299, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
-  m_PrefabInstance: {fileID: 3338736581714285292}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5789591542077271838 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9083006108061253106, guid: 373e1beb2ac68ca4cb89904028a6d625, type: 3}
   m_PrefabInstance: {fileID: 3338736581714285292}
   m_PrefabAsset: {fileID: 0}
