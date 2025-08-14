@@ -36,8 +36,7 @@ public class AI_Grenade : MonoBehaviour
         {
             if (hit.TryGetComponent<PlayerController>(out var player))
             {
-                // player.TakeDamage(gameObject, _damage);
-                Debug.Log($"Player hit with damage: {_damage}");
+                player.TakeDamage(gameObject, _damage);
             }
         }
 
