@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6536582220508257479}
   - component: {fileID: 386495144833962790}
   - component: {fileID: 1378579613767023746}
-  - component: {fileID: 8150126816975454386}
+  - component: {fileID: 4230221262255171580}
   m_Layer: 0
   m_Name: AK47
   m_TagString: Untagged
@@ -139,7 +139,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8150126816975454386
+--- !u!114 &4230221262255171580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,11 +148,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1611516191264284894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c5387d2580ac454e8feda8f5a9ddb2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9821c1785445c09408f274dce974d3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentBullet: 0
+  _currentBullet: 30
   weaponSpriteRenderer: {fileID: 0}
+  bulletCount: 1
+  spreadAngle: 0
   bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
-  firePoint: {fileID: 245275462165209874}
-  originPrefab: {fileID: 0}
+  firePoint: {fileID: 2070060029731343483}

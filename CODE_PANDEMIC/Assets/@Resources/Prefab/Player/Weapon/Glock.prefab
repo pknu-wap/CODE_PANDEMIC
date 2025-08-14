@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2286141012078134416}
   - component: {fileID: 7422415671511437523}
   - component: {fileID: 1687684095412384060}
-  - component: {fileID: 5942339064925749936}
+  - component: {fileID: 1066497109629660383}
   m_Layer: 0
   m_Name: Glock
   m_TagString: Untagged
@@ -139,7 +139,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5942339064925749936
+--- !u!114 &1066497109629660383
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,11 +148,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3281450986975610356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c5387d2580ac454e8feda8f5a9ddb2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9821c1785445c09408f274dce974d3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentBullet: 0
+  _currentBullet: 30
   weaponSpriteRenderer: {fileID: 0}
+  bulletCount: 1
+  spreadAngle: 0
   bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
-  firePoint: {fileID: 192553484421300071}
-  originPrefab: {fileID: 0}
+  firePoint: {fileID: 6791626292057959259}
