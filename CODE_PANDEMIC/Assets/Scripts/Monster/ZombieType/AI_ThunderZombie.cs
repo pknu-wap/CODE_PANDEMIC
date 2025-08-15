@@ -5,11 +5,6 @@ using System;
 
 public class AI_ThunderZombie : AI_Controller
 {
-    public float _thunderCoolDown = 10f;
-    public float _thunderDelay = 1f;
-    public float _attackCooldown = 2f;
-    public float _attackDuration = 0.1f;
-
     [SerializeField] private GameObject attackColliderPrefab;
     [SerializeField] private Transform hitboxSpawnPoint;
     [SerializeField] private GameObject thunderPrefab;
@@ -28,14 +23,16 @@ public class AI_ThunderZombie : AI_Controller
     {
         get
         {
-            if (_thunderSkill != null && _thunderSkill.IsReady(this))
-                return _thunderSkill;
-
             if (_patientAttack == null)
             {
-                _patientAttack = new AI_PatientAttack(attackColliderPrefab, hitboxSpawnPoint, _attackCooldown, _attackDuration);
+                PatientAttackSkillData patientAttackSkillData = new PatientAttackSkillData
+                {
+                    Cooldown = 2f,
+                    Duration = 0.1f
+                };
+                _patientAttack = new AI_PatientAttack();
+                _patientAttack.SetSettings(patientAttackSkillData, TargetLayer, this);
             }
-
             return _patientAttack;
         }
     }
@@ -44,22 +41,30 @@ public class AI_ThunderZombie : AI_Controller
     {
         TargetLayer = LayerMask.GetMask("Player");
         base.Awake();
+
+        ThunderSkillData thunderSkillData = new ThunderSkillData
+        {
+            Cooldown = 10f,
+            DelayBeforeStrike = 1f,
+            IntervalBetweenStrikes = 1.0f,
+            StrikeCount = 3,
+            StrikeRadius = 0.5f
+        };
+
+        _thunderSkill = new AI_ThunderSkill();
+        _thunderSkill.SetSettings(thunderSkillData, TargetLayer, this);
+
+        PatientAttackSkillData patientAttackSkillData = new PatientAttackSkillData
+        {
+            Cooldown = 2f,
+            Duration = 0.1f
+        };
+        _patientAttack = new AI_PatientAttack();
+        _patientAttack.SetSettings(patientAttackSkillData, TargetLayer, this);
     }
 
     protected override void Start()
     {
-        // if (_monsterData == null)
-        // {
-        //     _monsterData = new MonsterData();
-        //     _monsterData.NameID = "ThunderZombie";
-        //     _monsterData.Hp = 500;
-        //     _monsterData.AttackDelay = 2f;
-        //     _monsterData.DetectionRange = 10f;
-        //     _monsterData.DetectionAngle = 180;
-        //     _monsterData.MoveSpeed = 4f;
-        //     _monsterData.AttackRange = 10f;
-        //     _monsterData.AttackDamage = 30;
-        // }
         base.Start();
 
         if (!Init())
@@ -67,39 +72,26 @@ public class AI_ThunderZombie : AI_Controller
             enabled = false;
             return;
         }
-
-        _thunderSkill = new AI_ThunderSkill(thunderPrefab, TargetLayer);
-        _patientAttack = new AI_PatientAttack(attackColliderPrefab, hitboxSpawnPoint, _attackCooldown, _attackDuration);
-
     }
 
     public override bool IsPlayerInSkillRange()
     {
-        if (_player == null)
+        if (_detection.Player == null)
             return false;
-
-        float distance = Vector2.Distance(transform.position, _player.position);
-
         if (_thunderSkill != null && _thunderSkill.IsReady(this))
-            return distance <= AttackRange;
+            return Vector2.Distance(transform.position, _detection.Player.position) <= AttackRange;
         else
-            return distance <= 0.6f;
+            return Vector2.Distance(transform.position, _detection.Player.position) <= 0.6f;
     }
 
     public void AttackHit()
     {
         _patientAttack?.StartSkill(this, null);
     }
-    public override void Die() // 여기에다가 번개좀비 작업하면 됩니다.
+    protected override void Dielogic()
     {
-        base.Die();
-        Skill?.StopSkill();
-        StopMoving();
-        ChangeState(new AI_StateDie(this));
-        _animator.SetTrigger("Die");
-
+        base.Dielogic();
         OpenWorksiteDoor?.Invoke();
-
         Debug.Log($"{AIName} has died.");
     }
 }

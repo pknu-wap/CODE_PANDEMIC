@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class AttackCollider : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class AttackCollider : MonoBehaviour
         _damage = damage;
         _lifetime = duration;
         _targetLayer = targetLayer;
-        Invoke(nameof(SetActiveSelf), _lifetime);
+        StartCoroutine(DeactivateRoutine());
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -25,8 +26,9 @@ public class AttackCollider : MonoBehaviour
         }
     }
 
-    private void SetActiveSelf()
+    private IEnumerator DeactivateRoutine()
     {
+        yield return new WaitForSeconds(_lifetime);
         gameObject.SetActive(false);
     }
 }

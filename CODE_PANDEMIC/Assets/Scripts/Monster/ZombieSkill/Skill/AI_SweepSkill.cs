@@ -1,25 +1,18 @@
 using UnityEngine;
 using System.Collections;
-public class AI_SweepSkill : ISkillBehavior
+public class AI_SweepSkill : AI_SkillBase
 {
-    protected AI_Controller _controller;
     protected SweepSkillData _settings;
-    protected LayerMask _targetLayer;
 
     private Coroutine _skillCoroutine;
     private float _lastSkillTime = -Mathf.Infinity;
 
-    public void SetController(AI_Controller controller)
-    {
-        _controller = controller;
-    }
-
-    public virtual bool IsReady(AI_Controller controller)
+    public override bool IsReady(AI_Controller controller)
     {
         return Time.time >= _lastSkillTime + _settings.Cooldown;
     }
 
-    public virtual void StartSkill(AI_Controller controller, System.Action onSkillComplete)
+    public override void StartSkill(AI_Controller controller, System.Action onSkillComplete)
     {
         if (!IsReady(controller))
         {
@@ -29,13 +22,13 @@ public class AI_SweepSkill : ISkillBehavior
 
         _controller = controller;
         _lastSkillTime = Time.time;
-        _controller._isUsingSkill = true;
-        _controller._aiPath.canMove = false;
+        _movement._isUsingSkill = true;
+        _controller._movement.StopMoving();
 
         _skillCoroutine = _controller.StartCoroutine(SweepRoutine(onSkillComplete));
     }
 
-    public virtual void StopSkill()
+    public override void StopSkill()
     {
         if (_skillCoroutine != null)
         {
@@ -47,17 +40,16 @@ public class AI_SweepSkill : ISkillBehavior
     {
         return 0.5f; // 디폴트
     }
-    public virtual void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
+    public override void SetSettings(object settings, LayerMask targetLayer, AI_Controller controller)
     {
+        base.SetSettings(settings, targetLayer, controller);
         _settings = settings as SweepSkillData;
-        _targetLayer = targetLayer;
-        _controller = controller;
     }
 
 
     protected virtual IEnumerator SweepRoutine(System.Action onSkillComplete)
     {
-        Vector2 attackDirection = ((Vector2)_controller._player.position - (Vector2)_controller.transform.position).normalized;
+        Vector2 attackDirection = ((Vector2)_controller._detection.Player.position - (Vector2)_controller.transform.position).normalized;
         _controller._animator.SetBool("Attack", true);
         for (int i = 0; i < _settings.Count; i++)
         {
@@ -70,8 +62,8 @@ public class AI_SweepSkill : ISkillBehavior
             yield return new WaitForSeconds(_settings.Interval);
         }
 
-        _controller._aiPath.canMove = true;
-        _controller._isUsingSkill = false;
+        _controller._movement.ChasePlayer();
+        _movement._isUsingSkill = false;
         onSkillComplete?.Invoke();
     }
 
