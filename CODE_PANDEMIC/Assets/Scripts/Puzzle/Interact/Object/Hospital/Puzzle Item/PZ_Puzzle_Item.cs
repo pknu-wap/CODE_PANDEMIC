@@ -17,7 +17,9 @@ public class PZ_Puzzle_Item : PZ_Interact_Spawn
     private string _puzzleAddressable; // 화면에 출력할 퍼즐 어드레서블
     private bool _isMainPuzzle = true; // 메인 퍼즐인지 서브 퍼즐인지 체크
 
-    public void SetInfo(PuzzleData data)
+    protected bool _activeDongDong = true;
+
+    public virtual void SetInfo(PuzzleData data)
     {
         ID = data.ID;
         _puzzleAddressable = data.UIPath;
@@ -37,7 +39,10 @@ public class PZ_Puzzle_Item : PZ_Interact_Spawn
         _dongdong = _original;
         _dongdong.y += 0.2f;
 
-        StartCoroutine(MoveUp());
+        if (_activeDongDong)
+        {
+            StartCoroutine(MoveUp());
+        }
     }
 
     #endregion
@@ -112,6 +117,11 @@ public class PZ_Puzzle_Item : PZ_Interact_Spawn
         if (_isMainPuzzle)
         {
             Managers.Event.InvokeEvent("MainPuzzleClear", this);
+        }
+        else
+        {
+            PZ_Puzzle_UI_Side sidePuzzle = _popupPuzzle as PZ_Puzzle_UI_Side;
+            sidePuzzle.PuzzleClear();
         }
 
         Destroy(gameObject);

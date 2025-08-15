@@ -7,7 +7,7 @@ public class PZ_Generator : PZ_Puzzle_Interact_Side, IInteractable
     [SerializeField] private Transform _handleTransform;
     private Animator _animator;
 
-    private bool _isInteracted = false;
+    protected bool _isInteracted = false;
 
     private int _rememberCount = 5;
 
