@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1051710804892231989}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.9, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,8 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1249744242811470806}
   - component: {fileID: 8462438807792822078}
-  - component: {fileID: 2697179901745106412}
   - component: {fileID: 7182144624987177063}
+  - component: {fileID: 2106749311037021858}
   m_Layer: 0
   m_Name: Double-barreled
   m_TagString: Untagged
@@ -118,22 +118,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2697179901745106412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4693276169552575359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b24436d62964d2241b74ef1d9448e8f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentBullet: 0
-  weaponSpriteRenderer: {fileID: 0}
-  bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
-  firePoint: {fileID: 1051710804892231989}
 --- !u!95 &7182144624987177063
 Animator:
   serializedVersion: 5
@@ -155,3 +139,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2106749311037021858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4693276169552575359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9821c1785445c09408f274dce974d3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentBullet: 2
+  weaponSpriteRenderer: {fileID: 0}
+  bulletCount: 5
+  spreadAngle: 15
+  bulletPrefab: {fileID: 7177808409072152911, guid: 28391f5a5f92b4c448ecc95ffebe4b5e, type: 3}
+  firePoint: {fileID: 2843460273833474108}
