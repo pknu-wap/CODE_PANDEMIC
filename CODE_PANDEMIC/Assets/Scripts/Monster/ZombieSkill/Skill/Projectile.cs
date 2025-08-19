@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     private bool _hasTriggered = false;
     private PlayerController player;
     private AI_Controller _owner;
-    private float _safeTime = 0.05f; // 발사 직후 0.05초 동안 충돌 무시
+    private float _safeTime = 0.01f; // 발사 직후 0.01초 동안 충돌 무시
     private float _spawnTime;
 
     public void SetOwner(AI_Controller owner)
