@@ -19,7 +19,7 @@
 
       "ID": 2,
       "Prefab": "PZ_Puzzle_Item_Prefab",
-      "UIPath": "PZ_Sliding_Board_Prefab",
+      "UIPath": "PZ_Catch_Board_Prefab",
       "RewardItem": {
         "ID": -1,
         "Quantity": 0
@@ -214,8 +214,22 @@
       },
       "IsMain": false
 
+    },
+    {
+      "ID": 11,
+      "Prefab": "PZ_Interact_Bed_Prefab",
+      "UIPath": "PZ_Sliding_Board_Prefab",
+      "RewardItem": {
+        "ID": 3,
+        "Quantity": 3
+      },
+      "Pos": {
+        "x": 952.08,
+        "y": 95.55,
+        "z": 0
+      },
+      "IsMain": false
     }
-
   ]
 }
      

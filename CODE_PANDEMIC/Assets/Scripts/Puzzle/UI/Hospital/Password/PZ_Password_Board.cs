@@ -1,4 +1,3 @@
-using UnityEngine;
 using System.Collections.Generic;
 
 public class PZ_Password_Board : PZ_Puzzle_UI_Main
